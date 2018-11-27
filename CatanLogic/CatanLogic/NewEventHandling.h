@@ -6,31 +6,31 @@
 
 //enunm Forward Declaration
 //it is feasible as long as the type is defined in the code.
-using eventTypes = unsigned int;
+using EventTypes = unsigned int;
 
-class genericEvent
+class GenericEvent
 {
 public:
-	virtual eventTypes getType(void) = 0;
-	bool operator==(eventTypes ev) { return (this->getType() == ev); } //Easy Compare an Event With its types.
+	virtual EventTypes getType(void) = 0;
+	bool operator==(EventTypes ev) { return (this->getType() == ev); } //Easy Compare an Event With its types.
 	virtual bool const operator!() const { return  false; } 		        //This operator can be used to understand if the event is present or not. ie: No Event.
 };
 
-class eventGenerator
+class EventGenerator
 {
 public:
-	virtual genericEvent * getEvent(void) = 0;  // Returns NULL if there's no new Event or a pointer to a concrete instance in the heap of a genericEvent if there's a new event
+	virtual GenericEvent * getEvent(void) = 0;  // Returns NULL if there's no new Event or a pointer to a concrete instance in the heap of a GenericEvent if there's a new event
 															  // User must then free this isntance.
 };
 
 class mainEventGenerator
 {
 public:
-	genericEvent * getNextEvent(void);
-	void attach(eventGenerator * evg);
-	void detach(eventGenerator * evg);
+	GenericEvent * getNextEvent(void);
+	void attach(EventGenerator * evg);
+	void detach(EventGenerator * evg);
 
 private:
-	std::queue<genericEvent *>  eventQueue; //It can also be a priority_queue if events have got some sort of priority
-	std::list<eventGenerator *> generators; //It will contain all eventGenerators attached to the mainEventGenerator
+	std::queue<GenericEvent *>  eventQueue; //It can also be a priority_queue if events have got some sort of priority
+	std::list<EventGenerator *> generators; //It will contain all EventGenerators attached to the mainEventGenerator
 };

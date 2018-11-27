@@ -3,7 +3,7 @@
 using namespace std;
 
 //UNTOUCHED
-genericEvent * mainEventGenerator::
+GenericEvent * mainEventGenerator::
 getNextEvent(void)
 {
 	//Por cada getNextEvent primero me fijo en cada event generator
@@ -13,14 +13,14 @@ getNextEvent(void)
 	//por lo que basta con revisar una vez cada fuente de eventos.
 	//si no fuera el caso se debería iterar n veces por todos los generadores
 	//hasta que ninguno tenga más nada que reportar.
-	for (eventGenerator * evg : generators)
+	for (EventGenerator * evg : generators)
 	{
-		genericEvent * temp = evg->getEvent();
+		GenericEvent * temp = evg->getEvent();
 		eventQueue.push(temp);
 	}
 
 
-	genericEvent * ret = nullptr;
+	GenericEvent * ret = nullptr;
 
 	//If queue is not empty, saves first item and pops it out of the queue.
 	//Then returns first item or NULL if the queue is empty.
@@ -33,13 +33,13 @@ getNextEvent(void)
 }
 
 void mainEventGenerator::
-attach(eventGenerator * evg)
+attach(EventGenerator * evg)
 {
 	generators.push_back(evg);
 }
 
 void mainEventGenerator::
-detach(eventGenerator * evg)
+detach(EventGenerator * evg)
 {
 	generators.remove(evg);
 }

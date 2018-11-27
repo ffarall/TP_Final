@@ -115,10 +115,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enabler.cpp" />
     <ClCompile Include="NewEventHandling.cpp" />
     <ClCompile Include="NewGenericFSM.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enabler.h" />
     <ClInclude Include="NewEventHandling.h" />
     <ClInclude Include="NewGenericFSM.h" />
   </ItemGroup>

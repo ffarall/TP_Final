@@ -21,12 +21,18 @@
     <ClCompile Include="NewGenericFSM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Enabler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEventHandling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NewGenericFSM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enabler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <functional>
-#include "NewGenericFSM.h"
+#include "NewGenericFsm.h"
 
 //Forward declarations..
 
@@ -9,7 +9,7 @@ using namespace std::placeholders;
 
 
 
-void genericFSM::cycle(genericEvent * ev)
+void GenericFsm::cycle(GenericEvent * ev)
 {
 	if (ev != nullptr)
 	{
@@ -33,11 +33,15 @@ void genericFSM::cycle(genericEvent * ev)
 	return;
 }
 
-genericFSM::genericFSM(FsmMap fsmMap_, StateTypes initState) : fsmMap(fsmMap_), state(initState)
+GenericFsm::~GenericFsm()
 {
 }
 
-genericEvent * genericFSM::getEvent()
+GenericFsm::GenericFsm(FsmMap fsmMap_, StateTypes initState) : fsmMap(fsmMap_), state(initState)
+{
+}
+
+GenericEvent * GenericFsm::getEvent()
 {
 	return fsmEvent;
 }
