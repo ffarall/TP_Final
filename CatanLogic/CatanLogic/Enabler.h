@@ -8,7 +8,7 @@ class Enabler;
 using namespace std;
 using EventTypes = unsigned int;
 using EventSubtypes = unsigned int;
-using EnablerRoutine = void (Enabler::*)(GenericEvent*);
+using EnablerRoutine = void (Enabler::*)(SubtypeEvent*);
 using EnablerMap = map< EventTypes, map< EventSubtypes, list< EnablerRoutine > > >;
 
 class Enabler
@@ -18,7 +18,7 @@ public:
 	virtual ~Enabler();
 
 	// To be called when new event arrives.
-	void cycle(GenericEvent* ev);
+	void cycle(SubtypeEvent* ev);
 	// Event getter.
 	GenericEvent * getEvent();
 

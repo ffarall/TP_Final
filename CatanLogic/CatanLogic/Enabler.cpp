@@ -11,7 +11,7 @@ Enabler::~Enabler()
 {
 }
 
-void Enabler::cycle(GenericEvent * ev)
+void Enabler::cycle(SubtypeEvent * ev)
 {
 
 }
