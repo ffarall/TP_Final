@@ -115,6 +115,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MapTest.cpp" />
+    <ClCompile Include="NewEventHandling.cpp" />
+    <ClCompile Include="NewGenericFSM.cpp" />
+    <ClCompile Include="SimpleEventGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NewEventHandling.h" />
+    <ClInclude Include="NewGenericFSM.h" />
+    <ClInclude Include="SimpleEventGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
