@@ -15,7 +15,7 @@ struct EnablerLogic
 	EnablerRoutine defaultRoutine;
 };
 
-
+// Framework
 class Enabler
 {
 public:
