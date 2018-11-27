@@ -24,6 +24,12 @@
     <ClCompile Include="Enabler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="package.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="subEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEventHandling.h">
@@ -33,6 +39,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enabler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="package.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="subEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

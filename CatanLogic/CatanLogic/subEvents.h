@@ -1,5 +1,5 @@
 #pragma once
-#include "genericEvent.h"
+#include "NewEventHandling.h"
 #include "package.h"
 
 enum class subType {
@@ -18,7 +18,7 @@ enum class subType {
 };
 
 class subEvents :
-	public genericEvent
+	public GenericEvent
 {
 public:
 	subEvents(mainTypes ppal, subType secnd);

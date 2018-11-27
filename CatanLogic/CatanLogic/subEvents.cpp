@@ -1,6 +1,6 @@
 #include "subEvents.h"
 
-subEvents::subEvents(mainTypes ppal, subType secnd):genericEvent(ppal)
+subEvents::subEvents(mainTypes ppal, subType secnd):GenericEvent(ppal)
 {
 	subTipo = secnd;
 	paquete = nullptr;
