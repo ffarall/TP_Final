@@ -7,13 +7,20 @@
 //enunm Forward Declaration
 //it is feasible as long as the type is defined in the code.
 using EventTypes = unsigned int;
+using EventSubtypes = unsigned int;
 
 class GenericEvent
 {
 public:
-	virtual EventTypes getType(void) = 0;
+	virtual EventTypes getType() = 0;
 	bool operator==(EventTypes ev) { return (this->getType() == ev); } //Easy Compare an Event With its types.
 	virtual bool const operator!() const { return  false; } 		        //This operator can be used to understand if the event is present or not. ie: No Event.
+};
+
+class SubtypeEvent : GenericEvent
+{
+	virtual EventSubtypes getSubtype() = 0;
+	bool operator==(SubtypeEvent& ev) { return ((this->getType() == ev.getType()) && (this->getSubtype() == ev.getSubtype())); }
 };
 
 class EventGenerator

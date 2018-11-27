@@ -50,5 +50,8 @@
     <ClInclude Include="subEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="genericEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="Enabler.h" />
+    <ClInclude Include="genericEvent.h" />
     <ClInclude Include="NewEventHandling.h" />
     <ClInclude Include="NewGenericFSM.h" />
     <ClInclude Include="package.h" />
