@@ -17,8 +17,9 @@ public:
 	virtual bool const operator!() const { return  false; } 		        //This operator can be used to understand if the event is present or not. ie: No Event.
 };
 
-class SubtypeEvent : GenericEvent
+class SubtypeEvent : public GenericEvent
 {
+public:
 	virtual EventSubtypes getSubtype() = 0;
 	bool operator==(SubtypeEvent& ev) { return ((this->getType() == ev.getType()) && (this->getSubtype() == ev.getSubtype())); }
 };
