@@ -125,11 +125,11 @@
   <ItemGroup>
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="Enabler.h" />
-    <ClInclude Include="genericEvent.h" />
+    <ClInclude Include="MainEvent.h" />
     <ClInclude Include="NewEventHandling.h" />
     <ClInclude Include="NewGenericFSM.h" />
     <ClInclude Include="package.h" />
-    <ClInclude Include="subEvents.h" />
+    <ClInclude Include="SubEvents.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
