@@ -2,18 +2,18 @@
 #include "NewEventHandling.h"
 #include<map>
 
-class genericFSM;
+class GenericFsm;
 using StateTypes = unsigned int;
 
 struct FsmCell
 {
 	StateTypes nextState;
-	void (genericFSM::*action)(genericEvent *);
+	void (GenericFsm::*action)(GenericEvent *);
 };
 
 struct StateMap
 {
-	std::map< eventTypes, FsmCell > acceptedEventsMap;		// Every state has a map of accepted events with their corresponding FsmCells.
+	std::map< EventTypes, FsmCell > acceptedEventsMap;		// Every state has a map of accepted events with their corresponding FsmCells.
 	FsmCell defaultCell;									// And a cell that contains the information of what to do when the event that arrived is not in the current state's map.
 };
 
@@ -23,19 +23,19 @@ using FsmMap = std::map< StateTypes, StateMap >;
 
 
 
-class genericFSM : public eventGenerator
+class GenericFsm : public EventGenerator
 {
 public:
 
-	genericFSM( const FsmMap fsmMap_, StateTypes initState);
-	genericEvent * getEvent();
-	void cycle(genericEvent * ev);
+	GenericFsm( const FsmMap fsmMap_, StateTypes initState);
+	GenericEvent * getEvent();
+	void cycle(GenericEvent * ev);
+	virtual ~GenericFsm();
 
 private:
 	StateTypes state;
-	genericEvent * fsmEvent = nullptr;
+	GenericEvent * fsmEvent = nullptr;
 
-	
 	FsmMap fsmMap;
 };
 
@@ -43,16 +43,16 @@ private:
 /******************       The fsm should be initialised like this       ********************/
 
 /*
-enum eventTypes { Ev0, Ev1, Ev2, Ev3, Ev4 };
+enum EventTypes { Ev0, Ev1, Ev2, Ev3, Ev4 };
 enum implStates : StateTypes { State0, State1, State2, State3 };
 
-class FSMImplementation : public genericFSM
+class FSMImplementation : public GenericFsm
 {
 
 
 private:
 
-#define TX(x) (static_cast<void (genericFSM::* )(genericEvent *)>(&FSMImplementation::x))
+#define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&FSMImplementation::x))
 
 	const FsmMap testFsmMap = {
 		{ State0, { {	{ Ev0, { State1, TX(prueba1) } },
@@ -79,48 +79,48 @@ private:
 	//The action routines for the FSM
 	//These actions should not generate fsmEvents
 
-	void prueba1(genericEvent * ev)
+	void prueba1(GenericEvent * ev)
 	{
 		cout << "prueba 1" << endl;
 		return;
 	}
-	void prueba2(genericEvent * ev)
+	void prueba2(GenericEvent * ev)
 	{
 		cout << "prueba 2" << endl;
 		return;
 	}
-	void prueba3(genericEvent * ev)
+	void prueba3(GenericEvent * ev)
 	{
 		cout << "prueba 3" << endl;
 		return;
 	}
-	void prueba4(genericEvent * ev)
+	void prueba4(GenericEvent * ev)
 	{
 		cout << "prueba 4" << endl;
 		return;
 	}
 
-	void default1(genericEvent * ev)
+	void default1(GenericEvent * ev)
 	{
 		cout << "default 1" << endl;
 		return;
 	}
-	void default2(genericEvent * ev)
+	void default2(GenericEvent * ev)
 	{
 		cout << "default 2" << endl;
 		return;
 	}
-	void default3(genericEvent * ev)
+	void default3(GenericEvent * ev)
 	{
 		cout << "default 3" << endl;
 		return;
 	}
-	void default4(genericEvent * ev)
+	void default4(GenericEvent * ev)
 	{
 		cout << "default 4" << endl;
 		return;
 	}
 
 public:
-	FSMImplementation() : genericFSM(testFsmMap, State0) {}
+	FSMImplementation() : GenericFsm(testFsmMap, State0) {}
 };*/

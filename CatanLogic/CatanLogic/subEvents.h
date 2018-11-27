@@ -1,7 +1,8 @@
 #pragma once
-#include "genericEvent.h"
+#include "NewEventHandling.h"
 #include "package.h"
 
+enum mainTypes { NETWORK, PLAY_AGAIN, GAME_OVER, START_GAME, PLAYER_ACTION, QUIT, TICKS, LOCAL_STARTS, TURN_FINISHED, I_WON, TIME_OUT, ERR_IN_COM };
 enum class subType {
 	/* subtipos de networking */
 	CONNECTED, 
@@ -18,7 +19,7 @@ enum class subType {
 };
 
 class subEvents :
-	public genericEvent
+	public GenericEvent
 {
 public:
 	subEvents(mainTypes ppal, subType secnd);

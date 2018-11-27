@@ -115,13 +115,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HandShakingFSM.cpp" />
+    <ClCompile Include="Enabler.cpp" />
     <ClCompile Include="NewEventHandling.cpp" />
     <ClCompile Include="NewGenericFSM.cpp" />
+    <ClCompile Include="package.cpp" />
+    <ClCompile Include="subEvents.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CatanDefs.h" />
+    <ClInclude Include="Enabler.h" />
+    <ClInclude Include="genericEvent.h" />
     <ClInclude Include="NewEventHandling.h" />
     <ClInclude Include="NewGenericFSM.h" />
+    <ClInclude Include="package.h" />
+    <ClInclude Include="subEvents.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
