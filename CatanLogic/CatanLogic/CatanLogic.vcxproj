@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Enabler.cpp" />
+    <ClCompile Include="HandShakingFSM.cpp" />
     <ClCompile Include="NewEventHandling.cpp" />
     <ClCompile Include="NewGenericFSM.cpp" />
     <ClCompile Include="package.cpp" />
