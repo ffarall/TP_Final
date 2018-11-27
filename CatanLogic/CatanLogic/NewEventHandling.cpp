@@ -22,7 +22,7 @@ getNextEvent(void)
 
 	genericEvent * ret = nullptr;
 
-	//If queue is not empty, saves firts item and pops it out of the queue.
+	//If queue is not empty, saves first item and pops it out of the queue.
 	//Then returns first item or NULL if the queue is empty.
 	if (!eventQueue.empty())
 	{
