@@ -9,7 +9,7 @@ using namespace std;
 using EventTypes = unsigned int;
 using EventSubtypes = unsigned int;
 using EnablerRoutine = void (Enabler::*)(SubtypeEvent*);
-using EnablerMap = map< EventTypes, map< EventSubtypes, list< EnablerRoutine > > >;
+using EnablerMap = map< SubtypeEvent, list< EnablerRoutine > > ;
 
 class Enabler
 {

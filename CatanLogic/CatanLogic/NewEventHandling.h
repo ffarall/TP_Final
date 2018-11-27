@@ -13,7 +13,7 @@ class GenericEvent
 {
 public:
 	virtual EventTypes getType() = 0;
-	bool operator==(EventTypes ev) { return (this->getType() == ev); } //Easy Compare an Event With its types.
+	bool operator==(EventTypes ev) { return (this->getType() == ev); }		//Easy Compare an Event With its types.
 	virtual bool const operator!() const { return  false; } 		        //This operator can be used to understand if the event is present or not. ie: No Event.
 };
 
@@ -26,8 +26,8 @@ class SubtypeEvent : GenericEvent
 class EventGenerator
 {
 public:
-	virtual GenericEvent * getEvent(void) = 0;  // Returns NULL if there's no new Event or a pointer to a concrete instance in the heap of a GenericEvent if there's a new event
-															  // User must then free this isntance.
+	virtual GenericEvent * getEvent(void) = 0;					// Returns NULL if there's no new Event or a pointer to a concrete instance in the heap of a GenericEvent if there's a new event
+																// User must then free this isntance.
 };
 
 class mainEventGenerator
