@@ -17,9 +17,13 @@ enum SubType : EventSubtypes {
 class SubEvents :
 	public SubtypeEvent
 {
-public: // ver si es necesario el contructor
-	EventSubtypes getSubType() { return subTipo; }
-	void setSubType(EventSubtypes subType_) { subTipo = static_cast<SubType>(subType_); }
+public:
+	SubEvents() { paquete = nullptr; }
+	SubEvents(EventTypes mainEvent_, EventSubtypes subTipo_) { setEvent(mainEvent_); setSubtype(subTipo_); paquete = nullptr; }
+	SubEvents(EventTypes mainEvent_, EventSubtypes subTipo_, package * paquete_) { setEvent(mainEvent_); setSubtype(subTipo_); paquete = paquete_; }
+
+	virtual EventSubtypes getSubtype() { return subTipo; }
+	void setSubtype(EventSubtypes subType_) { subTipo = static_cast<SubType>(subType_); }
 
 	EventTypes getType() { return mainEvent; }
 	void setEvent(EventTypes tipo_) { mainEvent = static_cast<MainTypes>(tipo_); }
@@ -29,7 +33,7 @@ public: // ver si es necesario el contructor
 		if (paquete != nullptr) { delete paquete; }
 		paquete = newPacket;
 	};
-	package * getPacket() { return paquete; };
+	package * getPackage() { return paquete; };
 
 private:
 	MainTypes mainEvent;

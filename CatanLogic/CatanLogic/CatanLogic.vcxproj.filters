@@ -27,9 +27,6 @@
     <ClCompile Include="package.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="subEvents.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HandShakingFSM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

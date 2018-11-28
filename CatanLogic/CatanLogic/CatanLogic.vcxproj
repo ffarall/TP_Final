@@ -117,14 +117,15 @@
   <ItemGroup>
     <ClCompile Include="Enabler.cpp" />
     <ClCompile Include="HandShakingFSM.cpp" />
+    <ClCompile Include="LocalPlayerEnabler.cpp" />
     <ClCompile Include="NewEventHandling.cpp" />
     <ClCompile Include="NewGenericFSM.cpp" />
     <ClCompile Include="package.cpp" />
-    <ClCompile Include="subEvents.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="Enabler.h" />
+    <ClInclude Include="LocalPlayerEnabler.h" />
     <ClInclude Include="MainEvent.h" />
     <ClInclude Include="NewEventHandling.h" />
     <ClInclude Include="NewGenericFSM.h" />
