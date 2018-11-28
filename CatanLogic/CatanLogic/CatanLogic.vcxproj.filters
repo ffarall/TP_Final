@@ -27,10 +27,10 @@
     <ClCompile Include="package.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="subEvents.cpp">
+    <ClCompile Include="HandShakingFSM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HandShakingFSM.cpp">
+    <ClCompile Include="LocalPlayerEnabler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +50,13 @@
     <ClInclude Include="package.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="subEvents.h">
+    <ClInclude Include="MainEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="genericEvent.h">
+    <ClInclude Include="SubEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalPlayerEnabler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
