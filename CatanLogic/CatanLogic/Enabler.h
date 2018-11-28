@@ -27,7 +27,7 @@ public:
 	// Event getter.
 	GenericEvent * getEvent();
 
-private:
+protected:
 	// Map containing all enabled events and its actions.
 	EnablerLogic enabledActions;
 	// Current event.
