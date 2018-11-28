@@ -53,10 +53,10 @@
     <ClInclude Include="package.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="subEvents.h">
+    <ClInclude Include="MainEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="genericEvent.h">
+    <ClInclude Include="SubEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LocalPlayerEnabler.h">
