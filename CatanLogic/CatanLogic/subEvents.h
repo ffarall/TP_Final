@@ -5,11 +5,17 @@
 enum MainTypes : EventTypes { NETWORK, PLAY_AGAIN, GAME_OVER, START_GAME, PLAYER_ACTION, QUIT, TICKS, LOCAL_STARTS, REMOTE_START, TURN_FINISHED, I_WON, TIME_OUT, ERR_IN_COM };
 
 enum SubType : EventSubtypes {
-	/* subtipos de networking */
+	/* Subtipos de NETWORKING */
 	CONNECTED, 
 	ACK , NAME ,
 	NAME_IS , MAP_IS , CIRCULAR_TOKENS , PLAY_WITH_DEV , DEV_CARDS , YOU_START , I_START ,
 	YES , NO ,
+	/******************/
+	/* Subtipos de PLAYER_ACTION */
+	CONNECTED,
+	ACK, NAME,
+	NAME_IS, MAP_IS, CIRCULAR_TOKENS, PLAY_WITH_DEV, DEV_CARDS, YOU_START, I_START,
+	YES, NO,
 	/******************/
 	TIME_OUT , TICK 
 };

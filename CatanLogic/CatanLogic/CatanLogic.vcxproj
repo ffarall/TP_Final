@@ -121,6 +121,7 @@
     <ClCompile Include="NewEventHandling.cpp" />
     <ClCompile Include="NewGenericFSM.cpp" />
     <ClCompile Include="package.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CatanDefs.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="NewEventHandling.h" />
     <ClInclude Include="NewGenericFSM.h" />
     <ClInclude Include="package.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SubEvents.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

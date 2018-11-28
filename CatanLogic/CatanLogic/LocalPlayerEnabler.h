@@ -2,6 +2,7 @@
 #include "Enabler.h"
 #include <string>
 #include <cstdint>
+#include "Player.h"
 
 using namespace std;
 
@@ -12,8 +13,11 @@ public:
 	LocalPlayerEnabler();
 	virtual ~LocalPlayerEnabler();
 
-	// Enables events for the user to select 
-	void setUpForGame();
+	void init();
+	void end();
+
+	// Enables events for the user to select.
+	void localStarts();
 	// Enables events for beginning of turn.
 	void setUpForTurn();
 
@@ -32,6 +36,10 @@ private:
 	bool iWon;
 	// Counter of victory points.
 	size_t victoryPoints;
+	// Local player.
+	Player* localPlayer;
+	// Remote player.
+	Player* remotePlayer;
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(SubtypeEvent* ev);

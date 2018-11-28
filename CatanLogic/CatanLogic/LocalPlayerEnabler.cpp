@@ -4,8 +4,7 @@
 
 LocalPlayerEnabler::LocalPlayerEnabler()
 {
-	iWon = false;
-	setDefaultRoutine(TX(noAct));
+	init();
 }
 
 
@@ -13,9 +12,29 @@ LocalPlayerEnabler::~LocalPlayerEnabler()
 {
 }
 
-void LocalPlayerEnabler::setUpForGame()
+void LocalPlayerEnabler::init()
 {
+	iWon = false;
+	setDefaultRoutine(TX(noAct));
+	localPlayer = nullptr;
+	remotePlayer = nullptr;
+}
 
+void LocalPlayerEnabler::end()
+{
+	if (localPlayer != nullptr)
+	{
+		delete localPlayer;
+	}
+	if (remotePlayer != nullptr)
+	{
+		delete remotePlayer;
+	}
+}
+
+void LocalPlayerEnabler::localStarts()
+{
+	
 }
 
 void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
