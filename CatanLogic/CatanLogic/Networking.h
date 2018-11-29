@@ -4,14 +4,12 @@
 #include <queue>
 #include <list>
 
-#include "boost/asio.hpp"
-#include "boost/chrono.hpp"
-#include "boost/timer/timer.hpp"
+#include "package.h"
 
-
+enum Status { SERVER, CLIENT };
 #define PORT 13225
 
-enum Status {SERVER,CLIENT};
+#include "boost/asio.hpp"
 
 class Networking
 {
