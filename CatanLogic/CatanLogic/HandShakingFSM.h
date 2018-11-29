@@ -1,9 +1,8 @@
 #pragma once
-#include<iostream>
 #include"NewGenericFSM.h"
 #include"SubEvents.h"
 #include"Networking.h"
-enum implStates : StateTypes { Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S };
+enum handShakingStates : StateTypes { Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S };
 
 class HandShakingFSM : public GenericFsm
 {
@@ -62,7 +61,7 @@ private:
 		{SendingDevCards_S,{{
 				{SubType::NET_ACK,{SendingDevCards_S,TX(emitWhoStarts)}}
 			},
-			{SendingDevCards_S,TX(defaultSendingDevCardsS)}} },
+			{SendingDevCards_S,TX(defaultSendingDevCardsS)}} }
 	};
 	
 	void validateDevCards(GenericEvent *ev);

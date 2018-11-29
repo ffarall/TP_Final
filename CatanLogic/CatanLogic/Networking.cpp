@@ -197,7 +197,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_NAME_IS);
 		if ((input.length() >= 2) && ((input[1] + 2) <= input.length()) )//si esta completo el paquete name_is
 		{
-			evento->addPackage(new nameIs(input.substr(2, input[1])));
+			evento->addPackage(new NameIsPkg(input.substr(2, input[1])));
 			input.erase(0, input[1]+2);  
 		}
 		else
@@ -207,7 +207,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_NAME_IS);
 		if (input.length() >= 26)
 		{
-			evento->addPackage(new mapIs(input.substr(1, 25).c_str()));
+			evento->addPackage(new MapIsPkg(input.substr(1, 25).c_str()));
 			input.erase(0, 26);
 		}
 		else
@@ -270,10 +270,10 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		break;
 	case headers::CARD_IS:
 		evento->setSubtype(SubType::NET_CARD_IS);
-		if (input.length() >= 26)
+		if (input.length() >= 2)
 		{
-			evento->addPackage(new mapIs(input.substr(1, 25).c_str()));
-			input.erase(0, 26);
+			evento->addPackage(new CardIsPkg(input[1]));
+			input.erase(0, 2);
 		}
 		else
 			complete = false;
@@ -282,7 +282,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_ROBBER_MOVE);
 		if (input.length() >= 2)
 		{
-			evento->addPackage(new robberMove(input[1]));
+			evento->addPackage(new RobberMovePkg(input[1]));
 			input.erase(0, 2);
 		}
 		else
@@ -302,7 +302,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_ROAD);
 		if ((input.length() >= 2) && (input.length() >= input[1] - '0' + 2))
 		{
-			evento->addPackage(new road(input.substr(2, input[1] - '0').c_str()));
+			evento->addPackage(new RoadPkg(input.substr(2, input[1] - '0').c_str()));
 			input.erase(0, input[1] - '0');
 		}
 		else
