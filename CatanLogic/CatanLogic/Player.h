@@ -21,6 +21,16 @@ public:
 
 	// Asks if player has won.
 	bool hasWon();
+	// Add a settlement to mySettlements.
+	void addToMySettlements();
+	// Add a settlement to rivalsSettlements.
+	void addToRivalsSettlements();
+	// Add a road to myRoads.
+	void addToMyRoads();
+	// Add a road to rivalsRoads.
+	void addToRivalsRoads();
+	// Promote a Settlement to a City.
+	void promoteToCity();
 
 private:
 	// True when player has won.

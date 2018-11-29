@@ -20,6 +20,8 @@ void Player::init()
 	myRoads.clear();
 	rivalsRoads.clear();
 	rivalsSettlements.clear();
+	availableForRoad.clear();
+	allVertexesAvailable();
 }
 
 size_t Player::getVictoryPoints()
