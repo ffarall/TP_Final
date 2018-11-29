@@ -54,7 +54,7 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 {
-
+	
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
