@@ -7,6 +7,12 @@ Player::Player()
 	init();
 }
 
+Player::Player(string name_)
+{
+	name = name_;
+	init();
+}
+
 
 Player::~Player()
 {

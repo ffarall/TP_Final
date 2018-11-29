@@ -18,7 +18,7 @@ public:
 	void end();
 
 	// Enables events for the user to select when local starts.
-	void localStarts();
+	void localStarts(string nameLocal, string nameRemote);
 	// Enables events when remote starts.
 	void remoteStarts();
 	// Enables events for beginning of turn.

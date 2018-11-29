@@ -38,11 +38,11 @@ void LocalPlayerEnabler::end()
 	}
 }
 
-void LocalPlayerEnabler::localStarts()
+void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote)
 {
-	setLocalPlayer(localPlayer = new Player);					// Sets both localPlayer for local enabler and remote enabler.
-	setRemotePlayer(remotePlayer = new Player);					// Same for remotePlayer.
-	setBoard(board = new Board);								// Same for board.
+	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
+	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
+	remoteEnabler->setBoard(board = new Board);											// Same for board.
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
 	enable(PLA_SETTLEMENT, { TX(firstSettlement) });

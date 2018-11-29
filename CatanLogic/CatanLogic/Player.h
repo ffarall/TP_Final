@@ -13,6 +13,7 @@ class Player
 {
 public:
 	Player();
+	Player(string name_);
 	virtual ~Player();
 
 	size_t getVictoryPoints();
@@ -81,7 +82,7 @@ private:
 	};
 	// All combinations for vertexes.
 	const list< string > allVertexes = { 
-		"0A", "0B", "10C",
+		"0A", "0B", "01C",
 		"05A", "0AB", "0BC", "1C",
 		"5AD", "3AB", "BCF", "1CG",
 		"5D", "ADE", "BEF", "CFG", "1G",
