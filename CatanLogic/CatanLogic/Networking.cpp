@@ -15,7 +15,7 @@
 using namespace std;
 
 
-Networking::Networking(const char * ip, unsigned short _port, Status _estado)
+Networking::Networking(const char * ip, unsigned short _port, Status _estado):EventGenerator()
 {
 	ipOtherSide = string(ip);
 
@@ -86,7 +86,7 @@ void Networking::startConection()
 				connected = true;
 				cout << "[SERVER] connected\n";
 				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
-				//mandar evento
+				handler->enqueueEvent(ev);
 			}
 		}
 		else
@@ -102,7 +102,7 @@ void Networking::startConection()
 				cout << "[CLIENT] connected\n";
 				connected = true;
 				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
-				//mandar evento
+				handler->enqueueEvent(ev);
 			}
 		}
 	}
@@ -159,7 +159,7 @@ void Networking::workPlease()
 		{
 			SubEvents * errEvent = new SubEvents;
 			errEvent->setEvent(MainTypes::ERR_IN_COM);
-			//enviar evento error
+			handler->enqueueEvent(errEvent);
 		}
 		else
 		{
@@ -427,7 +427,11 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setEvent(MainTypes::ERR_IN_COM);
 		break;
 	}
-	//enviar evento
+
+	if (complete)
+		handler->enqueueEvent(evento);
+	else
+		delete evento;
 }
 
 void Networking::pushPackage(package * mensaje)
@@ -531,6 +535,6 @@ void Networking::send(const char* msg) {
 	{ // deberia generar evento de error a la fsm gral
 		SubEvents * ev = new SubEvents;
 		ev->setEvent(MainTypes::ERR_IN_COM);
-		//mandar evento
+		handler->enqueueEvent(ev);
 	}
 } 

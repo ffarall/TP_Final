@@ -5,13 +5,15 @@
 #include <list>
 
 #include "package.h"
+#include "NewEventHandling.h"
 
 enum Status { SERVER, CLIENT };
 #define PORT 13225
 
 #include "boost/asio.hpp"
 
-class Networking
+class Networking : 
+	public EventGenerator
 {
 public:
 	Networking(const char * _ip = "" , unsigned short _port=PORT , Status _estado = CLIENT); // por defecto arranca como client
@@ -42,7 +44,7 @@ private:
 
 	std::string ipOtherSide;
 
-	boost::asio::io_service* ioHandler;
+	boost::asio::io_service * ioHandler;
 	boost::asio::ip::tcp::socket* socket;
 
 	boost::asio::ip::tcp::acceptor* serverAcceptor; //por si trabajo como server o como client

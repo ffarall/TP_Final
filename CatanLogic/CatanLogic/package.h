@@ -44,6 +44,7 @@ class CircularTokensPkg :
 	public package
 {
 public:
+	CircularTokensPkg(const char * tokns);
 	CircularTokensPkg(std::vector<char>& tokenList);
 	char * getTokenList();
 	virtual std::string getPackage();
