@@ -1,5 +1,6 @@
 #include "LocalPlayerEnabler.h"
 #include "SubEvents.h"
+#include "package.h"
 
 #define TX(x) (static_cast<void (Enabler::* )(SubtypeEvent *)>(&LocalPlayerEnabler::x))
 
@@ -54,7 +55,9 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 {
-	
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
