@@ -15,8 +15,6 @@ public:
 	Player();
 	virtual ~Player();
 
-	void init();
-
 	size_t getVictoryPoints();
 	string getName();
 
@@ -35,7 +33,14 @@ public:
 	// Promote a Settlement in rivalsSettlements to a City. User must check if exists.
 	void promoteToRivalsCity(string position);
 
+	// Checks if position is available for settlement.
+	bool checkSettlementAvailability(string position);
+	// Checks if position is available for road.
+	bool checkRoadAvailability(string position);
+
 private:
+	void init();
+
 	// True when player has won.
 	bool iWon;
 	// Counter of victory points.
@@ -53,10 +58,12 @@ private:
 	// List of coordinates available for putting roads.
 	list< string > availableForRoad;
 	// List of coordinates available for putting settlements.
-	list< string > availableForSettlements;
+	list< string > availableForSettlement;
 
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
+	// Updates available coordinates for roads and settlements.
+	void updateAvailability();
 
 	// All combinations of edges.
 	const list< string > allEdges = {

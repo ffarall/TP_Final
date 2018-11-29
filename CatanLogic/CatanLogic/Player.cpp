@@ -49,24 +49,28 @@ void Player::addToMySettlements(string position)
 {
 	Settlement* newSettlement = new Settlement(position);
 	mySettlements.insert(pair< string, Settlement* >(position, newSettlement));
+	updateAvailability();
 }
 
 void Player::addToRivalsSettlements(string position)
 {
 	Settlement* newSettlement = new Settlement(position);
 	rivalsSettlements.insert(pair< string, Settlement* >(position, newSettlement));
+	updateAvailability();
 }
 
 void Player::addToMyRoads(string position)
 {
 	Road* newRoad = new Road(position);
 	myRoads.insert(pair< string, Road* >(position, newRoad));
+	updateAvailability();
 }
 
 void Player::addToRivalsRoads(string position)
 {
 	Road* newRoad = new Road(position);
 	rivalsRoads.insert(pair< string, Road* >(position, newRoad));
+	updateAvailability();
 }
 
 void Player::promoteToMyCity(string position)
@@ -81,7 +85,17 @@ void Player::promoteToRivalsCity(string position)
 	rivalsSettlements[position] = newCity;
 }
 
+bool Player::checkSettlementAvailability(string position)
+{
+	return (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());
+}
+
+bool Player::checkRoadAvailability(string position)
+{
+	return (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());
+}
+
 void Player::allVertexesAvailable()
 {
-	availableForSettlements = allVertexes;
+	availableForSettlement = allVertexes;
 }

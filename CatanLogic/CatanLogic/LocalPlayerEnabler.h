@@ -34,5 +34,8 @@ private:
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
+
+	/* AUXILIARY METHODS */
+	void addSettlementToLocal(string position);
 };
 

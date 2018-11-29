@@ -11,6 +11,9 @@ public:
 	Board();
 	virtual ~Board();
 
+
+	void addSettlementToToken(string position);
+
 private:
 	map< char, Token > board;
 };

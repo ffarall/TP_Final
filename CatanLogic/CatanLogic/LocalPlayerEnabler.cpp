@@ -55,8 +55,12 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 {
+	setErrMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	addSettlementToLocal(position);
 
 }
 
@@ -65,4 +69,19 @@ void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
 	unsigned int type = ev->getType();
 	unsigned int subtype = ev->getSubtype();
 	setErrMessage(string("Se recibió un evento de tipo ") + to_string(type) + " y subtipo " + to_string(subtype) + " , el cual no está habilitado.");
+}
+
+void LocalPlayerEnabler::addSettlementToLocal(string position)
+{
+	if (localPlayer->checkSettlementAvailability(position))
+	{
+		localPlayer->addToMySettlements(position);
+	}
+	else
+	{
+		setErrMessage("La posición donde se quiere colocar el Settlement es inválida.");
+		return;
+	}
+
+	if ()
 }
