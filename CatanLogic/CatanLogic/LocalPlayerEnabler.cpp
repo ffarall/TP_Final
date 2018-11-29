@@ -45,6 +45,7 @@ void LocalPlayerEnabler::localStarts()
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
 	enable(PLA_SETTLEMENT, { TX(firstSettlement) });
+	setDefaultRoutine(TX(genericDefault));
 }
 
 void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
@@ -54,4 +55,11 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 {
 
+}
+
+void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
+{
+	unsigned int type = ev->getType();
+	unsigned int subtype = ev->getSubtype();
+	setErrMessage(string("Se recibió un evento de tipo ") + to_string(type) + " y subtipo " + to_string(subtype) + " , el cual no está habilitado.");
 }
