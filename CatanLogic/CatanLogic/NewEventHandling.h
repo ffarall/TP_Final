@@ -38,9 +38,9 @@ private:
 class EventGenerator
 {
 public:
-	EventGenerator() {}
+	EventGenerator(EventsHandler * MainEventHandler = nullptr) { handler = MainEventHandler; }
 	virtual ~EventGenerator() {}
-	void enqueueEvent(GenericEvent* ev) { handler->enqueueEvent(ev); }		// User must delete event.
-private:
+	void attachHandler(EventsHandler * MainEventHandler) { handler = MainEventHandler; }
+protected:
 	EventsHandler* handler;
 };
