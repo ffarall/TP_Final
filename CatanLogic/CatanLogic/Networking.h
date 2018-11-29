@@ -1,11 +1,13 @@
 #pragma once
 
-#include "boost/asio.hpp"
-#include "boost/chrono.hpp"
-#include "boost/timer/timer.hpp"
 #include <string>
 #include <queue>
 #include <list>
+
+#include "boost/asio.hpp"
+#include "boost/chrono.hpp"
+#include "boost/timer/timer.hpp"
+
 
 #define PORT 13225
 
@@ -18,7 +20,7 @@ public:
 	~Networking();
 
 	void setIpToConect(const char * _ip);
-	bool startConection(); // intenta conectarse, si no puede devuelve false;
+	void startConection(); // intenta conectarse,cuando se conecta genera evento de connected
 	void closeConection(); // por si me interesa cerrar la conexion
 	
 	void workPlease();// manda mensajes si hay algo que enviar y recibe mesages + genera eventos
@@ -33,7 +35,7 @@ public:
 
 private:
 
-	bool send(const char * msg_);
+	void send(const char * msg_);
 
 	void parseInput(const char * mensaje);
 	
