@@ -90,7 +90,7 @@ std::string MapIsPkg::getPackage()
 	return ret;
 }
 
-CircularTokensPkg::circularTokens(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)
+CircularTokensPkg::CircularTokensPkg(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)
 {
 	std::string tokenList(_tokenList);
 	if (tokenList.size() == 19)
@@ -209,7 +209,7 @@ std::string RobberCardsPkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret += length;
 	for (DevCards a : cartas) { ret.push_back(static_cast<char>(a)); }
-	return;
+	return ret;
 }
 
 RobberMovePkg::RobberMovePkg(char newPos):package(headers::ROBBER_MOVE)
@@ -253,7 +253,7 @@ std::string SettlementPkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0' + length);
 	ret += pos;
-	return ;
+	return ret ;
 }
 
 CityPkg::CityPkg(std::string pos_):package(headers::CITY)
@@ -278,7 +278,7 @@ std::string CityPkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0' + length);
 	ret += pos;
-	return;
+	return ret;
 }
 
 RoadPkg::RoadPkg(std::string pos_):package(headers::ROAD)
@@ -303,7 +303,7 @@ std::string RoadPkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0' + length);
 	ret += pos;
-	return;;
+	return ret;
 }
 
 BanckTradePkg::BanckTradePkg(std::vector<recursos>& myResouces, recursos _pedido):package(headers::BANK_TRADE)
@@ -333,7 +333,7 @@ std::string BanckTradePkg::getPackage()
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0' + nOfResources);
-	for (recrsos a : misRecursos) { ret.push_back(static_cast<char>(a)); }
+	for (recursos a : misRecursos) { ret.push_back(static_cast<char>(a)); }
 	ret.push_back(static_cast<char>(pedido));
 	return ret;
 }
@@ -360,8 +360,8 @@ std::string OfferTradePkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0'+myOffer.size());
 	ret.push_back('0' + esperoAcambio.size());
-	for (recrsos a : myOffer) { ret.push_back(static_cast<char>(a)); }
-	for (recrsos a : esperoAcambio) { ret.push_back(static_cast<char>(a)); }
+	for (recursos a : myOffer) { ret.push_back(static_cast<char>(a)); }
+	for (recursos a : esperoAcambio) { ret.push_back(static_cast<char>(a)); }
 	return ret;
 }
 
