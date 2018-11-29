@@ -119,6 +119,7 @@
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Enabler.cpp" />
     <ClCompile Include="HandShakingFSM.cpp" />
+    <ClCompile Include="Networking.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Token.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="Enabler.h" />
+    <ClInclude Include="Networking.h" />
     <ClInclude Include="PlayerEnabler.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Token.h" />
