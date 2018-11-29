@@ -65,7 +65,7 @@ void Networking::setIpToConect(const char * _ip)
 	ipOtherSide = _ip;
 }
 
-bool Networking::startConection()
+void Networking::startConection()
 {
 	if (!connected)
 	{
@@ -80,6 +80,8 @@ bool Networking::startConection()
 			{
 				connected = true;
 				cout << "[SERVER] connected\n";
+				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
+				//mandar evento
 			}
 		}
 		else
@@ -94,10 +96,11 @@ bool Networking::startConection()
 			{
 				cout << "[CLIENT] connected\n";
 				connected = true;
+				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
+				//mandar evento
 			}
 		}
 	}
-	return connected;
 }
 
 void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
@@ -149,7 +152,9 @@ void Networking::workPlease()
 		
 		if (error)
 		{
-			//tiro evento de error
+			SubEvents * errEvent = new SubEvents;
+			errEvent->setEvent(MainTypes::ERR_IN_COM);
+			//enviar evento error
 		}
 		else
 		{
@@ -404,16 +409,20 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		input.erase(0, 1); //saco el primer caracter 
 		break;
 	case headers::QUIT:
-		evento->setSubtype(SubType::NET_QUIT);
+		evento->setEvent(MainTypes::NET_QUIT);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
-	case headers::ERROR_:
+	case headers::ERROR:
 		evento->setEvent(MainTypes::ERR_IN_COM);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
+	default:
+		evento->setEvent(MainTypes::ERR_IN_COM);
+		break;
 	}
+	//enviar evento
 }
 
 void Networking::pushPackage(package * mensaje)
@@ -502,23 +511,21 @@ void Networking::toggleStatus(void)
 	}
 }
 
-bool Networking::send(const char* msg) {
+void Networking::send(const char* msg) {
 
 	boost::system::error_code error; /* Creo receptor de errores */
 	size_t dataCount;
 
 	do { /* Mando la informacion de a partes */
 		/* Mando la data */
-		dataCount = socket->write_some(boost::asio::buffer(msg, strlen(msg)), error);
+		dataCount = socket->write_some(boost::asio::buffer(msg, strlen(msg)-1), error); //el -1 por el '\0'
 	} while (error.value() == WSAEWOULDBLOCK && dataCount < strlen(msg));
 
 	/* Verifico el error */
 	if (error)
 	{ // deberia generar evento de error a la fsm gral
-		return false;
-	}
-	else
-	{
-		return true;
+		SubEvents * ev = new SubEvents;
+		ev->setEvent(MainTypes::ERR_IN_COM);
+		//mandar evento
 	}
 } 

@@ -1,154 +1,92 @@
-#include<iostream>
-#include"NewGenericFSM.h"
-#include"SubEvents.h"
-enum implStates : StateTypes {Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S};
+#include"HandShakingFSM.h"
 
-class HandShakingFSM : public GenericFsm
+void HandShakingFSM::validateDevCards(GenericEvent * ev)
 {
+}
 
-private:
+void HandShakingFSM::validateCircularTokens(GenericEvent * ev)
+{
+}
 
-#define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&HandShakingFSM::x))
+void HandShakingFSM::validateMap(GenericEvent * ev)
+{
+}
 
-	const FsmMap fsmMap = {
-		{Client_S,{{
-				{SubType::NET_DEV_CARDS,{Client_S,TX(validateDevCards)}},
-				{SubType::NET_CIRCULAR_TOKENS,{Client_S,TX(validateCircularTokens)}},
-				{SubType::NET_MAP_IS,{Client_S,TX(validateMap)}},
-				{SubType::TICK,{Client_S,TX(tryToConnect)}},
-				{SubType::NET_NAME,{SendingClientName_S,TX(sendName)}},
-				{SubType::TIME_OUT,{Server_S,TX(changeToServer)}}
-			},
-			{Client_S,TX(defaultClientS)}}},
+void HandShakingFSM::tryToConnect(GenericEvent * ev)
+{
+	network->startConection();
+}
 
-		{SendingClientName_S,{{
-				{SubType::NET_ACK,{Client_S,TX(nonActRoutine)}}
-			},
-			{SendingClientName_S,TX(defaultSendingClientNameS)}}},
+void HandShakingFSM::sendName(GenericEvent * ev)
+{
+}
 
-		{Server_S,{{
-				{SubType::NET_CONNECTED,{WaitingForName_S,TX(nonActRoutine)}}
-			},
-			{Server_S,TX(defaultServerS)}}},
+void HandShakingFSM::changeToServer(GenericEvent * ev)
+{
+	network->toggleStatus();
+}
 
-		{WaitingForName_S,{{
-				{SubType::NET_NAME,{SendingServerName_S,TX(sendName)}}
-			},
-			{WaitingForName_S,TX(defaultWaitingForNameS)}} },
+void HandShakingFSM::defaultClientS(GenericEvent * ev)
+{
+}
 
-		{SendingServerName_S,{{
-				{SubType::NET_ACK,{SendingMap_S,TX(sendMap)}}
-			},
-			{SendingServerName_S,TX(defaultSendingServerNameS)}} },
+void HandShakingFSM::nonActRoutine(GenericEvent * ev)
+{
+}
 
-		{SendingMap_S,{{
-				{SubType::NET_ACK,{SendingCircTokens_S,TX(sendCircTokens)}}
-			},
-			{SendingMap_S,TX(defaultSendingMapS)}} },
+void HandShakingFSM::defaultSendingClientNameS(GenericEvent * ev)
+{
+}
 
-		{SendingCircTokens_S,{{
-				{SubType::NET_ACK,{PlayWithDevCards_S,TX(askPlayDevCards)}}
-			},
-			{SendingCircTokens_S,TX(defaultSendingCircTokensS)}} },
+void HandShakingFSM::defaultServerS(GenericEvent * ev)
+{
+}
 
-		{PlayWithDevCards_S,{{
-				{SubType::NET_YES,{SendingDevCards_S,TX(sendDevCards)}},
-				{SubType::NET_NO,{PlayWithDevCards_S,TX(emitWhoStarts)}}
-			},
-			{PlayWithDevCards_S,TX(defaultPlayWithDevCardsS)}}},
-		{SendingDevCards_S,{{
-				{SubType::NET_ACK,{SendingDevCards_S,TX(emitWhoStarts)}}
-			},
-			{SendingDevCards_S,TX(defaultSendingDevCardsS)}} },
-	};
+void HandShakingFSM::defaultWaitingForNameS(GenericEvent * ev)
+{
+}
 
-	void validateDevCards(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void validateCircularTokens(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void validateMap(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void tryToConnect(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void sendName(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void changeToServer(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultClientS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void nonActRoutine(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultSendingClientNameS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultServerS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultWaitingForNameS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void sendMap(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultSendingServerNameS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void sendCircTokens(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultSendingMapS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void askPlayDevCards(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultSendingCircTokensS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void sendDevCards(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void emitWhoStarts(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultPlayWithDevCardsS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	void defaultSendingDevCardsS(GenericEvent *ev)
-	{
-		//TODO
-	}
-	public:
-		HandShakingFSM():GenericFsm(fsmMap,Client_S)
-		{
-		}
+void HandShakingFSM::sendMap(GenericEvent * ev)
+{
+}
 
-};
+void HandShakingFSM::defaultSendingServerNameS(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::sendCircTokens(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::defaultSendingMapS(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::defaultSendingCircTokensS(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::sendDevCards(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::defaultPlayWithDevCardsS(GenericEvent * ev)
+{
+}
+
+void HandShakingFSM::defaultSendingDevCardsS(GenericEvent * ev)
+{
+}
+
+HandShakingFSM::HandShakingFSM(Networking * network_):GenericFsm(fsmMap,Client_S)
+{
+	network = network_;
+}
