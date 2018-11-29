@@ -27,7 +27,6 @@ void GenericFsm::cycle(GenericEvent * ev)
 
 		f();
 		state = temp.nextState;
-		delete ev;
 	}
 
 	return;
