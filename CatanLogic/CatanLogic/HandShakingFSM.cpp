@@ -1,12 +1,14 @@
 #include<iostream>
 #include"NewGenericFSM.h"
 #include"SubEvents.h"
+#include"Networking.h"
 enum implStates : StateTypes {Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S};
 
 class HandShakingFSM : public GenericFsm
 {
 
 private:
+	Networking *network;
 
 #define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&HandShakingFSM::x))
 
@@ -76,7 +78,7 @@ private:
 	}
 	void tryToConnect(GenericEvent *ev)
 	{
-		//TODO
+		network->startConection();
 	}
 	void sendName(GenericEvent *ev)
 	{
@@ -84,7 +86,7 @@ private:
 	}
 	void changeToServer(GenericEvent *ev)
 	{
-		//TODO
+		network->toggleStatus();
 	}
 	void defaultClientS(GenericEvent *ev)
 	{
@@ -92,7 +94,7 @@ private:
 	}
 	void nonActRoutine(GenericEvent *ev)
 	{
-		//TODO
+		
 	}
 	void defaultSendingClientNameS(GenericEvent *ev)
 	{
@@ -108,6 +110,7 @@ private:
 	}
 	void sendMap(GenericEvent *ev)
 	{
+		//crear mapa de alguna manera y pasarlo a santi con pushPackage()
 		//TODO
 	}
 	void defaultSendingServerNameS(GenericEvent *ev)
@@ -147,8 +150,9 @@ private:
 		//TODO
 	}
 	public:
-		HandShakingFSM():GenericFsm(fsmMap,Client_S)
+		HandShakingFSM(Networking* network_):GenericFsm(fsmMap,Client_S)
 		{
+			network = network_;
 		}
 
 };
