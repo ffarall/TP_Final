@@ -9,6 +9,7 @@
 using EventTypes = unsigned int;
 using EventSubtypes = unsigned int;
 
+
 class GenericEvent
 {
 public:
@@ -24,21 +25,22 @@ public:
 	bool operator==(SubtypeEvent& ev) { return ((this->getType() == ev.getType()) && (this->getSubtype() == ev.getSubtype())); }
 };
 
-class EventGenerator
+class EventsHandler
 {
 public:
-	virtual GenericEvent * getEvent(void) = 0;					// Returns NULL if there's no new Event or a pointer to a concrete instance in the heap of a GenericEvent if there's a new event
-																// User must then free this isntance.
-};
-
-class mainEventGenerator
-{
-public:
-	GenericEvent * getNextEvent(void);
-	void attach(EventGenerator * evg);
-	void detach(EventGenerator * evg);
+	GenericEvent * getNextEvent();
+	void enqueueEvent(GenericEvent* ev);
 
 private:
 	std::queue<GenericEvent *>  eventQueue; //It can also be a priority_queue if events have got some sort of priority
-	std::list<EventGenerator *> generators; //It will contain all EventGenerators attached to the mainEventGenerator
+};
+
+class EventGenerator
+{
+public:
+	EventGenerator() {}
+	virtual ~EventGenerator() {}
+	void enqueueEvent(GenericEvent* ev) { handler->enqueueEvent(ev); }		// User must delete event.
+private:
+	EventsHandler* handler;
 };
