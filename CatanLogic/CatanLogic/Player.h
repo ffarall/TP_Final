@@ -5,6 +5,7 @@
 #include <string>
 #include "Settlement.h"
 #include "Road.h"
+#include "City.h"
 
 using namespace std;
 
@@ -21,6 +22,18 @@ public:
 
 	// Asks if player has won.
 	bool hasWon();
+	// Add a settlement to mySettlements. User must check if position is available.
+	void addToMySettlements(string postion);
+	// Add a settlement to rivalsSettlements. User must check if position is available.
+	void addToRivalsSettlements(string position);
+	// Add a road to myRoads. User must check if position is available.
+	void addToMyRoads(string position);
+	// Add a road to rivalsRoads. User must check if position is available.
+	void addToRivalsRoads(string position);
+	// Promote a Settlement in mySettlements to a City. User must check if exists.
+	void promoteToMyCity(string position);
+	// Promote a Settlement in rivalsSettlements to a City. User must check if exists.
+	void promoteToRivalsCity(string position);
 
 private:
 	// True when player has won.

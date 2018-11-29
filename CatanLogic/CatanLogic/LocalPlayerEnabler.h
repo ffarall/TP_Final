@@ -31,5 +31,8 @@ private:
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(SubtypeEvent* ev);
 	void firstSettlement(SubtypeEvent* ev);
+
+	/* DEFAULT ROUTINES */
+	void genericDefault(SubtypeEvent* ev);
 };
 

@@ -5,6 +5,9 @@ class City :
 {
 public:
 	City();
+	City(string coordinate_);
 	virtual ~City();
+
+	virtual string whatAmI();
 };
 
