@@ -98,7 +98,7 @@ CircularTokensPkg::circularTokens(const char * _tokenList) :package(headers::CIR
 		for (int i = 0; i < 19; i++)
 			myTokens[i] = tokenList[i];
 	}
-
+}
 
 CircularTokensPkg::CircularTokensPkg(std::vector<char>& tokenList):package(headers::CIRCULAR_TOKENS)
 {
@@ -109,12 +109,12 @@ CircularTokensPkg::CircularTokensPkg(std::vector<char>& tokenList):package(heade
 	}
 }
 
-char * circularTokens::getTokenList()
+char * CircularTokensPkg::getTokenList()
 {
 	return myTokens;
 }
 
-std::string circularTokens::getPackage()
+std::string CircularTokensPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -122,7 +122,7 @@ std::string circularTokens::getPackage()
 	return ret;
 }
 
-devCards::devCards(const char * _deck) :package(headers::DEV_CARDS)
+DevCardsPkg::DevCardsPkg(const char * _deck) :package(headers::DEV_CARDS)
 {
 	std::string deck(_deck);
 	if (deck.size() == 25)
@@ -132,7 +132,7 @@ devCards::devCards(const char * _deck) :package(headers::DEV_CARDS)
 	}
 }
 
-devCards::devCards(std::vector<DevCards>& deck):package(headers::DEV_CARDS)
+DevCardsPkg::DevCardsPkg(std::vector<DevCards>& deck):package(headers::DEV_CARDS)
 {
 	if (deck.size() == 19)
 	{
@@ -141,12 +141,12 @@ devCards::devCards(std::vector<DevCards>& deck):package(headers::DEV_CARDS)
 	}
 }
 
-DevCards * devCards::getDeck()
+DevCards * DevCardsPkg::getDeck()
 {
 	return pilon;
 }
 
-std::string devCards::getPackage()
+std::string DevCardsPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -157,7 +157,7 @@ std::string devCards::getPackage()
 	return ret;
 }
 
-dice::dice(char dice1_, char dice2_):package(headers::DICE_ARE)
+DicePkg::DicePkg(char dice1_, char dice2_):package(headers::DICE_ARE)
 {
 	if (dice1_ > 0 && dice1_ < 7)
 		dice1 = dice1_;
@@ -165,19 +165,19 @@ dice::dice(char dice1_, char dice2_):package(headers::DICE_ARE)
 		dice2 = dice2_;
 }
 
-char dice::getValue(bool which)
+char DicePkg::getValue(bool which)
 {
 	return which?dice1:dice2;
 }
 
-std::string dice::getPackage()
+std::string DicePkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
 	return ret;
 }
 
-robberCards::robberCards(const char * devList) :package(headers::ROBBER_CARDS)
+RobberCardsPkg::RobberCardsPkg(const char * devList) :package(headers::ROBBER_CARDS)
 {
 	std::string _cartas(devList);
 	length = _cartas.size();
@@ -187,23 +187,23 @@ robberCards::robberCards(const char * devList) :package(headers::ROBBER_CARDS)
 	}
 }
 
-robberCards::robberCards(std::vector<DevCards>& descarte):package(headers::ROBBER_CARDS)
+RobberCardsPkg::RobberCardsPkg(std::vector<DevCards>& descarte):package(headers::ROBBER_CARDS)
 {
 	length = descarte.size();
 	cartas = descarte;
 }	
 
-std::vector<DevCards> robberCards::getCards()
+std::vector<DevCards> RobberCardsPkg::getCards()
 {
 	return cartas;
 }
 
-char robberCards::getLength()
+char RobberCardsPkg::getLength()
 {
 	return length;
 }
 
-std::string robberCards::getPackage()
+std::string RobberCardsPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -212,18 +212,18 @@ std::string robberCards::getPackage()
 	return;
 }
 
-robberMove::robberMove(char newPos):package(headers::ROBBER_MOVE)
+RobberMovePkg::RobberMovePkg(char newPos):package(headers::ROBBER_MOVE)
 {
 	if (newPos >= 'A' &&  newPos <= 'S')
 		pos = newPos;
 }
 
-char robberMove::getPos()
+char RobberMovePkg::getPos()
 {
 	return pos;
 }
 
-std::string robberMove::getPackage()
+std::string RobberMovePkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -231,23 +231,23 @@ std::string robberMove::getPackage()
 	return ret;
 }
 
-settlement::settlement(std::string pos_):package(headers::SETTLMENT)
+SettlementPkg::SettlementPkg(std::string pos_):package(headers::SETTLMENT)
 {
 	length = pos_.size();
 	pos = pos_;
 }
 
-char settlement::getLength()
+char SettlementPkg::getLength()
 {
 	return length;
 }
 
-std::string settlement::getPos()
+std::string SettlementPkg::getPos()
 {
 	return pos;
 }
 
-std::string settlement::getPackage()
+std::string SettlementPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -256,23 +256,23 @@ std::string settlement::getPackage()
 	return ;
 }
 
-city::city(std::string pos_):package(headers::CITY)
+CityPkg::CityPkg(std::string pos_):package(headers::CITY)
 {
 	length = pos_.length();
 	pos = pos_;
 }
 
-char city::getLength()
+char CityPkg::getLength()
 {
 	return length;
 }
 
-std::string city::getPos()
+std::string CityPkg::getPos()
 {
 	return pos;
 }
 
-std::string city::getPackage()
+std::string CityPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -281,23 +281,23 @@ std::string city::getPackage()
 	return;
 }
 
-road::road(std::string pos_):package(headers::ROAD)
+RoadPkg::RoadPkg(std::string pos_):package(headers::ROAD)
 {
 	length = pos_.length();
 	pos = pos_;
 }
 
-char road::getLength()
+char RoadPkg::getLength()
 {
 	return length;
 }
 
-std::string road::getPos()
+std::string RoadPkg::getPos()
 {
 	return pos;
 }
 
-std::string road::getPackage()
+std::string RoadPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -306,29 +306,29 @@ std::string road::getPackage()
 	return;;
 }
 
-banckTrade::banckTrade(std::vector<recursos>& myResouces, recursos _pedido):package(headers::BANK_TRADE)
+BanckTradePkg::BanckTradePkg(std::vector<recursos>& myResouces, recursos _pedido):package(headers::BANK_TRADE)
 {
 	nOfResources = myResouces.size();
 	misRecursos = myResouces;
 	pedido = _pedido;
 }
 
-char banckTrade::getLength()
+char BanckTradePkg::getLength()
 {
 	return nOfResources;
 }
 
-std::vector<recursos> banckTrade::getResoucesPaid()
+std::vector<recursos> BanckTradePkg::getResoucesPaid()
 {
 	return misRecursos;
 }
 
-recursos banckTrade::getResouceBougth()
+recursos BanckTradePkg::getResouceBougth()
 {
 	return pedido;
 }
 
-std::string banckTrade::getPackage()
+std::string BanckTradePkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -338,23 +338,23 @@ std::string banckTrade::getPackage()
 	return ret;
 }
 
-offerTrade::offerTrade(std::vector<recursos>& offer, std::vector<recursos>& pedido):package(headers::OFFER_TRADE)
+OfferTradePkg::OfferTradePkg(std::vector<recursos>& offer, std::vector<recursos>& pedido):package(headers::OFFER_TRADE)
 {
 	myOffer = offer;
 	esperoAcambio = pedido;
 }
 
-std::vector<recursos> offerTrade::getMyOnes()
+std::vector<recursos> OfferTradePkg::getMyOnes()
 {
 	return myOffer;
 }
 
-std::vector<recursos> offerTrade::getOponentOnes()
+std::vector<recursos> OfferTradePkg::getOponentOnes()
 {
 	return esperoAcambio;
 }
 
-std::string offerTrade::getPackage()
+std::string OfferTradePkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -365,18 +365,18 @@ std::string offerTrade::getPackage()
 	return ret;
 }
 
-knight::knight(char newPos):package(headers::KNIGHT)
+KnightPkg::KnightPkg(char newPos):package(headers::KNIGHT)
 {
 	if (newPos >= 'A' && newPos <= 'S')
 		pos = newPos;
 }
 
-char knight::getPos()
+char KnightPkg::getPos()
 {
 	return pos;
 }
 
-std::string knight::getPackage()
+std::string KnightPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -384,17 +384,17 @@ std::string knight::getPackage()
 	return ret;
 }
 
-monopoly::monopoly(recursos recurso):package(headers::MONOPOLY)
+MonopolyPkg::MonopolyPkg(recursos recurso):package(headers::MONOPOLY)
 {
 	resource = recurso;
 }
 
-recursos monopoly::getResouce()
+recursos MonopolyPkg::getResouce()
 {
 	return resource;
 }
 
-std::string monopoly::getPackage()
+std::string MonopolyPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -402,13 +402,13 @@ std::string monopoly::getPackage()
 	return ret;
 }
 
-yearsOfPlenty::yearsOfPlenty(recursos rec1_, recursos rec2_):package(headers::YEARS_OF_PLENTY)
+YearsOfPlentyPkg::YearsOfPlentyPkg(recursos rec1_, recursos rec2_):package(headers::YEARS_OF_PLENTY)
 {
 	rec1 = rec1_;
 	rec2 = rec2_;
 }
 
-std::string yearsOfPlenty::getPackage()
+std::string YearsOfPlentyPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -417,12 +417,12 @@ std::string yearsOfPlenty::getPackage()
 	return ret;
 }
 
-cardIs::cardIs(char resource) :package(headers::CARD_IS)
+CardIsPkg::CardIsPkg(char resource) :package(headers::CARD_IS)
 {
 	recurso = static_cast<recursos>(resource);
 }
 
-std::string cardIs::getPackage()
+std::string CardIsPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
