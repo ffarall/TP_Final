@@ -1,9 +1,14 @@
-#include "Networking.h"
-#include "package.h"
+
 #include "subEvents.h"
+
 #include <string>
 #include <iostream>
 #include <map>
+
+#include "boost/chrono.hpp"
+#include "boost/timer/timer.hpp"
+
+#include "Networking.h"
 
 #define MAX_SIZE 100
 
@@ -212,7 +217,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_CIRCULAR_TOKENS);
 		if (input.length() >= 20)
 		{
-			evento->addPackage(new circularTokens(input.substr(1, 19).c_str()));
+			evento->addPackage(new CircularTokensPkg(input.substr(1, 19).c_str()));
 			input.erase(0, 20);
 		}
 		else
@@ -227,7 +232,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_DEV_CARDS);
 		if (input.length() >= 26)
 		{
-			evento->addPackage(new devCards(input.substr(1, 25).c_str()));
+			evento->addPackage(new DevCardsPkg(input.substr(1, 25).c_str()));
 			input.erase(0, 26);
 		}
 		else
@@ -247,7 +252,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_DICES_ARE);
 		if (input.length() >= 4)
 		{
-			evento->addPackage(new dice(input[2],input[3]));
+			evento->addPackage(new DicePkg(input[2],input[3]));
 			input.erase(0, 4);
 		}
 		else
@@ -257,7 +262,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_ROBBER_CARDS);
 		if ((input.length() >= 2) && (input.length() >= (input[1]+2)) )
 		{
-			evento->addPackage(new robberCards(input.substr(2,input[1]).c_str()));
+			evento->addPackage(new RobberCardsPkg(input.substr(2,input[1]).c_str()));
 			input.erase(0, input[1]+2);
 		}
 		else
@@ -287,7 +292,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_SETTLEMENT);
 		if ((input.length() >= 2) && (input.length() >= input[1]-'0'+2 ))
 		{
-			evento->addPackage(new settlement(input.substr(2,input[1]-'0').c_str()));
+			evento->addPackage(new SettlementPkg(input.substr(2,input[1]-'0').c_str()));
 			input.erase(0, input[1]-'0');
 		}
 		else
@@ -307,7 +312,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_CITY);
 		if ((input.length() >= 2) && (input.length() >= input[1] - '0' + 2))
 		{
-			evento->addPackage(new city(input.substr(2, input[1] - '0').c_str()));
+			evento->addPackage(new CityPkg(input.substr(2, input[1] - '0').c_str()));
 			input.erase(0, input[1] - '0');
 		}
 		else
@@ -319,7 +324,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		{
 			std::vector<recursos> temp;
 			for (char a : input.substr(2, input[1] - '0')) { temp.push_back(static_cast<recursos>(a)); }
-			evento->addPackage(new banckTrade(temp, static_cast<recursos>(input[input[1] - '0' + 3])));
+			evento->addPackage(new BanckTradePkg(temp, static_cast<recursos>(input[input[1] - '0' + 3])));
 			input.erase(0, input[1]-'0'+3);
 		}
 		else
@@ -332,7 +337,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 			std::vector<recursos> temp1,temp2;
 			for (char a : input.substr(3, input[1] - '0')) { temp1.push_back(static_cast<recursos>(a)); }
 			for(char a : input.substr(3+input[1]-'0',input[2]-'0')){temp2.push_back(static_cast<recursos>(a));}
-			evento->addPackage(new offerTrade(temp1,temp2));
+			evento->addPackage(new OfferTradePkg(temp1,temp2));
 			input.erase(0, input[1]+input[2]-'0'-'0'+3);
 		}
 		else
@@ -352,7 +357,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_MONOPOLY);
 		if (input.length() >= 2)
 		{
-			evento->addPackage(new monopoly(static_cast<recursos>(input[1])));
+			evento->addPackage(new MonopolyPkg(static_cast<recursos>(input[1])));
 			input.erase(0, 2);
 		}
 		else
@@ -362,7 +367,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_DEV_CARDS);
 		if (input.length() >= 3)
 		{
-			evento->addPackage(new yearsOfPlenty(static_cast<recursos>(input[1]), static_cast<recursos>(input[2])) );
+			evento->addPackage(new YearsOfPlentyPkg(static_cast<recursos>(input[1]), static_cast<recursos>(input[2])) );
 			input.erase(0, 3);
 		}
 		else
@@ -377,7 +382,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_KNIGHT);
 		if (input.length() >= 2)
 		{
-			evento->addPackage(new knight(input[1]));
+			evento->addPackage(new KnightPkg(input[1]));
 			input.erase(0, 2);
 		}
 		else

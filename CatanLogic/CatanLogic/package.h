@@ -14,11 +14,11 @@ protected:
 	headers nombre;
 };
 
-class nameIs :
+class NameIsPkg :
 	public package
 {
 public:
-	nameIs(std::string name_);
+	NameIsPkg(std::string name_);
 	std::string getName();
 	virtual std::string getPackage();
 private:
@@ -26,12 +26,12 @@ private:
 	std::string name;
 };
 
-class mapIs :
+class MapIsPkg :
 	public package
 {
 public:
-	mapIs(const char * mapa);
-	mapIs(std::vector<mar>& agua_, std::vector<recursos>& piezas);
+	MapIsPkg(const char * mapa);
+	MapIsPkg(std::vector<mar>& agua_, std::vector<recursos>& piezas);
 	char * getMap(); // todava no se en que formato devolverlo (pensar...)
 	virtual std::string getPackage();
 private:
@@ -40,34 +40,34 @@ private:
 	char all[25];
 };
 
-class circularTokens :
+class CircularTokensPkg :
 	public package
 {
 public:
-	circularTokens(std::vector<char>& tokenList);
+	CircularTokensPkg(std::vector<char>& tokenList);
 	char * getTokenList();
 	virtual std::string getPackage();
 private:
 	char myTokens[19];
 };
 
-class devCards :
+class DevCardsPkg :
 	public package
 {
 public:
-	devCards(const char * deck);
-	devCards(std::vector<DevCards>& deck);
+	DevCardsPkg(const char * deck);
+	DevCardsPkg(std::vector<DevCards>& deck);
 	DevCards * getDeck();
 	virtual std::string getPackage();
 private:
 	DevCards pilon[25];
 };
 
-class dice :
+class DicePkg :
 	public package
 {
 public:
-	dice(char dice1_, char dice2_);
+	DicePkg(char dice1_, char dice2_);
 	char getValue(bool which); // con true devuelvo uno y con false el otro dado
 	virtual std::string getPackage();
 private:
@@ -75,12 +75,12 @@ private:
 	char dice2;
 };
 
-class robberCards :
+class RobberCardsPkg :
 	public package
 {
 public:
-	robberCards(const char * devList);
-	robberCards(std::vector<DevCards>& descarte);
+	RobberCardsPkg(const char * devList);
+	RobberCardsPkg(std::vector<DevCards>& descarte);
 	std::vector<DevCards> getCards();
 	char getLength();
 	virtual std::string getPackage();
@@ -89,22 +89,22 @@ private:
 	std::vector<DevCards> cartas;
 };
 
-class robberMove :
+class RobberMovePkg :
 	public package
 {
 public:
-	robberMove(char newPos);
+	RobberMovePkg(char newPos);
 	char getPos();
 	virtual std::string getPackage();
 private:
 	char pos;
 };
 
-class settlement :
+class SettlementPkg :
 	public package
 {
 public:
-	settlement(std::string pos_);
+	SettlementPkg(std::string pos_);
 	char getLength();
 	std::string getPos();
 	virtual std::string getPackage();
@@ -113,11 +113,11 @@ private:
 	std::string pos;
 };
 
-class city :
+class CityPkg :
 	public package
 {
 public:
-	city(std::string pos_);
+	CityPkg(std::string pos_);
 	char getLength();
 	std::string getPos();
 	virtual std::string getPackage();
@@ -126,11 +126,11 @@ private:
 	std::string pos;
 
 };
-class road :
+class RoadPkg :
 	public package
 {
 public:
-	road(std::string pos_);
+	RoadPkg(std::string pos_);
 	char getLength();
 	std::string getPos();
 	virtual std::string getPackage();
@@ -139,11 +139,11 @@ private:
 	std::string pos;
 };
 
-class banckTrade :
+class BanckTradePkg :
 	public package
 {
 public:
-	banckTrade(std::vector<recursos>& myResouces, recursos pedido);
+	BanckTradePkg(std::vector<recursos>& myResouces, recursos pedido);
 	char getLength();//devuelve la cantidad de recursos pagados
 	std::vector<recursos> getResoucesPaid();
 	recursos getResouceBougth();
@@ -154,11 +154,11 @@ private:
 	recursos pedido;
 };
 
-class offerTrade :
+class OfferTradePkg :
 	public package
 {
 public:
-	offerTrade(std::vector<recursos>& offer, std::vector<recursos>& pedido);
+	OfferTradePkg(std::vector<recursos>& offer, std::vector<recursos>& pedido);
 	std::vector<recursos> getMyOnes();
 	std::vector<recursos> getOponentOnes();
 	virtual std::string getPackage();
@@ -166,44 +166,44 @@ private:
 	std::vector<recursos> myOffer;
 	std::vector<recursos> esperoAcambio;
 };
-class knight :
+class KnightPkg :
 	public package
 {
 public:
-	knight(char newPos);
+	KnightPkg(char newPos);
 	char getPos();
 	virtual std::string getPackage();
 private:
 	char pos;
 };
 
-class monopoly :
+class MonopolyPkg :
 	public package
 {
 public:
-	monopoly(recursos recurso);
+	MonopolyPkg(recursos recurso);
 	recursos getResouce();
 	virtual std::string getPackage();
 private:
 	recursos resource;
 };
 
-class yearsOfPlenty :
+class YearsOfPlentyPkg :
 	public package
 {
 public:
-	yearsOfPlenty(recursos rec1_, recursos rec2_);
+	YearsOfPlentyPkg(recursos rec1_, recursos rec2_);
 	virtual std::string getPackage();
 private:
 	recursos rec1;
 	recursos rec2;
 };
 
-class cardIs :
+class CardIsPkg :
 	public package
 {
 public:
-	cardIs(char resource);
+	CardIsPkg(char resource);
 	virtual std::string getPackage();
 private:
 	recursos recurso;

@@ -21,18 +21,18 @@ std::string package::getPackage()
 	return ret;
 }
 
-nameIs::nameIs(std::string name_):package(headers::NAME_IS)
+NameIsPkg::NameIsPkg(std::string name_):package(headers::NAME_IS)
 {
 	name = name_;
 	length = name.length();
 }
 
-std::string nameIs::getName()
+std::string NameIsPkg::getName()
 {
 	return name;
 }
 
-std::string nameIs::getPackage()
+std::string NameIsPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(headers::NAME_IS));
@@ -41,7 +41,7 @@ std::string nameIs::getPackage()
 	return ret;
 }
 
-mapIs::mapIs(const char * mapa) :package(headers::MAP_IS)
+MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 {
 	int i = 0;
 
@@ -51,7 +51,7 @@ mapIs::mapIs(const char * mapa) :package(headers::MAP_IS)
 	}
 }
 
-mapIs::mapIs(std::vector<mar>& agua_, std::vector<recursos>& piezas):package(headers::MAP_IS)
+MapIsPkg::MapIsPkg(std::vector<mar>& agua_, std::vector<recursos>& piezas):package(headers::MAP_IS)
 {
 	
 	int j = 0;
@@ -77,12 +77,12 @@ mapIs::mapIs(std::vector<mar>& agua_, std::vector<recursos>& piezas):package(hea
 		all[j] = static_cast<char>(tablero[i]);
 }
 
-char * mapIs::getMap()
+char * MapIsPkg::getMap()
 {
 	return all;
 }
 
-std::string mapIs::getPackage()
+std::string MapIsPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
@@ -90,7 +90,7 @@ std::string mapIs::getPackage()
 	return ret;
 }
 
-circularTokens::circularTokens(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)
+CircularTokensPkg::circularTokens(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)
 {
 	std::string tokenList(_tokenList);
 	if (tokenList.size() == 19)
@@ -100,7 +100,7 @@ circularTokens::circularTokens(const char * _tokenList) :package(headers::CIRCUL
 	}
 
 
-circularTokens::circularTokens(std::vector<char>& tokenList):package(headers::CIRCULAR_TOKENS)
+CircularTokensPkg::CircularTokensPkg(std::vector<char>& tokenList):package(headers::CIRCULAR_TOKENS)
 {
 	if (tokenList.size() == 19)
 	{
