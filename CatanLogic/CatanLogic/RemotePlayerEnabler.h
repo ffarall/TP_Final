@@ -7,17 +7,17 @@
 
 using namespace std;
 
-class LocalPlayerEnabler :
+class RemotePlayerEnabler :
 	public PlayerEnabler
 {
 public:
-	LocalPlayerEnabler();
-	virtual ~LocalPlayerEnabler();
+	RemotePlayerEnabler();
+	virtual ~RemotePlayerEnabler();
 
 	void init();
 	void end();
 
-	// Enables events for the user to select when local starts.
+	// Enables events for when local starts.
 	void localStarts();
 	// Enables events when remote starts.
 	void remoteStarts();
@@ -26,10 +26,8 @@ public:
 
 private:
 	// To be used to set a common board, localPlayer and remotePlayer.
-	PlayerEnabler* remoteEnabler;
+	PlayerEnabler* localEnabler;
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
-	void noAct(SubtypeEvent* ev);
-	void firstSettlement(SubtypeEvent* ev);
 };
 
