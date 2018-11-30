@@ -10,15 +10,21 @@ LocalPlayerEnabler::LocalPlayerEnabler()
 	init();
 }
 
-LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_)
+LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_, PlayerEnabler* remoteEnabler_)
 {
 	init();
 	setPkgSender(pkgSender_);
+	setRemoteEnabler(remoteEnabler_);
 }
 
 
 LocalPlayerEnabler::~LocalPlayerEnabler()
 {
+}
+
+void LocalPlayerEnabler::setRemoteEnabler(PlayerEnabler * remoteEnabler_)
+{
+	remoteEnabler = remoteEnabler_;
 }
 
 void LocalPlayerEnabler::init()
@@ -28,6 +34,7 @@ void LocalPlayerEnabler::init()
 	remotePlayer = nullptr;
 	board = nullptr;
 	pkgSender = nullptr;
+	remoteEnabler = nullptr;
 }
 
 void LocalPlayerEnabler::end()
@@ -64,6 +71,7 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 {
 	setErrMessage("");
+	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -79,6 +87,7 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 {
 	setErrMessage("");
+	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -96,6 +105,7 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
 {
 	setErrMessage("");
+	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -111,6 +121,7 @@ void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
 void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 {
 	setErrMessage("");
+	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -126,6 +137,7 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 {
 	setErrMessage("");
+	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	DicePkg* pkg = static_cast<DicePkg*>(auxEv->getPackage());
 

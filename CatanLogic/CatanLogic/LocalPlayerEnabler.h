@@ -13,13 +13,15 @@ class LocalPlayerEnabler :
 {
 public:
 	LocalPlayerEnabler();
-	LocalPlayerEnabler(Networking* pkgSender_);
+	LocalPlayerEnabler(Networking* pkgSender_, PlayerEnabler* remoteEnabler_);
 	virtual ~LocalPlayerEnabler();
 
 	// Enables events for the user to select when local starts.
 	void localStarts(string nameLocal, string nameRemote);
 	// Enables events when remote starts.
-	void remoteStarts();
+	void remoteStarts(string nameLocal, string nameRemote);
+
+	void setRemoteEnabler(PlayerEnabler* remoteEnabler_);
 
 private:
 	void init();
