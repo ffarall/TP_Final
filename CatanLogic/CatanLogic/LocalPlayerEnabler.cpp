@@ -10,6 +10,12 @@ LocalPlayerEnabler::LocalPlayerEnabler()
 	init();
 }
 
+LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_)
+{
+	init();
+	setPkgSender(pkgSender_);
+}
+
 
 LocalPlayerEnabler::~LocalPlayerEnabler()
 {
@@ -21,6 +27,7 @@ void LocalPlayerEnabler::init()
 	localPlayer = nullptr;
 	remotePlayer = nullptr;
 	board = nullptr;
+	pkgSender = nullptr;
 }
 
 void LocalPlayerEnabler::end()
@@ -61,6 +68,8 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
+	pkgSender->pushPackage(pkg);
+	
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
@@ -74,6 +83,8 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
+	pkgSender->pushPackage(pkg);
+	
 	addRoadToLocal(position);
 
 	disable(PLA_ROAD);
@@ -89,6 +100,8 @@ void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
+	pkgSender->pushPackage(pkg);
+
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
@@ -102,10 +115,26 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
+	pkgSender->pushPackage(pkg);
+
 	addRoadToLocal(position);
 
 	disable(PLA_ROAD);
 	setUpForTurn();
+}
+
+void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	DicePkg* pkg = static_cast<DicePkg*>(auxEv->getPackage());
+
+	pkgSender->pushPackage(pkg);
+
+	int drawed = pkg->getValue(false);
+	drawed += pkg->getValue(true);
+	
+
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

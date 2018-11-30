@@ -3,6 +3,7 @@
 #include <cstdint>
 #include "Player.h"
 #include "Board.h"
+#include "Networking.h"
 
 class PlayerEnabler :
 	public Enabler
@@ -20,6 +21,8 @@ public:
 	void setRemotePlayer(Player* remotePlayer_);
 	// Allows other PlayerEnabler to create common new Board objects for board.
 	void setBoard(Board* board_);
+	// Sets package sender.
+	void setPkgSender(Networking* pkgSender_);
 
 
 protected:
@@ -33,6 +36,8 @@ protected:
 	Player* remotePlayer;
 	// Board.
 	Board* board;
+	// For sending packages.
+	Networking * pkgSender;
 
 	void setErrMessage(string message);
 	void setWaitingMessage(string message);

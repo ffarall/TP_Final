@@ -36,6 +36,11 @@ void PlayerEnabler::setBoard(Board * board_)
 	board = board_;
 }
 
+void PlayerEnabler::setPkgSender(Networking * pkgSender_)
+{
+	pkgSender = pkgSender_;
+}
+
 void PlayerEnabler::setErrMessage(string message)
 {
 	errMessageForUser = message;
