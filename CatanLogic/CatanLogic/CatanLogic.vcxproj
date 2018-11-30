@@ -120,6 +120,7 @@
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
     <ClCompile Include="HandShakingFSM.cpp" />
+    <ClCompile Include="Hex.cpp" />
     <ClCompile Include="MainFSM.cpp" />
     <ClCompile Include="Networking.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="EDASubject.h" />
     <ClInclude Include="Enabler.h" />
     <ClInclude Include="HandShakingFSM.h" />
+    <ClInclude Include="Hex.h" />
     <ClInclude Include="MainFSM.h" />
     <ClInclude Include="Networking.h" />
     <ClInclude Include="PlayerEnabler.h" />

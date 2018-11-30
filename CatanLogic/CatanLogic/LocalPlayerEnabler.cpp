@@ -130,6 +130,8 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 
 	addRoadToLocal(position);
 
+
+
 	disable(PLA_ROAD);
 	setUpForTurn();
 }
@@ -146,7 +148,10 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	int drawed = pkg->getValue(false);
 	drawed += pkg->getValue(true);
 	
-
+	if (drawed == 7)
+	{
+		
+	}
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

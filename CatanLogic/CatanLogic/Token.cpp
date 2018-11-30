@@ -4,9 +4,6 @@
 
 Token::Token()
 {
-	settlementOwners.fill(nullptr);
-	cityOwners.fill(nullptr);
-	roadOwners.fill(nullptr);
 }
 
 

@@ -69,6 +69,9 @@
     <ClCompile Include="EDASubject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Hex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEventHandling.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EDASubject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
