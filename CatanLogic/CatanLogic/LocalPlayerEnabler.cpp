@@ -66,6 +66,18 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	enable(PLA_ROAD, { TX(firstRoad) });
 }
 
+void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	addRoadToLocal(position);
+
+	disable(PLA_ROAD);
+}
+
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
 {
 	unsigned int type = ev->getType();
@@ -89,6 +101,26 @@ void LocalPlayerEnabler::addSettlementToLocal(string position)
 	if (!board->addSettlementToTokens(position, localPlayer))
 	{
 		setErrMessage("El casillero del tablero donde se quiere agregar el Settlement está lleno.");
+		return;
+	}
+}
+
+void LocalPlayerEnabler::addRoadToLocal(string position)
+{
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		localPlayer->addToMyRoads(position);
+		remotePlayer->addToRivalsRoads(position);
+	}
+	else
+	{
+		setErrMessage("La posición donde se quiere colocar el Road es inválida.");
+		return;
+	}
+
+	if (!board->addRoadToTokens(position, localPlayer))
+	{
+		setErrMessage("El casillero del tablero donde se quiere agregar el Road está lleno.");
 		return;
 	}
 }

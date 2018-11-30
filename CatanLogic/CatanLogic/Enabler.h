@@ -3,6 +3,7 @@
 #include <map>
 #include <list>
 #include "NewEventHandling.h"
+#include "EDASubject.h"
 
 class Enabler;
 using namespace std;
@@ -16,7 +17,8 @@ struct EnablerLogic
 };
 
 // Framework
-class Enabler
+class Enabler :
+	public EDASubject
 {
 public:
 	Enabler();
@@ -41,5 +43,7 @@ protected:
 	void disableAll();
 	// Sets default routine.
 	void setDefaultRoutine(EnablerRoutine defaultRoutine_);
+
+	EventsHandler* handler;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "NewEventHandling.h"
+#include "EDASubject.h"
 #include<map>
 
 class GenericFsm;
@@ -21,22 +22,24 @@ using FsmMap = std::map< StateTypes, StateMap >;
 
 
 
-
-
-class GenericFsm : public EventGenerator
+class GenericFsm : 
+	public EDASubject
 {
 public:
 
 	GenericFsm( const FsmMap fsmMap_, StateTypes initState);
+	GenericFsm(const FsmMap fsmMap_, StateTypes initState, EventsHandler* handler_);
 	GenericEvent * getEvent();
 	void cycle(GenericEvent * ev);
 	virtual ~GenericFsm();
 
-private:
+protected:
 	StateTypes state;
 	GenericEvent * fsmEvent = nullptr;
 
 	FsmMap fsmMap;
+
+	EventsHandler* handler;
 };
 
 

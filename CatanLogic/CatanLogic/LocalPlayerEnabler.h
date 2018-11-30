@@ -38,5 +38,6 @@ private:
 
 	/* AUXILIARY METHODS */
 	void addSettlementToLocal(string position);
+	void addRoadToLocal(string position);
 };
 

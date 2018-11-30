@@ -40,6 +40,10 @@ GenericFsm::GenericFsm(FsmMap fsmMap_, StateTypes initState) : fsmMap(fsmMap_), 
 {
 }
 
+GenericFsm::GenericFsm(const FsmMap fsmMap_, StateTypes initState, EventsHandler * handler_) : fsmMap(fsmMap_), state(initState), handler(handler_)
+{
+}
+
 GenericEvent * GenericFsm::getEvent()
 {
 	return fsmEvent;
