@@ -2,6 +2,7 @@
 
 //UNTOUCHED
 #include <list>
+#include <vector>
 #include <queue>
 
 //enunm Forward Declaration
@@ -28,11 +29,13 @@ public:
 class EventsHandler
 {
 public:
+	EventsHandler();
+	virtual ~EventsHandler();
 	GenericEvent * getNextEvent();
-	void enqueueEvent(GenericEvent* ev);
+	virtual bool enqueueEvent(GenericEvent* ev, int priority = 0);			// By default, events go to first queue. Returns false when event priority > eventQueues.size() (Event couldn't be added)
 
 private:
-	std::queue<GenericEvent *>  eventQueue; //It can also be a priority_queue if events have got some sort of priority
+	std::vector< std::queue<GenericEvent *> >  eventQueues;
 };
 
 class EventGenerator
