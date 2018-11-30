@@ -2,6 +2,7 @@
 #include"NewGenericFSM.h"
 #include"SubEvents.h"
 #include"Networking.h"
+#include<iostream>
 enum handShakingStates : StateTypes { Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S };
 
 class HandShakingFSM : public GenericFsm
@@ -9,6 +10,10 @@ class HandShakingFSM : public GenericFsm
 
 private:
 	Networking *network;
+	std::string name;
+	const char* gameMap;
+	const char *tokens;
+	const char *devCards;
 
 #define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&HandShakingFSM::x))
 
@@ -107,6 +112,6 @@ private:
 	void defaultSendingDevCardsS(GenericEvent *ev);
 	
 public:
-	HandShakingFSM(Networking* network_); 
+	HandShakingFSM(Networking* network_,std::string name_, const char *map, const char *tokns, const char *devcards); 
 
 };

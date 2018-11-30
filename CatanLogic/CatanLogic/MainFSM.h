@@ -1,10 +1,25 @@
 #pragma once
 #include"NewGenericFSM.h"
 #include"MainEvent.h"
+#include"HandShakingFSM.h"
+#include"LocalPlayerEnabler.h"
+#include"RemotePlayerEnabler.h"
+
+
+
+#define MAX_TICK_TIME 12000
 enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, GameOver_S, PlayAgain_S };
 class MainFSM: public GenericFsm
 {
 private:
+	HandShakingFSM *handShaking;
+	Networking *network;
+	EventsHandler *handler;
+	LocalPlayerEnabler *localEnabler;
+	RemotePlayerEnabler *remoteEnabler;
+
+	unsigned long int timerCount;
+	bool receivedQuit;
 #define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&MainFSM::x))
 	const FsmMap mainFsmMap = {
 		{StartMenu_S,{{
@@ -79,7 +94,10 @@ private:
 
 	void nonActRoutine(GenericEvent *ev);
 	void decTimeCounter(GenericEvent *ev);
+
+	void emitSubEvent(EventTypes type, EventSubtypes subtype);
 public:
-	MainFSM();
+	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote);
+	bool isQuit();
 
 };
