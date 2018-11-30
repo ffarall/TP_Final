@@ -4,6 +4,8 @@
 
 using namespace std;
 
+enum ResourceType : char { M='M', L='L', P='P', T='T', O='O', N='N' };
+
 class Token
 {
 public:
@@ -16,6 +18,8 @@ public:
 	bool addCity(Player* owner);
 	// Returns true if owner could be added, false otherwise.
 	bool addRoad(Player* owner);
+
+	// Gives a resource of this token's type
 
 protected:
 	array< Player*, 6 > settlementOwners;
