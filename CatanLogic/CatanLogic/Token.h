@@ -8,7 +8,7 @@ class Token
 {
 public:
 	Token();
-	~Token();
+	virtual ~Token();
 
 	// Returns true if owner could be added, false otherwise.
 	bool addSettlement(Player* owner);
@@ -17,7 +17,7 @@ public:
 	// Returns true if owner could be added, false otherwise.
 	bool addRoad(Player* owner);
 
-private:
+protected:
 	array< Player*, 6 > settlementOwners;
 	array< Player*, 6 > cityOwners;
 	array< Player*, 6 > roadOwners;

@@ -62,6 +62,8 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 
 	addSettlementToLocal(position);
 
+	disable(PLA_SETTLEMENT);
+	enable(PLA_ROAD, { TX(firstRoad) });
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
@@ -76,6 +78,7 @@ void LocalPlayerEnabler::addSettlementToLocal(string position)
 	if (localPlayer->checkSettlementAvailability(position))
 	{
 		localPlayer->addToMySettlements(position);
+		remotePlayer->addToRivalsSettlements(position);
 	}
 	else
 	{
@@ -83,5 +86,9 @@ void LocalPlayerEnabler::addSettlementToLocal(string position)
 		return;
 	}
 
-	if ()
+	if (!board->addSettlementToTokens(position, localPlayer))
+	{
+		setErrMessage("El casillero del tablero donde se quiere agregar el Settlement está lleno.");
+		return;
+	}
 }
