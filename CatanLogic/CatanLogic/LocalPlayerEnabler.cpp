@@ -82,6 +82,32 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 
+void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	addSettlementToLocal(position);
+
+	disable(PLA_SETTLEMENT);
+	enable(PLA_ROAD, { TX(secondRoad) });
+}
+
+void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	addRoadToLocal(position);
+
+	disable(PLA_ROAD);
+	setUpForTurn();
+}
+
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
 {
 	unsigned int type = ev->getType();
@@ -139,4 +165,10 @@ void LocalPlayerEnabler::addRoadToLocal(string position)
 		setErrMessage("El casillero del tablero donde se quiere agregar el Road está lleno.");
 		return;
 	}
+}
+
+void LocalPlayerEnabler::setUpForTurn()
+{
+	disableAll();
+	enable(PLA_DICES_ARE, { TX(checkDices) });
 }

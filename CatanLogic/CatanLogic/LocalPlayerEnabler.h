@@ -15,17 +15,15 @@ public:
 	LocalPlayerEnabler();
 	virtual ~LocalPlayerEnabler();
 
-	void init();
-	void end();
-
 	// Enables events for the user to select when local starts.
 	void localStarts(string nameLocal, string nameRemote);
 	// Enables events when remote starts.
 	void remoteStarts();
-	// Enables events for beginning of turn.
-	void setUpForTurn();
 
 private:
+	void init();
+	void end();
+
 	// To be used to set a common board, localPlayer and remotePlayer.
 	PlayerEnabler* remoteEnabler;
 
@@ -35,6 +33,7 @@ private:
 	void firstRoad(SubtypeEvent* ev);
 	void secondSettlement(SubtypeEvent* ev);
 	void secondRoad(SubtypeEvent* ev);
+	void checkDices(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
@@ -43,7 +42,11 @@ private:
 	void emitEvent(EventTypes type);
 	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
 
+	// Adds settlement to localPlayer and board from both Enablers
 	void addSettlementToLocal(string position);
+	// Adds road to localPlayer and board from both Enablers
 	void addRoadToLocal(string position);
+	// Enables events for beginning of turn.
+	void setUpForTurn();
 };
 
