@@ -11,6 +11,16 @@ PlayerEnabler::~PlayerEnabler()
 {
 }
 
+string PlayerEnabler::getErrMessage()
+{
+	return errMessageForUser;
+}
+
+string PlayerEnabler::getWaitingMessage()
+{
+	return waitingMessageForUser;
+}
+
 void PlayerEnabler::setLocalPlayer(Player * localPlayer_)
 {
 	localPlayer = localPlayer_;
