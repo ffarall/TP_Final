@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "Player.h"
 #include "Board.h"
+#include "package.h"
 
 using namespace std;
 
@@ -32,11 +33,16 @@ private:
 	void noAct(SubtypeEvent* ev);
 	void firstSettlement(SubtypeEvent* ev);
 	void firstRoad(SubtypeEvent* ev);
+	void secondSettlement(SubtypeEvent* ev);
+	void secondRoad(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
 
 	/* AUXILIARY METHODS */
+	void emitEvent(EventTypes type);
+	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
+
 	void addSettlementToLocal(string position);
 	void addRoadToLocal(string position);
 };

@@ -1,6 +1,7 @@
 #include "LocalPlayerEnabler.h"
 #include "SubEvents.h"
-#include "package.h"
+#include "MainEvent.h"
+#include "NewEventHandling.h"
 
 #define TX(x) (static_cast<void (Enabler::* )(SubtypeEvent *)>(&LocalPlayerEnabler::x))
 
@@ -76,6 +77,9 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	addRoadToLocal(position);
 
 	disable(PLA_ROAD);
+	enable(PLA_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
+
+	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
@@ -83,6 +87,18 @@ void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
 	unsigned int type = ev->getType();
 	unsigned int subtype = ev->getSubtype();
 	setErrMessage(string("Se recibió un evento de tipo ") + to_string(type) + " y subtipo " + to_string(subtype) + " , el cual no está habilitado.");
+}
+
+void LocalPlayerEnabler::emitEvent(EventTypes type)
+{
+	GenericEvent* ev = new MainEvents(type);
+	handler->enqueueEvent(ev);
+}
+
+void LocalPlayerEnabler::emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg)
+{
+	GenericEvent* ev = new SubEvents(type, subtype, pkg);
+	handler->enqueueEvent(ev);
 }
 
 void LocalPlayerEnabler::addSettlementToLocal(string position)
