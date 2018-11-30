@@ -6,6 +6,11 @@ Enabler::Enabler()
 {
 }
 
+Enabler::Enabler(EventsHandler * handler_)
+{
+	setHandler(handler_);
+}
+
 
 Enabler::~Enabler()
 {
@@ -35,6 +40,11 @@ void Enabler::cycle(SubtypeEvent * ev)
 GenericEvent * Enabler::getEvent()
 {
 	return enablerEvent;
+}
+
+void Enabler::setHandler(EventsHandler * handler_)
+{
+	handler = handler_;
 }
 
 void Enabler::enable(EventSubtypes subtype, list< EnablerRoutine > routine)

@@ -30,6 +30,7 @@ public:
 	GenericFsm( const FsmMap fsmMap_, StateTypes initState);
 	GenericFsm(const FsmMap fsmMap_, StateTypes initState, EventsHandler* handler_);
 	GenericEvent * getEvent();
+	void setHandler(EventsHandler* handler_);
 	void cycle(GenericEvent * ev);
 	virtual ~GenericFsm();
 

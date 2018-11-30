@@ -48,3 +48,8 @@ GenericEvent * GenericFsm::getEvent()
 {
 	return fsmEvent;
 }
+
+void GenericFsm::setHandler(EventsHandler * handler_)
+{
+	handler = handler_;
+}

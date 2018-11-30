@@ -22,12 +22,15 @@ class Enabler :
 {
 public:
 	Enabler();
+	Enabler(EventsHandler* handler_);
 	virtual ~Enabler();
 
 	// To be called when new event arrives.
 	void cycle(SubtypeEvent* ev);
 	// Event getter.
 	GenericEvent * getEvent();
+	// Sets new handler.
+	void setHandler(EventsHandler* handler_);
 
 protected:
 	// Map containing all enabled events and its actions.
