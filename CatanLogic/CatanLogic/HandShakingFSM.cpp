@@ -1,4 +1,6 @@
 #include"HandShakingFSM.h"
+#include<cstdlib>
+#include<ctime>
 
 void HandShakingFSM::validateDevCards(GenericEvent * ev)
 {
@@ -81,7 +83,7 @@ void HandShakingFSM::sendDevCards(GenericEvent * ev)
 
 void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
 {
-	network->pushPackage(new package(headers::I_START));
+	network->pushPackage(new package(rand()%2 ?  headers::I_START: headers::YOU_START));
 }
 
 void HandShakingFSM::defaultPlayWithDevCardsS(GenericEvent * ev)
@@ -98,4 +100,5 @@ HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, const ch
 	name = name_;
 	gameMap = map;
 	tokens = tokns;
+	srand(time(NULL));
 }
