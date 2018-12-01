@@ -6,6 +6,8 @@
 #include "Settlement.h"
 #include "Road.h"
 #include "City.h"
+#include "Hex.h"
+#include "Sea.h"
 
 using namespace std;
 
@@ -21,6 +23,11 @@ public:
 
 	// Asks if player has won.
 	bool hasWon();
+	// Increments the given resource.
+	void addResource(ResourceType resource, int amount);
+	// Decrements the given resource if it's not 0. Returns false if there are not enough resources
+	bool useResource(ResourceType resource, int amount);
+
 	// Add a settlement to mySettlements. User must check if position is available.
 	void addToMySettlements(string postion);
 	// Add a settlement to rivalsSettlements. User must check if position is available.
@@ -48,6 +55,8 @@ private:
 	size_t victoryPoints;
 	// Name of the player.
 	string name;
+	// Resources the player has.
+	map< ResourceType, size_t > resources;
 	// Map of this player's settlements (some can be cities).
 	map< string, Settlement* > mySettlements;
 	// Map of this player's roads.

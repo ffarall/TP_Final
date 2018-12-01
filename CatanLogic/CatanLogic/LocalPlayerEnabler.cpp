@@ -145,10 +145,10 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 
 	pkgSender->pushPackage(pkg);
 
-	int drawed = pkg->getValue(false);
-	drawed += pkg->getValue(true);
+	int rolled = pkg->getValue(false);
+	rolled += pkg->getValue(true);
 	
-	if (drawed == 7)
+	if (rolled == 7)
 	{
 		
 	}
