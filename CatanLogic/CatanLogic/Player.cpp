@@ -45,12 +45,12 @@ void Player::init()
 	availableForRoad.clear();
 	allVertexesAvailable();
 
-	resources[M] = 0;
-	resources[L] = 0;
-	resources[P] = 0;
-	resources[T] = 0;
-	resources[O] = 0;
-	resources[N] = 0;
+	resources[BOSQUE] = 0;
+	resources[COLINAS] = 0;
+	resources[MONTAÑAS] = 0;
+	resources[CAMPOS] = 0;
+	resources[PASTOS] = 0;
+	resources[DESIERTO] = 0;
 
 }
 
@@ -87,10 +87,28 @@ bool Player::useResource(ResourceType resource, int amount)
 	}
 }
 
+size_t Player::totalResourcesAmount()
+{
+	size_t total = 0;
+	for (auto res : resources)
+	{
+		total += res.second;
+	}
+	return total;
+}
+
 void Player::addToMySettlements(string position)
 {
 	Settlement* newSettlement = new Settlement(position);
 	mySettlements.insert(pair< string, Settlement* >(position, newSettlement));
+
+	useResource(COLINAS, 1);
+	useResource(BOSQUE, 1);
+	useResource(CAMPOS, 1);
+	useResource(PASTOS, 1);
+
+	incVictoryPoints();
+
 	updateAvailability();
 }
 
@@ -98,6 +116,7 @@ void Player::addToRivalsSettlements(string position)
 {
 	Settlement* newSettlement = new Settlement(position);
 	rivalsSettlements.insert(pair< string, Settlement* >(position, newSettlement));
+
 	updateAvailability();
 }
 
@@ -105,6 +124,10 @@ void Player::addToMyRoads(string position)
 {
 	Road* newRoad = new Road(position);
 	myRoads.insert(pair< string, Road* >(position, newRoad));
+
+	useResource(COLINAS, 1);
+	useResource(BOSQUE, 1);
+
 	updateAvailability();
 }
 
@@ -112,6 +135,7 @@ void Player::addToRivalsRoads(string position)
 {
 	Road* newRoad = new Road(position);
 	rivalsRoads.insert(pair< string, Road* >(position, newRoad));
+
 	updateAvailability();
 }
 
@@ -122,6 +146,12 @@ void Player::promoteToMyCity(string position)
 		delete mySettlements[position];
 		Settlement* newCity = new City(position);
 		mySettlements[position] = newCity;
+
+		useResource(CAMPOS, 2);
+		useResource(MONTAÑAS, 3);
+
+		incVictoryPoints();
+		incVictoryPoints();
 	}
 }
 
@@ -137,12 +167,31 @@ void Player::promoteToRivalsCity(string position)
 
 bool Player::checkSettlementAvailability(string position)
 {
-	return (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());
+	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());	// Check if position is available.
+	ret &= resources[COLINAS] >= 1;																								// Using brick.
+	ret &= resources[BOSQUE] >= 1;																								// Using wood.
+	ret &= resources[CAMPOS] >= 1;																								// Using wheat.
+	ret &= resources[PASTOS] >= 1;																								// Using wool.
+
+	return ret;
 }
 
 bool Player::checkRoadAvailability(string position)
 {
-	return (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());
+	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());					// Check if position is available.
+	ret &= resources[COLINAS] >= 1;																								// Using brick.
+	ret &= resources[BOSQUE] >= 1;																								// Using wood.
+
+	return ret;
+}
+
+bool Player::checkPromotionOfCity(string position)
+{
+	bool ret = (mySettlements.find(position) != mySettlements.end());		// Check if there's a Settlement in that position.
+	ret &= resources[CAMPOS] >= 2;											// Using wheat.
+	ret &= resources[MONTAÑAS] >= 3;										// Using rock.
+
+	return ret;
 }
 
 void Player::allVertexesAvailable()
@@ -299,4 +348,14 @@ void Player::updateAvailability()
 		}
 	}
 	
+}
+
+void Player::incVictoryPoints()
+{
+	victoryPoints++;
+
+	if (victoryPoints == 10)
+	{
+		iWon = true;
+	}
 }

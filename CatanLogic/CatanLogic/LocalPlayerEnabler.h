@@ -52,6 +52,7 @@ private:
 	void useMonopoly(SubtypeEvent* ev);
 	void useYearsOfPlenty(SubtypeEvent* ev);
 	void useRoadBuilding(SubtypeEvent* ev);
+	void exchangeResources(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);

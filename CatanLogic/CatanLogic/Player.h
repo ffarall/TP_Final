@@ -31,23 +31,25 @@ public:
 	// Returns total amount of resources.
 	size_t totalResourcesAmount();
 
-	// Add a settlement to mySettlements. User must check if position is available.
+	// Add a settlement to mySettlements. User must check if position is available. Uses resources. Adds 1 victoryPoint.
 	void addToMySettlements(string postion);
 	// Add a settlement to rivalsSettlements. User must check if position is available.
 	void addToRivalsSettlements(string position);
-	// Add a road to myRoads. User must check if position is available.
+	// Add a road to myRoads. User must check if position is available. Uses resources.
 	void addToMyRoads(string position);
 	// Add a road to rivalsRoads. User must check if position is available.
 	void addToRivalsRoads(string position);
-	// Promote a Settlement in mySettlements to a City. User must check if exists.
+	// Promote a Settlement in mySettlements to a City. User must check if exists. Uses resources. Adds 2 victoryPoints.
 	void promoteToMyCity(string position);
 	// Promote a Settlement in rivalsSettlements to a City. User must check if exists.
 	void promoteToRivalsCity(string position);
 
-	// Checks if position is available for settlement.
+	// Checks if position is available for settlement and if player has enough resources. Uses resources.
 	bool checkSettlementAvailability(string position);
-	// Checks if position is available for road.
+	// Checks if position is available for road and if player has enough resources.
 	bool checkRoadAvailability(string position);
+	// Checks if a Settlement is promotable to a City and if player has enough resources.
+	bool checkPromotionOfCity(string position);
 
 private:
 	void init();
@@ -77,6 +79,9 @@ private:
 	void allVertexesAvailable();
 	// Updates available coordinates for roads and settlements.
 	void updateAvailability();
+
+	// Increment victoryPoints and checks if has Won.
+	void incVictoryPoints();
 
 	// All combinations of edges.
 	const list< string > allEdges = {

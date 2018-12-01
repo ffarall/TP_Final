@@ -159,9 +159,10 @@ class OfferTradePkg :
 	public package
 {
 public:
+	OfferTradePkg();
 	OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido);
 	std::vector<ResourceType> getMyOnes();
-	std::vector<ResourceType> getOponentOnes();
+	std::vector<ResourceType> getOpponentOnes();
 	virtual std::string getPackage();
 private:
 	std::vector<ResourceType> myOffer;

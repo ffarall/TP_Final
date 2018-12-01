@@ -218,6 +218,8 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 	enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
 	enable(PLA_DEV_CARD, { TX(drawDevCard) });
 	enable(PLA_PASS, { TX(checkOffer) });
+
+	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
@@ -253,6 +255,118 @@ void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 	enable(NET_ACK, { TX(enablePlayerActions) });
 
 	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	OfferTradePkg* pkg = static_cast<OfferTradePkg*>(auxEv->getPackage());
+
+	if (validateOffer(pkg))
+	{
+		pendingOffer = *pkg;													// Saving offer for response.
+
+		disableAll();
+		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
+		enable(NET_NO, { TX(enablePlayerActions) });
+	}
+	else
+	{
+		setErrMessage("La oferta de trade ingresada es inválida. La misma debe constar de entre 1 y 9 recursos ofrecidos, y entre 1 y 9 pedidos.");
+	}
+
+	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkSettlementAvailability(position))
+	{
+		localPlayer->addToMySettlements(position);
+		remotePlayer->addToRivalsSettlements(position);
+		board->addSettlementToTokens(position, localPlayer);
+		pkgSender->pushPackage(new SettlementPkg(*pkg));
+		disableAll();
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+	else
+	{
+		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no está disponible.");
+	}
+
+	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		localPlayer->addToMyRoads(position);
+		remotePlayer->addToRivalsRoads(position);
+		board->addRoadToTokens(position, localPlayer);
+		pkgSender->pushPackage(new RoadPkg(*pkg));
+		disableAll();
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+	else
+	{
+		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
+	}
+
+	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	CityPkg* pkg = static_cast<CityPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkPromotionOfCity(position))
+	{
+		localPlayer->promoteToMyCity(position);
+		remotePlayer->promoteToRivalsCity(position);
+		board->addCityToTokens(position, localPlayer);
+		pkgSender->pushPackage(new CityPkg(*pkg));
+		disableAll();
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+	else
+	{
+		setErrMessage("La coordenada donde se quiso promover la nueva City no es aceptada.");
+	}
+
+	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
+{
+	for (auto resource : pendingOffer.getOpponentOnes())
+	{
+		localPlayer->addResource(resource, 1);					// Adding the resources coming from opponent.
+		remotePlayer->useResource(resource, 1);
+	}
+	for (auto resource : pendingOffer.getMyOnes())
+	{
+		remotePlayer->addResource(resource, 1);					// Giving resources to opponent.
+		localPlayer->useResource(resource, 1);
+	}
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

@@ -349,7 +349,7 @@ std::vector<ResourceType> OfferTradePkg::getMyOnes()
 	return myOffer;
 }
 
-std::vector<ResourceType> OfferTradePkg::getOponentOnes()
+std::vector<ResourceType> OfferTradePkg::getOpponentOnes()
 {
 	return esperoAcambio;
 }

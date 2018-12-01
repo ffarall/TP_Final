@@ -50,3 +50,18 @@ void PlayerEnabler::setWaitingMessage(string message)
 {
 	waitingMessageForUser = message;
 }
+
+bool PlayerEnabler::validateOffer(OfferTradePkg * pkg)
+{
+	size_t bidder = pkg->getMyOnes().size();
+	size_t receiver = pkg->getOpponentOnes().size();
+
+	if (bidder > 0 && bidder <= 9 && receiver > 0 && receiver >= 9)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Board.h"
 #include "Networking.h"
+#include "package.h"
 
 class PlayerEnabler :
 	public Enabler
@@ -38,8 +39,13 @@ protected:
 	Board* board;
 	// For sending packages.
 	Networking * pkgSender;
+	// To save OFFER_TRADE package when expecting rival's response.
+	OfferTradePkg pendingOffer;
 
 	void setErrMessage(string message);
 	void setWaitingMessage(string message);
+
+	/* VALIDATING FUNCTIONS */
+	bool validateOffer(OfferTradePkg* pkg);
 };
 
