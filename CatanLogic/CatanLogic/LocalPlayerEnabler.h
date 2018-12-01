@@ -42,6 +42,16 @@ private:
 	void enablePlayerActions(SubtypeEvent* ev);
 	void discardLocalResources(SubtypeEvent* ev);
 	void moveRobber(SubtypeEvent* ev);
+	void checkOffer(SubtypeEvent* ev);
+	void checkSettlement(SubtypeEvent* ev);
+	void checkRoad(SubtypeEvent* ev);
+	void checkCity(SubtypeEvent* ev);
+	void checkBankTrade(SubtypeEvent* ev);
+	void drawDevCard(SubtypeEvent* ev);
+	void useKnight(SubtypeEvent* ev);
+	void useMonopoly(SubtypeEvent* ev);
+	void useYearsOfPlenty(SubtypeEvent* ev);
+	void useRoadBuilding(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
@@ -50,6 +60,7 @@ private:
 	void emitEvent(EventTypes type);
 	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
 	void getResourceFromSettlement(string position, Player* who);
+	void checkDevCards();
 
 	// Adds settlement to localPlayer and board from both Enablers
 	void addSettlementToLocal(string position);

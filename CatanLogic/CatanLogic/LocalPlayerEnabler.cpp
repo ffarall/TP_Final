@@ -207,6 +207,19 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 	notifyAllObservers();
 }
 
+void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
+{
+	disableAll();
+	checkDevCards();
+	enable(PLA_OFFER_TRADE, { TX(checkOffer) });
+	enable(PLA_SETTLEMENT, { TX(checkSettlement) });
+	enable(PLA_ROAD, { TX(checkRoad) });
+	enable(PLA_CITY, { TX(checkCity) });
+	enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
+	enable(PLA_DEV_CARD, { TX(drawDevCard) });
+	enable(PLA_PASS, { TX(checkOffer) });
+}
+
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 {
 	setErrMessage("");
