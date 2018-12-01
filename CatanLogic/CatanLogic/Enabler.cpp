@@ -1,5 +1,6 @@
 #include "Enabler.h"
 #include <functional>
+#include <algorithm>
 
 
 Enabler::Enabler()
@@ -63,6 +64,17 @@ void Enabler::disable(EventSubtypes subtype)
 void Enabler::disableAll()
 {
 	enabledActions.enablerMap.clear();
+}
+
+void Enabler::disableAllBut(list<EventSubtypes> thisEvents)
+{
+	for (auto ev : enabledActions.enablerMap)
+	{
+		if (find(thisEvents.begin(), thisEvents.end(), ev.first) == thisEvents.end())		// If it's not in the but list.
+		{
+			disable(ev.first);
+		}
+	}
 }
 
 void Enabler::setDefaultRoutine(EnablerRoutine defaultRoutine_)
