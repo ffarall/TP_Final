@@ -8,7 +8,7 @@ enum class headers : char{
 	DEV_CARD = 0x30, MONOPOLY = 0x31, YEARS_OF_PLENTY = 0x32, ROAD_BUILDING = 0x33, KNIGHT = 0x34,
 	YES = 0x40, NO = 0x41,
 	I_WON = 0x50, PLAY_AGAIN = 0x51, GAME_OVER = 0x52,
-	ERROR = 0xFE, QUIT = 0xFF
+	ERROR_ = 0xFE, QUIT = 0xFF
 };
 
 enum class recursos : char {

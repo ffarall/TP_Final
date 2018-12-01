@@ -51,6 +51,11 @@ size_t Player::getVictoryPoints()
 	return victoryPoints;
 }
 
+string Player::getName()
+{
+	return name;
+}
+
 void Player::addToMySettlements(string position)
 {
 	Settlement* newSettlement = new Settlement(position);
