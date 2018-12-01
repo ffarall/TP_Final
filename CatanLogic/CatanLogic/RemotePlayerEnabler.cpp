@@ -40,6 +40,18 @@ void RemotePlayerEnabler::setUpForTurn()
 	enable(NET_DICES_ARE, { TX(checkDices) });
 }
 
+bool RemotePlayerEnabler::deleteCards(vector<ResourceType> descarte)
+{
+	for (auto carta : descarte)
+	{
+		if (!localPlayer->useResource(carta, 1)) // si no tiene el recurso error
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 void RemotePlayerEnabler::setLocalEnabler(PlayerEnabler * localEnabler_)
 {
 	localEnabler = localEnabler_;
@@ -163,10 +175,14 @@ void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
 	setErrMessage("");
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
-	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
+	RobberCardsPkg* pkg = new RobberCardsPkg(*static_cast<RobberCardsPkg*>(auxEv->getPackage()));
 
 	pkgSender->pushPackage(pkg);
-	pkg->getCards()
+	if (!deleteCards(pkg->getCards())) // si no puedo eliminar todas las cartas
+	{
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
 }
 
 void RemotePlayerEnabler::genericDefault(SubtypeEvent * ev)

@@ -55,7 +55,7 @@ private:
 	// Enables events for beginning of turn.
 	void setUpForTurn();
 	// Eliminates Robbers cards
-
+	bool deleteCards(vector<ResourceType> descarte);
 	
 };
 
