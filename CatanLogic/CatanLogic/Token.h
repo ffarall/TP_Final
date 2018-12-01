@@ -22,6 +22,8 @@ public:
 	// Gives a resource of this token's type
 
 protected:
+
+
 	array< Player*, 6 > settlementOwners;
 	array< Player*, 6 > cityOwners;
 	array< Player*, 6 > roadOwners;
