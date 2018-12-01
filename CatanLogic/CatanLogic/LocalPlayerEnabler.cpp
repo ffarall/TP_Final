@@ -83,8 +83,6 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 
 	disable(PLA_SETTLEMENT);
 	enable(PLA_ROAD, { TX(firstRoad) });
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
@@ -103,8 +101,6 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	enable(PLA_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
 
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
@@ -138,8 +134,6 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 
 	disable(PLA_ROAD);
 	setUpForTurn();
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
@@ -172,8 +166,6 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	{
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
@@ -203,8 +195,6 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 		disableAll();
 		enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
 	}
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
@@ -218,8 +208,6 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 	enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
 	enable(PLA_DEV_CARD, { TX(drawDevCard) });
 	enable(PLA_PASS, { TX(checkOffer) });
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
@@ -238,8 +226,6 @@ void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 
 	disableAll();
 	enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
@@ -253,8 +239,6 @@ void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
@@ -276,8 +260,6 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 	{
 		setErrMessage("La oferta de trade ingresada es inválida. La misma debe constar de entre 1 y 9 recursos ofrecidos, y entre 1 y 9 pedidos.");
 	}
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
@@ -301,8 +283,6 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no está disponible.");
 	}
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
@@ -326,8 +306,6 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
 	}
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
@@ -351,8 +329,6 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso promover la nueva City no es aceptada.");
 	}
-
-	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
