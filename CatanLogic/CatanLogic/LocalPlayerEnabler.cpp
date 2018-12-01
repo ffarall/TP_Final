@@ -82,6 +82,8 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 
 	disable(PLA_SETTLEMENT);
 	enable(PLA_ROAD, { TX(firstRoad) });
+
+	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
@@ -100,6 +102,8 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	enable(PLA_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
 
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
+
+	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
@@ -133,6 +137,8 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 
 	disable(PLA_ROAD);
 	setUpForTurn();
+
+	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
@@ -165,11 +171,16 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	{
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
+
+	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
 {
-
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

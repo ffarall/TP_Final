@@ -1,10 +1,9 @@
 #pragma once
 #include <array>
 #include "Player.h"
+#include "CatanDefs.h"
 
 using namespace std;
-
-enum ResourceType : char { M='M', L='L', P='P', T='T', O='O', N='N' };
 
 class Token
 {

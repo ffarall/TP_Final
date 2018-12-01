@@ -31,12 +31,12 @@ class MapIsPkg :
 {
 public:
 	MapIsPkg(const char * mapa);
-	MapIsPkg(std::vector<mar>& agua_, std::vector<recursos>& piezas);
+	MapIsPkg(std::vector<SeaType>& agua_, std::vector<ResourceType>& piezas);
 	char * getMap(); // todava no se en que formato devolverlo (pensar...)
 	virtual std::string getPackage();
 private:
-	mar agua[6];
-	recursos tablero[19];
+	SeaType agua[6];
+	ResourceType tablero[19];
 	char all[25];
 };
 
@@ -81,13 +81,13 @@ class RobberCardsPkg :
 {
 public:
 	RobberCardsPkg(const char * devList);
-	RobberCardsPkg(std::vector<DevCards>& descarte);
-	std::vector<DevCards> getCards();
+	RobberCardsPkg(std::vector<ResourceType>& descarte);
+	std::vector<ResourceType> getCards();
 	char getLength();
 	virtual std::string getPackage();
 private:
 	char length;
-	std::vector<DevCards> cartas;
+	std::vector<ResourceType> cartas;
 };
 
 class RobberMovePkg :
@@ -144,28 +144,28 @@ class BanckTradePkg :
 	public package
 {
 public:
-	BanckTradePkg(std::vector<recursos>& myResouces, recursos pedido);
-	char getLength();//devuelve la cantidad de recursos pagados
-	std::vector<recursos> getResoucesPaid();
-	recursos getResouceBougth();
+	BanckTradePkg(std::vector<ResourceType>& myResouces, ResourceType pedido);
+	char getLength();//devuelve la cantidad de ResourceType pagados
+	std::vector<ResourceType> getResoucesPaid();
+	ResourceType getResouceBougth();
 	virtual std::string getPackage();
 private:
 	char nOfResources;
-	std::vector<recursos> misRecursos;
-	recursos pedido;
+	std::vector<ResourceType> misRecursos;
+	ResourceType pedido;
 };
 
 class OfferTradePkg :
 	public package
 {
 public:
-	OfferTradePkg(std::vector<recursos>& offer, std::vector<recursos>& pedido);
-	std::vector<recursos> getMyOnes();
-	std::vector<recursos> getOponentOnes();
+	OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido);
+	std::vector<ResourceType> getMyOnes();
+	std::vector<ResourceType> getOponentOnes();
 	virtual std::string getPackage();
 private:
-	std::vector<recursos> myOffer;
-	std::vector<recursos> esperoAcambio;
+	std::vector<ResourceType> myOffer;
+	std::vector<ResourceType> esperoAcambio;
 };
 class KnightPkg :
 	public package
@@ -182,22 +182,22 @@ class MonopolyPkg :
 	public package
 {
 public:
-	MonopolyPkg(recursos recurso);
-	recursos getResouce();
+	MonopolyPkg(ResourceType recurso);
+	ResourceType getResouce();
 	virtual std::string getPackage();
 private:
-	recursos resource;
+	ResourceType resource;
 };
 
 class YearsOfPlentyPkg :
 	public package
 {
 public:
-	YearsOfPlentyPkg(recursos rec1_, recursos rec2_);
+	YearsOfPlentyPkg(ResourceType rec1_, ResourceType rec2_);
 	virtual std::string getPackage();
 private:
-	recursos rec1;
-	recursos rec2;
+	ResourceType rec1;
+	ResourceType rec2;
 };
 
 class CardIsPkg :
@@ -207,5 +207,5 @@ public:
 	CardIsPkg(char resource);
 	virtual std::string getPackage();
 private:
-	recursos recurso;
+	ResourceType recurso;
 };
