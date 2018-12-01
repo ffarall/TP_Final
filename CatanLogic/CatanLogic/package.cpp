@@ -183,17 +183,17 @@ RobberCardsPkg::RobberCardsPkg(const char * devList) :package(headers::ROBBER_CA
 	length = _cartas.size();
 	for (char a : _cartas)
 	{
-		cartas.push_back(static_cast<DevCards>(a));
+		cartas.push_back(static_cast<ResourceType>(a));
 	}
 }
 
-RobberCardsPkg::RobberCardsPkg(std::vector<DevCards>& descarte):package(headers::ROBBER_CARDS)
+RobberCardsPkg::RobberCardsPkg(std::vector<ResourceType>& descarte):package(headers::ROBBER_CARDS)
 {
 	length = descarte.size();
 	cartas = descarte;
 }	
 
-std::vector<DevCards> RobberCardsPkg::getCards()
+std::vector<ResourceType> RobberCardsPkg::getCards()
 {
 	return cartas;
 }
@@ -208,7 +208,7 @@ std::string RobberCardsPkg::getPackage()
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
 	ret += length;
-	for (DevCards a : cartas) { ret.push_back(static_cast<char>(a)); }
+	for (ResourceType a : cartas) { ret.push_back(static_cast<char>(a)); }
 	return ret;
 }
 

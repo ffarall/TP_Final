@@ -81,13 +81,13 @@ class RobberCardsPkg :
 {
 public:
 	RobberCardsPkg(const char * devList);
-	RobberCardsPkg(std::vector<DevCards>& descarte);
-	std::vector<DevCards> getCards();
+	RobberCardsPkg(std::vector<ResourceType>& descarte);
+	std::vector<ResourceType> getCards();
 	char getLength();
 	virtual std::string getPackage();
 private:
 	char length;
-	std::vector<DevCards> cartas;
+	std::vector<ResourceType> cartas;
 };
 
 class RobberMovePkg :
