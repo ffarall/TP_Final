@@ -418,7 +418,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
-	case headers::ERROR:
+	case headers::ERROR_:
 		evento->setEvent(MainTypes::ERR_IN_COM);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
@@ -436,7 +436,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 
 void Networking::pushPackage(package * mensaje)
 {
-	paraEnviar.push(mensaje); 
+	paraEnviar.push(mensaje);
 }
 
 bool Networking::hayMensaje() // para ver que funcione!!!

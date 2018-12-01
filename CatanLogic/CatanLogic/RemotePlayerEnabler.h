@@ -39,6 +39,7 @@ private:
 	void secondSettlement(SubtypeEvent* ev);
 	void secondRoad(SubtypeEvent* ev);
 	void checkDices(SubtypeEvent* ev);
+	void SendsRobberCards(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
@@ -53,5 +54,8 @@ private:
 	void addRoadToRemote(string position);
 	// Enables events for beginning of turn.
 	void setUpForTurn();
+	// Eliminates Robbers cards
+	bool deleteCards(vector<ResourceType> descarte);
+	
 };
 

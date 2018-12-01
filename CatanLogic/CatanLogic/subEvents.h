@@ -31,7 +31,12 @@ class SubEvents :
 public:
 	SubEvents() { paquete = nullptr; }
 	SubEvents(EventTypes mainEvent_, EventSubtypes subTipo_, package * paquete_=nullptr) { setEvent(mainEvent_); setSubtype(subTipo_); paquete = paquete_; }
-
+	~SubEvents() 
+	{ 
+		if(paquete != nullptr)
+			delete paquete; 
+	}
+	
 	virtual EventSubtypes getSubtype() { return subTipo; }
 	void setSubtype(EventSubtypes subType_) { subTipo = static_cast<SubType>(subType_); }
 

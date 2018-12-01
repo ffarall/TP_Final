@@ -40,6 +40,18 @@ void RemotePlayerEnabler::setUpForTurn()
 	enable(NET_DICES_ARE, { TX(checkDices) });
 }
 
+bool RemotePlayerEnabler::deleteCards(vector<ResourceType> descarte)
+{
+	for (auto carta : descarte)
+	{
+		if (!localPlayer->useResource(carta, 1)) // si no tiene el recurso error
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 void RemotePlayerEnabler::setLocalEnabler(PlayerEnabler * localEnabler_)
 {
 	localEnabler = localEnabler_;
@@ -122,7 +134,55 @@ void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
 
 void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 {
-	
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	DicePkg* pkg = static_cast<DicePkg*>(auxEv->getPackage());
+
+	int rolled = pkg->getValue(false);
+	rolled += pkg->getValue(true);
+
+	board->assignResourcesForNum(rolled);
+
+	disable(NET_DICES_ARE);
+	if (rolled == 7)
+	{
+		if (localPlayer->totalResourcesAmount() >= 7)
+		{
+			enable(PLA_ROBBER_CARDS, TX(SendsRobberCards) );
+		}
+		else
+		{
+			pkgSender->pushPackage(new package(headers::ACK));
+			if (remotePlayer->totalResourcesAmount() >= 7)
+			{
+				enable(NET_ROBBER_CARDS, TX(remoteLoseCards));
+			}
+			else
+			{
+				enable(NET_ROBBER_MOVE, TX(remoteMoveRobber));
+			}
+		}
+	}
+	else
+	{
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+}
+
+void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RobberCardsPkg* pkg = new RobberCardsPkg(*static_cast<RobberCardsPkg*>(auxEv->getPackage()));
+
+	pkgSender->pushPackage(pkg);
+	if (!deleteCards(pkg->getCards())) // si no puedo eliminar todas las cartas
+	{
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
 }
 
 void RemotePlayerEnabler::genericDefault(SubtypeEvent * ev)
@@ -170,9 +230,12 @@ void RemotePlayerEnabler::addRoadToRemote(string position)
 	{
 		remotePlayer->addToMyRoads(position);
 		localPlayer->addToRivalsRoads(position);
+		pkgSender->pushPackage(new package(headers::ACK));
 	}
 	else
 	{
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
 		setErrMessage("La posición donde se quiere colocar el Road es inválida.");
 		return;
 	}
