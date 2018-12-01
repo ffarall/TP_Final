@@ -60,6 +60,7 @@ void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote)
 	remoteEnabler->setBoard(board = new Board);											// Same for board.
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
+	disableAll();
 	enable(PLA_SETTLEMENT, { TX(firstSettlement) });
 	setDefaultRoutine(TX(genericDefault));
 }
@@ -76,7 +77,7 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(pkg);
+	pkgSender->pushPackage(new SettlementPkg(*pkg));
 	
 	addSettlementToLocal(position);
 
@@ -94,7 +95,7 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(pkg);
+	pkgSender->pushPackage(new RoadPkg(*pkg));
 	
 	addRoadToLocal(position);
 
@@ -114,7 +115,7 @@ void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(pkg);
+	pkgSender->pushPackage(new SettlementPkg(*pkg));
 
 	addSettlementToLocal(position);
 
@@ -130,7 +131,7 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(pkg);
+	pkgSender->pushPackage(new RoadPkg(*pkg));
 
 	addRoadToLocal(position);
 	getResourceFromSettlement(position, localPlayer);
@@ -148,7 +149,7 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	DicePkg* pkg = static_cast<DicePkg*>(auxEv->getPackage());
 
-	pkgSender->pushPackage(pkg);
+	pkgSender->pushPackage(new DicePkg(*pkg));
 
 	int rolled = pkg->getValue(false);
 	rolled += pkg->getValue(true);
@@ -181,6 +182,64 @@ void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
+
+	for (auto res : pkg->getCards())
+	{
+		remotePlayer->useResource(res, 1);										// For every card, a resource is eliminated.
+	}
+}
+
+void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
+{
+	if (localPlayer->totalResourcesAmount() >= 7)					// If local has 7 or more resources...
+	{
+		disableAll();
+		enable(PLA_ROBBER_CARDS, { TX(discardLocalResources) });
+	}
+	else
+	{
+		pkgSender->pushPackage(new package(headers::ACK));
+
+		disableAll();
+		enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
+	}
+
+	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
+
+	for (auto res : pkg->getCards())
+	{
+		localPlayer->useResource(res, 1);										// For every card, a resource is eliminated.
+	}
+
+	pkgSender->pushPackage(new RobberCardsPkg(*pkg));
+
+	disableAll();
+	enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
+
+	notifyAllObservers();
+}
+
+void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
+
+	board->moveRobber(pkg->getPos());
+
+	disableAll();
+	enable(NET_ACK, { TX(enablePlayerActions) });
+
+	notifyAllObservers();
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

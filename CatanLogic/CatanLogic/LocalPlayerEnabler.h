@@ -40,6 +40,8 @@ private:
 	void remoteSendsRobberCards(SubtypeEvent* ev);
 	void checkLocalResources(SubtypeEvent* ev);
 	void enablePlayerActions(SubtypeEvent* ev);
+	void discardLocalResources(SubtypeEvent* ev);
+	void moveRobber(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);

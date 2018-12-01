@@ -61,3 +61,8 @@ void Board::assignResourcesForNum(int num)
 		}
 	}
 }
+
+void Board::moveRobber(char position)
+{
+	robber = position;
+}

@@ -27,7 +27,13 @@ public:
 	// Assigns resources from all of the Hex that have a diceNum like the given.
 	void assignResourcesForNum(int num);
 
+	// Moves Robber to position given.
+	void moveRobber(char position);
+
 private:
+	// Actual board containing the identifier of every Token (which can be a Sea or a Hex).
 	map< char, Token* > board;
+	// Position of Robber.
+	char robber;
 };
 
