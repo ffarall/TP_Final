@@ -22,6 +22,11 @@ public:
 	// Returns false if one of the Tokens is already full of cities.
 	bool addCityToTokens(string position, Player* owner);
 
+	// Returns ResourceType from Hex. Validation that the char given is alpha must be done before calling.
+	ResourceType getResourceFromHex(char tokenChar);
+	// Assigns resources from all of the Hex that have a diceNum like the given.
+	void assignResourcesForNum(int num);
+
 private:
 	map< char, Token* > board;
 };

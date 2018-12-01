@@ -23,10 +23,13 @@ public:
 
 	// Asks if player has won.
 	bool hasWon();
+
 	// Increments the given resource.
 	void addResource(ResourceType resource, int amount);
 	// Decrements the given resource if it's not 0. Returns false if there are not enough resources
 	bool useResource(ResourceType resource, int amount);
+	// Returns total amount of resources.
+	size_t totalResourcesAmount();
 
 	// Add a settlement to mySettlements. User must check if position is available.
 	void addToMySettlements(string postion);

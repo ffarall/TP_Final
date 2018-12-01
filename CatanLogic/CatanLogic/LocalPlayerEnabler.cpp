@@ -129,8 +129,7 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 	pkgSender->pushPackage(pkg);
 
 	addRoadToLocal(position);
-
-
+	getResourceFromSettlement(position, localPlayer);
 
 	disable(PLA_ROAD);
 	setUpForTurn();
@@ -147,11 +146,30 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 
 	int rolled = pkg->getValue(false);
 	rolled += pkg->getValue(true);
+
+	board->assignResourcesForNum(rolled);
 	
+	disable(PLA_DICES_ARE);
 	if (rolled == 7)
 	{
-		
+		if (remotePlayer->totalResourcesAmount() >= 7)
+		{
+			enable(NET_ROBBER_CARDS, { TX(remoteSendsRobberCards), TX(checkLocalResources) });
+		}
+		else
+		{
+			enable(NET_ACK, { TX(checkLocalResources) });
+		}
 	}
+	else
+	{
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+}
+
+void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
+{
+
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
@@ -171,6 +189,18 @@ void LocalPlayerEnabler::emitSubEvent(EventTypes type, EventSubtypes subtype, pa
 {
 	GenericEvent* ev = new SubEvents(type, subtype, pkg);
 	handler->enqueueEvent(ev);
+}
+
+void LocalPlayerEnabler::getResourceFromSettlement(string position, Player* who)
+{
+	for (char c : position)
+	{
+		if (isalpha(c))												// If it's a Hex.
+		{
+			ResourceType resType = board->getResourceFromHex(c);
+			who->addResource(resType, 1);							// Adds 1 resource because it's a Settlement.
+		}
+	}
 }
 
 void LocalPlayerEnabler::addSettlementToLocal(string position)

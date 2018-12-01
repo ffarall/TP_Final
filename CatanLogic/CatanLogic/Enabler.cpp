@@ -54,7 +54,10 @@ void Enabler::enable(EventSubtypes subtype, list< EnablerRoutine > routine)
 
 void Enabler::disable(EventSubtypes subtype)
 {
-	enabledActions.enablerMap.erase(subtype);
+	if (enabledActions.enablerMap.find(subtype) != enabledActions.enablerMap.end())
+	{
+		enabledActions.enablerMap.erase(subtype);
+	}
 }
 
 void Enabler::disableAll()
