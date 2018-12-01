@@ -37,6 +37,9 @@ private:
 	void secondSettlement(SubtypeEvent* ev);
 	void secondRoad(SubtypeEvent* ev);
 	void checkDices(SubtypeEvent* ev);
+	void remoteSendsRobberCards(SubtypeEvent* ev);
+	void checkLocalResources(SubtypeEvent* ev);
+	void enablePlayerActions(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
@@ -44,6 +47,7 @@ private:
 	/* AUXILIARY METHODS */
 	void emitEvent(EventTypes type);
 	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
+	void getResourceFromSettlement(string position, Player* who);
 
 	// Adds settlement to localPlayer and board from both Enablers
 	void addSettlementToLocal(string position);

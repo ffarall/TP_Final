@@ -12,6 +12,8 @@ public:
 	Token();
 	virtual ~Token();
 
+	virtual string whatAmI() = 0;
+
 	// Returns true if owner could be added, false otherwise.
 	bool addSettlement(Player* owner);
 	// Returns true if owner could be added, false otherwise.

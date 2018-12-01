@@ -6,5 +6,7 @@ class Sea :
 public:
 	Sea();
 	virtual ~Sea();
+
+	virtual string whatAmI();
 };
 

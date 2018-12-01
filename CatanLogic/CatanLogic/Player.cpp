@@ -44,6 +44,14 @@ void Player::init()
 	rivalsSettlements.clear();
 	availableForRoad.clear();
 	allVertexesAvailable();
+
+	resources[M] = 0;
+	resources[L] = 0;
+	resources[P] = 0;
+	resources[T] = 0;
+	resources[O] = 0;
+	resources[N] = 0;
+
 }
 
 size_t Player::getVictoryPoints()
@@ -54,6 +62,29 @@ size_t Player::getVictoryPoints()
 string Player::getName()
 {
 	return name;
+}
+
+bool Player::hasWon()
+{
+	return iWon;
+}
+
+void Player::addResource(ResourceType resource, int amount)
+{
+	resources[resource] += amount;
+}
+
+bool Player::useResource(ResourceType resource, int amount)
+{
+	if (resources[resource] > amount)
+	{
+		resources[resource] -= amount;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Player::addToMySettlements(string position)
@@ -86,14 +117,22 @@ void Player::addToRivalsRoads(string position)
 
 void Player::promoteToMyCity(string position)
 {
-	Settlement* newCity = new City(position);
-	mySettlements[position] = newCity;
+	if (mySettlements.find(position) != mySettlements.end())
+	{
+		delete mySettlements[position];
+		Settlement* newCity = new City(position);
+		mySettlements[position] = newCity;
+	}
 }
 
 void Player::promoteToRivalsCity(string position)
 {
-	Settlement* newCity = new City(position);
-	rivalsSettlements[position] = newCity;
+	if (rivalsSettlements.find(position) != rivalsSettlements.end())
+	{
+		delete rivalsSettlements[position];
+		Settlement* newCity = new City(position);
+		rivalsSettlements[position] = newCity;
+	}
 }
 
 bool Player::checkSettlementAvailability(string position)
