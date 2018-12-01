@@ -1,12 +1,14 @@
 #pragma once
 #include "Token.h"
 #include "Player.h"
+#include "EDASubject.h"
 #include <iostream>
 #include <map>
 
 using namespace std;
 
-class Board
+class Board :
+	public EDASubject
 {
 public:
 	Board();

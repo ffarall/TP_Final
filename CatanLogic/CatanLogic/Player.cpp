@@ -72,6 +72,8 @@ bool Player::hasWon()
 void Player::addResource(ResourceType resource, int amount)
 {
 	resources[resource] += amount;
+
+	notifyAllObservers();
 }
 
 bool Player::useResource(ResourceType resource, int amount)
@@ -85,6 +87,8 @@ bool Player::useResource(ResourceType resource, int amount)
 	{
 		return false;
 	}
+
+	notifyAllObservers();
 }
 
 size_t Player::totalResourcesAmount()
@@ -110,6 +114,8 @@ void Player::addToMySettlements(string position)
 	incVictoryPoints();
 
 	updateAvailability();
+
+	notifyAllObservers();
 }
 
 void Player::addToRivalsSettlements(string position)
@@ -118,6 +124,8 @@ void Player::addToRivalsSettlements(string position)
 	rivalsSettlements.insert(pair< string, Settlement* >(position, newSettlement));
 
 	updateAvailability();
+
+	notifyAllObservers();
 }
 
 void Player::addToMyRoads(string position)
@@ -129,6 +137,8 @@ void Player::addToMyRoads(string position)
 	useResource(BOSQUE, 1);
 
 	updateAvailability();
+
+	notifyAllObservers();
 }
 
 void Player::addToRivalsRoads(string position)
@@ -137,6 +147,8 @@ void Player::addToRivalsRoads(string position)
 	rivalsRoads.insert(pair< string, Road* >(position, newRoad));
 
 	updateAvailability();
+
+	notifyAllObservers();
 }
 
 void Player::promoteToMyCity(string position)
@@ -152,6 +164,8 @@ void Player::promoteToMyCity(string position)
 
 		incVictoryPoints();
 		incVictoryPoints();
+
+		notifyAllObservers();
 	}
 }
 
@@ -162,6 +176,8 @@ void Player::promoteToRivalsCity(string position)
 		delete rivalsSettlements[position];
 		Settlement* newCity = new City(position);
 		rivalsSettlements[position] = newCity;
+
+		notifyAllObservers();
 	}
 }
 

@@ -34,6 +34,8 @@ void Enabler::cycle(SubtypeEvent * ev)
 			auto f = bind(enabledActions.defaultRoutine, this, ev);
 			f();
 		}
+
+		notifyAllObservers();
 		delete ev;
 	}
 }

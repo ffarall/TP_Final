@@ -8,10 +8,12 @@
 #include "City.h"
 #include "Hex.h"
 #include "Sea.h"
+#include "EDASubject.h"
 
 using namespace std;
 
-class Player
+class Player :
+	public EDASubject
 {
 public:
 	Player();
