@@ -20,8 +20,12 @@ void HandShakingFSM::tryToConnect(GenericEvent * ev)
 }
 
 void HandShakingFSM::sendName(GenericEvent * ev)
-{	
-	network->pushPackage(new NameIsPkg(name));
+{
+	if (((SubEvents*)ev)->getType() == SubType::NET_NAME)
+	{
+		remoteName = ((NameIsPkg*)((SubEvents*)ev)->getPackage())->getName();
+	}
+	network->pushPackage(new NameIsPkg(localName));
 }
 
 void HandShakingFSM::changeToServer(GenericEvent * ev)
@@ -97,8 +101,23 @@ void HandShakingFSM::defaultSendingDevCardsS(GenericEvent * ev)
 HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, const char *map, const char *tokns, const char *devcards) :GenericFsm(fsmMap,Client_S)
 {
 	network = network_;
-	name = name_;
+	localName = name_;
 	gameMap = map;
 	tokens = tokns;
 	srand(time(NULL));
+}
+
+void HandShakingFSM::setState(handShakingStates newState)
+{
+	state = newState;
+}
+
+std::string HandShakingFSM::getLocalName()
+{
+	return localName;
+}
+
+std::string HandShakingFSM::getRemoteName()
+{
+	return remoteName;
 }

@@ -10,7 +10,8 @@ class HandShakingFSM : public GenericFsm
 
 private:
 	Networking *network;
-	std::string name;
+	std::string localName;
+	std::string remoteName;
 	const char* gameMap;
 	const char *tokens;
 	const char *devCards;
@@ -113,5 +114,8 @@ private:
 	
 public:
 	HandShakingFSM(Networking* network_,std::string name_, const char *map, const char *tokns, const char *devcards); 
+	void setState(handShakingStates newState);
+	std::string getLocalName();
+	std::string getRemoteName();
 
 };
