@@ -11,7 +11,7 @@ enum class headers : char{
 	ERROR = 0xFE, QUIT = 0xFF
 };
 
-enum class recursos : char {
+enum ResourceType : char {
 	BOSQUE = 'M',
 	COLINAS = 'L',
 	MONTAÑAS = 'P',
@@ -20,7 +20,7 @@ enum class recursos : char {
 	DESIERTO = 'N'
 };
 
-enum class mar : char {
+enum SeaType : char {
 	_3X1 = 'N',
 	_3X1_2TX1 = 'T',
 	_3X1_2OX1 = 'O',
@@ -29,7 +29,7 @@ enum class mar : char {
 	_2MX1 = 'M'
 };
 
-enum class DevCards : char {
+enum DevCards : char {
 	CABALLERO = 'K',
 	VICTORY_POINTS = 'V',
 	ROAD_CONSTRUCTION = 'C',

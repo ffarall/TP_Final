@@ -51,7 +51,7 @@ MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 	}
 }
 
-MapIsPkg::MapIsPkg(std::vector<mar>& agua_, std::vector<recursos>& piezas):package(headers::MAP_IS)
+MapIsPkg::MapIsPkg(std::vector<SeaType>& agua_, std::vector<ResourceType>& piezas):package(headers::MAP_IS)
 {
 	
 	int j = 0;
@@ -66,9 +66,9 @@ MapIsPkg::MapIsPkg(std::vector<mar>& agua_, std::vector<recursos>& piezas):packa
 	else
 	{
 		for (int i = 0; i < 6; i++)
-			agua[i] = mar::_3X1;
+			agua[i] = SeaType::_3X1;
 		for (int i = 0; i < 19; i++)
-			tablero[i] = recursos::DESIERTO;
+			tablero[i] = ResourceType::DESIERTO;
 	}
 
 	for (int i = 0; i < 6; i++, j++)
@@ -306,7 +306,7 @@ std::string RoadPkg::getPackage()
 	return ret;
 }
 
-BanckTradePkg::BanckTradePkg(std::vector<recursos>& myResouces, recursos _pedido):package(headers::BANK_TRADE)
+BanckTradePkg::BanckTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido):package(headers::BANK_TRADE)
 {
 	nOfResources = myResouces.size();
 	misRecursos = myResouces;
@@ -318,12 +318,12 @@ char BanckTradePkg::getLength()
 	return nOfResources;
 }
 
-std::vector<recursos> BanckTradePkg::getResoucesPaid()
+std::vector<ResourceType> BanckTradePkg::getResoucesPaid()
 {
 	return misRecursos;
 }
 
-recursos BanckTradePkg::getResouceBougth()
+ResourceType BanckTradePkg::getResouceBougth()
 {
 	return pedido;
 }
@@ -333,23 +333,23 @@ std::string BanckTradePkg::getPackage()
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0' + nOfResources);
-	for (recursos a : misRecursos) { ret.push_back(static_cast<char>(a)); }
+	for (ResourceType a : misRecursos) { ret.push_back(static_cast<char>(a)); }
 	ret.push_back(static_cast<char>(pedido));
 	return ret;
 }
 
-OfferTradePkg::OfferTradePkg(std::vector<recursos>& offer, std::vector<recursos>& pedido):package(headers::OFFER_TRADE)
+OfferTradePkg::OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido):package(headers::OFFER_TRADE)
 {
 	myOffer = offer;
 	esperoAcambio = pedido;
 }
 
-std::vector<recursos> OfferTradePkg::getMyOnes()
+std::vector<ResourceType> OfferTradePkg::getMyOnes()
 {
 	return myOffer;
 }
 
-std::vector<recursos> OfferTradePkg::getOponentOnes()
+std::vector<ResourceType> OfferTradePkg::getOponentOnes()
 {
 	return esperoAcambio;
 }
@@ -360,8 +360,8 @@ std::string OfferTradePkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back('0'+myOffer.size());
 	ret.push_back('0' + esperoAcambio.size());
-	for (recursos a : myOffer) { ret.push_back(static_cast<char>(a)); }
-	for (recursos a : esperoAcambio) { ret.push_back(static_cast<char>(a)); }
+	for (ResourceType a : myOffer) { ret.push_back(static_cast<char>(a)); }
+	for (ResourceType a : esperoAcambio) { ret.push_back(static_cast<char>(a)); }
 	return ret;
 }
 
@@ -384,12 +384,12 @@ std::string KnightPkg::getPackage()
 	return ret;
 }
 
-MonopolyPkg::MonopolyPkg(recursos recurso):package(headers::MONOPOLY)
+MonopolyPkg::MonopolyPkg(ResourceType recurso):package(headers::MONOPOLY)
 {
 	resource = recurso;
 }
 
-recursos MonopolyPkg::getResouce()
+ResourceType MonopolyPkg::getResouce()
 {
 	return resource;
 }
@@ -402,7 +402,7 @@ std::string MonopolyPkg::getPackage()
 	return ret;
 }
 
-YearsOfPlentyPkg::YearsOfPlentyPkg(recursos rec1_, recursos rec2_):package(headers::YEARS_OF_PLENTY)
+YearsOfPlentyPkg::YearsOfPlentyPkg(ResourceType rec1_, ResourceType rec2_):package(headers::YEARS_OF_PLENTY)
 {
 	rec1 = rec1_;
 	rec2 = rec2_;
@@ -419,7 +419,7 @@ std::string YearsOfPlentyPkg::getPackage()
 
 CardIsPkg::CardIsPkg(char resource) :package(headers::CARD_IS)
 {
-	recurso = static_cast<recursos>(resource);
+	recurso = static_cast<ResourceType>(resource);
 }
 
 std::string CardIsPkg::getPackage()

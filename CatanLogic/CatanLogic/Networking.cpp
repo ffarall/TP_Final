@@ -322,9 +322,9 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_BANK_TRADE);
 		if ((input.length() >= 2)&& (input.length() >= input[1]-'0'+3))
 		{
-			std::vector<recursos> temp;
-			for (char a : input.substr(2, input[1] - '0')) { temp.push_back(static_cast<recursos>(a)); }
-			evento->addPackage(new BanckTradePkg(temp, static_cast<recursos>(input[input[1] - '0' + 3])));
+			std::vector<ResourceType> temp;
+			for (char a : input.substr(2, input[1] - '0')) { temp.push_back(static_cast<ResourceType>(a)); }
+			evento->addPackage(new BanckTradePkg(temp, static_cast<ResourceType>(input[input[1] - '0' + 3])));
 			input.erase(0, input[1]-'0'+3);
 		}
 		else
@@ -334,9 +334,9 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_OFFER_TRADE);
 		if ((input.length() >= 3)&&(input.length() >= (input[1]-'0'+input[2]-'0'+3)) ) 
 		{
-			std::vector<recursos> temp1,temp2;
-			for (char a : input.substr(3, input[1] - '0')) { temp1.push_back(static_cast<recursos>(a)); }
-			for(char a : input.substr(3+input[1]-'0',input[2]-'0')){temp2.push_back(static_cast<recursos>(a));}
+			std::vector<ResourceType> temp1,temp2;
+			for (char a : input.substr(3, input[1] - '0')) { temp1.push_back(static_cast<ResourceType>(a)); }
+			for(char a : input.substr(3+input[1]-'0',input[2]-'0')){temp2.push_back(static_cast<ResourceType>(a));}
 			evento->addPackage(new OfferTradePkg(temp1,temp2));
 			input.erase(0, input[1]+input[2]-'0'-'0'+3);
 		}
@@ -357,7 +357,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_MONOPOLY);
 		if (input.length() >= 2)
 		{
-			evento->addPackage(new MonopolyPkg(static_cast<recursos>(input[1])));
+			evento->addPackage(new MonopolyPkg(static_cast<ResourceType>(input[1])));
 			input.erase(0, 2);
 		}
 		else
@@ -367,7 +367,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		evento->setSubtype(SubType::NET_DEV_CARDS);
 		if (input.length() >= 3)
 		{
-			evento->addPackage(new YearsOfPlentyPkg(static_cast<recursos>(input[1]), static_cast<recursos>(input[2])) );
+			evento->addPackage(new YearsOfPlentyPkg(static_cast<ResourceType>(input[1]), static_cast<ResourceType>(input[2])) );
 			input.erase(0, 3);
 		}
 		else
