@@ -40,6 +40,25 @@ private:
 	void secondRoad(SubtypeEvent* ev);
 	void checkDices(SubtypeEvent* ev);
 	void SendsRobberCards(SubtypeEvent* ev);
+	void remoteLoseCards(SubtypeEvent* ev);
+	void remoteMoveRobber(SubtypeEvent* ev);
+
+	void evaluateOffer(SubtypeEvent* ev);
+	void checkRemoteSettlement(SubtypeEvent* ev);
+	void checkRemoteRoad(SubtypeEvent* ev);
+	void checkRemoteCity(SubtypeEvent* ev);
+	void checkRemoteBankTrade(SubtypeEvent* ev);
+	void checkDevCards(SubtypeEvent * ev);
+	void endTurn(SubtypeEvent * ev);
+
+	void remUsedKnight(SubtypeEvent * ev);
+	void remUsedMonopoly(SubtypeEvent * ev);
+	void remUsedYoP(SubtypeEvent * ev);
+	void remUsedRoadBuilding(SubtypeEvent * ev);
+
+	void enableRemoteActions(SubtypeEvent * ev);
+
+	void exchangeResources(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
@@ -55,7 +74,10 @@ private:
 	// Enables events for beginning of turn.
 	void setUpForTurn();
 	// Eliminates Robbers cards
-	bool deleteCards(vector<ResourceType> descarte);
-	
+	bool deleteCards(vector<ResourceType> descarte, Player * player_);
+	// Enables All posible actions in a turn
+	void enableRemoteActions();
+
+	void checkRemoteDevCards();
 };
 
