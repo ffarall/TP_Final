@@ -58,6 +58,8 @@ void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote)
 	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
 	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
 	remoteEnabler->setBoard(board = new Board);											// Same for board.
+
+
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
 	disableAll();
@@ -209,6 +211,11 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 	enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
 	enable(PLA_DEV_CARD, { TX(drawDevCard) });
 	enable(PLA_PASS, { TX(checkOffer) });
+}
+
+void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
+{
+
 }
 
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)

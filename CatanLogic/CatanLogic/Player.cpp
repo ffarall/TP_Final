@@ -1,6 +1,9 @@
 #include "Player.h"
 #include <algorithm>
 #include <vector>
+#include <functional>
+
+#define TX(x) (static_cast<void (Player::* )()>(&Player::x))
 
 Player::Player()
 {
@@ -52,6 +55,11 @@ void Player::init()
 	resources[PASTOS] = 0;
 	resources[DESIERTO] = 0;
 
+	devCards[KNIGHT] = { 0, useKnight };
+	devCards[VICTORY_POINTS] = { 0, useVictoryPoint };
+	devCards[MONOPOLY] = { 0, useMonopoly };
+	devCards[YEARS_OF_PLENTY] = { 0, useYearsOfPlenty };
+	devCards[ROAD_CONSTRUCTION] = { 0, useRoadConstruction };
 }
 
 size_t Player::getVictoryPoints()
@@ -66,6 +74,15 @@ string Player::getName()
 
 bool Player::hasWon()
 {
+	if ((victoryPoints + cardVictoryPoints) >= 10)
+	{
+		iWon = true;
+	}
+	else
+	{
+		iWon = false;
+	}
+
 	return iWon;
 }
 
@@ -208,6 +225,37 @@ bool Player::checkPromotionOfCity(string position)
 	ret &= resources[MONTAÑAS] >= 3;										// Using rock.
 
 	return ret;
+}
+
+void Player::getNewDevCard(Board * board)
+{
+	devCards[board->pickDevCard()].amount++;
+}
+
+void Player::useDevCard(DevCards card)
+{
+	if (devCards[card].amount)
+	{
+		auto f = bind(devCards[card].useDevCard, this);
+		f();
+	}
+}
+
+size_t Player::getDevCardAmount(DevCards card)
+{
+	return devCards[card].amount;
+}
+
+bool Player::checkResourcesForDevCard(DevCards card)
+{
+	if (devCards[card].amount)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Player::allVertexesAvailable()
@@ -370,8 +418,5 @@ void Player::incVictoryPoints()
 {
 	victoryPoints++;
 
-	if (victoryPoints == 10)
-	{
-		iWon = true;
-	}
+	hasWon();
 }

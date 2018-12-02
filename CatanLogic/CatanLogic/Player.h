@@ -9,8 +9,16 @@
 #include "Hex.h"
 #include "Sea.h"
 #include "EDASubject.h"
+#include "Board.h"
 
 using namespace std;
+using DevCardRoutine = void (Player::*)();
+
+struct DevCardUsage
+{
+	size_t amount;
+	void (Player::*useDevCard)();
+};
 
 class Player :
 	public EDASubject
@@ -53,6 +61,15 @@ public:
 	// Checks if a Settlement is promotable to a City and if player has enough resources.
 	bool checkPromotionOfCity(string position);
 
+	// Adds to the given DevCard.
+	void getNewDevCard(Board* board);
+	// Uses DevCard.
+	void useDevCard(DevCards card);
+	// Returns amount of given DevCard.
+	size_t getDevCardAmount(DevCards card);
+	// Checks if player has enough resources to get a DevCard.
+	bool checkResourcesForDevCard(DevCards card);
+
 private:
 	void init();
 
@@ -60,6 +77,8 @@ private:
 	bool iWon;
 	// Counter of victory points.
 	size_t victoryPoints;
+	// Victory points earned by DevCard (hidden to other player).
+	size_t cardVictoryPoints;
 	// Name of the player.
 	string name;
 	// Resources the player has.
@@ -76,6 +95,8 @@ private:
 	list< string > availableForRoad;
 	// List of coordinates available for putting settlements.
 	list< string > availableForSettlement;
+	// DevCards this player has.
+	map< DevCards, DevCardUsage > devCards;
 
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
@@ -84,6 +105,13 @@ private:
 
 	// Increment victoryPoints and checks if has Won.
 	void incVictoryPoints();
+
+	// DevCards Routines.
+	void useKnight();
+	void useVictoryPoint();
+	void useMonopoly();
+	void useYearsOfPlenty();
+	void useRoadConstruction();
 
 	// All combinations of edges.
 	const list< string > allEdges = {
