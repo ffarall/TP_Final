@@ -8,6 +8,7 @@
 #include "NewEventHandling.h"
 
 enum Status { SERVER, CLIENT };
+enum Activity { NOTHING, CONNECTING, WORKING };
 #define PORT 13225
 
 #include "boost/asio.hpp"
@@ -40,6 +41,7 @@ private:
 	void parseInput(const char * mensaje);
 	
 	Status estado; //Si funciona como server o como client
+	Activity current;
 	bool connected;
 
 	std::string ipOtherSide;
