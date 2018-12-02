@@ -20,11 +20,28 @@ LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_, PlayerEnabler* r
 
 LocalPlayerEnabler::~LocalPlayerEnabler()
 {
+	end();
 }
 
 void LocalPlayerEnabler::setRemoteEnabler(PlayerEnabler * remoteEnabler_)
 {
 	remoteEnabler = remoteEnabler_;
+}
+
+string LocalPlayerEnabler::whoWon()
+{
+	if (localPlayer->hasWon())
+	{
+		return "local";
+	}
+	else if (remotePlayer->hasWon())
+	{
+		return "remote";
+	}
+	else
+	{
+		return "no one";
+	}
 }
 
 void LocalPlayerEnabler::init()
@@ -55,6 +72,8 @@ void LocalPlayerEnabler::end()
 
 void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote)
 {
+	end();																				// Clears possible previous Players and Board from previous games.
+
 	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
 	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
 	remoteEnabler->setBoard(board = new Board);											// Same for board.
