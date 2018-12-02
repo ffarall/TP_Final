@@ -7,7 +7,7 @@ void MainFSM::endProgram(GenericEvent * ev)
 
 void MainFSM::initHandShakingFSM(GenericEvent * ev)
 {
-	//WTF
+	handShaking->setState(handShakingStates::Client_S);//la fsm de handshaking siempre comienza como client
 }
 
 void MainFSM::defaultStartMenuS(GenericEvent * ev)
@@ -35,6 +35,18 @@ void MainFSM::decAndRun(GenericEvent * ev)
 	{
 		emitSubEvent(MainTypes::TIME_OUT, SubType::TIME_OUT);
 	}
+}
+
+void MainFSM::localStartsRoutine(GenericEvent * ev)
+{
+	localEnabler->localStarts(handShaking->getLocalName(),handShaking->getRemoteName());
+	remoteEnabler->localStarts();
+}
+
+void MainFSM::remoteStartsRoutine(GenericEvent * ev)
+{
+	localEnabler->remoteStarts(handShaking->getLocalName(), handShaking->getRemoteName());
+	remoteEnabler->remoteStarts();
 }
 
 void MainFSM::defaultHandShakingS(GenericEvent * ev)
@@ -65,8 +77,10 @@ void MainFSM::defaultGameOverS(GenericEvent * ev)
 
 void MainFSM::continuePlaying(GenericEvent * ev)
 {
-	//WTF
+	handShaking->setState(handShakingStates::Client_S);//la fsm de handshaking siempre comienza como client
+	//en principio no deberiamos vover a conectarnos con el otro, nada mas deberiamos hacer un nuevo board y comoenzar a jugar de vuelta, suponiendo que el que es server sigue siendo server
 }
+
 
 void MainFSM::defaultPlayAgainS(GenericEvent * ev)
 {

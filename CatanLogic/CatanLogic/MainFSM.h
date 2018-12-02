@@ -32,8 +32,8 @@ private:
 				{MainTypes::NETWORK,{HandShaking_S,TX(handShakingFSMRun)}},
 				{MainTypes::TIME_OUT,{HandShaking_S,TX(handShakingFSMRun)}},
 				{MainTypes::TICKS,{HandShaking_S,TX(decAndRun)}},
-				{MainTypes::LOCAL_STARTS,{LocalPlayer_S,TX(nonActRoutine)}},
-				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(nonActRoutine)}}
+				{MainTypes::LOCAL_STARTS,{LocalPlayer_S,TX(localStartsRoutine)}},
+				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(remoteStartsRoutine)}}
 
 			},
 			{HandShaking_S,TX(defaultHandShakingS)}}},
@@ -79,6 +79,8 @@ private:
 
 	void handShakingFSMRun(GenericEvent *ev);
 	void decAndRun(GenericEvent *ev);	
+	void localStartsRoutine(GenericEvent *ev);
+	void remoteStartsRoutine(GenericEvent *ev);
 	void defaultHandShakingS(GenericEvent *ev);
 
 	void localFSMRun(GenericEvent *ev);
