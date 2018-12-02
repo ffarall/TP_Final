@@ -59,7 +59,7 @@ void Player::init()
 	devCards[VICTORY_POINTS] = { 0, useVictoryPoint };
 	devCards[MONOPOLY] = { 0, useMonopoly };
 	devCards[YEARS_OF_PLENTY] = { 0, useYearsOfPlenty };
-	devCards[ROAD_CONSTRUCTION] = { 0, useRoadConstruction };
+	devCards[ROAD_BUILDING] = { 0, useRoadConstruction };
 }
 
 size_t Player::getVictoryPoints()
@@ -201,10 +201,7 @@ void Player::promoteToRivalsCity(string position)
 bool Player::checkSettlementAvailability(string position)
 {
 	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());	// Check if position is available.
-	ret &= resources[COLINAS] >= 1;																								// Using brick.
-	ret &= resources[BOSQUE] >= 1;																								// Using wood.
-	ret &= resources[CAMPOS] >= 1;																								// Using wheat.
-	ret &= resources[PASTOS] >= 1;																								// Using wool.
+	ret &= checkSettlementResources();
 
 	return ret;
 }
@@ -212,8 +209,7 @@ bool Player::checkSettlementAvailability(string position)
 bool Player::checkRoadAvailability(string position)
 {
 	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());					// Check if position is available.
-	ret &= resources[COLINAS] >= 1;																								// Using brick.
-	ret &= resources[BOSQUE] >= 1;																								// Using wood.
+	ret &= checkRoadResources();
 
 	return ret;
 }
@@ -221,8 +217,7 @@ bool Player::checkRoadAvailability(string position)
 bool Player::checkPromotionOfCity(string position)
 {
 	bool ret = (mySettlements.find(position) != mySettlements.end());		// Check if there's a Settlement in that position.
-	ret &= resources[CAMPOS] >= 2;											// Using wheat.
-	ret &= resources[MONTAÑAS] >= 3;										// Using rock.
+	ret &= checkCityResources();
 
 	return ret;
 }
@@ -230,6 +225,10 @@ bool Player::checkPromotionOfCity(string position)
 void Player::getNewDevCard(Board * board)
 {
 	devCards[board->pickDevCard()].amount++;
+
+	useResource(CAMPOS, 1);
+	useResource(PASTOS, 1);
+	useResource(MONTAÑAS, 1);
 }
 
 void Player::useDevCard(DevCards card)
@@ -246,7 +245,19 @@ size_t Player::getDevCardAmount(DevCards card)
 	return devCards[card].amount;
 }
 
-bool Player::checkResourcesForDevCard(DevCards card)
+bool Player::checkResourcesForDevCard()
+{
+	if (resources[PASTOS] >= 1 && resources[CAMPOS] >= 1 && resources[MONTAÑAS] >= 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::isThereDevCard(DevCards card)
 {
 	if (devCards[card].amount)
 	{
@@ -414,9 +425,43 @@ void Player::updateAvailability()
 	
 }
 
+bool Player::checkSettlementResources()
+{
+	bool ret = true;
+	ret &= resources[COLINAS] >= 1;																								// Using brick.
+	ret &= resources[BOSQUE] >= 1;																								// Using wood.
+	ret &= resources[CAMPOS] >= 1;																								// Using wheat.
+	ret &= resources[PASTOS] >= 1;																								// Using wool.
+
+	return ret;
+}
+
+bool Player::checkRoadResources()
+{
+	bool ret = true;
+	ret &= resources[COLINAS] >= 1;																								// Using brick.
+	ret &= resources[BOSQUE] >= 1;																								// Using wood.
+
+	return ret;
+}
+
+bool Player::checkCityResources()
+{
+	bool ret = true;
+	ret &= resources[CAMPOS] >= 2;											// Using wheat.
+	ret &= resources[MONTAÑAS] >= 3;										// Using rock.
+
+	return ret;
+}
+
 void Player::incVictoryPoints()
 {
 	victoryPoints++;
 
 	hasWon();
+}
+
+void Player::useVictoryPoint()
+{
+	cardVictoryPoints = devCards[VICTORY_POINTS].amount;
 }

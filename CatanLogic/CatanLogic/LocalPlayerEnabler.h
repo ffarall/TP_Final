@@ -54,6 +54,7 @@ private:
 	void useYearsOfPlenty(SubtypeEvent* ev);
 	void useRoadBuilding(SubtypeEvent* ev);
 	void exchangeResources(SubtypeEvent* ev);
+	void endTurn(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);

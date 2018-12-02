@@ -204,18 +204,72 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 	list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
 
 	disableAllBut(devCardsEvs);
-	enable(PLA_OFFER_TRADE, { TX(checkOffer) });
-	enable(PLA_SETTLEMENT, { TX(checkSettlement) });
-	enable(PLA_ROAD, { TX(checkRoad) });
-	enable(PLA_CITY, { TX(checkCity) });
-	enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
-	enable(PLA_DEV_CARD, { TX(drawDevCard) });
-	enable(PLA_PASS, { TX(checkOffer) });
+	if (localPlayer->totalResourcesAmount())
+	{
+		enable(PLA_OFFER_TRADE, { TX(checkOffer) });
+	}
+	if (localPlayer->checkSettlementResources())
+	{
+		enable(PLA_SETTLEMENT, { TX(checkSettlement) });
+	}
+	if (localPlayer->checkRoadResources())
+	{
+		enable(PLA_ROAD, { TX(checkRoad) });
+	}
+	if (localPlayer->checkCityResources())
+	{
+		enable(PLA_CITY, { TX(checkCity) });
+	}
+	if (localPlayer->totalResourcesAmount())
+	{
+		enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
+	}
+	if (localPlayer->checkResourcesForDevCard())
+	{
+		enable(PLA_DEV_CARD, { TX(drawDevCard) });
+	}
+	enable(PLA_PASS, { TX(endTurn) });
 }
 
 void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
 
+	if (localPlayer->isThereDevCard(KNIGHT))
+	{
+		enable(PLA_KNIGHT, { TX(useKnight) });
+	}
+	else
+	{
+		disable(PLA_KNIGHT);
+	}
+	if (localPlayer->isThereDevCard(VICTORY_POINTS))
+	{
+		localPlayer->useDevCard(VICTORY_POINTS);
+	}
+	if (localPlayer->isThereDevCard(MONOPOLY))
+	{
+		enable(PLA_MONOPOLY, { TX(useMonopoly) });
+	}
+	else
+	{
+		disable(PLA_MONOPOLY);
+	}
+	if (localPlayer->isThereDevCard(YEARS_OF_PLENTY))
+	{
+		enable(PLA_YEARS_OF_PLENTY, { TX(useYearsOfPlenty) });
+	}
+	else
+	{
+		disable(PLA_YEARS_OF_PLENTY);
+	}
+	if (localPlayer->isThereDevCard(ROAD_BUILDING))
+	{
+		enable(PLA_ROAD_BUILDING, { TX(useRoadBuilding) });
+	}
+	else
+	{
+		disable(PLA_ROAD_BUILDING);
+	}
 }
 
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
@@ -331,6 +385,19 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 	else
 	{
 		setErrMessage("La coordenada donde se quiso promover la nueva City no es aceptada.");
+	}
+}
+
+void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
+{
+	if (localPlayer->checkResourcesForDevCard())
+	{
+		localPlayer->getNewDevCard(board);
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+	else
+	{
+		setErrMessage("El jugador no cuenta con suficientes recursos para tomar una Development Card.");
 	}
 }
 

@@ -61,14 +61,20 @@ public:
 	// Checks if a Settlement is promotable to a City and if player has enough resources.
 	bool checkPromotionOfCity(string position);
 
-	// Adds to the given DevCard.
+	bool checkSettlementResources();
+	bool checkRoadResources();
+	bool checkCityResources();
+
+	// Picks DevCard from the pile in the board. Uses resources.
 	void getNewDevCard(Board* board);
 	// Uses DevCard.
 	void useDevCard(DevCards card);
 	// Returns amount of given DevCard.
 	size_t getDevCardAmount(DevCards card);
 	// Checks if player has enough resources to get a DevCard.
-	bool checkResourcesForDevCard(DevCards card);
+	bool checkResourcesForDevCard();
+	// Check if user has this devCard.
+	bool isThereDevCard(DevCards card);
 
 private:
 	void init();
