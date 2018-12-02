@@ -77,7 +77,16 @@ void MainFSM::defaultGameOverS(GenericEvent * ev)
 
 void MainFSM::continuePlaying(GenericEvent * ev)
 {
-	handShaking->setState(handShakingStates::Client_S);//la fsm de handshaking siempre comienza como client
+	if (network->getStatus() == Status::CLIENT)
+	{
+		handShaking->setState(handShakingStates::Client_S);
+	}
+	else
+	{
+		handShaking->setState(handShakingStates::SendingServerName_S);
+		emitSubEvent(MainTypes::NETWORK, SubType::NET_ACK);
+
+	}//la fsm de handshaking siempre comienza como client
 	//en principio no deberiamos vover a conectarnos con el otro, nada mas deberiamos hacer un nuevo board y comoenzar a jugar de vuelta, suponiendo que el que es server sigue siendo server
 }
 
