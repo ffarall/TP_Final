@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <map>
 #include <list>
+#include <vector>
 #include <string>
 #include "Settlement.h"
 #include "Road.h"
@@ -120,7 +121,7 @@ private:
 	void useRoadConstruction();
 
 	// All combinations of edges.
-	const list< string > allEdges = {
+	const vector< string > allEdges = {
 		"0A5", "0AB", "0BA", "0BC", "0C", "1C0",
 		"5A", "AB", "BC", "1CG",
 		"5DA", "AD", "AE", "BE", "BF", "CF", "CG", "1GC",
@@ -134,7 +135,7 @@ private:
 		"4Q3", "3Q", "3RQ", "3RS", "3SR", "3S2"
 	};
 	// All combinations for vertexes.
-	const list< string > allVertexes = { 
+	const vector< string > allVertexes = { 
 		"0A", "0B", "01C",
 		"05A", "0AB", "0BC", "1C",
 		"5AD", "ABE", "BCF", "1CG",
