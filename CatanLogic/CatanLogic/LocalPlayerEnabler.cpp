@@ -58,6 +58,8 @@ void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote)
 	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
 	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
 	remoteEnabler->setBoard(board = new Board);											// Same for board.
+
+
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
 	disableAll();
@@ -164,7 +166,7 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	}
 	else
 	{
-		enable(NET_ACK, { TX(enablePlayerActions) });
+		enable(NET_ACK, { TX(enablePlayerActions), TX(checkDevCards) });
 	}
 }
 
@@ -199,15 +201,75 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 {
-	disableAll();
-	checkDevCards();
-	enable(PLA_OFFER_TRADE, { TX(checkOffer) });
-	enable(PLA_SETTLEMENT, { TX(checkSettlement) });
-	enable(PLA_ROAD, { TX(checkRoad) });
-	enable(PLA_CITY, { TX(checkCity) });
-	enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
-	enable(PLA_DEV_CARD, { TX(drawDevCard) });
-	enable(PLA_PASS, { TX(checkOffer) });
+	list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+
+	disableAllBut(devCardsEvs);
+	if (localPlayer->totalResourcesAmount())
+	{
+		enable(PLA_OFFER_TRADE, { TX(checkOffer) });
+	}
+	if (localPlayer->checkSettlementResources())
+	{
+		enable(PLA_SETTLEMENT, { TX(checkSettlement) });
+	}
+	if (localPlayer->checkRoadResources())
+	{
+		enable(PLA_ROAD, { TX(checkRoad) });
+	}
+	if (localPlayer->checkCityResources())
+	{
+		enable(PLA_CITY, { TX(checkCity) });
+	}
+	if (localPlayer->totalResourcesAmount())
+	{
+		enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
+	}
+	if (localPlayer->checkResourcesForDevCard())
+	{
+		enable(PLA_DEV_CARD, { TX(drawDevCard) });
+	}
+	enable(PLA_PASS, { TX(endTurn) });
+}
+
+void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
+{
+
+	if (localPlayer->isThereDevCard(KNIGHT))
+	{
+		enable(PLA_KNIGHT, { TX(useKnight) });
+	}
+	else
+	{
+		disable(PLA_KNIGHT);
+	}
+	if (localPlayer->isThereDevCard(VICTORY_POINTS))
+	{
+		localPlayer->useDevCard(VICTORY_POINTS);
+	}
+	if (localPlayer->isThereDevCard(MONOPOLY))
+	{
+		enable(PLA_MONOPOLY, { TX(useMonopoly) });
+	}
+	else
+	{
+		disable(PLA_MONOPOLY);
+	}
+	if (localPlayer->isThereDevCard(YEARS_OF_PLENTY))
+	{
+		enable(PLA_YEARS_OF_PLENTY, { TX(useYearsOfPlenty) });
+	}
+	else
+	{
+		disable(PLA_YEARS_OF_PLENTY);
+	}
+	if (localPlayer->isThereDevCard(ROAD_BUILDING))
+	{
+		enable(PLA_ROAD_BUILDING, { TX(useRoadBuilding) });
+	}
+	else
+	{
+		disable(PLA_ROAD_BUILDING);
+	}
 }
 
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
@@ -237,8 +299,7 @@ void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 
 	board->moveRobber(pkg->getPos());
 
-	disableAll();
-	enable(NET_ACK, { TX(enablePlayerActions) });
+	enable(NET_ACK, { TX(enablePlayerActions), TX(checkDevCards) });
 }
 
 void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
@@ -252,7 +313,6 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 	{
 		pendingOffer = *pkg;													// Saving offer for response.
 
-		disableAll();
 		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
 		enable(NET_NO, { TX(enablePlayerActions) });
 	}
@@ -276,7 +336,6 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 		remotePlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, localPlayer);
 		pkgSender->pushPackage(new SettlementPkg(*pkg));
-		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 	else
@@ -299,7 +358,6 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 		remotePlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, localPlayer);
 		pkgSender->pushPackage(new RoadPkg(*pkg));
-		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 	else
@@ -322,12 +380,24 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 		remotePlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, localPlayer);
 		pkgSender->pushPackage(new CityPkg(*pkg));
-		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 	else
 	{
 		setErrMessage("La coordenada donde se quiso promover la nueva City no es aceptada.");
+	}
+}
+
+void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
+{
+	if (localPlayer->checkResourcesForDevCard())
+	{
+		localPlayer->getNewDevCard(board);
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+	else
+	{
+		setErrMessage("El jugador no cuenta con suficientes recursos para tomar una Development Card.");
 	}
 }
 

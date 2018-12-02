@@ -4,6 +4,8 @@
 #include "EDASubject.h"
 #include <iostream>
 #include <map>
+#include <stack>
+#include "CatanDefs.h"
 
 using namespace std;
 
@@ -12,6 +14,7 @@ class Board :
 {
 public:
 	Board();
+	Board(map< char, Token* >& board, char robber, stack< DevCards >& pileOfDevCards);
 	virtual ~Board();
 
 	// Creates new board randomly and according to game rules.
@@ -32,10 +35,15 @@ public:
 	// Moves Robber to position given.
 	void moveRobber(char position);
 
+	// Returns DevCard at the top of the pile.
+	DevCards pickDevCard();
+
 private:
 	// Actual board containing the identifier of every Token (which can be a Sea or a Hex).
 	map< char, Token* > board;
 	// Position of Robber.
 	char robber;
+	// DevCards pile.
+	stack< DevCards > pileOfDevCards;
 };
 

@@ -30,9 +30,9 @@ enum SeaType : char {
 };
 
 enum DevCards : char {
-	CABALLERO = 'K',
+	KNIGHT = 'K',
 	VICTORY_POINTS = 'V',
-	ROAD_CONSTRUCTION = 'C',
+	ROAD_BUILDING = 'C',
 	MONOPOLY = 'M',
 	YEARS_OF_PLENTY = 'P'
 };

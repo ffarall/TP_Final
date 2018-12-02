@@ -6,6 +6,10 @@ Board::Board()
 {
 }
 
+Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDevCards_) : board(board_), robber(robber_), pileOfDevCards(pileOfDevCards_)
+{
+}
+
 
 Board::~Board()
 {
@@ -65,4 +69,11 @@ void Board::assignResourcesForNum(int num)
 void Board::moveRobber(char position)
 {
 	robber = position;
+}
+
+DevCards Board::pickDevCard()
+{
+	DevCards card = pileOfDevCards.top();
+	pileOfDevCards.pop();
+	return card;
 }
