@@ -40,6 +40,7 @@ private:
 	void remoteSendsRobberCards(SubtypeEvent* ev);
 	void checkLocalResources(SubtypeEvent* ev);
 	void enablePlayerActions(SubtypeEvent* ev);
+	void checkDevCards(SubtypeEvent* ev);
 	void discardLocalResources(SubtypeEvent* ev);
 	void moveRobber(SubtypeEvent* ev);
 	void checkOffer(SubtypeEvent* ev);
@@ -61,7 +62,6 @@ private:
 	void emitEvent(EventTypes type);
 	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
 	void getResourceFromSettlement(string position, Player* who);
-	void checkDevCards();
 
 	// Adds settlement to localPlayer and board from both Enablers
 	void addSettlementToLocal(string position);

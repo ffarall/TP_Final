@@ -164,7 +164,7 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	}
 	else
 	{
-		enable(NET_ACK, { TX(enablePlayerActions) });
+		enable(NET_ACK, { TX(enablePlayerActions), TX(checkDevCards) });
 	}
 }
 
@@ -199,8 +199,9 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 {
-	disableAll();
-	checkDevCards();
+	list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+
+	disableAllBut(devCardsEvs);
 	enable(PLA_OFFER_TRADE, { TX(checkOffer) });
 	enable(PLA_SETTLEMENT, { TX(checkSettlement) });
 	enable(PLA_ROAD, { TX(checkRoad) });
@@ -237,8 +238,7 @@ void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 
 	board->moveRobber(pkg->getPos());
 
-	disableAll();
-	enable(NET_ACK, { TX(enablePlayerActions) });
+	enable(NET_ACK, { TX(enablePlayerActions), TX(checkDevCards) });
 }
 
 void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
@@ -252,7 +252,6 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 	{
 		pendingOffer = *pkg;													// Saving offer for response.
 
-		disableAll();
 		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
 		enable(NET_NO, { TX(enablePlayerActions) });
 	}
@@ -276,7 +275,6 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 		remotePlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, localPlayer);
 		pkgSender->pushPackage(new SettlementPkg(*pkg));
-		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 	else
@@ -299,7 +297,6 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 		remotePlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, localPlayer);
 		pkgSender->pushPackage(new RoadPkg(*pkg));
-		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 	else
@@ -322,7 +319,6 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 		remotePlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, localPlayer);
 		pkgSender->pushPackage(new CityPkg(*pkg));
-		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 	else
