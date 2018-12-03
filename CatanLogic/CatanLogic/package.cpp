@@ -1,4 +1,6 @@
 #include "package.h"
+#include "Hex.h"
+using namespace std;
 
 package::package()
 {
@@ -45,27 +47,84 @@ std::string NameIsPkg::getPackage()
 	return ret;
 }
 
+MapIsPkg::MapIsPkg(Board * board_)
+{
+	board = new Board(*board_);
+	for (int i = 0; i < 19; i++)
+	{
+		all[i + 6] = static_cast<char>(board->getResourceFromHex('A' + i));
+	}
+}
+
 MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 {
-	int i = 0;
+	int i = 0, j, RobberPos = 0;
+	map<char, Token*> table;
+	map<string, PortType> puertos;
 
 	for (char a : std::string(mapa))
 	{
 		all[i++] = a;
 	}
+
+	for (int i = 0; i < 6; i++, j++)
+	{
+		Sea * boo = new Sea();
+		boo->setPortType(static_cast<PortType>(all[i]));
+		table.insert(pair<char, Token*>(i, static_cast<Token *>(boo)));
+	}
+	for (int i = 0; i < 19; i++)
+	{
+		if (all[i + 6] == 'N') { RobberPos = 'A' + i; } // para guardar la posicion del robber
+		Hex * boo2 = new Hex();
+		boo2->setResource(static_cast<ResourceType>(all[i+6]));
+		table.insert(pair<char, Token*>('A' + i, static_cast<Token *>(boo2)));
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		PortType var = static_cast<PortType>(all[i]);
+		switch (var)
+		{
+		case PortType::_2Tx1: case PortType::_2Ox1: case PortType::_2Lx1:
+			puertos.insert(pair<string, PortType>(utiles[5 * i], PortType::_3x1));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 1], PortType::_3x1));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 3], var));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 4], var));
+			break;
+		default:
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 2], var));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 3], var));
+			break;
+		}
+	}
+
+	board = new Board(table, RobberPos, puertos);
 }
 
 MapIsPkg::MapIsPkg(std::vector<PortType>& agua_, std::vector<ResourceType>& piezas) : package(headers::MAP_IS)
 {
-	
-	int j = 0;
+	map<char, Token*> table ;
+	map<string, PortType> puertos;
+	int j = 0, RobberPos = 0;
 	if (agua_.size() == 6 && piezas.size() == 19)
 	{
 
 		for (int i = 0; i < 6; i++, j++)
+		{
 			agua[i] = agua_[i];
+			Sea * boo = new Sea();
+			boo->setPortType(agua_.at(i));
+			table.insert(pair<char, Token*>(i, static_cast<Token *>(boo) ));
+		}
 		for (int i = 0; i < 19; i++)
+		{
 			tablero[i] = piezas[i];
+			if (tablero[i] == ResourceType::DESIERTO) { RobberPos = 'A' + i; }
+			Hex * boo2 = new Hex();
+			boo2->setResource(piezas[i]);
+			table.insert(pair<char, Token*>('A'+i, static_cast<Token *>(boo2)));
+		}
 	}
 	else
 	{
@@ -75,10 +134,29 @@ MapIsPkg::MapIsPkg(std::vector<PortType>& agua_, std::vector<ResourceType>& piez
 			tablero[i] = ResourceType::DESIERTO;
 	}
 
+	for (int i = 0 ; i<6;i++)
+	{
+		switch (agua[i])
+		{
+		case PortType::_2Tx1 : case PortType::_2Ox1 : case PortType::_2Lx1 :
+			puertos.insert(pair<string, PortType>(utiles[5 * i], PortType::_3x1));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 1], PortType::_3x1));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 3], agua[i]));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 4], agua[i]));
+			break;
+		default:
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 2], agua[i]));
+			puertos.insert(pair<string, PortType>(utiles[5 * i + 3], agua[i]));
+			break;
+		}
+	}
+
 	for (int i = 0; i < 6; i++, j++)
 		all[j] = static_cast<char>(agua[i]);
 	for (int i = 0; i < 19; i++, j++)
 		all[j] = static_cast<char>(tablero[i]);
+
+	board = new Board(table, RobberPos, puertos);
 }
 
 char * MapIsPkg::getMap()
@@ -92,6 +170,11 @@ std::string MapIsPkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret += all;
 	return ret;
+}
+
+Board * MapIsPkg::getBoard()
+{
+	return board;
 }
 
 CircularTokensPkg::CircularTokensPkg(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)

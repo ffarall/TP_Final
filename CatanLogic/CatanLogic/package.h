@@ -32,15 +32,27 @@ class MapIsPkg :
 	public package
 {
 public:
+	MapIsPkg(Board * board_);
 	MapIsPkg(const char * mapa);
 	MapIsPkg(std::vector<PortType>& agua_, std::vector<ResourceType>& piezas);
 	char * getMap(); // todava no se en que formato devolverlo (pensar...)
 	virtual std::string getPackage();
+	Board * getBoard();
 private:
 	PortType agua[6];
 	ResourceType tablero[19];
 	char all[25];
 	Board * board;
+
+	const vector<string> utiles =
+	{
+		"05A","0A","0AB","0B","0BC","01C",
+		"1C","1CG","1G","1GL","12L",
+		"2L","2LP","2P","2PS","23S",
+		"3S" ,"3RS","3R","3QR","34Q",
+		"4Q","4MQ","4M" ,"4HM","45H",
+		"5H","5DH","5D","5AD"
+	}
 };
 
 class CircularTokensPkg :
