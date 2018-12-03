@@ -24,6 +24,7 @@ Networking::Networking(const char * ip, unsigned short _port, Status _estado):Ev
 	estado = _estado;
 	port = _port ;
 	
+	current = NOTHING;
 	connected = false;
 
 	ioHandler = new boost::asio::io_service();
@@ -85,24 +86,42 @@ void Networking::startConection()
 			{
 				connected = true;
 				cout << "[SERVER] connected\n";
+				current = WORKING; //formalidad nomas
 				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
 				handler->enqueueEvent(ev);
 			}
 		}
 		else
 		{
-			boost::system::error_code error;
-			boost::asio::ip::tcp::resolver::iterator endpoint;
-			endpoint = clientResolver->resolve(boost::asio::ip::tcp::resolver::query(ipOtherSide, to_string(port)));
-
-			boost::asio::connect(*socket, endpoint, error); // me intento conectar
-
-			if (!error)
+			if (current == NOTHING)
 			{
-				cout << "[CLIENT] connected\n";
+				boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address::from_string(ipOtherSide), port);
+
+				socket->async_connect(endpoint,
+					[this](boost::system::error_code error)
+					{
+						if (!error)
+						{
+							cout << "[CLIENT] connected\n";
+							current = WORKING;
+							connected = true;
+							socket->non_blocking(true);
+							SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
+							handler->enqueueEvent(ev);
+						}
+					}
+				);
+				current = CONNECTING;
+			}
+			else if (current == CONNECTING)
+			{
+				ioHandler->poll();
+			}
+			else if (current == WORKING)
+			{
 				connected = true;
-				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
-				handler->enqueueEvent(ev);
+				socket->non_blocking(true);
+
 			}
 		}
 	}
