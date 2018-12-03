@@ -142,11 +142,11 @@ private:
 	std::string pos;
 };
 
-class BanckTradePkg :
+class BankTradePkg :
 	public package
 {
 public:
-	BanckTradePkg(std::vector<ResourceType>& myResouces, ResourceType pedido);
+	BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType pedido);
 	char getLength();//devuelve la cantidad de ResourceType pagados
 	std::vector<ResourceType> getResoucesPaid();
 	ResourceType getResouceBougth();
