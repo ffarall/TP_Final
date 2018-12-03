@@ -82,7 +82,23 @@ void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote)
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
 	disableAll();
-	enable(PLA_SETTLEMENT, { TX(firstSettlement) });
+	enable(PLA_SETTLEMENT, { TX(firstSettlementLocalStarts) });
+	setDefaultRoutine(TX(genericDefault));
+}
+
+void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote)
+{
+	end();																				// Clears possible previous Players and Board from previous games.
+
+	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
+	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
+	remoteEnabler->setBoard(board = new Board);											// Same for board.
+
+
+	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
+
+	disableAll();
+	enable(PLA_SETTLEMENT, { TX(firstSettlementRemoteStarts) });
 	setDefaultRoutine(TX(genericDefault));
 }
 
@@ -90,7 +106,7 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 {
 }
 
-void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
+void LocalPlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -103,10 +119,10 @@ void LocalPlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
-	enable(PLA_ROAD, { TX(firstRoad) });
+	enable(PLA_ROAD, { TX(firstRoadLocalStarts) });
 }
 
-void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
+void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -119,12 +135,12 @@ void LocalPlayerEnabler::firstRoad(SubtypeEvent * ev)
 	addRoadToLocal(position);
 
 	disable(PLA_ROAD);
-	enable(PLA_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
+	enable(PLA_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
 
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 
-void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
+void LocalPlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -137,10 +153,10 @@ void LocalPlayerEnabler::secondSettlement(SubtypeEvent * ev)
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
-	enable(PLA_ROAD, { TX(secondRoad) });
+	enable(PLA_ROAD, { TX(secondRoadLocalStarts) });
 }
 
-void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
+void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -155,6 +171,73 @@ void LocalPlayerEnabler::secondRoad(SubtypeEvent * ev)
 
 	disable(PLA_ROAD);
 	setUpForTurn();
+}
+
+void LocalPlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	pkgSender->pushPackage(new SettlementPkg(*pkg));
+
+	addSettlementToLocal(position);
+
+	disable(PLA_SETTLEMENT);
+	enable(PLA_ROAD, { TX(firstRoadRemoteStarts) });
+}
+
+void LocalPlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	pkgSender->pushPackage(new RoadPkg(*pkg));
+
+	addRoadToLocal(position);
+
+	disable(PLA_ROAD);
+	enable(PLA_SETTLEMENT, { TX(secondSettlementRemoteStarts) });
+}
+
+void LocalPlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	pkgSender->pushPackage(new SettlementPkg(*pkg));
+
+	addSettlementToLocal(position);
+
+	disable(PLA_SETTLEMENT);
+	enable(PLA_ROAD, { TX(secondRoadRemoteStarts) });
+}
+
+void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	pkgSender->pushPackage(new RoadPkg(*pkg));
+
+	addRoadToLocal(position);
+	getResourceFromSettlement(position, localPlayer);
+
+	disable(PLA_ROAD);
+	setUpForTurn();
+
+	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 
 void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
@@ -560,7 +643,7 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 	pkgSender->pushPackage(new package(headers::ROAD_BUILDING));
 
 	disableAll();
-	enable(NET_ACK, )
+	enable(NET_ACK, { TX(enableFstRoad) });
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
@@ -587,6 +670,52 @@ void LocalPlayerEnabler::takeRobberCard(SubtypeEvent * ev)
 
 	localPlayer->addResource(res);
 	remotePlayer->useResource(res);
+}
+
+void LocalPlayerEnabler::enableFstRoad(SubtypeEvent * ev)
+{
+	disableAll();
+	enable(PLA_ROAD, { TX(checkFstRoad) });
+}
+
+void LocalPlayerEnabler::checkFstRoad(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		localPlayer->addToMyRoads(position);
+		remotePlayer->addToRivalsRoads(position);
+		board->addRoadToTokens(position, localPlayer);
+		pkgSender->pushPackage(new RoadPkg(*pkg));
+		enable(NET_ACK, { TX(enableSndRoad) });
+	}
+	else
+	{
+		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
+	}
+}
+
+void LocalPlayerEnabler::enableSndRoad(SubtypeEvent * ev)
+{
+	disableAll();
+	enable(PLA_ROAD, { TX(checkSndRoad) });
+}
+
+void LocalPlayerEnabler::checkSndRoad(SubtypeEvent * ev)
+{
+	checkRoad(ev);
+}
+
+void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
+{
+	emitEvent(TURN_FINISHED);
+	disableAll();
+	enable(PLA_DICES_ARE, { TX(checkDices) });
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

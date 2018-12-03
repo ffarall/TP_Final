@@ -35,10 +35,14 @@ private:
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(SubtypeEvent* ev);
-	void firstSettlement(SubtypeEvent* ev);
-	void firstRoad(SubtypeEvent* ev);
-	void secondSettlement(SubtypeEvent* ev);
-	void secondRoad(SubtypeEvent* ev);
+	void firstSettlementLocalStarts(SubtypeEvent* ev);
+	void firstRoadLocalStarts(SubtypeEvent* ev);
+	void secondSettlementLocalStarts(SubtypeEvent* ev);
+	void secondRoadLocalStarts(SubtypeEvent* ev);
+	void firstSettlementRemoteStarts(SubtypeEvent* ev);
+	void firstRoadRemoteStarts(SubtypeEvent* ev);
+	void secondSettlementRemoteStarts(SubtypeEvent* ev);
+	void secondRoadRemoteStarts(SubtypeEvent* ev);
 	void checkDices(SubtypeEvent* ev);
 	void remoteSendsRobberCards(SubtypeEvent* ev);
 	void checkLocalResources(SubtypeEvent* ev);
