@@ -501,6 +501,7 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 
 	pkgSender->pushPackage(new KnightPkg(*pkg));
 
+	localPlayer->useDevCard(KNIGHT);
 	if (remotePlayer->isThereSetOrCity(movedTo))
 	{
 		disableAll();
@@ -523,6 +524,7 @@ void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 
 	pkgSender->pushPackage(new MonopolyPkg(*pkg));
 
+	localPlayer->useDevCard(MONOPOLY);
 	localPlayer->addResource(res, remotePlayer->getResourceAmount(res));
 	remotePlayer->useResource(res, remotePlayer->getResourceAmount(res));
 
@@ -541,11 +543,24 @@ void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
 
 	pkgSender->pushPackage(new YearsOfPlentyPkg(*pkg));
 
+	localPlayer->useDevCard(YEARS_OF_PLENTY);
 	localPlayer->addResource(resCard1);
 	localPlayer->addResource(resCard2);
 
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
+}
+
+void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("Seleccione donde quiere colocar el primer Road.");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+
+	pkgSender->pushPackage(new package(headers::ROAD_BUILDING));
+
+	disableAll();
+	enable(NET_ACK, )
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)

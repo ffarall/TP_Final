@@ -58,6 +58,10 @@ private:
 	void useRoadBuilding(SubtypeEvent* ev);
 	void exchangeResources(SubtypeEvent* ev);
 	void takeRobberCard(SubtypeEvent* ev);
+	void enableFstRoad(SubtypeEvent* ev);
+	void checkFstRoad(SubtypeEvent* ev);
+	void enableSndRoad(SubtypeEvent* ev);
+	void checkSndRoad(SubtypeEvent* ev);
 	void endTurn(SubtypeEvent* ev);
 
 	/* DEFAULT ROUTINES */

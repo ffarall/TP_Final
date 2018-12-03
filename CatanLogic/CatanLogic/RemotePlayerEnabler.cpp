@@ -639,7 +639,7 @@ void RemotePlayerEnabler::remUsedMonopoly(SubtypeEvent * ev)
 	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
 
 	pkgSender->pushPackage(new package(headers::ACK)); // respondo el pauqete
-	ResourceType recurso = pkg->getResouce();
+	ResourceType recurso = pkg->getResource();
 	size_t amount = localPlayer->getResourceAmount(recurso); // busco la cantidad de recursos que el local tiene para agregarle al remoto
 	
 	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
