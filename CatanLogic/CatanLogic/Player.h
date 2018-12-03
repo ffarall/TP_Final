@@ -72,10 +72,10 @@ public:
 
 	// Checks if given position is a port in given board.
 	bool checkIfIsPort(string position, Board* board);
-	// Check if any settlement or city is connected with a port
+	// Check if any settlement or city is connected to a port
 	bool checkForAnyPort(Board * board, PortType port_);
 	// Does the bank trade and exchanges the resources. When the bank trade is with a port that has fixed resourcesOffered, this parameter is not needed.
-	void makeBankTrade(string position, Board* board, ResourceType resourceAsked, ResourceType resourcesOffered = MONTAÑAS);
+	void makeBankTrade(PortType type, ResourceType resourceAsked, ResourceType resourcesOffered = MONTAÑAS);
 	// Checks if player has enough resources for the given type of port.
 	bool checkResourcesForBankTrade(PortType type);
 

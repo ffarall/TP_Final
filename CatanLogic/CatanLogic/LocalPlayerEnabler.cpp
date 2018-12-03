@@ -416,17 +416,65 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	BankTradePkg* pkg = static_cast<BankTradePkg*>(auxEv->getPackage());
 	int amountOfResourcesPaid = pkg->getLength();
+	ResourceType resourcesOffered = pkg->getResoucesPaid()[0];
 
+	PortType tradeType;
 	switch (amountOfResourcesPaid)
 	{
-	case 4:
+	case 4: tradeType = _4x1;
 		break;
-	case 3:
+	case 3: tradeType = _3x1;
 		break;
 	case 2:
-		break;
+	{
+		switch (resourcesOffered)
+		{
+		case BOSQUE: tradeType = _2Mx1;
+			break;
+		case COLINAS: tradeType = _2Lx1;
+			break;
+		case MONTAÑAS: tradeType = _2Px1;
+			break;
+		case CAMPOS: tradeType = _2Tx1;
+			break;
+		case PASTOS: tradeType = _2Ox1;
+			break;
+		default:
+			break;
+		}
+	}
+	break;
 	default:
+	{
+		setErrMessage("Condiciones inválidas ingresadas para BANK_TRADE.");
+		return;
+	}
 		break;
+	}
+
+	if (localPlayer->checkResourcesForBankTrade(tradeType))
+	{
+		pkgSender->pushPackage(new BankTradePkg(*pkg));
+
+		if (tradeType == _4x1)
+		{
+			localPlayer->makeBankTrade(tradeType, pkg->getResouceBougth(), pkg->getResoucesPaid[0]);
+		}
+		else
+		{
+			if (localPlayer->checkForAnyPort(board, tradeType))
+			{
+				localPlayer->makeBankTrade(tradeType, pkg->getResouceBougth(), pkg->getResoucesPaid[0]);
+			}
+			else
+			{
+				setErrMessage("El usuario no cuenta con un puerto capaz de hacer un tarde de este tipo.");
+			}
+		}
+	}
+	else
+	{
+		setErrMessage("El usuario no cuenta con los recursos necesarios para hacer el BANK_TRADE.");
 	}
 }
 

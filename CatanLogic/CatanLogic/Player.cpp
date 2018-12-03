@@ -231,7 +231,25 @@ bool Player::checkResourcesForBankTrade(PortType type)
 {
 	switch (type)
 	{
-	case _3x1: return (totalResourcesAmount() >= 3);
+	case _4x1:
+	{
+		bool ret = false;
+		for (auto res : resources)
+		{
+			ret |= getResourceAmount(res.first) >= 4;
+		}
+		return ret;
+	}
+		break;
+	case _3x1:
+	{
+		bool ret = false;
+		for (auto res : resources)
+		{
+			ret |= getResourceAmount(res.first) >= 3;
+		}
+		return ret;
+	}
 		break;
 	case _2Tx1: return (getResourceAmount(CAMPOS) >= 2);
 		break;
@@ -507,35 +525,29 @@ bool Player::checkForAnyPort(Board * board, PortType port_)
 	return false;
 }
 
-void Player::makeBankTrade(string position, Board * board, ResourceType resourceAsked, ResourceType resourcesOffered)
+void Player::makeBankTrade(PortType type, ResourceType resourceAsked, ResourceType resourcesOffered)
 {
-	if (checkIfIsPort(position, board))
+	switch (type)
 	{
-		PortType type = board->getPortType(position);
+	case _4x1: { useResource(resourcesOffered, 4); addResource(resourceAsked); }
+		break;
+	case _3x1: { useResource(resourcesOffered, 3); addResource(resourceAsked); }
+		break;
+	case _2Tx1: { useResource(CAMPOS, 2); addResource(resourceAsked); }
+		break;
+	case _2Ox1: { useResource(PASTOS, 2); addResource(resourceAsked); }
+		break;
+	case _2Lx1: { useResource(COLINAS, 2); addResource(resourceAsked); }
+		break;
+	case _2Px1: { useResource(MONTAÑAS, 2); addResource(resourceAsked); }
+		break;
+	case _2Mx1: { useResource(BOSQUE, 2); addResource(resourceAsked); }
+		break;
+	default:
+		break;
+	}
 
-		switch (type)
-		{
-		case _3x1: { useResource(resourcesOffered, 3); addResource(resourceAsked); }
-				   break;
-		case _2Tx1: { useResource(CAMPOS, 2); addResource(resourceAsked); }
-					break;
-		case _2Ox1: { useResource(PASTOS, 2); addResource(resourceAsked); }
-			break;
-		case _2Lx1: { useResource(COLINAS, 2); addResource(resourceAsked); }
-			break;
-		case _2Px1: { useResource(MONTAÑAS, 2); addResource(resourceAsked); }
-			break;
-		case _2Mx1: { useResource(BOSQUE, 2); addResource(resourceAsked); }
-			break;
-		default:
-			break;
-		}
-	}
-	else
-	{
-		useResource(resourcesOffered, 4);
-		addResource(resourceAsked);
-	}
+	notifyAllObservers();
 }
 
 void Player::incVictoryPoints()
