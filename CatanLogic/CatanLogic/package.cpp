@@ -513,6 +513,11 @@ CardIsPkg::CardIsPkg(char resource) :package(headers::CARD_IS)
 	recurso = static_cast<ResourceType>(resource);
 }
 
+ResourceType CardIsPkg::getResource()
+{
+	return recurso;
+}
+
 std::string CardIsPkg::getPackage()
 {
 	std::string ret;
