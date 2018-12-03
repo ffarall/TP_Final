@@ -36,7 +36,7 @@ public:
 	char * getMap(); // todava no se en que formato devolverlo (pensar...)
 	virtual std::string getPackage();
 private:
-	SeaType agua[6];
+	PortType agua[6];
 	ResourceType tablero[19];
 	char all[25];
 	Board * board;
