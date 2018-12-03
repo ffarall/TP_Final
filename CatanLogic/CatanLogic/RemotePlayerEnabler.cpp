@@ -307,8 +307,8 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 	{
 		pendingOffer = *pkg;													// Saving offer for response.
 
-		enable(NET_YES, { TX(exchangeResources), TX(enableRemoteActions) });
-		enable(NET_NO, { TX(enableRemoteActions) });
+		enable(PLA_YES, { TX(exchangeResources), TX(enableRemoteActions) });
+		enable(PLA_NO, { TX(rejectOffer),TX(enableRemoteActions) });
 	}
 	else
 	{
@@ -462,8 +462,14 @@ void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 	enable(NET_PASS, { TX(endTurn) });
 }
 
+void RemotePlayerEnabler::rejectOffer(SubtypeEvent * ev)
+{
+	pkgSender->pushPackage(new package(headers::NO))
+}
+
 void RemotePlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
+	pkgSender->pushPackage(new package(headers::YES));
 	for (auto resource : pendingOffer.getMyOnes())
 	{
 		localPlayer->addResource(resource);					// Adding the resources coming from opponent.
