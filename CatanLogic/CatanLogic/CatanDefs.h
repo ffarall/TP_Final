@@ -39,9 +39,9 @@ enum DevCards : char {
 
 enum PortType : char {
 	_3x1 = 'N',
-	_3x1_2Tx1 = 'T',
-	_3x1_2Ox1 = 'O',
-	_3x1_2Lx1 = 'L',
+	_2Tx1 = 'T',
+	_2Ox1 = 'O',
+	_2Lx1 = 'L',
 	_2Px1 = 'P',
 	_2Mx1 = 'M'
 };

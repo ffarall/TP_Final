@@ -43,7 +43,7 @@ public:
 	// Checks if position given has a port.
 	bool checkIfIsPort(string position);
 	// Returns type of port in given position.
-	bool getPortType(string position);
+	PortType getPortType(string position);
 	// Sets port in position given to type given.
 	void setPort(string position, PortType type);
 

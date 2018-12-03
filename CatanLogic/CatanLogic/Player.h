@@ -36,11 +36,13 @@ public:
 	bool hasWon();
 
 	// Increments the given resource.
-	void addResource(ResourceType resource, int amount);
+	void addResource(ResourceType resource, int amount = 1);
 	// Decrements the given resource if it's not 0. Returns false if there are not enough resources
-	bool useResource(ResourceType resource, int amount);
+	bool useResource(ResourceType resource, int amount = 1);
 	// Returns total amount of resources.
 	size_t totalResourcesAmount();
+	// Returns amount of the given resource.
+	size_t getResourceAmount(ResourceType resource);
 
 	// Add a settlement to mySettlements. User must check if position is available. Uses resources. Adds 1 victoryPoint.
 	void addToMySettlements(string postion);
@@ -69,9 +71,11 @@ public:
 	bool checkCityResources();
 
 	// Checks if user can make a bank trade from the given position.
-	bool checkBankTrade(string position);
+	bool checkBankTrade(string position, Board* board);
 	// Does the bank trade and exchanges the resources. When the bank trade is with a port that has fixed resourcesOffered, this parameter is not needed.
-	void makeBankTrade(string position, ResourceType resourceAsked, list< ResourceType > resourcesOffered = {});
+	void makeBankTrade(string position, Board* board, ResourceType resourceAsked, vector< ResourceType > resourcesOffered = {});
+	// Checks if player has enough resources for the given type of port.
+	bool checkResourcesForBankTrade(PortType type);
 
 	// Picks DevCard from the pile in the board. Uses resources.
 	void getNewDevCard(Board* board);
@@ -128,7 +132,7 @@ private:
 	void useRoadConstruction();
 
 	// All combinations of edges.
-	const vector< string > allEdges = {
+	const list< string > allEdges = {
 		"0A5", "0AB", "0BA", "0BC", "0C", "1C0",
 		"5A", "AB", "BC", "1CG",
 		"5DA", "AD", "AE", "BE", "BF", "CF", "CG", "1GC",
@@ -142,7 +146,7 @@ private:
 		"4Q3", "3Q", "3RQ", "3RS", "3SR", "3S2"
 	};
 	// All combinations for vertexes.
-	const vector< string > allVertexes = { 
+	const list< string > allVertexes = { 
 		"0A", "0B", "01C",
 		"05A", "0AB", "0BC", "1C",
 		"5AD", "ABE", "BCF", "1CG",

@@ -44,7 +44,7 @@ bool RemotePlayerEnabler::deleteCards(vector<ResourceType> descarte, Player * pl
 {
 	for (auto carta : descarte)
 	{
-		if (!player_->useResource(carta, 1)) // si no tiene el recurso error
+		if (!player_->useResource(carta)) // si no tiene el recurso error
 		{
 			return false;
 		}
@@ -368,7 +368,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 	bool isOK = true;
 	for (ResourceType a : pkg->getResoucesPaid())
 	{
-		if (!(remotePlayer->useResource(a, 1)))
+		if (!(remotePlayer->useResource(a)))
 		{
 			isOK = false;
 		}
@@ -426,13 +426,13 @@ void RemotePlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
 	for (auto resource : pendingOffer.getMyOnes())
 	{
-		localPlayer->addResource(resource, 1);					// Adding the resources coming from opponent.
-		remotePlayer->useResource(resource, 1);
+		localPlayer->addResource(resource);					// Adding the resources coming from opponent.
+		remotePlayer->useResource(resource);
 	}
 	for (auto resource : pendingOffer.getOpponentOnes())
 	{
-		remotePlayer->addResource(resource, 1);					// Giving resources to opponent.
-		localPlayer->useResource(resource, 1);
+		remotePlayer->addResource(resource);					// Giving resources to opponent.
+		localPlayer->useResource(resource);
 	}
 }
 

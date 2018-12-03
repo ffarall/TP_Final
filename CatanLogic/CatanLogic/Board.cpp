@@ -81,3 +81,18 @@ DevCards Board::pickDevCard()
 	pileOfDevCards.pop();
 	return card;
 }
+
+bool Board::checkIfIsPort(string position)
+{
+	return (ports.find(position) != ports.end());
+}
+
+PortType Board::getPortType(string position)
+{
+	return ports[position];
+}
+
+void Board::setPort(string position, PortType type)
+{
+	ports[position] = type;
+}

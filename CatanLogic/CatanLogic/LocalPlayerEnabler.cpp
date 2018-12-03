@@ -198,7 +198,7 @@ void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
 
 	for (auto res : pkg->getCards())
 	{
-		remotePlayer->useResource(res, 1);										// For every card, a resource is eliminated.
+		remotePlayer->useResource(res);										// For every card, a resource is eliminated.
 	}
 }
 
@@ -300,7 +300,7 @@ void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 
 	for (auto res : pkg->getCards())
 	{
-		localPlayer->useResource(res, 1);										// For every card, a resource is eliminated.
+		localPlayer->useResource(res);										// For every card, a resource is eliminated.
 	}
 
 	pkgSender->pushPackage(new RobberCardsPkg(*pkg));
@@ -424,13 +424,13 @@ void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
 	for (auto resource : pendingOffer.getOpponentOnes())
 	{
-		localPlayer->addResource(resource, 1);					// Adding the resources coming from opponent.
-		remotePlayer->useResource(resource, 1);
+		localPlayer->addResource(resource);					// Adding the resources coming from opponent.
+		remotePlayer->useResource(resource);
 	}
 	for (auto resource : pendingOffer.getMyOnes())
 	{
-		remotePlayer->addResource(resource, 1);					// Giving resources to opponent.
-		localPlayer->useResource(resource, 1);
+		remotePlayer->addResource(resource);					// Giving resources to opponent.
+		localPlayer->useResource(resource);
 	}
 }
 
@@ -460,7 +460,7 @@ void LocalPlayerEnabler::getResourceFromSettlement(string position, Player* who)
 		if (isalpha(c))												// If it's a Hex.
 		{
 			ResourceType resType = board->getResourceFromHex(c);
-			who->addResource(resType, 1);							// Adds 1 resource because it's a Settlement.
+			who->addResource(resType);							// Adds 1 resource because it's a Settlement.
 		}
 	}
 }

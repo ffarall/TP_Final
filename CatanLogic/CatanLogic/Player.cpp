@@ -118,15 +118,20 @@ size_t Player::totalResourcesAmount()
 	return total;
 }
 
+size_t Player::getResourceAmount(ResourceType resource)
+{
+	return resources[resource];
+}
+
 void Player::addToMySettlements(string position)
 {
 	Settlement* newSettlement = new Settlement(position);
 	mySettlements.insert(pair< string, Settlement* >(position, newSettlement));
 
-	useResource(COLINAS, 1);
-	useResource(BOSQUE, 1);
-	useResource(CAMPOS, 1);
-	useResource(PASTOS, 1);
+	useResource(COLINAS);
+	useResource(BOSQUE);
+	useResource(CAMPOS);
+	useResource(PASTOS);
 
 	incVictoryPoints();
 
@@ -150,8 +155,8 @@ void Player::addToMyRoads(string position)
 	Road* newRoad = new Road(position);
 	myRoads.insert(pair< string, Road* >(position, newRoad));
 
-	useResource(COLINAS, 1);
-	useResource(BOSQUE, 1);
+	useResource(COLINAS);
+	useResource(BOSQUE);
 
 	updateAvailability();
 
@@ -222,13 +227,34 @@ bool Player::checkPromotionOfCity(string position)
 	return ret;
 }
 
+bool Player::checkResourcesForBankTrade(PortType type)
+{
+	switch (type)
+	{
+	case _3x1: return (totalResourcesAmount() >= 3);
+		break;
+	case _2Tx1: return (getResourceAmount(CAMPOS) >= 2);
+		break;
+	case _2Ox1: return (getResourceAmount(PASTOS) >= 2);
+		break;
+	case _2Lx1: return (getResourceAmount(COLINAS) >= 2);
+		break;
+	case _2Px1: return (getResourceAmount(MONTAÑAS) >= 2);
+		break;
+	case _2Mx1: return (getResourceAmount(BOSQUE) >= 2);
+		break;
+	default:
+		break;
+	}
+}
+
 void Player::getNewDevCard(Board * board)
 {
 	devCards[board->pickDevCard()].amount++;
 
-	useResource(CAMPOS, 1);
-	useResource(PASTOS, 1);
-	useResource(MONTAÑAS, 1);
+	useResource(CAMPOS);
+	useResource(PASTOS);
+	useResource(MONTAÑAS);
 }
 
 void Player::useDevCard(DevCards card)
@@ -454,11 +480,47 @@ bool Player::checkCityResources()
 	return ret;
 }
 
+bool Player::checkBankTrade(string position, Board* board)
+{
+	if (board->checkIfIsPort(position))
+	{
+		if (checkResourcesForBankTrade(board->getPortType(position)))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void Player::makeBankTrade(string position, Board * board, ResourceType resourceAsked, vector<ResourceType> resourcesOffered)
+{
+	PortType type = board->getPortType(position);
+
+	switch (type)
+	{
+	case _3x1: { useResource(resourcesOffered[0]; ); }
+		break;
+	case _2Tx1:
+		break;
+	case _2Ox1:
+		break;
+	case _2Lx1:
+		break;
+	case _2Px1:
+		break;
+	case _2Mx1:
+		break;
+	default:
+		break;
+	}
+}
+
 void Player::incVictoryPoints()
 {
 	victoryPoints++;
 
 	hasWon();
+	notifyAllObservers();
 }
 
 void Player::useVictoryPoint()
