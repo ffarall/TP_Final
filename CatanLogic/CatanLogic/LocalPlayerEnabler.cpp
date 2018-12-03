@@ -409,6 +409,15 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 	}
 }
 
+void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	BankTradePkg* pkg = static_cast<BankTradePkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+}
+
 void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 {
 	if (localPlayer->checkResourcesForDevCard())

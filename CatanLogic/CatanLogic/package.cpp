@@ -306,29 +306,29 @@ std::string RoadPkg::getPackage()
 	return ret;
 }
 
-BanckTradePkg::BanckTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido):package(headers::BANK_TRADE)
+BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido):package(headers::BANK_TRADE)
 {
 	nOfResources = myResouces.size();
 	misRecursos = myResouces;
 	pedido = _pedido;
 }
 
-char BanckTradePkg::getLength()
+char BankTradePkg::getLength()
 {
 	return nOfResources;
 }
 
-std::vector<ResourceType> BanckTradePkg::getResoucesPaid()
+std::vector<ResourceType> BankTradePkg::getResoucesPaid()
 {
 	return misRecursos;
 }
 
-ResourceType BanckTradePkg::getResouceBougth()
+ResourceType BankTradePkg::getResouceBougth()
 {
 	return pedido;
 }
 
-std::string BanckTradePkg::getPackage()
+std::string BankTradePkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));

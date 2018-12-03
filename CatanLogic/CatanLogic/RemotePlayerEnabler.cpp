@@ -388,7 +388,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 	setErrMessage("");
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
-	BanckTradePkg* pkg = static_cast<BanckTradePkg*>(auxEv->getPackage());
+	BankTradePkg* pkg = static_cast<BankTradePkg*>(auxEv->getPackage());
 	
 	bool isOK = true;
 	for (ResourceType a : pkg->getResoucesPaid())

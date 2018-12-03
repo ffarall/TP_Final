@@ -343,7 +343,7 @@ void Networking::parseInput(const char * mensaje) // aca parseo
 		{
 			std::vector<ResourceType> temp;
 			for (char a : input.substr(2, input[1] - '0')) { temp.push_back(static_cast<ResourceType>(a)); }
-			evento->addPackage(new BanckTradePkg(temp, static_cast<ResourceType>(input[input[1] - '0' + 3])));
+			evento->addPackage(new BankTradePkg(temp, static_cast<ResourceType>(input[input[1] - '0' + 3])));
 			input.erase(0, input[1]-'0'+3);
 		}
 		else
