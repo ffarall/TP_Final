@@ -36,3 +36,12 @@ enum DevCards : char {
 	MONOPOLY = 'M',
 	YEARS_OF_PLENTY = 'P'
 };
+
+enum PortType : char {
+	_3x1 = 'N',
+	_2Tx1 = 'T',
+	_2Ox1 = 'O',
+	_2Lx1 = 'L',
+	_2Px1 = 'P',
+	_2Mx1 = 'M'
+};

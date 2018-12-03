@@ -43,7 +43,7 @@ void Hex::assignResources()
 {
 	for (auto owner : settlementOwners)
 	{
-		owner->addResource(resource, 1);		// 1 resource per Settlement.
+		owner->addResource(resource);		// 1 resource per Settlement.
 	}
 	for (auto owner : cityOwners)
 	{

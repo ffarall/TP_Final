@@ -10,6 +10,10 @@ Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDev
 {
 }
 
+Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDevCards_, map<Coordinate, PortType> ports_) : board(board_), robber(robber_), pileOfDevCards(pileOfDevCards_), ports(ports_)
+{
+}
+
 
 Board::~Board()
 {
@@ -76,4 +80,19 @@ DevCards Board::pickDevCard()
 	DevCards card = pileOfDevCards.top();
 	pileOfDevCards.pop();
 	return card;
+}
+
+bool Board::checkIfIsPort(string position)
+{
+	return (ports.find(position) != ports.end());
+}
+
+PortType Board::getPortType(string position)
+{
+	return ports[position];
+}
+
+void Board::setPort(string position, PortType type)
+{
+	ports[position] = type;
 }
