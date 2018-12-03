@@ -306,7 +306,7 @@ std::string RoadPkg::getPackage()
 	return ret;
 }
 
-BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido):package(headers::BANK_TRADE)
+BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido) :package(headers::BANK_TRADE)
 {
 	nOfResources = myResouces.size();
 	misRecursos = myResouces;
