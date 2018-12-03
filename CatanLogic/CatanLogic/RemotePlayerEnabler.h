@@ -59,6 +59,7 @@ private:
 	void enableRemoteActions(SubtypeEvent * ev);
 
 	void exchangeResources(SubtypeEvent* ev);
+	void checkRemoteDevCards(SubtypeEvent * ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
