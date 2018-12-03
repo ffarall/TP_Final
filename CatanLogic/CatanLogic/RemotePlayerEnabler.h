@@ -65,6 +65,9 @@ private:
 	void exchangeResources(SubtypeEvent* ev);
 	void checkRemoteDevCards(SubtypeEvent * ev);
 
+	void road1(SubtypeEvent * ev);
+	void road2(SubtypeEvent * ev);
+
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
 
