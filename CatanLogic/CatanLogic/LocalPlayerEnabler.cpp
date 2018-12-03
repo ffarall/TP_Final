@@ -519,6 +519,33 @@ void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
+	ResourceType res = pkg->getResource();
+
+	pkgSender->pushPackage(new MonopolyPkg(*pkg));
+
+	localPlayer->addResource(res, remotePlayer->getResourceAmount(res));
+	remotePlayer->useResource(res, remotePlayer->getResourceAmount(res));
+
+	disableAll();
+	enable(NET_ACK, { TX(enablePlayerActions) });
+}
+
+void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	YearsOfPlentyPkg* pkg = static_cast<YearsOfPlentyPkg*>(auxEv->getPackage());
+	ResourceType resCard1 = pkg->getResource(true);
+	ResourceType resCard2 = pkg->getResource(false);
+
+	pkgSender->pushPackage(new YearsOfPlentyPkg(*pkg));
+
+	localPlayer->addResource(resCard1);
+	localPlayer->addResource(resCard2);
+
+	disableAll();
+	enable(NET_ACK, { TX(enablePlayerActions) });
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
