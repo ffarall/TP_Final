@@ -61,10 +61,17 @@ public:
 	bool checkRoadAvailability(string position);
 	// Checks if a Settlement is promotable to a City and if player has enough resources.
 	bool checkPromotionOfCity(string position);
-
+	// Checks if user has enough resources to build a Settlement.
 	bool checkSettlementResources();
+	// Checks if user has enough resources to build a Road.
 	bool checkRoadResources();
+	// Checks if user has enough resources to build a City.
 	bool checkCityResources();
+
+	// Checks if user can make a bank trade from the given position.
+	bool checkBankTrade(string position);
+	// Does the bank trade and exchanges the resources. When the bank trade is with a port that has fixed resourcesOffered, this parameter is not needed.
+	void makeBankTrade(string position, ResourceType resourceAsked, list< ResourceType > resourcesOffered = {});
 
 	// Picks DevCard from the pile in the board. Uses resources.
 	void getNewDevCard(Board* board);

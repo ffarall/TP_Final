@@ -10,6 +10,10 @@ Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDev
 {
 }
 
+Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDevCards_, map<Coordinate, PortType> ports_) : board(board_), robber(robber_), pileOfDevCards(pileOfDevCards_), ports(ports_)
+{
+}
+
 
 Board::~Board()
 {

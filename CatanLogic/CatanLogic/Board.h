@@ -8,13 +8,15 @@
 #include "CatanDefs.h"
 
 using namespace std;
+using Coordinate = string;
 
 class Board :
 	public EDASubject
 {
 public:
 	Board();
-	Board(map< char, Token* >& board, char robber, stack< DevCards >& pileOfDevCards);
+	Board(map< char, Token* >& board_, char robber_, stack< DevCards >& pileOfDevCards_);
+	Board(map< char, Token* >& board_, char robber_, stack< DevCards >& pileOfDevCards_, map< Coordinate, PortType > ports_);
 	virtual ~Board();
 
 	// Creates new board randomly and according to game rules.
@@ -38,6 +40,13 @@ public:
 	// Returns DevCard at the top of the pile.
 	DevCards pickDevCard();
 
+	// Checks if position given has a port.
+	bool checkIfIsPort(string position);
+	// Returns type of port in given position.
+	bool getPortType(string position);
+	// Sets port in position given to type given.
+	void setPort(string position, PortType type);
+
 private:
 	// Actual board containing the identifier of every Token (which can be a Sea or a Hex).
 	map< char, Token* > board;
@@ -45,5 +54,7 @@ private:
 	char robber;
 	// DevCards pile.
 	stack< DevCards > pileOfDevCards;
+	// Vertexes with ports.
+	map< Coordinate, PortType > ports;
 };
 

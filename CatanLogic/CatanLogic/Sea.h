@@ -8,5 +8,7 @@ public:
 	virtual ~Sea();
 
 	virtual string whatAmI();
+private:
+
 };
 
