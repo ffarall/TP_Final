@@ -480,7 +480,7 @@ MonopolyPkg::MonopolyPkg(ResourceType recurso):package(headers::MONOPOLY)
 	resource = recurso;
 }
 
-ResourceType MonopolyPkg::getResouce()
+ResourceType MonopolyPkg::getResource()
 {
 	return resource;
 }

@@ -513,6 +513,14 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 	}
 }
 
+void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
+}
+
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
 	for (auto resource : pendingOffer.getOpponentOnes())
@@ -533,6 +541,10 @@ void LocalPlayerEnabler::takeRobberCard(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	CardIsPkg* pkg = static_cast<CardIsPkg*>(auxEv->getPackage());
+	ResourceType res = pkg->getResource();
+
+	localPlayer->addResource(res);
+	remotePlayer->useResource(res);
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

@@ -199,7 +199,7 @@ class MonopolyPkg :
 {
 public:
 	MonopolyPkg(ResourceType recurso);
-	ResourceType getResouce();
+	ResourceType getResource();
 	virtual std::string getPackage();
 private:
 	ResourceType resource;
