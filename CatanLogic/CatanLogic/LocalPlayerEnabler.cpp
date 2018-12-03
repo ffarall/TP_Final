@@ -491,6 +491,36 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 	}
 }
 
+void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	KnightPkg* pkg = static_cast<KnightPkg*>(auxEv->getPackage());
+	char movedTo = pkg->getPos();
+
+	pkgSender->pushPackage(new KnightPkg(*pkg));
+
+	if (remotePlayer->isThereSetOrCity(movedTo))
+	{
+		disableAll();
+		enable(NET_CARD_IS, { TX(takeRobberCard), TX(enablePlayerActions) });
+	}
+	else
+	{
+		disableAll();
+		enable(NET_ACK, { TX(enablePlayerActions) });
+	}
+}
+
+void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
+}
+
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
 	for (auto resource : pendingOffer.getOpponentOnes())
@@ -503,6 +533,18 @@ void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
 		remotePlayer->addResource(resource);					// Giving resources to opponent.
 		localPlayer->useResource(resource);
 	}
+}
+
+void LocalPlayerEnabler::takeRobberCard(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	CardIsPkg* pkg = static_cast<CardIsPkg*>(auxEv->getPackage());
+	ResourceType res = pkg->getResource();
+
+	localPlayer->addResource(res);
+	remotePlayer->useResource(res);
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

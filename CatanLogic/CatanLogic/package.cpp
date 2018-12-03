@@ -480,7 +480,7 @@ MonopolyPkg::MonopolyPkg(ResourceType recurso):package(headers::MONOPOLY)
 	resource = recurso;
 }
 
-ResourceType MonopolyPkg::getResouce()
+ResourceType MonopolyPkg::getResource()
 {
 	return resource;
 }
@@ -516,6 +516,11 @@ ResourceType YearsOfPlentyPkg::getResource(bool cual)
 CardIsPkg::CardIsPkg(char resource) :package(headers::CARD_IS)
 {
 	recurso = static_cast<ResourceType>(resource);
+}
+
+ResourceType CardIsPkg::getResource()
+{
+	return recurso;
 }
 
 std::string CardIsPkg::getPackage()

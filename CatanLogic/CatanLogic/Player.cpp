@@ -498,6 +498,18 @@ bool Player::checkCityResources()
 	return ret;
 }
 
+bool Player::isThereSetOrCity(char token)
+{
+	for (auto set : mySettlements)
+	{
+		if (set.first.find(token) != string::npos)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Player::checkIfIsPort(string position, Board* board)
 {
 	if (board->checkIfIsPort(position))

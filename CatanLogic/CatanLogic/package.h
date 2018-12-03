@@ -52,7 +52,7 @@ private:
 		"3S" ,"3RS","3R","3QR","34Q",
 		"4Q","4MQ","4M" ,"4HM","45H",
 		"5H","5DH","5D","5AD"
-	}
+	};
 };
 
 class CircularTokensPkg :
@@ -199,7 +199,7 @@ class MonopolyPkg :
 {
 public:
 	MonopolyPkg(ResourceType recurso);
-	ResourceType getResouce();
+	ResourceType getResource();
 	virtual std::string getPackage();
 private:
 	ResourceType resource;
@@ -222,6 +222,7 @@ class CardIsPkg :
 {
 public:
 	CardIsPkg(char resource);
+	ResourceType getResource();
 	virtual std::string getPackage();
 private:
 	ResourceType recurso;

@@ -69,6 +69,8 @@ public:
 	bool checkRoadResources();
 	// Checks if user has enough resources to build a City.
 	bool checkCityResources();
+	// Checks if there is a Settlement or City adjacent to the given token.
+	bool isThereSetOrCity(char token);
 
 	// Checks if given position is a port in given board.
 	bool checkIfIsPort(string position, Board* board);
