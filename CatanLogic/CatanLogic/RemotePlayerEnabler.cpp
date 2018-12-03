@@ -26,6 +26,7 @@ void RemotePlayerEnabler::localStarts()
 {
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
+	disableAll();
 	enable(NET_SETTLEMENT, { TX(firstSettlement) });
 	setDefaultRoutine(TX(genericDefault));
 }
@@ -64,23 +65,47 @@ void RemotePlayerEnabler::enableRemoteActions()
 	enable(NET_PASS, {TX(endTurn)});
 }
 
-void RemotePlayerEnabler::checkRemoteDevCards()
+void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 {
 	if (remotePlayer->getDevCardAmount(DevCards::KNIGHT))
 	{
-		enable(NET_KNIGHT,{TX(remUsedKnight)});
+		enable(NET_KNIGHT, { TX(remUsedKnight) });
 	}
+	else
+	{
+		disable(NET_KNIGHT);
+	}
+	
 	if (remotePlayer->getDevCardAmount(DevCards::MONOPOLY))
 	{
 		enable(NET_MONOPOLY, { TX(remUsedMonopoly) });
 	}
+	else
+	{
+		disable(NET_MONOPOLY);
+	}
+	
 	if (remotePlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
 	{
 		enable(NET_YEARS_OF_PLENTY, { TX(remUsedYoP) });
 	}
-	if (remotePlayer->getDevCardAmount(DevCards::ROAD_CONSTRUCTION))
+	else
+	{
+		disable(NET_YEARS_OF_PLENTY);
+	}
+	
+	if (remotePlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
 	{
 		enable(NET_ROAD_BUILDING, { TX(remUsedRoadBuilding) });
+	}
+	else
+	{
+		disable(NET_ROAD_BUILDING);
+	}
+
+	if (localPlayer->isThereDevCard(VICTORY_POINTS))
+	{
+		localPlayer->useDevCard(VICTORY_POINTS);
 	}
 }
 
@@ -194,14 +219,14 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 			}
 			else
 			{
-				enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) , TX(checkRemoteDevCards() ) });
+				enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) , TX(checkRemoteDevCards) });
 			}
 		}
 	}
 	else
 	{
 		pkgSender->pushPackage(new package(headers::ACK));
-		checkRemoteDevCards();
+		checkRemoteDevCards(ev);
 		enableRemoteActions();
 	}
 }
@@ -413,12 +438,27 @@ void RemotePlayerEnabler::endTurn(SubtypeEvent * ev)
 void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 {
 	disableAllBut({ NET_KNIGHT,NET_YEARS_OF_PLENTY,NET_MONOPOLY,NET_ROAD_BUILDING }); 
-	enable(NET_OFFER_TRADE, { TX(evaluateOffer) });
-	enable(NET_SETTLEMENT, { TX(checkRemoteSettlement) });
-	enable(NET_CITY, { TX(checkRemoteCity) });
-	enable(NET_ROAD, { TX(checkRemoteRoad) });
-	enable(NET_BANK_TRADE, { TX(checkRemoteBankTrade) });
-	enable(NET_DEV_CARDS, { TX(checkDevCards) });
+	if (remotePlayer->totalResourcesAmount())
+	{
+		enable(NET_OFFER_TRADE, { TX(evaluateOffer) });
+		enable(NET_BANK_TRADE, { TX(checkRemoteBankTrade) });
+	}
+	if (remotePlayer->checkSettlementResources())
+	{
+		enable(NET_SETTLEMENT, { TX(checkRemoteSettlement) });
+	}
+	if (remotePlayer->checkCityResources())
+	{
+		enable(NET_CITY, { TX(checkRemoteCity) });
+	}
+	if (remotePlayer->checkRoadResources())
+	{
+		enable(NET_ROAD, { TX(checkRemoteRoad) });
+	}
+	if (remotePlayer->checkResourcesForDevCard())
+	{
+		enable(NET_DEV_CARDS, { TX(checkDevCards) });
+	}
 	enable(NET_PASS, { TX(endTurn) });
 }
 
@@ -438,6 +478,7 @@ void RemotePlayerEnabler::exchangeResources(SubtypeEvent * ev)
 
 void RemotePlayerEnabler::genericDefault(SubtypeEvent * ev)
 {
+	emitEvent(ERR_IN_COM);
 }
 
 void RemotePlayerEnabler::emitEvent(EventTypes type)
