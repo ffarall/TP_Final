@@ -508,6 +508,11 @@ std::string YearsOfPlentyPkg::getPackage()
 	return ret;
 }
 
+ResourceType YearsOfPlentyPkg::getResource(bool cual)
+{
+	return cual ? rec1:rec2 ;
+}
+
 CardIsPkg::CardIsPkg(char resource) :package(headers::CARD_IS)
 {
 	recurso = static_cast<ResourceType>(resource);
