@@ -211,6 +211,7 @@ class YearsOfPlentyPkg :
 public:
 	YearsOfPlentyPkg(ResourceType rec1_, ResourceType rec2_);
 	virtual std::string getPackage();
+	ResourceType getResource(bool cual); // true es el 1 y false el 2
 private:
 	ResourceType rec1;
 	ResourceType rec2;

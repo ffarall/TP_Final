@@ -609,6 +609,45 @@ void RemotePlayerEnabler::endTurn(SubtypeEvent * ev)
 	emitEvent(TURN_FINISHED);
 }
 
+void RemotePlayerEnabler::remUsedMonopoly(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
+
+	pkgSender->pushPackage(new package(headers::ACK)); // respondo el pauqete
+	ResourceType recurso = pkg->getResouce();
+	size_t amount = localPlayer->getResourceAmount(recurso); // busco la cantidad de recursos que el local tiene para agregarle al remoto
+	
+	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
+	localPlayer->useResource(recurso, amount); // saco los recuros
+	remotePlayer->useDevCard(DevCards::MONOPOLY); // uso la carta
+}
+
+void RemotePlayerEnabler::remUsedYoP(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	YearsOfPlentyPkg* pkg = static_cast<YearsOfPlentyPkg*>(auxEv->getPackage());
+
+	pkgSender->pushPackage(new package(headers::ACK)); // respondo el pauqete
+	ResourceType recurso = pkg->getResource(true);
+	size_t amount = localPlayer->getResourceAmount(recurso); // busco la cantidad de recursos que el local tiene para agregarle al remoto
+
+	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
+	localPlayer->useResource(recurso, amount); // saco los recuros
+
+	recurso = pkg->getResource(false);
+	amount = localPlayer->getResourceAmount(recurso); // busco la cantidad de recursos que el local tiene para agregarle al remoto
+
+	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
+	localPlayer->useResource(recurso, amount); // saco los recuros
+
+	remotePlayer->useDevCard(DevCards::YEARS_OF_PLENTY); // uso la carta
+}
+
 void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 {
 	disableAllBut({ NET_KNIGHT,NET_YEARS_OF_PLENTY,NET_MONOPOLY,NET_ROAD_BUILDING }); 
@@ -638,7 +677,7 @@ void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 
 void RemotePlayerEnabler::rejectOffer(SubtypeEvent * ev)
 {
-	pkgSender->pushPackage(new package(headers::NO))
+	pkgSender->pushPackage(new package(headers::NO));
 }
 
 void RemotePlayerEnabler::exchangeResources(SubtypeEvent * ev)
