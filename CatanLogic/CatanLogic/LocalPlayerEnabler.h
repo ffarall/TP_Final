@@ -23,6 +23,9 @@ public:
 
 	void setRemoteEnabler(PlayerEnabler* remoteEnabler_);
 
+	// Returns "local" or "remote", depending on who won, or "no one" if game ended because of an error.
+	string whoWon();
+
 private:
 	void init();
 	void end();
