@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "CatanDefs.h"
+#include "Board.h"
 
 class package
 {
@@ -31,13 +32,14 @@ class MapIsPkg :
 {
 public:
 	MapIsPkg(const char * mapa);
-	MapIsPkg(std::vector<SeaType>& agua_, std::vector<ResourceType>& piezas);
+	MapIsPkg(std::vector<PortType>& agua_, std::vector<ResourceType>& piezas);
 	char * getMap(); // todava no se en que formato devolverlo (pensar...)
 	virtual std::string getPackage();
 private:
 	SeaType agua[6];
 	ResourceType tablero[19];
 	char all[25];
+	Board * board;
 };
 
 class CircularTokensPkg :

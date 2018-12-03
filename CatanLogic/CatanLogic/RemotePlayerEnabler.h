@@ -57,7 +57,7 @@ private:
 	void remUsedRoadBuilding(SubtypeEvent * ev);
 
 	void enableRemoteActions(SubtypeEvent * ev);
-
+	void rejectOffer(SubtypeEvent * ev);
 	void exchangeResources(SubtypeEvent* ev);
 	void checkRemoteDevCards(SubtypeEvent * ev);
 
