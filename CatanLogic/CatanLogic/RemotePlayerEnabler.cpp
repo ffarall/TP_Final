@@ -113,6 +113,14 @@ void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 	}
 }
 
+void RemotePlayerEnabler::road1(SubtypeEvent * ev)
+{
+}
+
+void RemotePlayerEnabler::road2(SubtypeEvent * ev)
+{
+}
+
 void RemotePlayerEnabler::setLocalEnabler(PlayerEnabler * localEnabler_)
 {
 	localEnabler = localEnabler_;
@@ -609,8 +617,22 @@ void RemotePlayerEnabler::endTurn(SubtypeEvent * ev)
 	emitEvent(TURN_FINISHED);
 }
 
+void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
+{
+	disableAll();
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
+
+	board->moveRobber(pkg->getPos());
+	localPlay;
+	enableRemoteActions();
+}
+
 void RemotePlayerEnabler::remUsedMonopoly(SubtypeEvent * ev)
 {
+	disableAll();
 	setErrMessage("");
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
@@ -623,10 +645,12 @@ void RemotePlayerEnabler::remUsedMonopoly(SubtypeEvent * ev)
 	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
 	localPlayer->useResource(recurso, amount); // saco los recuros
 	remotePlayer->useDevCard(DevCards::MONOPOLY); // uso la carta
+	enableRemoteActions();
 }
 
 void RemotePlayerEnabler::remUsedYoP(SubtypeEvent * ev)
 {
+	disableAll();
 	setErrMessage("");
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
@@ -646,6 +670,14 @@ void RemotePlayerEnabler::remUsedYoP(SubtypeEvent * ev)
 	localPlayer->useResource(recurso, amount); // saco los recuros
 
 	remotePlayer->useDevCard(DevCards::YEARS_OF_PLENTY); // uso la carta
+	enableRemoteActions();
+}
+
+void RemotePlayerEnabler::remUsedRoadBuilding(SubtypeEvent * ev)
+{
+	disableAll();
+	pkgSender->pushPackage(new package(headers::ACK));
+	enable(NET_ROAD, { TX(firstRoad) });
 }
 
 void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
