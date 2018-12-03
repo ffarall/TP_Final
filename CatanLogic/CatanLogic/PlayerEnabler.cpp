@@ -41,6 +41,16 @@ void PlayerEnabler::setPkgSender(Networking * pkgSender_)
 	pkgSender = pkgSender_;
 }
 
+void PlayerEnabler::setPlayingWithDev(bool playing)
+{
+	playingWithDev = playing;
+}
+
+bool PlayerEnabler::areWePlayingWithDev()
+{
+	return playingWithDev;
+}
+
 void PlayerEnabler::setErrMessage(string message)
 {
 	errMessageForUser = message;

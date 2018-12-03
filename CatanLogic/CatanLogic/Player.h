@@ -70,10 +70,10 @@ public:
 	// Checks if user has enough resources to build a City.
 	bool checkCityResources();
 
-	// Checks if user can make a bank trade from the given position.
-	bool checkBankTrade(string position, Board* board);
+	// Checks if given position is a port in given board.
+	bool checkIfIsPort(string position, Board* board);
 	// Does the bank trade and exchanges the resources. When the bank trade is with a port that has fixed resourcesOffered, this parameter is not needed.
-	void makeBankTrade(string position, Board* board, ResourceType resourceAsked, vector< ResourceType > resourcesOffered = {});
+	void makeBankTrade(string position, Board* board, ResourceType resourceAsked, ResourceType resourcesOffered = MONTAÑAS);
 	// Checks if player has enough resources for the given type of port.
 	bool checkResourcesForBankTrade(PortType type);
 

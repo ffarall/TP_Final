@@ -252,42 +252,44 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
-
-	if (localPlayer->isThereDevCard(KNIGHT))
+	if (areWePlayingWithDev())
 	{
-		enable(PLA_KNIGHT, { TX(useKnight) });
-	}
-	else
-	{
-		disable(PLA_KNIGHT);
-	}
-	if (localPlayer->isThereDevCard(VICTORY_POINTS))
-	{
-		localPlayer->useDevCard(VICTORY_POINTS);
-	}
-	if (localPlayer->isThereDevCard(MONOPOLY))
-	{
-		enable(PLA_MONOPOLY, { TX(useMonopoly) });
-	}
-	else
-	{
-		disable(PLA_MONOPOLY);
-	}
-	if (localPlayer->isThereDevCard(YEARS_OF_PLENTY))
-	{
-		enable(PLA_YEARS_OF_PLENTY, { TX(useYearsOfPlenty) });
-	}
-	else
-	{
-		disable(PLA_YEARS_OF_PLENTY);
-	}
-	if (localPlayer->isThereDevCard(ROAD_BUILDING))
-	{
-		enable(PLA_ROAD_BUILDING, { TX(useRoadBuilding) });
-	}
-	else
-	{
-		disable(PLA_ROAD_BUILDING);
+		if (localPlayer->isThereDevCard(KNIGHT))
+		{
+			enable(PLA_KNIGHT, { TX(useKnight) });
+		}
+		else
+		{
+			disable(PLA_KNIGHT);
+		}
+		if (localPlayer->isThereDevCard(VICTORY_POINTS))
+		{
+			localPlayer->useDevCard(VICTORY_POINTS);
+		}
+		if (localPlayer->isThereDevCard(MONOPOLY))
+		{
+			enable(PLA_MONOPOLY, { TX(useMonopoly) });
+		}
+		else
+		{
+			disable(PLA_MONOPOLY);
+		}
+		if (localPlayer->isThereDevCard(YEARS_OF_PLENTY))
+		{
+			enable(PLA_YEARS_OF_PLENTY, { TX(useYearsOfPlenty) });
+		}
+		else
+		{
+			disable(PLA_YEARS_OF_PLENTY);
+		}
+		if (localPlayer->isThereDevCard(ROAD_BUILDING))
+		{
+			enable(PLA_ROAD_BUILDING, { TX(useRoadBuilding) });
+		}
+		else
+		{
+			disable(PLA_ROAD_BUILDING);
+		}
 	}
 }
 

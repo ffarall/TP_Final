@@ -480,7 +480,7 @@ bool Player::checkCityResources()
 	return ret;
 }
 
-bool Player::checkBankTrade(string position, Board* board)
+bool Player::checkIfIsPort(string position, Board* board)
 {
 	if (board->checkIfIsPort(position))
 	{
@@ -492,26 +492,34 @@ bool Player::checkBankTrade(string position, Board* board)
 	return false;
 }
 
-void Player::makeBankTrade(string position, Board * board, ResourceType resourceAsked, vector<ResourceType> resourcesOffered)
+void Player::makeBankTrade(string position, Board * board, ResourceType resourceAsked, ResourceType resourcesOffered)
 {
-	PortType type = board->getPortType(position);
-
-	switch (type)
+	if (checkIfIsPort(position, board))
 	{
-	case _3x1: { useResource(resourcesOffered[0]; ); }
-		break;
-	case _2Tx1:
-		break;
-	case _2Ox1:
-		break;
-	case _2Lx1:
-		break;
-	case _2Px1:
-		break;
-	case _2Mx1:
-		break;
-	default:
-		break;
+		PortType type = board->getPortType(position);
+
+		switch (type)
+		{
+		case _3x1: { useResource(resourcesOffered, 3); addResource(resourceAsked); }
+				   break;
+		case _2Tx1: { useResource(CAMPOS, 2); addResource(resourceAsked); }
+					break;
+		case _2Ox1: { useResource(PASTOS, 2); addResource(resourceAsked); }
+			break;
+		case _2Lx1: { useResource(COLINAS, 2); addResource(resourceAsked); }
+			break;
+		case _2Px1: { useResource(MONTAÑAS, 2); addResource(resourceAsked); }
+			break;
+		case _2Mx1: { useResource(BOSQUE, 2); addResource(resourceAsked); }
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		useResource(resourcesOffered, 4);
+		addResource(resourceAsked);
 	}
 }
 

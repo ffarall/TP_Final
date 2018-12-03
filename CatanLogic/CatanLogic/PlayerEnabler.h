@@ -24,6 +24,10 @@ public:
 	void setBoard(Board* board_);
 	// Sets package sender.
 	void setPkgSender(Networking* pkgSender_);
+	// Sets playingWithDev.
+	void setPlayingWithDev(bool playing);
+	// True when playing with DevCards.
+	bool areWePlayingWithDev();
 
 
 protected:
@@ -41,6 +45,8 @@ protected:
 	Networking * pkgSender;
 	// To save OFFER_TRADE package when expecting rival's response.
 	OfferTradePkg pendingOffer;
+	// True when playing with DevCards.
+	bool playingWithDev;
 
 	void setErrMessage(string message);
 	void setWaitingMessage(string message);

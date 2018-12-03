@@ -6,17 +6,27 @@ Board::Board()
 {
 }
 
-Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDevCards_) : board(board_), robber(robber_), pileOfDevCards(pileOfDevCards_)
+Board::Board(map<char, Token*>& board_, char robber_) : board(board_), robber(robber_)
 {
 }
 
-Board::Board(map<char, Token*>& board_, char robber_, stack<DevCards>& pileOfDevCards_, map<Coordinate, PortType> ports_) : board(board_), robber(robber_), pileOfDevCards(pileOfDevCards_), ports(ports_)
+Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>& ports_) : board(board_), robber(robber_), ports(ports_)
 {
 }
 
 
 Board::~Board()
 {
+}
+
+void Board::setDevCards(stack<DevCards>& pileOfDevCards_)
+{
+	pileOfDevCards = pileOfDevCards_;
+}
+
+void Board::setCircularToken(char token, unsigned int circToken)
+{
+	((Hex*)board[token])->setDiceNum(circToken);
 }
 
 bool Board::addSettlementToTokens(string position, Player* owner)

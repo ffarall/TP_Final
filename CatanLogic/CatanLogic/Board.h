@@ -15,12 +15,17 @@ class Board :
 {
 public:
 	Board();
-	Board(map< char, Token* >& board_, char robber_, stack< DevCards >& pileOfDevCards_);
-	Board(map< char, Token* >& board_, char robber_, stack< DevCards >& pileOfDevCards_, map< Coordinate, PortType > ports_);
+	Board(map< char, Token* >& board_, char robber_);
+	Board(map< char, Token* >& board_, char robber_, map< Coordinate, PortType >& ports_);
 	virtual ~Board();
 
 	// Creates new board randomly and according to game rules.
 	void shuffleBoard();
+
+	// Sets new pile of devCards.
+	void setDevCards(stack< DevCards >& pileOfDevCards_);
+	// Sets Circular Token for the given Token.
+	void setCircularToken(char token, unsigned int circToken);
 
 	// Returns false if one of the Tokens is already full of settlements.
 	bool addSettlementToTokens(string position, Player* owner);
