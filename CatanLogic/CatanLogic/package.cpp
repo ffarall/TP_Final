@@ -1,5 +1,9 @@
 #include "package.h"
 
+package::package()
+{
+}
+
 package::package(headers paquete)
 {
 	nombre = paquete;
@@ -51,7 +55,7 @@ MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 	}
 }
 
-MapIsPkg::MapIsPkg(std::vector<SeaType>& agua_, std::vector<ResourceType>& piezas):package(headers::MAP_IS)
+MapIsPkg::MapIsPkg(std::vector<PortType>& agua_, std::vector<ResourceType>& piezas) : package(headers::MAP_IS)
 {
 	
 	int j = 0;
@@ -66,7 +70,7 @@ MapIsPkg::MapIsPkg(std::vector<SeaType>& agua_, std::vector<ResourceType>& pieza
 	else
 	{
 		for (int i = 0; i < 6; i++)
-			agua[i] = SeaType::_3X1;
+			agua[i] = PortType::_3x1;
 		for (int i = 0; i < 19; i++)
 			tablero[i] = ResourceType::DESIERTO;
 	}
@@ -336,6 +340,10 @@ std::string BankTradePkg::getPackage()
 	for (ResourceType a : misRecursos) { ret.push_back(static_cast<char>(a)); }
 	ret.push_back(static_cast<char>(pedido));
 	return ret;
+}
+
+OfferTradePkg::OfferTradePkg()
+{
 }
 
 OfferTradePkg::OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido):package(headers::OFFER_TRADE)
