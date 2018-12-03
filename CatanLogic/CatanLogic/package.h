@@ -44,7 +44,7 @@ private:
 	char all[25];
 	Board * board;
 
-	const vector<string> utiles =
+	const vector<string> utiles = // los vertices exteriores en sentido horario
 	{
 		"05A","0A","0AB","0B","0BC","01C",
 		"1C","1CG","1G","1GL","12L",
