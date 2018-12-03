@@ -7,6 +7,7 @@
 class package
 {
 public:
+	package();
 	package(headers paquete);
 	~package();
 	headers getPacket();
