@@ -415,7 +415,19 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	BankTradePkg* pkg = static_cast<BankTradePkg*>(auxEv->getPackage());
-	string position = pkg->getPos();
+	int amountOfResourcesPaid = pkg->getLength();
+
+	switch (amountOfResourcesPaid)
+	{
+	case 4:
+		break;
+	case 3:
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
 }
 
 void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
