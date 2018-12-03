@@ -38,6 +38,10 @@ private:
 	void firstRoad(SubtypeEvent* ev);
 	void secondSettlement(SubtypeEvent* ev);
 	void secondRoad(SubtypeEvent* ev);
+	void firstSettlement_(SubtypeEvent* ev);
+	void firstRoad_(SubtypeEvent* ev);
+	void secondSettlement_(SubtypeEvent* ev);
+	void secondRoad_(SubtypeEvent* ev);
 	void checkDices(SubtypeEvent* ev);
 	void SendsRobberCards(SubtypeEvent* ev);
 	void remoteLoseCards(SubtypeEvent* ev);

@@ -492,6 +492,21 @@ bool Player::checkIfIsPort(string position, Board* board)
 	return false;
 }
 
+bool Player::checkForAnyPort(Board * board, PortType port_)
+{
+	for (auto settlement : mySettlements)
+	{
+		if (board->checkIfIsPort(settlement.first))
+		{
+			if (board->getPortType(settlement.first) == port_)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void Player::makeBankTrade(string position, Board * board, ResourceType resourceAsked, ResourceType resourcesOffered)
 {
 	if (checkIfIsPort(position, board))

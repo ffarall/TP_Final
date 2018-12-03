@@ -33,6 +33,10 @@ void RemotePlayerEnabler::localStarts()
 
 void RemotePlayerEnabler::remoteStarts()
 {
+	disableAll();
+	enable(NET_SETTLEMENT, { TX(firstSettlement_) });
+	setDefaultRoutine(TX(genericDefault));
+
 }
 
 void RemotePlayerEnabler::setUpForTurn()
@@ -140,10 +144,19 @@ void RemotePlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	addSettlementToRemote(position);
-
-	disable(NET_SETTLEMENT);
-	enable(NET_ROAD, { TX(firstRoad) });
+	if (localPlayer->checkSettlementAvailability(position))
+	{
+		addSettlementToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_SETTLEMENT);
+		enable(NET_ROAD, { TX(firstRoad) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
 }
 
 void RemotePlayerEnabler::firstRoad(SubtypeEvent * ev)
@@ -154,10 +167,19 @@ void RemotePlayerEnabler::firstRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	addRoadToRemote(position);
-
-	disable(NET_ROAD);
-	enable(NET_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_ROAD);
+		enable(NET_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
 }
 
 void RemotePlayerEnabler::secondSettlement(SubtypeEvent * ev)
@@ -168,11 +190,20 @@ void RemotePlayerEnabler::secondSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	addSettlementToRemote(position);
-	board->addSettlementToTokens(position, remotePlayer);
-
-	disable(NET_SETTLEMENT);
-	enable(NET_ROAD, { TX(secondRoad) });
+	if (localPlayer->checkSettlementAvailability(position))
+	{
+		pkgSender->pushPackage(new package(headers::ACK));
+		addSettlementToRemote(position);
+		board->addSettlementToTokens(position, remotePlayer);
+		disable(NET_SETTLEMENT);
+		enable(NET_ROAD, { TX(secondRoad_) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
 }
 
 void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
@@ -183,11 +214,117 @@ void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	addRoadToRemote(position);
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_ROAD);
+		setUpForTurn();
+		emitEvent(TURN_FINISHED);
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
+}
 
-	disable(NET_ROAD);
-	setUpForTurn();
-	emitEvent(TURN_FINISHED);
+void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkSettlementAvailability(position))
+	{
+		addSettlementToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_SETTLEMENT);
+		enable(NET_ROAD, { TX(firstRoad_) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
+}
+
+void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_ROAD);
+		enable(NET_SETTLEMENT, { TX(secondSettlement_) });				// Leaving everything ready for next turn.
+		emitEvent(TURN_FINISHED);
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
+
+}
+
+void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkSettlementAvailability(position))
+	{
+		pkgSender->pushPackage(new package(headers::ACK));
+		addSettlementToRemote(position);
+		board->addSettlementToTokens(position, remotePlayer);
+		disable(NET_SETTLEMENT);
+		enable(NET_ROAD, { TX(secondRoad_) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
+}
+
+void RemotePlayerEnabler::secondRoad_(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if(localPlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_ROAD);
+		setUpForTurn();
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
+	
 }
 
 void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
@@ -389,17 +526,54 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	BankTradePkg* pkg = static_cast<BankTradePkg*>(auxEv->getPackage());
-	
-	bool isOK = true;
-	for (ResourceType a : pkg->getResoucesPaid())
+	int amountOfResourcesPaid = pkg->getLength();
+	bool isOk = false;
+
+	switch (amountOfResourcesPaid)
 	{
-		if (!(remotePlayer->useResource(a)))
+	case 4:
+		isOk = true;
+		break;
+	case 3:
+		if (remotePlayer->checkForAnyPort(board, PortType::_3x1)) { isOk = true; }
+		break;
+	case 2:
+		switch (pkg->getResouceBougth())
 		{
-			isOK = false;
+		case PortType::_2Lx1:
+			if (remotePlayer->checkForAnyPort(board, PortType::_2Lx1)) { isOk = true; }
+			break;
+		case PortType::_2Ox1:
+			if (remotePlayer->checkForAnyPort(board, PortType::_2Ox1)) { isOk = true; }
+			break;
+		case PortType::_2Mx1:
+			if (remotePlayer->checkForAnyPort(board, PortType::_2Mx1)) { isOk = true; }
+			break;
+		case PortType::_2Px1:
+			if (remotePlayer->checkForAnyPort(board, PortType::_2Px1)) { isOk = true; }
+			break;
+		case PortType::_2Tx1:
+			if (remotePlayer->checkForAnyPort(board, PortType::_2Tx1)) { isOk = true; }
+			break;
+		}
+		break;
+	default:
+		isOk = false; // hay algun error en el paquete
+		break;
+	}
+	/* despues de fijarme si es posible la cuestien de los puertos, me fijo si tiene los recursos suficientes*/
+	if (isOk)
+	{
+		for (ResourceType a : pkg->getResoucesPaid())
+		{
+			if (!(remotePlayer->useResource(a)))
+			{
+				isOk = false;
+			}
 		}
 	}
 
-	if (isOK)
+	if (isOk)
 	{
 		remotePlayer->addResource(pkg->getResouceBougth(),1);
 		pkgSender->pushPackage(new package(headers::ACK));
