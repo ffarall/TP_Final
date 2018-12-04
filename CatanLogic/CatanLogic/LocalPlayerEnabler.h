@@ -75,6 +75,7 @@ private:
 	void emitEvent(EventTypes type);
 	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
 	void getResourceFromSettlement(string position, Player* who);
+	void checkIfLocalWon();
 
 	// Adds settlement to localPlayer and board from both Enablers
 	void addSettlementToLocal(string position);

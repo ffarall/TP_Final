@@ -59,7 +59,7 @@ void Player::init()
 	devCards[VICTORY_POINTS] = { 0, useVictoryPoint };
 	devCards[MONOPOLY] = { 0, useMonopoly };
 	devCards[YEARS_OF_PLENTY] = { 0, useYearsOfPlenty };
-	devCards[ROAD_BUILDING] = { 0, useRoadConstruction };
+	devCards[ROAD_BUILDING] = { 0, useRoadBuilding };
 }
 
 size_t Player::getVictoryPoints()
@@ -570,7 +570,27 @@ void Player::incVictoryPoints()
 	notifyAllObservers();
 }
 
+void Player::useKnight()
+{
+	devCards[KNIGHT].amount--;
+}
+
 void Player::useVictoryPoint()
 {
 	cardVictoryPoints = devCards[VICTORY_POINTS].amount;
+}
+
+void Player::useMonopoly()
+{
+	devCards[MONOPOLY].amount--;
+}
+
+void Player::useYearsOfPlenty()
+{
+	devCards[YEARS_OF_PLENTY].amount--;
+}
+
+void Player::useRoadBuilding()
+{
+	devCards[ROAD_BUILDING].amount--;
 }

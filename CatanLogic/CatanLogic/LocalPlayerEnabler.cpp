@@ -446,6 +446,8 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no está disponible.");
 	}
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
@@ -468,6 +470,8 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
 	}
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
@@ -490,6 +494,8 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso promover la nueva City no es aceptada.");
 	}
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
@@ -595,6 +601,8 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 		disableAll();
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
@@ -613,6 +621,8 @@ void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
@@ -632,6 +642,8 @@ void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
 
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
@@ -644,6 +656,8 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 
 	disableAll();
 	enable(NET_ACK, { TX(enableFstRoad) });
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
@@ -698,6 +712,8 @@ void LocalPlayerEnabler::checkFstRoad(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
 	}
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::enableSndRoad(SubtypeEvent * ev)
@@ -716,6 +732,8 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	emitEvent(TURN_FINISHED);
 	disableAll();
 	enable(PLA_DICES_ARE, { TX(checkDices) });
+
+	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
@@ -746,6 +764,14 @@ void LocalPlayerEnabler::getResourceFromSettlement(string position, Player* who)
 			ResourceType resType = board->getResourceFromHex(c);
 			who->addResource(resType);							// Adds 1 resource because it's a Settlement.
 		}
+	}
+}
+
+void LocalPlayerEnabler::checkIfLocalWon()
+{
+	if (localPlayer->hasWon())
+	{
+		emitEvent(I_WON);
 	}
 }
 

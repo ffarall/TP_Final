@@ -128,6 +128,12 @@ private:
 	// Increment victoryPoints and checks if has Won.
 	void incVictoryPoints();
 
+	void useKnight();
+	void useVictoryPoint();
+	void useMonopoly();
+	void useYearsOfPlenty();
+	void useRoadBuilding();
+
 	// All combinations of edges.
 	const list< string > allEdges = {
 		"0A5", "0AB", "0BA", "0BC", "0C", "1C0",
