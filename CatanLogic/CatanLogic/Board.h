@@ -21,7 +21,8 @@ public:
 
 	// Creates new board randomly and according to game rules.
 	void shuffleBoard();
-
+	// copy from another board
+	void copyBoard(Board * original); // para evitar problemas de destructores
 	// Sets new pile of devCards.
 	void setDevCards(stack< DevCards > const & pileOfDevCards_);
 	// Sets Circular Token for the given Token.
@@ -41,7 +42,8 @@ public:
 
 	// Moves Robber to position given.
 	void moveRobber(char position);
-
+	// Get robber position
+	char getRobberPos();
 	// Returns DevCard at the top of the pile.
 	DevCards pickDevCard();
 
