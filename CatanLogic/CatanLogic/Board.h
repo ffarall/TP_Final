@@ -49,6 +49,12 @@ public:
 	bool checkIfIsPort(string position);
 	// Returns type of port in given position.
 	PortType getPortType(string position);
+	// Returns type of the port of an specific sea
+	PortType getPortType(char position);
+	// Returns the circular Token from an specific hex
+	char getCircToken(char hex_);
+	// Returns all devCards
+	stack< DevCards > getDevCards(void); // para mandarlo por network
 	// Sets port in position given to type given.
 	void setPort(string position, PortType type);
 

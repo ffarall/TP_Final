@@ -59,6 +59,7 @@ class CircularTokensPkg :
 	public package
 {
 public:
+	CircularTokensPkg(Board * tablero);
 	CircularTokensPkg(const char * tokns);
 	CircularTokensPkg(std::vector<char>& tokenList);
 	char * getTokenList();
@@ -71,9 +72,10 @@ class DevCardsPkg :
 	public package
 {
 public:
+	DevCardsPkg(stack< DevCards > pilaDeCartas);
 	DevCardsPkg(const char * deck);
 	DevCardsPkg(std::vector<DevCards>& deck);
-	DevCards * getDeck();
+	stack< DevCards > getDeck();
 	virtual std::string getPackage();
 private:
 	DevCards pilon[25];

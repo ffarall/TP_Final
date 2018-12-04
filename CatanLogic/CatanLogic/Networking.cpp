@@ -155,38 +155,41 @@ void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
 
 void Networking::workPlease()
 {
-	if (!(paraEnviar.empty()))
+	if (connected)
 	{
-		const char * msg = paraEnviar.front()->getPackage().c_str();
-		cout << "Envio: " << msg << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
-		send(msg);
-		paraEnviar.pop(); // lo saco de la cola
-	}
-	
-	size_t len = 0,dataLength = socket->available();
-	boost::system::error_code error;
-
-	if (dataLength > 0)
-	{
-		char * buffer = new char[dataLength+1];
-
-		do { 
-			len = socket->read_some(boost::asio::buffer(buffer, dataLength), error);
-		} while (error.value() == WSAEWOULDBLOCK && len < dataLength );
-		
-		if (error)
+		if (!(paraEnviar.empty()))
 		{
-			SubEvents * errEvent = new SubEvents;
-			errEvent->setEvent(MainTypes::ERR_IN_COM);
-			handler->enqueueEvent(errEvent);
+			const char * msg = paraEnviar.front()->getPackage().c_str();
+			cout << "Envio: " << msg << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
+			send(msg);
+			paraEnviar.pop(); // lo saco de la cola
 		}
-		else
+
+		size_t len = 0, dataLength = socket->available();
+		boost::system::error_code error;
+
+		if (dataLength > 0)
 		{
-			buffer[dataLength] = '\0';
-			cout << "Recibi: " << buffer << endl;
-			parseInput(buffer);
+			char * buffer = new char[dataLength + 1];
+
+			do {
+				len = socket->read_some(boost::asio::buffer(buffer, dataLength), error);
+			} while (error.value() == WSAEWOULDBLOCK && len < dataLength);
+
+			if (error)
+			{
+				SubEvents * errEvent = new SubEvents;
+				errEvent->setEvent(MainTypes::ERR_IN_COM);
+				handler->enqueueEvent(errEvent);
+			}
+			else
+			{
+				buffer[dataLength] = '\0';
+				cout << "Recibi: " << buffer << endl;
+				parseInput(buffer);
+			}
+			delete[]buffer;
 		}
-		delete []buffer;
 	}
 }
 

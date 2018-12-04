@@ -106,6 +106,35 @@ PortType Board::getPortType(string position)
 	return ports[position];
 }
 
+PortType Board::getPortType(char position)
+{
+	if (board[position]->whatAmI().compare("Sea"))
+	{
+		return static_cast<Sea *>(board[position])->getPortType();
+	}
+	else
+	{
+		return PortType::_4x1; // deffault/error
+	}
+}
+
+char Board::getCircToken(char hex_)
+{
+	if (board[hex_]->whatAmI().compare("Hex"))
+	{
+		return static_cast<Hex *>(board[hex_])->getDiceNum();
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+stack<DevCards> Board::getDevCards(void)
+{
+	return pileOfDevCards;
+}
+
 void Board::setPort(string position, PortType type)
 {
 	ports[position] = type;
