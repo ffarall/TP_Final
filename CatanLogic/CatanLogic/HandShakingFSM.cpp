@@ -35,6 +35,7 @@ void HandShakingFSM::changeToServer(GenericEvent * ev)
 
 void HandShakingFSM::defaultClientS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::nonActRoutine(GenericEvent * ev)
@@ -43,23 +44,28 @@ void HandShakingFSM::nonActRoutine(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingClientNameS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::defaultServerS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::defaultWaitingForNameS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::sendMap(GenericEvent * ev)
 {
-	network->pushPackage(new MapIsPkg(gameMap));
+	board->shuffleBoard();
+	network->pushPackage(new Board(board));
 }
 
 void HandShakingFSM::defaultSendingServerNameS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::sendCircTokens(GenericEvent * ev)
@@ -69,6 +75,7 @@ void HandShakingFSM::sendCircTokens(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingMapS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
@@ -78,6 +85,7 @@ void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingCircTokensS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::sendDevCards(GenericEvent * ev)
@@ -92,19 +100,25 @@ void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
 
 void HandShakingFSM::defaultPlayWithDevCardsS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void HandShakingFSM::defaultSendingDevCardsS(GenericEvent * ev)
 {
+	error(ev);
 }
 
-HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, const char *map, const char *tokns, const char *devcards) :GenericFsm(fsmMap,Client_S)
+void HandShakingFSM::error(GenericEvent * ev)
+{
+}
+
+HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, const char *tokns, const char *devcards, Board *board_) :GenericFsm(fsmMap,Client_S)
 {
 	network = network_;
 	localName = name_;
-	gameMap = map;
 	tokens = tokns;
 	srand(time(NULL));
+	board = board_;
 }
 
 void HandShakingFSM::setState(handShakingStates newState)

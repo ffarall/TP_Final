@@ -12,6 +12,7 @@ private:
 	Networking *network;
 	std::string localName;
 	std::string remoteName;
+	Board *board;
 	const char* gameMap;
 	const char *tokens;
 	const char *devCards;
@@ -32,42 +33,42 @@ private:
 		{SendingClientName_S,{{
 				{SubType::NET_ACK,{Client_S,TX(nonActRoutine)}}
 			},
-			{SendingClientName_S,TX(defaultSendingClientNameS)}}},
+			{Client_S,TX(defaultSendingClientNameS)}}},
 
 		{Server_S,{{
 				{SubType::NET_CONNECTED,{WaitingForName_S,TX(nonActRoutine)}}
 			},
-			{Server_S,TX(defaultServerS)}}},
+			{Client_S,TX(defaultServerS)}}},
 
 		{WaitingForName_S,{{
 				{SubType::NET_NAME,{SendingServerName_S,TX(sendName)}}
 			},
-			{WaitingForName_S,TX(defaultWaitingForNameS)}} },
+			{Client_S,TX(defaultWaitingForNameS)}} },
 
 		{SendingServerName_S,{{
 				{SubType::NET_ACK,{SendingMap_S,TX(sendMap)}}
 			},
-			{SendingServerName_S,TX(defaultSendingServerNameS)}} },
+			{Client_S,TX(defaultSendingServerNameS)}} },
 
 		{SendingMap_S,{{
 				{SubType::NET_ACK,{SendingCircTokens_S,TX(sendCircTokens)}}
 			},
-			{SendingMap_S,TX(defaultSendingMapS)}} },
+			{Client_S,TX(defaultSendingMapS)}} },
 
 		{SendingCircTokens_S,{{
 				{SubType::NET_ACK,{PlayWithDevCards_S,TX(askPlayDevCards)}}
 			},
-			{SendingCircTokens_S,TX(defaultSendingCircTokensS)}} },
+			{Client_S,TX(defaultSendingCircTokensS)}} },
 
 		{PlayWithDevCards_S,{{
 				{SubType::NET_YES,{SendingDevCards_S,TX(sendDevCards)}},
 				{SubType::NET_NO,{PlayWithDevCards_S,TX(emitWhoStarts)}}
 			},
-			{PlayWithDevCards_S,TX(defaultPlayWithDevCardsS)}}},
+			{Client_S,TX(defaultPlayWithDevCardsS)}}},
 		{SendingDevCards_S,{{
 				{SubType::NET_ACK,{SendingDevCards_S,TX(emitWhoStarts)}}
 			},
-			{SendingDevCards_S,TX(defaultSendingDevCardsS)}} }
+			{Client_S,TX(defaultSendingDevCardsS)}} }
 	};
 	
 	void validateDevCards(GenericEvent *ev);
@@ -111,9 +112,11 @@ private:
 	void defaultPlayWithDevCardsS(GenericEvent *ev);
 	
 	void defaultSendingDevCardsS(GenericEvent *ev);
+
+	void error(GenericEvent *ev);
 	
 public:
-	HandShakingFSM(Networking* network_,std::string name_, const char *map, const char *tokns, const char *devcards); 
+	HandShakingFSM(Networking* network_,std::string name_, const char *tokns, const char *devcards, Board *board_); 
 	void setState(handShakingStates newState);
 	std::string getLocalName();
 	std::string getRemoteName();
