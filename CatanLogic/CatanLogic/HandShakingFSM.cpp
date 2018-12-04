@@ -59,8 +59,8 @@ void HandShakingFSM::defaultWaitingForNameS(GenericEvent * ev)
 
 void HandShakingFSM::sendMap(GenericEvent * ev)
 {
-	board->shuffleBoard();
-	network->pushPackage(new Board(board));
+	board->shuffleBoard();	
+	network->pushPackage(new MapIsPkg(board));
 }
 
 void HandShakingFSM::defaultSendingServerNameS(GenericEvent * ev)
