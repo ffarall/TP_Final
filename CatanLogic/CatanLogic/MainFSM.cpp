@@ -1,4 +1,5 @@
 #include "MainFSM.h"
+#include<random>
 
 void MainFSM::endProgram(GenericEvent * ev)
 {
@@ -7,6 +8,11 @@ void MainFSM::endProgram(GenericEvent * ev)
 
 void MainFSM::initHandShakingFSM(GenericEvent * ev)
 {
+	random_device rd;
+	mt19937_64 generator{ rd() };
+	uniform_int_distribution<> dist{ 2000, 5000 };	
+	timerCount = dist(generator)/TICK_TIME;; //cambiar este valor por el random
+	handShaking->setBoard(board);
 	handShaking->setState(handShakingStates::Client_S);//la fsm de handshaking siempre comienza como client
 }
 
@@ -39,13 +45,13 @@ void MainFSM::decAndRun(GenericEvent * ev)
 
 void MainFSM::localStartsRoutine(GenericEvent * ev)
 {
-	localEnabler->localStarts(handShaking->getLocalName(),handShaking->getRemoteName());
+	localEnabler->localStarts(handShaking->getLocalName(),handShaking->getRemoteName(),board);
 	remoteEnabler->localStarts();
 }
 
 void MainFSM::remoteStartsRoutine(GenericEvent * ev)
 {
-	localEnabler->remoteStarts(handShaking->getLocalName(), handShaking->getRemoteName());
+	localEnabler->remoteStarts(handShaking->getLocalName(), handShaking->getRemoteName(),board);
 	remoteEnabler->remoteStarts();
 }
 
@@ -117,9 +123,19 @@ void MainFSM::decTimeCounter(GenericEvent * ev)
 	}
 }
 
+void MainFSM::resetTimer(GenericEvent * ev)
+{
+	timerCount = MAX_TICK_TIME;
+}
+
 void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 {
 	handler->enqueueEvent(new SubEvents(type, subtype));
+}
+
+void MainFSM::error(GenericEvent * ev)
+{
+	//do error stuff
 }
 
 MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote):GenericFsm(mainFsmMap,StartMenu_S)
@@ -131,6 +147,12 @@ MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandle
 	remoteEnabler = enablerRemote;
 	receivedQuit = false;
 	timerCount = MAX_TICK_TIME;
+	board = new Board;
+}
+
+mainStates MainFSM::getCurrState()
+{
+	return (mainStates)state;
 }
 
 bool MainFSM::isQuit()

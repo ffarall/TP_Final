@@ -2,16 +2,25 @@
 #include<cstdlib>
 #include<ctime>
 
-void HandShakingFSM::validateDevCards(GenericEvent * ev)
+void HandShakingFSM::saveDevCards(GenericEvent * ev)
 {
+	devCardsOn = true;
+	board->setDevCards(((DevCardsPkg*)((SubEvents*)ev)->getPackage())->getDeck());
 }
 
-void HandShakingFSM::validateCircularTokens(GenericEvent * ev)
+void HandShakingFSM::saveCircularTokens(GenericEvent * ev)
 {
+	for (int i = 0; i < 19; i++)
+	{
+		char circ = (((CircularTokensPkg*)((SubEvents*)ev)->getPackage())->getTokenList())[i];
+		board->setCircularToken('A' + i, circ);
+	}
+	
 }
 
-void HandShakingFSM::validateMap(GenericEvent * ev)
+void HandShakingFSM::saveMap(GenericEvent * ev)
 {
+	//FALTA!
 }
 
 void HandShakingFSM::tryToConnect(GenericEvent * ev)
@@ -40,6 +49,7 @@ void HandShakingFSM::defaultClientS(GenericEvent * ev)
 
 void HandShakingFSM::nonActRoutine(GenericEvent * ev)
 {
+	emitEvent//DONE
 }
 
 void HandShakingFSM::defaultSendingClientNameS(GenericEvent * ev)
@@ -70,7 +80,7 @@ void HandShakingFSM::defaultSendingServerNameS(GenericEvent * ev)
 
 void HandShakingFSM::sendCircTokens(GenericEvent * ev)
 {
-	network->pushPackage(new CircularTokensPkg(tokens));
+	network->pushPackage(new CircularTokensPkg(board));
 }
 
 void HandShakingFSM::defaultSendingMapS(GenericEvent * ev)
@@ -90,11 +100,19 @@ void HandShakingFSM::defaultSendingCircTokensS(GenericEvent * ev)
 
 void HandShakingFSM::sendDevCards(GenericEvent * ev)
 {
-	network->pushPackage(new DevCardsPkg(devCards));
+	network->pushPackage(new DevCardsPkg(board->getDevCards()));
 }
 
 void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
 {
+	if (state == handShakingStates::PlayWithDevCards_S)
+	{
+		devCardsOn = false;
+	}
+	else
+	{
+		devCardsOn = true;
+	}
 	network->pushPackage(new package(rand()%2 ?  headers::I_START: headers::YOU_START));
 }
 
@@ -113,13 +131,12 @@ void HandShakingFSM::error(GenericEvent * ev)
 	//do error stuff
 }
 
-HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, const char *tokns, const char *devcards, Board *board_) :GenericFsm(fsmMap,Client_S)
+HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_) :GenericFsm(fsmMap,Client_S)
 {
 	network = network_;
 	localName = name_;
-	tokens = tokns;
-	srand(time(NULL));
-	board = board_;
+	srand(time(NULL));	
+	devCardsOn = false;
 }
 
 void HandShakingFSM::setState(handShakingStates newState)
@@ -135,4 +152,17 @@ std::string HandShakingFSM::getLocalName()
 std::string HandShakingFSM::getRemoteName()
 {
 	return remoteName;
+}
+
+void HandShakingFSM::setBoard(Board * board_)
+{
+	if (board_ != nullptr)
+	{
+		board = board_;
+	}
+}
+
+bool HandShakingFSM::playingWithDev()
+{
+	return devCardsOn;
 }

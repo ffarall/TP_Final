@@ -6,8 +6,8 @@
 #include"RemotePlayerEnabler.h"
 
 
-
-#define MAX_TICK_TIME 12000
+#define TICK_TIME 5//ms
+#define MAX_TICK_TIME 12000//set to be 2 min 30 sec
 enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, GameOver_S, PlayAgain_S };
 class MainFSM: public GenericFsm
 {
@@ -17,6 +17,7 @@ private:
 	EventsHandler *handler;
 	LocalPlayerEnabler *localEnabler;
 	RemotePlayerEnabler *remoteEnabler;
+	Board *board;
 
 	unsigned long int timerCount;
 	bool receivedQuit;
@@ -25,6 +26,7 @@ private:
 		{StartMenu_S,{{
 				{MainTypes::QUIT,{StartMenu_S,TX(endProgram)}},
 				{MainTypes::START_GAME,{HandShaking_S,TX(initHandShakingFSM)}},
+				{MainTypes::TICKS,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultStartMenuS)}}},
 
@@ -41,7 +43,7 @@ private:
 		{LocalPlayer_S,{{
 				{MainTypes::PLAYER_ACTION,{LocalPlayer_S,TX(localFSMRun)}},
 				{MainTypes::NETWORK,{LocalPlayer_S,TX(localFSMRun)}},
-				{MainTypes::TURN_FINISHED,{RemotePlayer_S,TX(nonActRoutine)}},
+				{MainTypes::TURN_FINISHED,{RemotePlayer_S,TX(resetTimer)}},
 				{MainTypes::TICKS,{LocalPlayer_S,TX(decTimeCounter)}},
 				{MainTypes::I_WON,{GameOver_S,TX(nonActRoutine)}}
 			},
@@ -50,7 +52,7 @@ private:
 		{RemotePlayer_S,{{
 				{MainTypes::NETWORK,{RemotePlayer_S,TX(remoteFSMRun)}},
 				{MainTypes::I_WON,{GameOver_S,TX(nonActRoutine)}},
-				{MainTypes::TURN_FINISHED,{LocalPlayer_S,TX(nonActRoutine)}},
+				{MainTypes::TURN_FINISHED,{LocalPlayer_S,TX(resetTimer)}},
 				{MainTypes::PLAYER_ACTION,{RemotePlayer_S,TX(remoteFSMRun)}},
 				{MainTypes::TICKS,{RemotePlayer_S,TX(decTimeCounter)}}
 			},
@@ -96,11 +98,13 @@ private:
 
 	void nonActRoutine(GenericEvent *ev);
 	void decTimeCounter(GenericEvent *ev);
+	void resetTimer(GenericEvent *ev);
 
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);
 	void error(GenericEvent *ev);
 public:
 	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote);
+	mainStates getCurrState();
 	bool isQuit();
 
 };
