@@ -1,7 +1,7 @@
 #pragma once
 #include "NewEventHandling.h"
 #include "EDASubject.h"
-#include<map>
+#include <map>
 
 class GenericFsm;
 using StateTypes = unsigned int;

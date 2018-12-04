@@ -17,6 +17,10 @@ Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>&
 
 Board::~Board()
 {
+	for (auto token : board)
+	{
+		delete token.second;
+	}
 }
 
 void Board::setDevCards(stack<DevCards>& pileOfDevCards_)
