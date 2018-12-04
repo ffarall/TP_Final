@@ -19,7 +19,7 @@ public:
 	// Enables events for the user to select when local starts.
 	void localStarts(string nameLocal, string nameRemote, Board* board_);
 	// Enables events when remote starts.
-	void remoteStarts(string nameLocal, string nameRemote);
+	void remoteStarts(string nameLocal, string nameRemote,Board* board_);
 
 	void setRemoteEnabler(PlayerEnabler* remoteEnabler_);
 

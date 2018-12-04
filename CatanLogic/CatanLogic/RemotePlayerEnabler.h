@@ -21,9 +21,7 @@ public:
 	void localStarts();
 	// Enables events when remote starts.
 	void remoteStarts();
-	// Enables events for beginning of turn.
-	void setUpForTurn();
-
+	
 	void setLocalEnabler(PlayerEnabler* localEnabler_);
 private:
 	void init();
@@ -87,6 +85,7 @@ private:
 	bool deleteCards(vector<ResourceType> descarte, Player * player_);
 	// Enables All posible actions in a turn
 	void enableRemoteActions();
-	
+	// Enables events for beginning of turn.
+	void setUpForTurn();
 };
 

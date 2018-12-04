@@ -21,9 +21,10 @@ public:
 
 	// Creates new board randomly and according to game rules.
 	void shuffleBoard();
-
+	// copy from another board
+	void copyBoard(Board * original); // para evitar problemas de destructores
 	// Sets new pile of devCards.
-	void setDevCards(stack< DevCards >& pileOfDevCards_);
+	void setDevCards(stack< DevCards > const & pileOfDevCards_);
 	// Sets Circular Token for the given Token.
 	void setCircularToken(char token, unsigned int circToken);
 
@@ -41,7 +42,8 @@ public:
 
 	// Moves Robber to position given.
 	void moveRobber(char position);
-
+	// Get robber position
+	char getRobberPos();
 	// Returns DevCard at the top of the pile.
 	DevCards pickDevCard();
 
@@ -49,6 +51,12 @@ public:
 	bool checkIfIsPort(string position);
 	// Returns type of port in given position.
 	PortType getPortType(string position);
+	// Returns type of the port of an specific sea
+	PortType getPortType(char position);
+	// Returns the circular Token from an specific hex
+	char getCircToken(char hex_);
+	// Returns all devCards
+	stack< DevCards > getDevCards(void); // para mandarlo por network
 	// Sets port in position given to type given.
 	void setPort(string position, PortType type);
 

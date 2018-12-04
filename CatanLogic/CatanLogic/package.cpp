@@ -50,6 +50,12 @@ std::string NameIsPkg::getPackage()
 MapIsPkg::MapIsPkg(Board * board_)
 {
 	board = new Board(*board_);
+
+	for (int i = 0; i < 6; i++)
+	{
+		all[i] = static_cast<char>(board->getPortType(i));
+	}
+
 	for (int i = 0; i < 19; i++)
 	{
 		all[i + 6] = static_cast<char>(board->getResourceFromHex('A' + i));
@@ -177,6 +183,21 @@ Board * MapIsPkg::getBoard()
 	return board;
 }
 
+CircularTokensPkg::CircularTokensPkg(Board * tablero)
+{
+	for (int i = 0; i < 19; i++)
+	{
+		if (tablero->getResourceFromHex('A'+i) != DESIERTO)
+		{
+			myTokens[i] = static_cast<char>(tablero->getCircToken('A' + i));
+		}
+		else
+		{
+			myTokens[i] = 0;
+		}
+	}
+}
+
 CircularTokensPkg::CircularTokensPkg(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)
 {
 	std::string tokenList(_tokenList);
@@ -209,6 +230,15 @@ std::string CircularTokensPkg::getPackage()
 	return ret;
 }
 
+DevCardsPkg::DevCardsPkg(stack<DevCards> pilaDeCartas)
+{
+	for (int i = 0; i < 25; i++)
+	{
+		pilon[i] = pilaDeCartas.top();
+		pilaDeCartas.pop();
+	}
+}
+
 DevCardsPkg::DevCardsPkg(const char * _deck) :package(headers::DEV_CARDS)
 {
 	std::string deck(_deck);
@@ -228,9 +258,14 @@ DevCardsPkg::DevCardsPkg(std::vector<DevCards>& deck):package(headers::DEV_CARDS
 	}
 }
 
-DevCards * DevCardsPkg::getDeck()
+stack< DevCards > DevCardsPkg::getDeck()
 {
-	return pilon;
+	stack< DevCards > auxiliar;
+	for (int i = 0; i < 25; i++)
+	{
+		auxiliar.push(pilon[25-1]);
+	}
+	return auxiliar;
 }
 
 std::string DevCardsPkg::getPackage()
