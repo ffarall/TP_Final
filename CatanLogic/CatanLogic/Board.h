@@ -23,7 +23,7 @@ public:
 	void shuffleBoard();
 
 	// Sets new pile of devCards.
-	void setDevCards(stack< DevCards >& pileOfDevCards_);
+	void setDevCards(stack< DevCards > const & pileOfDevCards_);
 	// Sets Circular Token for the given Token.
 	void setCircularToken(char token, unsigned int circToken);
 

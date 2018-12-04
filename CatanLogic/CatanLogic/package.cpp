@@ -187,7 +187,14 @@ CircularTokensPkg::CircularTokensPkg(Board * tablero)
 {
 	for (int i = 0; i < 19; i++)
 	{
-		myTokens[i] = static_cast<char>(tablero->getCircToken('A'+i));
+		if (tablero->getResourceFromHex('A'+i) != DESIERTO)
+		{
+			myTokens[i] = static_cast<char>(tablero->getCircToken('A' + i));
+		}
+		else
+		{
+			myTokens[i] = 0;
+		}
 	}
 }
 
@@ -256,7 +263,7 @@ stack< DevCards > DevCardsPkg::getDeck()
 	stack< DevCards > auxiliar;
 	for (int i = 0; i < 25; i++)
 	{
-		auxiliar.push(pilon[25 - 1]);
+		auxiliar.push(pilon[25-1]);
 	}
 	return auxiliar;
 }
