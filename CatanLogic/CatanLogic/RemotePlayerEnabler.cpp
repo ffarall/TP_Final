@@ -2,7 +2,7 @@
 #include "SubEvents.h"
 #include "MainEvent.h"
 #include "NewEventHandling.h"
-
+#include <random>
 
 #define TX(x) (static_cast<void (Enabler::* )(SubtypeEvent *)>(&RemotePlayerEnabler::x))
 
@@ -59,7 +59,7 @@ bool RemotePlayerEnabler::deleteCards(vector<ResourceType> descarte, Player * pl
 
 void RemotePlayerEnabler::enableRemoteActions()
 {
-	disableAllBut({});
+	disableAllBut({NET_YEARS_OF_PLENTY,NET_ROAD_BUILDING,NET_MONOPOLY,NET_KNIGHT});
 	enable(NET_OFFER_TRADE, {TX(evaluateOffer)});
 	enable(NET_SETTLEMENT, {TX(checkRemoteSettlement)});
 	enable(NET_CITY, {TX(checkRemoteCity)});
@@ -107,18 +107,64 @@ void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 		disable(NET_ROAD_BUILDING);
 	}
 
-	if (localPlayer->isThereDevCard(VICTORY_POINTS))
+	if (remotePlayer->isThereDevCard(VICTORY_POINTS))
 	{
-		localPlayer->useDevCard(VICTORY_POINTS);
+		remotePlayer->useDevCard(VICTORY_POINTS);
+		if (remotePlayer->hasWon())
+			enable(NET_I_WON, { TX(finDelJuego) });
 	}
 }
 
 void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 {
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_ROAD);
+		enable(NET_ROAD, { TX(road2) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
 }
 
 void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 {
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (localPlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		pkgSender->pushPackage(new package(headers::ACK));
+		disable(NET_ROAD);
+		enableRemoteActions();
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+	}
+}
+
+void RemotePlayerEnabler::finDelJuego(SubtypeEvent * ev)
+{
+	disableAll();
+	emitEvent(I_WON);
 }
 
 void RemotePlayerEnabler::setLocalEnabler(PlayerEnabler * localEnabler_)
@@ -475,6 +521,8 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 		localPlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
+		if (remotePlayer->hasWon())
+			enable(NET_I_WON, {TX(finDelJuego)});
 	}
 	else
 	{
@@ -519,6 +567,8 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 		localPlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
+		if (remotePlayer->hasWon())
+			enable(NET_I_WON, { TX(finDelJuego) });
 	}
 	else
 	{
@@ -624,9 +674,34 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
+	
+	random_device rd;
+	mt19937_64 generator{ rd() };
+	uniform_int_distribution<> dist{ 0,4}; // para tener un numero bien aleatorio (mejor que rand()%)
+	ResourceType randCard;
 
 	board->moveRobber(pkg->getPos());
-	localPlay;
+	if (localPlayer->isThereSetOrCity(pkg->getPos()))
+	{
+		do{
+			switch (dist(generator))
+			{
+			case 0: randCard = ResourceType::BOSQUE; break;
+			case 1:randCard = ResourceType::CAMPOS; break;
+			case 2:randCard = ResourceType::COLINAS; break;
+			case 3:randCard = ResourceType::MONTAÑAS; break;
+			case 4:randCard = ResourceType::PASTOS; break;
+			default:randCard = ResourceType::DESIERTO; break; // para que se sortee otro nuevo
+			}
+		} while (localPlayer->getResourceAmount(randCard) == 0);
+		localPlayer->useResource(randCard);
+		remotePlayer->addResource(randCard);
+		pkgSender->pushPackage(new CardIsPkg(static_cast<char>(randCard)));
+	}
+	else
+	{
+		pkgSender->pushPackage(new package(headers::ACK));
+	}
 	enableRemoteActions();
 }
 

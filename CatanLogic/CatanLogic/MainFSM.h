@@ -36,7 +36,7 @@ private:
 				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(remoteStartsRoutine)}}
 
 			},
-			{HandShaking_S,TX(defaultHandShakingS)}}},
+			{StartMenu_S,TX(defaultHandShakingS)}}},
 
 		{LocalPlayer_S,{{
 				{MainTypes::PLAYER_ACTION,{LocalPlayer_S,TX(localFSMRun)}},
@@ -45,7 +45,7 @@ private:
 				{MainTypes::TICKS,{LocalPlayer_S,TX(decTimeCounter)}},
 				{MainTypes::I_WON,{GameOver_S,TX(nonActRoutine)}}
 			},
-			{LocalPlayer_S,TX(defaultLocalPlayerS)}}},
+			{StartMenu_S,TX(defaultLocalPlayerS)}}},
 
 		{RemotePlayer_S,{{
 				{MainTypes::NETWORK,{RemotePlayer_S,TX(remoteFSMRun)}},
@@ -54,21 +54,21 @@ private:
 				{MainTypes::PLAYER_ACTION,{RemotePlayer_S,TX(remoteFSMRun)}},
 				{MainTypes::TICKS,{RemotePlayer_S,TX(decTimeCounter)}}
 			},
-			{RemotePlayer_S,TX(defaultRemotePlayerS)}} },
+			{StartMenu_S,TX(defaultRemotePlayerS)}} },
 
 		{GameOver_S,{{
 				{MainTypes::TICKS,{GameOver_S,TX(decTimeCounter)}},
 				{MainTypes::PLAY_AGAIN,{PlayAgain_S,TX(nonActRoutine)}},
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(nonActRoutine)}}
 			},
-			{GameOver_S,TX(defaultGameOverS)}} },
+			{StartMenu_S,TX(defaultGameOverS)}} },
 
 		{PlayAgain_S,{{
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(nonActRoutine)}},
 				{MainTypes::TICKS,{PlayAgain_S,TX(decTimeCounter)}},
 				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(continuePlaying)}}
 			},
-			{PlayAgain_S,TX(defaultPlayAgainS)}} },
+			{StartMenu_S,TX(defaultPlayAgainS)}} },
 
 		
 	};
@@ -98,6 +98,7 @@ private:
 	void decTimeCounter(GenericEvent *ev);
 
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);
+	void error(GenericEvent *ev);
 public:
 	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote);
 	bool isQuit();

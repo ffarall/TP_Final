@@ -12,7 +12,7 @@ void MainFSM::initHandShakingFSM(GenericEvent * ev)
 
 void MainFSM::defaultStartMenuS(GenericEvent * ev)
 {
-	//TODO
+	error(ev);
 }
 
 void MainFSM::handShakingFSMRun(GenericEvent * ev)
@@ -51,6 +51,7 @@ void MainFSM::remoteStartsRoutine(GenericEvent * ev)
 
 void MainFSM::defaultHandShakingS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void MainFSM::localFSMRun(GenericEvent * ev)
@@ -60,6 +61,7 @@ void MainFSM::localFSMRun(GenericEvent * ev)
 
 void MainFSM::defaultLocalPlayerS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void MainFSM::remoteFSMRun(GenericEvent * ev)
@@ -69,23 +71,28 @@ void MainFSM::remoteFSMRun(GenericEvent * ev)
 
 void MainFSM::defaultRemotePlayerS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void MainFSM::defaultGameOverS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void MainFSM::continuePlaying(GenericEvent * ev)
 {
-	if (network->getStatus() == Status::CLIENT)
+	if (localEnabler->whoWon() == "remote")
 	{
 		handShaking->setState(handShakingStates::Client_S);
 	}
-	else
+	else if(localEnabler->whoWon() == "local")
 	{
 		handShaking->setState(handShakingStates::SendingServerName_S);
 		emitSubEvent(MainTypes::NETWORK, SubType::NET_ACK);
-
+	}
+	else
+	{
+		error(ev);
 	}//la fsm de handshaking siempre comienza como client
 	//en principio no deberiamos vover a conectarnos con el otro, nada mas deberiamos hacer un nuevo board y comoenzar a jugar de vuelta, suponiendo que el que es server sigue siendo server
 }
@@ -93,6 +100,7 @@ void MainFSM::continuePlaying(GenericEvent * ev)
 
 void MainFSM::defaultPlayAgainS(GenericEvent * ev)
 {
+	error(ev);
 }
 
 void MainFSM::nonActRoutine(GenericEvent * ev)

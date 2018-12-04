@@ -68,6 +68,8 @@ private:
 	void road1(SubtypeEvent * ev);
 	void road2(SubtypeEvent * ev);
 
+	void finDelJuego(SubtypeEvent * ev);
+
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
 
@@ -85,7 +87,6 @@ private:
 	bool deleteCards(vector<ResourceType> descarte, Player * player_);
 	// Enables All posible actions in a turn
 	void enableRemoteActions();
-
-	void checkRemoteDevCards();
+	
 };
 
