@@ -94,6 +94,7 @@ public:
 
 	// Returns true when this player has the Longest Road card.
 	bool hasLongestRoad();
+	// Returns size of longest
 
 	// Returns true when this player has the Largest Army card.
 	bool hasLargestArmy();
@@ -133,6 +134,8 @@ private:
 	map< DevCards, DevCardUsage > devCards;
 	// Variable containing size of this player's army (times this player used a KNIGHT DevCard).
 	size_t army;
+	// Longest road of this player.
+	size_t longestRoad;
 
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
