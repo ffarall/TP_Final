@@ -415,49 +415,13 @@ void Player::updateAvailability()
 
 	for (pair<string,Settlement*> vertx : mySettlements)
 	{
-		if (vertx.first[0] >= '0' && vertx.first[0] <= '9')
+		list<string> posibles = getEdges(vertx.first);
+		for (string a : posibles)
 		{
-			if (vertx.first.length() == 3) // si es la de 2 num + 1 letra
-			{
-				if (!vertx.first.compare("05A")) // el unico de los 6 que es distinto
-				{
-					availableForRoad.push_back("5A");
-					availableForRoad.push_back("0A5");
-				}
-				else
-				{
-					string aux_ = vertx.first;
-					aux_.erase(aux_.begin() + 1);
-					availableForRoad.push_back(aux_);
-					aux_ = vertx.first;
-					aux_.erase(aux_.begin());
-					aux_.push_back(vertx.first[0]);
-					availableForRoad.push_back(aux_);
-				}
-			}
-			else
-			{
-				for (string str : allEdges)
-				{
-					if (str.find(vertx.first[0]) != str.end && str.find(vertx.first[1]) != str.end) // las aristas que contengan ambos caracteres
-					{
-						availableForRoad.push_back(str);
-					}
-				}
-			}
-		}
-		else // los edge aledaños son combinaciones de las letras, easy to solve(?
-		{
-			string temp;
-			temp.push_back(vertx.first[0]);
-			temp.push_back(vertx.first[1]);
-			availableForRoad.push_back(temp);
-			temp[1] = vertx.first[2];
-			availableForRoad.push_back(temp);
-			temp[0] = vertx.first[1];
-			availableForRoad.push_back(temp);
+			availableForRoad.push_back(a);
 		}
 	}
+	availableForRoad.unique(); // filtro los que puedan estar repetidos
 	//ahora que ya tengo todas las disponibles, tengo que sacar las ocupadas
 	for (vertex = availableForRoad.begin(); vertex != availableForRoad.end(); vertex++)
 	{
@@ -593,4 +557,53 @@ void Player::useYearsOfPlenty()
 void Player::useRoadBuilding()
 {
 	devCards[ROAD_BUILDING].amount--;
+}
+
+list<string> Player::getEdges(string vertex)
+{
+	list<string> adyacentes;
+	adyacentes.clear();
+	if (vertex[0] >= '0' && vertex[0] <= '9')
+	{
+		if (vertex.length() == 3) // si es la de 2 num + 1 letra
+		{
+			if (!vertex.compare("05A")) // el unico de los 6 que es distinto
+			{
+				adyacentes.push_back("5A");
+				adyacentes.push_back("0A5");
+			}
+			else
+			{
+				string aux_ = vertex;
+				aux_.erase(aux_.begin() + 1);
+				adyacentes.push_back(aux_);
+				aux_ = vertex;
+				aux_.erase(aux_.begin());
+				aux_.push_back(vertex[0]);
+				adyacentes.push_back(aux_);
+			}
+		}
+		else
+		{
+			for (string str : allEdges)
+			{
+				if (str.find(vertex[0]) != str.end && str.find(vertex[1]) != str.end) // las aristas que contengan ambos caracteres
+				{
+					adyacentes.push_back(str);
+				}
+			}
+		}
+	}
+	else // los edge aledaños son combinaciones de las letras, easy to solve(?
+	{
+		string temp;
+		temp.push_back(vertex[0]);
+		temp.push_back(vertex[1]);
+		adyacentes.push_back(temp);
+		temp[1] = vertex[2];
+		availableForRoad.push_back(temp);
+		temp[0] = vertex[1];
+		adyacentes.push_back(temp);
+	}
+	return adyacentes;
 }

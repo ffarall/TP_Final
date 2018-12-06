@@ -134,6 +134,8 @@ private:
 	void useYearsOfPlenty();
 	void useRoadBuilding();
 
+	list<string> getEdges(string vertex);
+
 	// All combinations of edges.
 	const list< string > allEdges = {
 		"0A5", "0AB", "0BA", "0BC", "0C", "1C0",
