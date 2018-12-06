@@ -74,7 +74,16 @@ string Player::getName()
 
 bool Player::hasWon()
 {
-	if ((victoryPoints + cardVictoryPoints) >= 10)
+	size_t totalVictoryPoints = victoryPoints + cardVictoryPoints;
+	if (hasLongestRoad())
+	{
+		totalVictoryPoints++;
+	}
+	if (hasLargestArmy())
+	{
+		totalVictoryPoints++;
+	}
+	if (totalVictoryPoints >= 10)
 	{
 		iWon = true;
 	}
@@ -152,7 +161,7 @@ void Player::addToRivalsSettlements(string position)
 
 void Player::addToMyRoads(string position)
 {
-	Road* newRoad = new Road(position);
+	Road* newRoad = new Road(position, getAdjacentVertexes(position));
 	myRoads.insert(pair< string, Road* >(position, newRoad));
 
 	useResource(COLINAS);
@@ -165,7 +174,7 @@ void Player::addToMyRoads(string position)
 
 void Player::addToRivalsRoads(string position)
 {
-	Road* newRoad = new Road(position);
+	Road* newRoad = new Road(position, getAdjacentVertexes(position));
 	rivalsRoads.insert(pair< string, Road* >(position, newRoad));
 
 	updateAvailability();
@@ -311,6 +320,21 @@ bool Player::isThereDevCard(DevCards card)
 	{
 		return false;
 	}
+}
+
+bool Player::hasLongestRoad()
+{
+	return longestRoad;
+}
+
+bool Player::hasLargestArmy()
+{
+	return largestArmy;
+}
+
+size_t Player::getArmySize()
+{
+	return army;
 }
 
 void Player::allVertexesAvailable()
@@ -570,9 +594,50 @@ void Player::incVictoryPoints()
 	notifyAllObservers();
 }
 
+vector< string > Player::getAdjacentVertexes(string edge)
+{
+	vector< string > adVert;
+	
+	if (edge.size() == 2)																		// For edges nominated by two tokens.
+	{
+		for (auto vert : allVertexes)
+		{
+			if (vert.find(edge[0]) != string::npos && vert.find(edge[1]) != string::npos)		// If the vertex coordinate contains both tokens of the edge coordinate...
+			{
+				adVert.push_back(vert);															// Is one of the two adjacent vertexes.
+			}
+		}
+	}
+	else if (edge.size() == 3)																	// For edges nominated by three tokens.
+	{
+		for (auto vert : allVertexes)
+		{
+			if (vert.find(edge[0]) != string::npos && vert.find(edge[1]) != string::npos && vert.find(edge[2]) != string::npos)		// If the vertex coordinate contains all three tokens of the edge coordinate...
+			{
+				adVert.push_back(vert);																								// Is one of the two adjacent vertexes.
+			}
+		}
+
+		string auxEdge = edge;
+		auxEdge.pop_back();
+		for (auto vert : allVertexes)
+		{
+			if (vert.size() == 2)																									// The other vertex must be of size 2.
+			{
+				if (vert.find(auxEdge[0]) != string::npos && vert.find(auxEdge[1]) != string::npos)									// If the vertex coordinate contains both tokens of the auxEdge coordinate...
+				{
+					adVert.push_back(vert);																							// Is the other adjacent vertexes.
+				}
+			}
+		}
+	}
+	return adVert;
+}
+
 void Player::useKnight()
 {
 	devCards[KNIGHT].amount--;
+	army++;
 }
 
 void Player::useVictoryPoint()

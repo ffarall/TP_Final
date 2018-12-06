@@ -92,6 +92,14 @@ public:
 	// Check if user has this devCard.
 	bool isThereDevCard(DevCards card);
 
+	// Returns true when this player has the Longest Road card.
+	bool hasLongestRoad();
+
+	// Returns true when this player has the Largest Army card.
+	bool hasLargestArmy();
+	// Returns size of this player's army (times this player used KNIGHT DevCard).
+	size_t getArmySize();
+
 private:
 	void init();
 
@@ -101,6 +109,10 @@ private:
 	size_t victoryPoints;
 	// Victory points earned by DevCard (hidden to other player).
 	size_t cardVictoryPoints;
+	// True when player has the Longest Road card. Counts as a Victory Point.
+	bool longestRoad;
+	// True when player has the Largest Army card. Counts as a Victory Point.
+	bool largestArmy;
 	// Name of the player.
 	string name;
 	// Resources the player has.
@@ -119,6 +131,8 @@ private:
 	list< string > availableForSettlement;
 	// DevCards this player has.
 	map< DevCards, DevCardUsage > devCards;
+	// Variable containing size of this player's army (times this player used a KNIGHT DevCard).
+	size_t army;
 
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
@@ -128,6 +142,10 @@ private:
 	// Increment victoryPoints and checks if has Won.
 	void incVictoryPoints();
 
+	// Returns the pair of adjacent vertexes to a edge of the board.
+	vector< string > getAdjacentVertexes(string edge);
+
+	// Functions for using DevCards.
 	void useKnight();
 	void useVictoryPoint();
 	void useMonopoly();
