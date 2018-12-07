@@ -49,7 +49,7 @@ void HandShakingFSM::defaultClientS(GenericEvent * ev)
 
 void HandShakingFSM::nonActRoutine(GenericEvent * ev)
 {
-	emitEvent//DONE
+	//DONE
 }
 
 void HandShakingFSM::defaultSendingClientNameS(GenericEvent * ev)

@@ -80,9 +80,25 @@ void MainFSM::defaultRemotePlayerS(GenericEvent * ev)
 	error(ev);
 }
 
+void MainFSM::sendAck(GenericEvent * ev)
+{
+	network->pushPackage(new package(headers::ACK));
+		
+}
+
 void MainFSM::defaultGameOverS(GenericEvent * ev)
 {
 	error(ev);
+}
+
+void MainFSM::sendGameOver(GenericEvent * ev)
+{
+	network->pushPackage(new package(headers::GAME_OVER));
+}
+
+void MainFSM::sendPlayAgain(GenericEvent * ev)
+{
+	network->pushPackage(new package(headers::PLAY_AGAIN));
 }
 
 void MainFSM::continuePlaying(GenericEvent * ev)
@@ -107,6 +123,12 @@ void MainFSM::continuePlaying(GenericEvent * ev)
 void MainFSM::defaultPlayAgainS(GenericEvent * ev)
 {
 	error(ev);
+}
+
+void MainFSM::ackAndcontinuePlaying(GenericEvent * ev)
+{
+	network->pushPackage(new package(headers::ACK));
+	continuePlaying(ev);
 }
 
 void MainFSM::nonActRoutine(GenericEvent * ev)
@@ -135,7 +157,8 @@ void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 
 void MainFSM::error(GenericEvent * ev)
 {
-	//do error stuff
+	network->pushPackage(new package(headers::ERROR_);
+
 }
 
 MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote):GenericFsm(mainFsmMap,StartMenu_S)
