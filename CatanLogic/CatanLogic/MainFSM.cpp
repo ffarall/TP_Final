@@ -157,7 +157,7 @@ void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 
 void MainFSM::error(GenericEvent * ev)
 {
-	network->pushPackage(new package(headers::ERROR_);
+	network->pushPackage(new package(headers::ERROR_));
 
 }
 
