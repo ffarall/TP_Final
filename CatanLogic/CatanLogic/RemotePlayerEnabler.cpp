@@ -10,11 +10,11 @@ RemotePlayerEnabler::RemotePlayerEnabler()
 {
 }
 
-RemotePlayerEnabler::RemotePlayerEnabler(Networking * pkgSender_, PlayerEnabler* localEnabler_)
+RemotePlayerEnabler::RemotePlayerEnabler(Networking * pkgSender_,EventsHandler * handler_)
 {
 	init();
 	setPkgSender(pkgSender_);
-	setLocalEnabler(localEnabler_);
+	setHandler(handler_);
 }
 
 
@@ -165,11 +165,6 @@ void RemotePlayerEnabler::finDelJuego(SubtypeEvent * ev)
 {
 	disableAll();
 	emitEvent(I_WON);
-}
-
-void RemotePlayerEnabler::setLocalEnabler(PlayerEnabler * localEnabler_)
-{
-	localEnabler = localEnabler_;
 }
 
 void RemotePlayerEnabler::init()

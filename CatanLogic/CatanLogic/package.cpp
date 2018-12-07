@@ -68,9 +68,9 @@ MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 	map<char, Token*> table;
 	map<string, PortType> puertos;
 
-	for (char a : std::string(mapa))
+	for (char a : std::string(mapa,25))
 	{
-		all[i++] = a;
+		all[i++] = a;	
 	}
 
 	for (int i = 0; i < 6; i++, j++)
