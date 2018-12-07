@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="EDASubject.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Settlement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />

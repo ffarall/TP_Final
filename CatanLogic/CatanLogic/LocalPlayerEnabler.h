@@ -13,7 +13,7 @@ class LocalPlayerEnabler :
 {
 public:
 	LocalPlayerEnabler();
-	LocalPlayerEnabler(Networking* pkgSender_, PlayerEnabler* remoteEnabler_);	
+	LocalPlayerEnabler(Networking* pkgSender_, PlayerEnabler* remoteEnabler_, EventsHandler* handler_, BasicGUI* GUI_);
 	virtual ~LocalPlayerEnabler();
 
 	// Enables events for the user to select when local starts.

@@ -10,7 +10,7 @@ LocalPlayerEnabler::LocalPlayerEnabler()
 	init();
 }
 
-LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_, PlayerEnabler* remoteEnabler_)
+LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_, PlayerEnabler* remoteEnabler_, EventsHandler* handler_, BasicGUI* GUI_) : PlayerEnabler(handler_, GUI_)
 {
 	init();
 	setPkgSender(pkgSender_);

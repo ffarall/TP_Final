@@ -6,6 +6,11 @@ PlayerEnabler::PlayerEnabler()
 {
 }
 
+PlayerEnabler::PlayerEnabler(EventsHandler * handler_, BasicGUI* GUI_) : Enabler(handler_)
+{
+	setGUI(GUI_);
+}
+
 
 PlayerEnabler::~PlayerEnabler()
 {
