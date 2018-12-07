@@ -124,6 +124,7 @@
     <ClCompile Include="Hex.cpp" />
     <ClCompile Include="MainFSM.cpp" />
     <ClCompile Include="Networking.cpp" />
+    <ClCompile Include="ObserverAndController.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Sea.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Hex.h" />
     <ClInclude Include="MainFSM.h" />
     <ClInclude Include="Networking.h" />
+    <ClInclude Include="ObserverAndController.h" />
     <ClInclude Include="PlayerEnabler.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Sea.h" />
