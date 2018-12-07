@@ -8,7 +8,7 @@
 
 #define TICK_TIME 5//ms
 #define MAX_TICK_TIME 12000//set to be 2 min 30 sec
-enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, GameOver_S, PlayAgain_S };
+enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, LocalGameOver_S, LocalPlayAgain_S, RemoteGameOver_S, RemotePlayAgain_S };
 class MainFSM: public GenericFsm
 {
 private:
@@ -35,8 +35,9 @@ private:
 				{MainTypes::TIME_OUT,{HandShaking_S,TX(handShakingFSMRun)}},
 				{MainTypes::TICKS,{HandShaking_S,TX(decAndRun)}},
 				{MainTypes::LOCAL_STARTS,{LocalPlayer_S,TX(localStartsRoutine)}},
-				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(remoteStartsRoutine)}}
-
+				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(remoteStartsRoutine)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultHandShakingS)}}},
 
@@ -45,32 +46,58 @@ private:
 				{MainTypes::NETWORK,{LocalPlayer_S,TX(localFSMRun)}},
 				{MainTypes::TURN_FINISHED,{RemotePlayer_S,TX(resetTimer)}},
 				{MainTypes::TICKS,{LocalPlayer_S,TX(decTimeCounter)}},
-				{MainTypes::I_WON,{GameOver_S,TX(nonActRoutine)}}
+				{MainTypes::I_WON,{LocalGameOver_S,TX(nonActRoutine)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultLocalPlayerS)}}},
 
 		{RemotePlayer_S,{{
 				{MainTypes::NETWORK,{RemotePlayer_S,TX(remoteFSMRun)}},
-				{MainTypes::I_WON,{GameOver_S,TX(nonActRoutine)}},
+				{MainTypes::I_WON,{RemoteGameOver_S,TX(nonActRoutine)}},
 				{MainTypes::TURN_FINISHED,{LocalPlayer_S,TX(resetTimer)}},
 				{MainTypes::PLAYER_ACTION,{RemotePlayer_S,TX(remoteFSMRun)}},
-				{MainTypes::TICKS,{RemotePlayer_S,TX(decTimeCounter)}}
+				{MainTypes::TICKS,{RemotePlayer_S,TX(decTimeCounter)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultRemotePlayerS)}} },
 
-		{GameOver_S,{{
-				{MainTypes::TICKS,{GameOver_S,TX(decTimeCounter)}},
-				{MainTypes::PLAY_AGAIN,{PlayAgain_S,TX(nonActRoutine)}},
-				{MainTypes::GAME_OVER,{StartMenu_S,TX(nonActRoutine)}}
+		{LocalGameOver_S,{{
+				{MainTypes::TICKS,{LocalGameOver_S,TX(decTimeCounter)}},
+				{MainTypes::PLAY_AGAIN,{LocalPlayAgain_S,TX(nonActRoutine)}},
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultGameOverS)}} },
 
-		{PlayAgain_S,{{
-				{MainTypes::GAME_OVER,{StartMenu_S,TX(nonActRoutine)}},
-				{MainTypes::TICKS,{PlayAgain_S,TX(decTimeCounter)}},
-				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(continuePlaying)}}
+		{LocalPlayAgain_S,{{
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendGameOver)}},
+				{MainTypes::TICKS,{LocalPlayAgain_S,TX(decTimeCounter)}},
+				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(continuePlaying)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultPlayAgainS)}} },
+
+		{RemoteGameOver_S,{{
+				{MainTypes::TICKS,{RemoteGameOver_S,TX(decTimeCounter)}},
+				{MainTypes::PLAY_AGAIN,{RemotePlayAgain_S,TX(sendPlayAgain)}},
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendGameOver)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+			},
+			{StartMenu_S,TX(defaultGameOverS)}} },
+
+		{RemotePlayAgain_S,{{
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::TICKS,{RemotePlayAgain_S,TX(decTimeCounter)}},
+				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(ackAndcontinuePlaying)}},
+				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
+				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+			},
+			{StartMenu_S,TX(defaultPlayAgainS)}} }
 
 		
 	};
@@ -91,11 +118,16 @@ private:
 	void remoteFSMRun(GenericEvent *ev);
 	void defaultRemotePlayerS(GenericEvent *ev);
 
+	void sendAck(GenericEvent *ev);
 	void defaultGameOverS(GenericEvent *ev);
+
+	void sendGameOver(GenericEvent *ev);
+	void sendPlayAgain(GenericEvent *ev);
 
 	void continuePlaying(GenericEvent *ev);
 	void defaultPlayAgainS(GenericEvent *ev);
-
+	void ackAndcontinuePlaying(GenericEvent *ev);
+	
 	void nonActRoutine(GenericEvent *ev);
 	void decTimeCounter(GenericEvent *ev);
 	void resetTimer(GenericEvent *ev);
