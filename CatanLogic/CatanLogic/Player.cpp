@@ -4,6 +4,9 @@
 #include <functional>
 
 #define TX(x) (static_cast<void (Player::* )()>(&Player::x))
+#define MAX_SETTLEMENTS 5
+#define MAX_ROADS 15
+#define MAX_CITIES 4
 
 Player::Player()
 {
@@ -47,6 +50,15 @@ void Player::init()
 	rivalsSettlements.clear();
 	availableForRoad.clear();
 	allVertexesAvailable();
+
+	remainingSettlements = MAX_SETTLEMENTS;
+	remainingRoads = MAX_ROADS;
+	remainingCities = MAX_CITIES;
+
+	longestRoadCard = false;
+	longestRoad = 0;
+	largestArmyCard = false;
+	army = 0;
 
 	resources[BOSQUE] = 0;
 	resources[COLINAS] = 0;
@@ -143,6 +155,7 @@ void Player::addToMySettlements(string position)
 	useResource(PASTOS);
 
 	incVictoryPoints();
+	remainingSettlements--;
 
 	updateAvailability();
 
@@ -168,6 +181,8 @@ void Player::addToMyRoads(string position)
 	useResource(BOSQUE);
 
 	updateAvailability();
+	updateLongestRoad(position);
+	remainingRoads--;
 
 	notifyAllObservers();
 }
@@ -195,6 +210,8 @@ void Player::promoteToMyCity(string position)
 
 		incVictoryPoints();
 		incVictoryPoints();
+		remainingCities--;
+		remainingSettlements++;
 
 		notifyAllObservers();
 	}
@@ -212,10 +229,26 @@ void Player::promoteToRivalsCity(string position)
 	}
 }
 
+size_t Player::getRemainingSettlements()
+{
+	return remainingSettlements;
+}
+
+size_t Player::getRemainingRoads()
+{
+	return remainingRoads;
+}
+
+size_t Player::getRemainingCities()
+{
+	return remainingCities;
+}
+
 bool Player::checkSettlementAvailability(string position)
 {
 	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());	// Check if position is available.
-	ret &= checkSettlementResources();
+	ret &= checkSettlementResources();																							// Check if player has resources.
+	ret &= getRemainingSettlements();																							// Check if player has Settlements left to put.
 
 	return ret;
 }
@@ -223,7 +256,8 @@ bool Player::checkSettlementAvailability(string position)
 bool Player::checkRoadAvailability(string position)
 {
 	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());					// Check if position is available.
-	ret &= checkRoadResources();
+	ret &= checkRoadResources();																								// Check if player has resources.
+	ret &= getRemainingRoads();																									// Check if player has remaining Roads to put.
 
 	return ret;
 }
@@ -231,7 +265,8 @@ bool Player::checkRoadAvailability(string position)
 bool Player::checkPromotionOfCity(string position)
 {
 	bool ret = (mySettlements.find(position) != mySettlements.end());		// Check if there's a Settlement in that position.
-	ret &= checkCityResources();
+	ret &= checkCityResources();											// Check if player has resources.
+	ret &= getRemainingCities();											// Check if player has Cities left to put.
 
 	return ret;
 }
@@ -290,6 +325,8 @@ void Player::useDevCard(DevCards card)
 	{
 		auto f = bind(devCards[card].useDevCard, this);
 		f();
+
+		notifyAllObservers();
 	}
 }
 
@@ -324,12 +361,46 @@ bool Player::isThereDevCard(DevCards card)
 
 bool Player::hasLongestRoad()
 {
+	return longestRoadCard;
+}
+
+void Player::setLongestRoadCard(bool doesItHaveTheCard)
+{
+	longestRoadCard = doesItHaveTheCard;
+}
+
+size_t Player::getLongestRoad()
+{
 	return longestRoad;
+}
+
+void Player::updateLongestRoad(string startingEdge)
+{
+	roadsVisited.clear();															// Clears any residue from previous calculations.
+	vector< string > startingVertexes = getAdjacentVertexes(startingEdge);
+
+	for (auto vertex : startingVertexes)
+	{
+		followRoad(vertex);															// Follows Road to both sides, filling roadsVisited.
+	}
+
+	size_t roadLength = roadsVisited.size();										// Length of road calculated.
+	if (roadLength > longestRoad)
+	{
+		longestRoad = roadLength;													// Updates if there's a new longestRoad.
+	}
+
+	notifyAllObservers();
 }
 
 bool Player::hasLargestArmy()
 {
-	return largestArmy;
+	return largestArmyCard;
+}
+
+void Player::setLargestArmyCard(bool doesItHaveTheCard)
+{
+	largestArmyCard = doesItHaveTheCard;
 }
 
 size_t Player::getArmySize()
@@ -439,7 +510,7 @@ void Player::updateAvailability()
 
 	for (pair<string,Settlement*> vertx : mySettlements)
 	{
-		list<string> posibles = getEdges(vertx.first);
+		vector<string> posibles = getAdjacentEdges(vertx.first);
 		for (string a : posibles)
 		{
 			availableForRoad.push_back(a);
@@ -455,6 +526,7 @@ void Player::updateAvailability()
 		}
 	}
 	
+	notifyAllObservers();
 }
 
 bool Player::checkSettlementResources()
@@ -624,9 +696,9 @@ void Player::useRoadBuilding()
 	devCards[ROAD_BUILDING].amount--;
 }
 
-list<string> Player::getEdges(string vertex)
+vector<string> Player::getAdjacentEdges(string vertex)
 {
-	list<string> adyacentes;
+	vector<string> adyacentes;
 	adyacentes.clear();
 	if (vertex[0] >= '0' && vertex[0] <= '9')
 	{
@@ -671,4 +743,24 @@ list<string> Player::getEdges(string vertex)
 		adyacentes.push_back(temp);
 	}
 	return adyacentes;
+}
+
+void Player::followRoad(string vertex)
+{
+	vector< string > adjacentEdges = getAdjacentEdges(vertex);
+
+	for (auto edge : adjacentEdges)
+	{
+		if (myRoads.find(edge) != myRoads.end() && find(roadsVisited.begin(), roadsVisited.end(), edge) != roadsVisited.end())		// If the edge has a Road and it's not yet visited...
+		{
+			roadsVisited.push_back(edge);																							// Visiting this Road.
+			for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
+			{
+				if (newVertex != vertex)																							// Ignores the vertex that was the parameter of this function.
+				{
+					followRoad(newVertex);
+				}
+			}
+		}
+	}
 }

@@ -80,9 +80,9 @@ private:
 	void getResourceFromSettlement(string position, Player* who);
 	// If local won, emits event I_WON.
 	void checkIfLocalWon();
-	// Checks if localPlayer should own longestRoad, comparing with remotePlayer. If the local is the rightful owner of the card, this gives local de card ant takes it away from remote.
+	// Checks if localPlayer should own longestRoadCard, comparing with remotePlayer. If the local is the rightful owner of the card, this gives local de card ant takes it away from remote.
 	void checkLongestRoad();
-	// Checks if localPlayer should own largestArmy, comparing with remotePlayer. If the local is the rightful owner of the card, this gives local de card ant takes it away from remote.
+	// Checks if localPlayer should own largestArmyCard, comparing with remotePlayer. If the local is the rightful owner of the card, this gives local de card ant takes it away from remote.
 	void checkLargestArmy();
 
 	// Adds settlement to localPlayer and board from both Enablers

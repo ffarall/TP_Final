@@ -470,7 +470,8 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 	{
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
 	}
-
+	
+	checkLongestRoad();
 	checkIfLocalWon();
 }
 
@@ -602,6 +603,7 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 		enable(NET_ACK, { TX(enablePlayerActions) });
 	}
 
+	checkLargestArmy();
 	checkIfLocalWon();
 }
 
@@ -772,6 +774,42 @@ void LocalPlayerEnabler::checkIfLocalWon()
 	if (localPlayer->hasWon())
 	{
 		emitEvent(I_WON);
+	}
+}
+
+void LocalPlayerEnabler::checkLongestRoad()
+{
+	if (localPlayer->getLongestRoad() >= 5)											// Minimum requisite for having the longestRoadCard
+	{
+		if (remotePlayer->hasLongestRoad())											// If remote has it...
+		{
+			if (localPlayer->getLongestRoad() > remotePlayer->getLongestRoad())		// Must check who has it longer.
+			{
+				localPlayer->setLongestRoadCard(true);
+			}
+		}
+		else
+		{
+			localPlayer->setLongestRoadCard(true);
+		}
+	}
+}
+
+void LocalPlayerEnabler::checkLargestArmy()
+{
+	if (localPlayer->getArmySize() >= 3)											// Minimum requisite for having the largestArmyCard
+	{
+		if (remotePlayer->hasLargestArmy())											// If remote has it...
+		{
+			if (localPlayer->getArmySize() > remotePlayer->getArmySize())			// Must check who has it larger.
+			{
+				localPlayer->setLargestArmyCard(true);
+			}
+		}
+		else
+		{
+			localPlayer->setLargestArmyCard(true);
+		}
 	}
 }
 

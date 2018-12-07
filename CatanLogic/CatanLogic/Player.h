@@ -57,6 +57,10 @@ public:
 	// Promote a Settlement in rivalsSettlements to a City. User must check if exists.
 	void promoteToRivalsCity(string position);
 
+	size_t getRemainingSettlements();
+	size_t getRemainingRoads();
+	size_t getRemainingCities();
+
 	// Checks if position is available for settlement and if player has enough resources. Uses resources.
 	bool checkSettlementAvailability(string position);
 	// Checks if position is available for road and if player has enough resources.
@@ -94,10 +98,17 @@ public:
 
 	// Returns true when this player has the Longest Road card.
 	bool hasLongestRoad();
-	// Returns size of longest
+	// Gives the Longest Road Card to this player.
+	void setLongestRoadCard(bool doesItHaveTheCard);
+	// Returns size of longest Road.
+	size_t getLongestRoad();
+	// Calculates the length of a road to both sides of the given edge (which must me a road itself) and updates the longestRoad.
+	void updateLongestRoad(string startingEdge);
 
 	// Returns true when this player has the Largest Army card.
 	bool hasLargestArmy();
+	// Gives the Largest Army Card to this player.
+	void setLargestArmyCard(bool doesItHaveTheCard);
 	// Returns size of this player's army (times this player used KNIGHT DevCard).
 	size_t getArmySize();
 
@@ -111,17 +122,23 @@ private:
 	// Victory points earned by DevCard (hidden to other player).
 	size_t cardVictoryPoints;
 	// True when player has the Longest Road card. Counts as a Victory Point.
-	bool longestRoad;
+	bool longestRoadCard;
 	// True when player has the Largest Army card. Counts as a Victory Point.
-	bool largestArmy;
+	bool largestArmyCard;
 	// Name of the player.
 	string name;
 	// Resources the player has.
 	map< ResourceType, size_t > resources;
 	// Map of this player's settlements (some can be cities).
 	map< string, Settlement* > mySettlements;
+	// Number of Settlements remaining to build (once this reaches 0, no more Settlements can be built).
+	size_t remainingSettlements;
+	// Number of Cities remaining to build (once this reaches 0, no more Cities can be built).
+	size_t remainingCities;
 	// Map of this player's roads.
 	map< string, Road* > myRoads;
+	// Number of Roads remaining to build (once this reaches 0, no more Roads can be built).
+	size_t remainingRoads;
 	// Map of rivals' settlements (some can be cities).
 	map< string, Settlement* > rivalsSettlements;
 	// Map of rivals' roads.
@@ -137,6 +154,9 @@ private:
 	// Longest road of this player.
 	size_t longestRoad;
 
+	// List used when calculating the longestRoad. Stores all the edges that have roads and have already been visited.
+	list< string > roadsVisited;
+
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
 	// Updates available coordinates for roads and settlements.
@@ -145,8 +165,12 @@ private:
 	// Increment victoryPoints and checks if has Won.
 	void incVictoryPoints();
 
-	// Returns the pair of adjacent vertexes to a edge of the board.
+	// Returns the pair of adjacent vertexes to an edge of the board.
 	vector< string > getAdjacentVertexes(string edge);
+	// Returns a list with the adjacent edges to a vertex of the board. Can be 2 or 3.
+	vector< string > getAdjacentEdges(string vertex);
+	// Recursive function used to visit all the adjacent edges which have a Road (used for calculating longestRoad).
+	void followRoad(string vertex);
 
 	// Functions for using DevCards.
 	void useKnight();
@@ -154,8 +178,6 @@ private:
 	void useMonopoly();
 	void useYearsOfPlenty();
 	void useRoadBuilding();
-
-	list<string> getEdges(string vertex);
 
 	// All combinations of edges.
 	const list< string > allEdges = {
