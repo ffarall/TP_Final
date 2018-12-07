@@ -131,12 +131,13 @@ void HandShakingFSM::error(GenericEvent * ev)
 	//do error stuff
 }
 
-HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_) :GenericFsm(fsmMap,Client_S)
+HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, BasicGUI* GUI_) :GenericFsm(fsmMap,Client_S)
 {
 	network = network_;
 	localName = name_;
 	srand(time(NULL));	
 	devCardsOn = false;
+	GUI = GUI_;
 }
 
 void HandShakingFSM::setState(handShakingStates newState)

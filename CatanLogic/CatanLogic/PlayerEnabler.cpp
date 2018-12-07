@@ -26,6 +26,11 @@ string PlayerEnabler::getWaitingMessage()
 	return waitingMessageForUser;
 }
 
+void PlayerEnabler::setGUI(BasicGUI * GUI_)
+{
+	GUI = GUI_;
+}
+
 void PlayerEnabler::setLocalPlayer(Player * localPlayer_)
 {
 	localPlayer = localPlayer_;

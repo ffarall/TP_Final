@@ -64,18 +64,14 @@ void LocalPlayerEnabler::end()
 	{
 		delete remotePlayer;
 	}
-	if (board != nullptr)
-	{
-		delete board;
-	}
 }
 
 void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote, Board* board_)
 {
 	end();																				// Clears possible previous Players and Board from previous games.
 
-	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
-	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
+	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal, GUI));					// Sets both localPlayer for local enabler and remote enabler.
+	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote, GUI));				// Same for remotePlayer.
 	remoteEnabler->setBoard(board = board_);											// Same for board.
 
 
@@ -90,8 +86,8 @@ void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote, Board
 {
 	end();																				// Clears possible previous Players and Board from previous games.
 
-	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal));					// Sets both localPlayer for local enabler and remote enabler.
-	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote));				// Same for remotePlayer.
+	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal, GUI));					// Sets both localPlayer for local enabler and remote enabler.
+	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote, GUI));				// Same for remotePlayer.
 	remoteEnabler->setBoard(board = board_);											// Same for board.
 
 

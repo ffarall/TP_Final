@@ -13,10 +13,11 @@ Player::Player()
 	init();
 }
 
-Player::Player(string name_)
+Player::Player(string name_, BasicGUI* GUI_)
 {
-	name = name_;
 	init();
+	name = name_;
+	setGUI(GUI_);
 }
 
 
@@ -38,6 +39,11 @@ Player::~Player()
 	{
 		delete road.second;
 	}
+}
+
+void Player::setGUI(BasicGUI* GUI_)
+{
+	GUI = GUI_;
 }
 
 void Player::init()
