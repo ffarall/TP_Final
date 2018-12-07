@@ -4,6 +4,7 @@
 #include"HandShakingFSM.h"
 #include"LocalPlayerEnabler.h"
 #include"RemotePlayerEnabler.h"
+#include"BasicGUI.h"
 
 
 #define TICK_TIME 5//ms
@@ -18,6 +19,7 @@ private:
 	LocalPlayerEnabler *localEnabler;
 	RemotePlayerEnabler *remoteEnabler;
 	Board *board;
+	BasicGUI* GUI;
 
 	unsigned long int timerCount;
 	bool receivedQuit;
@@ -37,7 +39,7 @@ private:
 				{MainTypes::LOCAL_STARTS,{LocalPlayer_S,TX(localStartsRoutine)}},
 				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(remoteStartsRoutine)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultHandShakingS)}}},
 
@@ -48,7 +50,7 @@ private:
 				{MainTypes::TICKS,{LocalPlayer_S,TX(decTimeCounter)}},
 				{MainTypes::I_WON,{LocalGameOver_S,TX(nonActRoutine)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultLocalPlayerS)}}},
 
@@ -59,7 +61,7 @@ private:
 				{MainTypes::PLAYER_ACTION,{RemotePlayer_S,TX(remoteFSMRun)}},
 				{MainTypes::TICKS,{RemotePlayer_S,TX(decTimeCounter)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultRemotePlayerS)}} },
 
@@ -68,7 +70,7 @@ private:
 				{MainTypes::PLAY_AGAIN,{LocalPlayAgain_S,TX(nonActRoutine)}},
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultGameOverS)}} },
 
@@ -77,7 +79,7 @@ private:
 				{MainTypes::TICKS,{LocalPlayAgain_S,TX(decTimeCounter)}},
 				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(continuePlaying)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultPlayAgainS)}} },
 
@@ -86,7 +88,7 @@ private:
 				{MainTypes::PLAY_AGAIN,{RemotePlayAgain_S,TX(sendPlayAgain)}},
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendGameOver)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultGameOverS)}} },
 
@@ -95,7 +97,7 @@ private:
 				{MainTypes::TICKS,{RemotePlayAgain_S,TX(decTimeCounter)}},
 				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(ackAndcontinuePlaying)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::NET_QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultPlayAgainS)}} }
 
@@ -135,7 +137,8 @@ private:
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);
 	void error(GenericEvent *ev);
 public:
-	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote);
+	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote, BasicGUI* GUI_);
+	virtual ~MainFSM();
 	mainStates getCurrState();
 	bool isQuit();
 

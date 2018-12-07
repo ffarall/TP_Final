@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="EDASubject.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="Hex.cpp" />
     <ClCompile Include="MainFSM.cpp" />
     <ClCompile Include="Networking.cpp" />
+    <ClCompile Include="ObserverAndController.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Sea.cpp" />
@@ -136,6 +138,7 @@
     <ClCompile Include="Settlement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
@@ -146,6 +149,7 @@
     <ClInclude Include="Hex.h" />
     <ClInclude Include="MainFSM.h" />
     <ClInclude Include="Networking.h" />
+    <ClInclude Include="ObserverAndController.h" />
     <ClInclude Include="PlayerEnabler.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Sea.h" />

@@ -5,16 +5,20 @@
 #include "Board.h"
 #include "Networking.h"
 #include "package.h"
+#include "BasicGUI.h"
 
 class PlayerEnabler :
 	public Enabler
 {
 public:
 	PlayerEnabler();
+	PlayerEnabler(EventsHandler* handler_, BasicGUI* GUI_);
 	virtual ~PlayerEnabler();
 
 	string getErrMessage();
 	string getWaitingMessage();
+
+	void setGUI(BasicGUI* GUI_);
 
 	// Allows other PlayerEnabler to create common new Player objects for localPlayer.
 	void setLocalPlayer(Player* localPlayer_);
@@ -47,6 +51,9 @@ protected:
 	OfferTradePkg pendingOffer;
 	// True when playing with DevCards.
 	bool playingWithDev;
+
+	// GUI to attach observers that are also controllers.
+	BasicGUI* GUI;
 
 	void setErrMessage(string message);
 	void setWaitingMessage(string message);
