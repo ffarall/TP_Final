@@ -1,7 +1,7 @@
 #include "BoardObsAndCon.h"
 #include "BoardController.h"
 
-#define MAP_FILE ""
+#define MAP_FILE "mapBest3.png"
 
 BoardObsAndCon::BoardObsAndCon()
 {
