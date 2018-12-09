@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="BoardController.cpp" />
     <ClCompile Include="BoardObsAndCon.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardController.h" />
     <ClInclude Include="BoardObsAndCon.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />

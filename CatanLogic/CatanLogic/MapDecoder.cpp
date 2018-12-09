@@ -11,15 +11,15 @@ MapDecoder::MapDecoder() : pixelMatrix() , compressorError()
 	y = 0;
 }
 
-MapDecoder::MapDecoder(const char * dataArray) : pixelMatrix()
+MapDecoder::MapDecoder(const char * filename) : pixelMatrix()
 {
-	Image png(dataArray);
+	Image png(filename);
 	
 	unsigned char * tempArray; //si es un png estas las utilizo en lodepng functios
 
 	if (png.getFormat() == "png")
 	{
-		unsigned error = lodepng_decode32_file(&tempArray, &x, &y, dataArray);
+		unsigned error = lodepng_decode32_file(&tempArray, &x, &y, filename);
 		if ( error != 0)
 		{
 			compressorError.setErrType(ErrType::ERROR_PNG);

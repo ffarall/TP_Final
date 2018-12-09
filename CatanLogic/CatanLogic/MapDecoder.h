@@ -14,7 +14,7 @@ class MapDecoder
 {
 public:
 	MapDecoder();
-	MapDecoder(const char * dataArray);
+	MapDecoder(const char * filename);
 	~MapDecoder();
 
 	void init(char * dataArray, unsigned int x_, unsigned int y_);

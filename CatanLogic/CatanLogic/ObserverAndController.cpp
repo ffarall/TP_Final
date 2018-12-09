@@ -9,6 +9,7 @@ ObserverAndController::ObserverAndController()
 
 ObserverAndController::~ObserverAndController()
 {
+	delete controller;
 }
 
 BasicController * ObserverAndController::getController()
