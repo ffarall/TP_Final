@@ -117,14 +117,20 @@
   <ItemGroup>
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="BoardObsAndCon.cpp" />
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="HandShakingFSM.cpp" />
     <ClCompile Include="Hex.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="MainFSM.cpp" />
     <ClCompile Include="Networking.cpp" />
     <ClCompile Include="ObserverAndController.cpp" />
+    <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Sea.cpp" />
@@ -140,16 +146,22 @@
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardObsAndCon.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
+    <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
     <ClInclude Include="EDASubject.h" />
     <ClInclude Include="Enabler.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="HandShakingFSM.h" />
     <ClInclude Include="Hex.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="lodepng.h" />
     <ClInclude Include="MainFSM.h" />
     <ClInclude Include="Networking.h" />
     <ClInclude Include="ObserverAndController.h" />
+    <ClInclude Include="Pixel.h" />
     <ClInclude Include="PlayerEnabler.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Sea.h" />
