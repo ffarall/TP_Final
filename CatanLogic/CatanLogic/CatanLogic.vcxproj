@@ -117,14 +117,22 @@
   <ItemGroup>
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="BoardController.cpp" />
+    <ClCompile Include="BoardObsAndCon.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="HandShakingFSM.cpp" />
     <ClCompile Include="Hex.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="MainFSM.cpp" />
     <ClCompile Include="Networking.cpp" />
     <ClCompile Include="ObserverAndController.cpp" />
+    <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Sea.cpp" />
@@ -140,16 +148,24 @@
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardController.h" />
+    <ClInclude Include="BoardObsAndCon.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
+    <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
     <ClInclude Include="EDASubject.h" />
     <ClInclude Include="Enabler.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="HandShakingFSM.h" />
     <ClInclude Include="Hex.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="lodepng.h" />
     <ClInclude Include="MainFSM.h" />
     <ClInclude Include="Networking.h" />
     <ClInclude Include="ObserverAndController.h" />
+    <ClInclude Include="Pixel.h" />
     <ClInclude Include="PlayerEnabler.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Sea.h" />
@@ -254,6 +270,8 @@
     <Import Project="..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets" Condition="Exists('..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets')" />
     <Import Project="..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets" Condition="Exists('..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets')" />
     <Import Project="..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets" Condition="Exists('..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets')" />
+    <Import Project="..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" />
+    <Import Project="..\packages\Allegro.5.2.4.0\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.4.0\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -344,5 +362,7 @@
     <Error Condition="!Exists('..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets'))" />
     <Error Condition="!Exists('..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets'))" />
     <Error Condition="!Exists('..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets'))" />
+    <Error Condition="!Exists('..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets'))" />
+    <Error Condition="!Exists('..\packages\Allegro.5.2.4.0\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.4.0\build\native\Allegro.targets'))" />
   </Target>
 </Project>
