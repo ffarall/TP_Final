@@ -23,7 +23,11 @@ private:
 	MapDecoder* decoder;
 	
 	/* As observer, this object will make use of public functions of both Board and Players to check for changes and represent them on screen. */
-	// Board ot observe
+	// Board to observe.
 	Board* board;
+	// localPlayer to observe.
+	Player* localPlayer;
+	// remotePlayer to observe.
+	Player* remotePlayer;
 };
 
