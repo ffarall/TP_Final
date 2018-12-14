@@ -71,47 +71,50 @@ void RemotePlayerEnabler::enableRemoteActions()
 
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 {
-	if (remotePlayer->getDevCardAmount(DevCards::KNIGHT))
+	if (playingWithDev)
 	{
-		enable(NET_KNIGHT, { TX(remUsedKnight) });
-	}
-	else
-	{
-		disable(NET_KNIGHT);
-	}
-	
-	if (remotePlayer->getDevCardAmount(DevCards::MONOPOLY))
-	{
-		enable(NET_MONOPOLY, { TX(remUsedMonopoly) });
-	}
-	else
-	{
-		disable(NET_MONOPOLY);
-	}
-	
-	if (remotePlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
-	{
-		enable(NET_YEARS_OF_PLENTY, { TX(remUsedYoP) });
-	}
-	else
-	{
-		disable(NET_YEARS_OF_PLENTY);
-	}
-	
-	if (remotePlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
-	{
-		enable(NET_ROAD_BUILDING, { TX(remUsedRoadBuilding) });
-	}
-	else
-	{
-		disable(NET_ROAD_BUILDING);
-	}
+		if (remotePlayer->getDevCardAmount(DevCards::KNIGHT))
+		{
+			enable(NET_KNIGHT, { TX(remUsedKnight) });
+		}
+		else
+		{
+			disable(NET_KNIGHT);
+		}
 
-	if (remotePlayer->isThereDevCard(VICTORY_POINTS))
-	{
-		remotePlayer->useDevCard(VICTORY_POINTS);
-		if (remotePlayer->hasWon())
-			enable(NET_I_WON, { TX(finDelJuego) });
+		if (remotePlayer->getDevCardAmount(DevCards::MONOPOLY))
+		{
+			enable(NET_MONOPOLY, { TX(remUsedMonopoly) });
+		}
+		else
+		{
+			disable(NET_MONOPOLY);
+		}
+
+		if (remotePlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
+		{
+			enable(NET_YEARS_OF_PLENTY, { TX(remUsedYoP) });
+		}
+		else
+		{
+			disable(NET_YEARS_OF_PLENTY);
+		}
+
+		if (remotePlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
+		{
+			enable(NET_ROAD_BUILDING, { TX(remUsedRoadBuilding) });
+		}
+		else
+		{
+			disable(NET_ROAD_BUILDING);
+		}
+
+		if (remotePlayer->isThereDevCard(VICTORY_POINTS))
+		{
+			remotePlayer->useDevCard(VICTORY_POINTS);
+			if (remotePlayer->hasWon())
+				enable(NET_I_WON, { TX(finDelJuego) });
+		}
 	}
 }
 
