@@ -1,4 +1,4 @@
-#include "BoardObserver.h"
+#include "BoardObsAndCon.h"
 #include "BoardController.h"
 
 
@@ -23,19 +23,19 @@
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
 
-BoardObserver::BoardObserver()
+BoardObsAndCon::BoardObsAndCon()
 {
 	init();
 	update();
 }
 
 
-BoardObserver::~BoardObserver()
+BoardObsAndCon::~BoardObsAndCon()
 {
 	delete decoder;
 }
 
-void BoardObserver::update()
+void BoardObsAndCon::update()
 {
 	drawMap();
 	for (auto edge : localPlayer->getMyRoads()) { drawRoad(edge, true); }
@@ -48,7 +48,7 @@ void BoardObserver::update()
 	for (auto vertex : localPlayer->getMyCities()) { drawBuilding(vertex, false, false); }
 }
 
-void BoardObserver::init()
+void BoardObsAndCon::init()
 {
 	decoder = new MapDecoder(MAP_FILE);
 
@@ -84,7 +84,7 @@ void BoardObserver::init()
 	}
 }
 
-void BoardObserver::drawMap()
+void BoardObsAndCon::drawMap()
 {
 	for (int i = 0; i < 6; i++) // dibujo el agua
 	{
@@ -130,7 +130,7 @@ void BoardObserver::drawMap()
 	}
 }
 
-void BoardObserver::drawRoad(string edge, bool player)
+void BoardObsAndCon::drawRoad(string edge, bool player)
 {
 	float angle_rot;
 	if (edge.length() == 2)
@@ -175,7 +175,7 @@ void BoardObserver::drawRoad(string edge, bool player)
 	);
 }
 
-void BoardObserver::drawBuilding(string edge, bool type, bool player)
+void BoardObsAndCon::drawBuilding(string edge, bool type, bool player)
 {
 	ALLEGRO_BITMAP * temp = (type ? bitmaps[CITY_FILE] : bitmaps[SETTLEMENT_FILE]);
 	pair<unsigned int, unsigned int> pos = decoder->getPositioningForVertex(edge);

@@ -99,7 +99,7 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BoardObserver.cpp">
+    <ClCompile Include="BoardObsAndCon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,7 +200,7 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BoardObserver.h">
+    <ClInclude Include="BoardObsAndCon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

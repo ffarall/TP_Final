@@ -118,7 +118,7 @@
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardController.cpp" />
-    <ClCompile Include="BoardObserver.cpp" />
+    <ClCompile Include="BoardObsAndCon.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
@@ -149,7 +149,7 @@
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardController.h" />
-    <ClInclude Include="BoardObserver.h" />
+    <ClInclude Include="BoardObsAndCon.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />

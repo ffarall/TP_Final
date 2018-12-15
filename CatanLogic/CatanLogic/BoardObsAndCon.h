@@ -10,17 +10,16 @@
 
 using namespace std;
 
-class BoardObserver :
-	public Observer
+class BoardObsAndCon :
+	public ObserverAndController
 {
 public:
-	BoardObserver();
-	virtual ~BoardObserver();
+	BoardObsAndCon();
+	virtual ~BoardObsAndCon();
 
 	virtual void update();
 
 private:
-	virtual void drawBoard();
 	void init();
 
 	void drawMap();
