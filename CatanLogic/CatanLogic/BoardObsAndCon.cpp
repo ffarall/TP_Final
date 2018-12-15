@@ -1,7 +1,6 @@
 #include "BoardObsAndCon.h"
 #include "BoardController.h"
 
-
 #define MAP_FILE "mapaFinal.png"
 #define HILLS_HEX_FILE "colinas.png"
 #define WOODS_HEX_FILE "bosque.png"
@@ -32,6 +31,7 @@ BoardObsAndCon::BoardObsAndCon()
 
 BoardObsAndCon::~BoardObsAndCon()
 {
+	delete controller;
 	delete decoder;
 }
 
@@ -50,6 +50,7 @@ void BoardObsAndCon::update()
 
 void BoardObsAndCon::init()
 {
+	controller = new BoardController;
 	decoder = new MapDecoder(MAP_FILE);
 
 	bitmaps[HILLS_HEX_FILE] = al_load_bitmap(HILLS_HEX_FILE);
