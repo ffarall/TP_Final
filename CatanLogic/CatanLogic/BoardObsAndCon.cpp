@@ -52,4 +52,8 @@ void BoardObsAndCon::init()
 	bitmaps[SEA_2LX1_FILE] = al_load_bitmap(SEA_2LX1_FILE);
 	bitmaps[SEA_2PX1_FILE] = al_load_bitmap(SEA_2PX1_FILE);
 	bitmaps[SEA_2MX1_FILE] = al_load_bitmap(SEA_2MX1_FILE);
+	bitmaps[SETTLEMENT_FILE] = al_load_bitmap(SETTLEMENT_FILE);
+	bitmaps[CITY_FILE] = al_load_bitmap(CITY_FILE);
+	bitmaps[ROAD_FILE] = al_load_bitmap(ROAD_FILE);
+	bitmaps[ROBBER_FILE] = al_load_bitmap(ROBBER_FILE);
 }
