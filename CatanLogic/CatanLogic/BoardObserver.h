@@ -10,16 +10,17 @@
 
 using namespace std;
 
-class BoardObsAndCon :
-	public ObserverAndController
+class BoardObserver :
+	public Observer
 {
 public:
-	BoardObsAndCon();
-	virtual ~BoardObsAndCon();
+	BoardObserver();
+	virtual ~BoardObserver();
 
 	virtual void update();
 
 private:
+	virtual void drawBoard();
 	void init();
 
 	// Reads the MapCode to determine what the player is touching in the board and also it specifies where to put the bitmaps of Roads and Settlements or Cities.

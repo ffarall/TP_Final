@@ -1,4 +1,4 @@
-#include "BoardObsAndCon.h"
+#include "BoardObserver.h"
 #include "BoardController.h"
 
 
@@ -23,20 +23,19 @@
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
 
-BoardObsAndCon::BoardObsAndCon()
+BoardObserver::BoardObserver()
 {
 	init();
 	update();
 }
 
 
-BoardObsAndCon::~BoardObsAndCon()
+BoardObserver::~BoardObserver()
 {
-	delete controller;
 	delete decoder;
 }
 
-void BoardObsAndCon::update()
+void BoardObserver::update()
 {
 	for (int i = 0; i < 6; i++) // dibujo el agua
 	{
@@ -82,9 +81,8 @@ void BoardObsAndCon::update()
 	}
 }
 
-void BoardObsAndCon::init()
+void BoardObserver::init()
 {
-	controller = new BoardController;
 	decoder = new MapDecoder(MAP_FILE);
 
 	bitmaps[HILLS_HEX_FILE] = al_load_bitmap(HILLS_HEX_FILE);
