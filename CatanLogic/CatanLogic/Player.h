@@ -64,6 +64,10 @@ public:
 	size_t getRemainingRoads();
 	size_t getRemainingCities();
 
+	list<string> getMySettlements();
+	list<string> getMyCities();
+	list<string> getMyRoads();
+
 	// Checks if position is available for settlement and if player has enough resources. Uses resources.
 	bool checkSettlementAvailability(string position);
 	// Checks if position is available for road and if player has enough resources.

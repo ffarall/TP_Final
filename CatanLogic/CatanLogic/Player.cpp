@@ -250,6 +250,42 @@ size_t Player::getRemainingCities()
 	return remainingCities;
 }
 
+list<string> Player::getMySettlements()
+{
+	list<string> ret;
+	for (auto building : mySettlements)
+	{
+		if (building.second->whatAmI().compare("Settlement"))
+		{
+			ret.push_back(building.first);
+		}
+	}
+	return ret;
+}
+
+list<string> Player::getMyCities()
+{
+	list<string> ret;
+	for (auto building : mySettlements)
+	{
+		if (building.second->whatAmI().compare("City"))
+		{
+			ret.push_back(building.first);
+		}
+	}
+	return ret;
+}
+
+list<string> Player::getMyRoads()
+{
+	list<string> ret;
+	for (auto building :myRoads)
+	{
+		ret.push_back(building.first);
+	}
+	return ret;
+}
+
 bool Player::checkSettlementAvailability(string position)
 {
 	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());	// Check if position is available.

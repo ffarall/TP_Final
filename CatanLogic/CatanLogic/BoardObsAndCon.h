@@ -22,6 +22,10 @@ public:
 private:
 	void init();
 
+	void drawMap();
+	void drawRoad(string edge, bool player); //true red, false blue
+	void drawBuilding(string edge, bool type, bool player); // false city, true settlement, true red , false blue
+
 	// Reads the MapCode to determine what the player is touching in the board and also it specifies where to put the bitmaps of Roads and Settlements or Cities.
 	MapDecoder* decoder;
 	// Map with all of the Allegro bitmaps.
