@@ -82,6 +82,7 @@ void Board::shuffleBoard()
 	{
 		size_t randPos = rand() % resources.size();
 		ResourceType randRec = resources.at(randPos);
+		resources.erase(resources.begin() + randPos); // lo saco de la lista
 		Hex * token = new Hex;
 		token->setResource(randRec);
 		board.at('A'+i) = token;
