@@ -58,3 +58,12 @@ void Pixel::setAlpha(unsigned char alpha_)
 Pixel::~Pixel()
 {
 }
+
+bool Pixel::operator==(const Pixel & pix)
+{
+	if (pix.R == R && pix.G == G && pix.B == B && pix.alpha == alpha)
+	{
+		return true;
+	}
+	return false;
+}
