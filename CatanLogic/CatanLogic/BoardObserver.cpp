@@ -42,10 +42,10 @@ void BoardObserver::update()
 	for (auto edge : remotePlayer->getMyRoads()) { drawRoad(edge, false); }
 
 	for (auto vertex : localPlayer->getMySettlements()) { drawBuilding(vertex, true, true); }
-	for (auto vertex : localPlayer->getMySettlements()) { drawBuilding(vertex, true, false); }
+	for (auto vertex : remotePlayer->getMySettlements()) { drawBuilding(vertex, true, false); }
 
 	for (auto vertex : localPlayer->getMyCities()) { drawBuilding(vertex, false, true); }
-	for (auto vertex : localPlayer->getMyCities()) { drawBuilding(vertex, false, false); }
+	for (auto vertex : remotePlayer->getMyCities()) { drawBuilding(vertex, false, false); }
 }
 
 void BoardObserver::init()
