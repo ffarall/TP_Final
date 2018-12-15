@@ -28,6 +28,8 @@ public:
 	pair<unsigned int, unsigned int> getPositioningForEdge(string edge);
 	// Returns the coordinates in the board where a bitmap of the Settlement or City should be drawn.
 	pair<unsigned int, unsigned int> getPositioningForVertex(string vertex);
+	// Returns the coordinates in the board where a bitmap of the Resource or sea should be drawn.
+	pair<unsigned int, unsigned int> getPositioningForToken(string token);
 	
 	// True if everything is ok, false otherwise.
 	bool isOk(void); 
@@ -46,6 +48,8 @@ private:
 	map< string, pair< unsigned int, unsigned int > > vertexPositioners;
 	// Map containing coordinates of Pixels for edge positioning (eases finding positioning Pixels using the Catan coordinates for access).
 	map< string, pair< unsigned int, unsigned int > > edgePositioners;
+	// Map containing coordinates of Pixels for token positioning (eases finding positioning Pixels using the Catan coordinates for access).
+	map< string, pair< unsigned int, unsigned int > > tokenPositioners;
 	Error compressorError;
 };
 

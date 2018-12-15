@@ -1,6 +1,6 @@
 #pragma once
 
-enum PixelTypes : unsigned char { TOKEN = 128, EDGE = 191, VERTEX = 255, E_POSITIONING = 77, V_POSITIONING = 153 };
+enum PixelTypes : unsigned char { TOKEN = 64, EDGE = 191, VERTEX = 255, E_POSITIONING = 153, V_POSITIONING = 77, T_POSITIONING = 128 };
 
 class Pixel
 {
@@ -16,6 +16,8 @@ public:
 	void setG(unsigned char G_);
 	void setB(unsigned char B_);
 	void setAlpha(unsigned char alpha_);
+
+	bool operator==(const Pixel& pix);
 	
 	~Pixel();
 

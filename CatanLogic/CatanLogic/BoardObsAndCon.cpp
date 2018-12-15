@@ -1,6 +1,7 @@
 #include "BoardObsAndCon.h"
 #include "BoardController.h"
 
+
 #define MAP_FILE "mapaFinal.png"
 #define HILLS_HEX_FILE "colinas.png"
 #define WOODS_HEX_FILE "bosque.png"
@@ -33,6 +34,52 @@ BoardObsAndCon::~BoardObsAndCon()
 {
 	delete controller;
 	delete decoder;
+}
+
+void BoardObsAndCon::update()
+{
+	for (int i = 0; i < 6; i++) // dibujo el agua
+	{
+		ALLEGRO_BITMAP *  temp = NULL;
+		switch (board->getPortType('0' + i))
+		{
+			case PortType::_2Lx1: temp = bitmaps[SEA_2LX1_FILE]; break;
+			case PortType::_2Mx1:temp = bitmaps[SEA_2MX1_FILE]; break;
+			case PortType::_2Ox1:temp = bitmaps[SEA_2OX1_FILE]; break;
+			case PortType::_2Px1:temp = bitmaps[SEA_2PX1_FILE]; break;
+			case PortType::_2Tx1:temp = bitmaps[SEA_2TX1_FILE]; break;
+			case PortType::_3x1:temp = bitmaps[SEA_3X1_FILE]; break;
+		}
+		string letra = "0";
+		letra[0] += i;
+		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
+		al_draw_rotated_bitmap(temp,
+			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
+			pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+			ALLEGRO_PI*((((float)i) / 3) - 1), 0);
+	}
+
+	for (int i = 0; i < 19; i++) // dibujo los hex
+	{
+		ALLEGRO_BITMAP *  temp = NULL;
+		switch (board->getResourceFromHex('A'+i))
+		{
+		case BOSQUE: temp = bitmaps[WOODS_HEX_FILE]; break;
+		case COLINAS:temp = bitmaps[HILLS_HEX_FILE]; break;
+		case MONTAÑAS:temp = bitmaps[MOUNTAINS_HEX_FILE]; break;
+		case CAMPOS:temp = bitmaps[FIELDS_HEX_FILE]; break;
+		case PASTOS:temp = bitmaps[PASTURES_HEX_FILE]; break;
+		case DESIERTO:temp = bitmaps[DESERT_HEX_FILE]; break;
+		}
+
+		string letra = "A";
+		letra[0] += i;
+		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
+		al_draw_rotated_bitmap(temp,
+			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
+			pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+			0, 0);
+	}
 }
 
 void BoardObsAndCon::init()
