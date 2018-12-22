@@ -75,7 +75,7 @@ void BoardObsAndCon::init()
 	{
 		if (imagen.second == NULL) { allegOk = false; }
 	}
-	if (!allegOk) // si hubo algun problema limpio
+	if (!allegOk) // si hubo algún problema limpio
 	{
 		for (auto imagen : bitmaps)
 		{
