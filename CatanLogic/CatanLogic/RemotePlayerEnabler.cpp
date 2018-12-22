@@ -112,7 +112,7 @@ void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 		if (remotePlayer->isThereDevCard(VICTORY_POINTS))
 		{
 			remotePlayer->useDevCard(VICTORY_POINTS);
-			if (remotePlayer->hasWon())
+			if (remotePlayer->hasWon(playingWithDev))
 				enable(NET_I_WON, { TX(finDelJuego) });
 		}
 	}
@@ -177,7 +177,7 @@ void RemotePlayerEnabler::init()
 	remotePlayer = nullptr;
 	board = nullptr;
 	pkgSender = nullptr;
-	localEnabler = nullptr;
+	
 }
 
 void RemotePlayerEnabler::end()
@@ -519,7 +519,7 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 		localPlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
-		if (remotePlayer->hasWon())
+		if (remotePlayer->hasWon(playingWithDev))
 			enable(NET_I_WON, {TX(finDelJuego)});
 	}
 	else
@@ -565,7 +565,7 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 		localPlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
-		if (remotePlayer->hasWon())
+		if (remotePlayer->hasWon(playingWithDev))
 			enable(NET_I_WON, { TX(finDelJuego) });
 	}
 	else
