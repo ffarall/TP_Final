@@ -30,11 +30,11 @@ void LocalPlayerEnabler::setRemoteEnabler(PlayerEnabler * remoteEnabler_)
 
 string LocalPlayerEnabler::whoWon()
 {
-	if (localPlayer->hasWon())
+	if (localPlayer->hasWon(playingWithDev))
 	{
 		return "local";
 	}
-	else if (remotePlayer->hasWon())
+	else if (remotePlayer->hasWon(playingWithDev))
 	{
 		return "remote";
 	}
@@ -767,7 +767,7 @@ void LocalPlayerEnabler::getResourceFromSettlement(string position, Player* who)
 
 void LocalPlayerEnabler::checkIfLocalWon()
 {
-	if (localPlayer->hasWon())
+	if (localPlayer->hasWon(playingWithDev))
 	{
 		emitEvent(I_WON);
 	}

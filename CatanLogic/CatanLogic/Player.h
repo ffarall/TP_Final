@@ -36,7 +36,7 @@ public:
 	string getName();
 
 	// Asks if player has won.
-	bool hasWon();
+	bool hasWon(bool playingWithDevs);
 
 	// Increments the given resource.
 	void addResource(ResourceType resource, int amount = 1);

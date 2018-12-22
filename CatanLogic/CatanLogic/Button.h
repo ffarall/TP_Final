@@ -21,6 +21,8 @@ public:
 	ALLEGRO_BITMAP* getBitmap();	
 	bool setBitmap(ALLEGRO_BITMAP* image);
 	bool setFont(ALLEGRO_FONT* font);
+
+	virtual void update();
 private:
 	uint buttonXPos;
 	uint buttonYPos;

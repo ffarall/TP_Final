@@ -90,7 +90,7 @@ string Player::getName()
 	return name;
 }
 
-bool Player::hasWon()
+bool Player::hasWon(bool playingWithDevs)
 {
 	size_t totalVictoryPoints = victoryPoints + cardVictoryPoints;
 	if (hasLongestRoad())
@@ -101,7 +101,7 @@ bool Player::hasWon()
 	{
 		totalVictoryPoints++;
 	}
-	if (totalVictoryPoints >= 10)
+	if (totalVictoryPoints >= (playingWithDevs?10:8))
 	{
 		iWon = true;
 	}
@@ -668,7 +668,7 @@ void Player::incVictoryPoints()
 {
 	victoryPoints++;
 
-	hasWon();
+	hasWon(true);// aca no me interesa si uso o no las dev cards
 	notifyAllObservers();
 }
 
