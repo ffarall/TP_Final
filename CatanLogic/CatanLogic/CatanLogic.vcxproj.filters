@@ -102,6 +102,9 @@
     <ClCompile Include="BoardObsAndCon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUIEnabler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewEventHandling.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoardObsAndCon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIEnabler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
