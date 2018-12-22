@@ -259,7 +259,10 @@ void Board::assignResourcesForNum(int num)
 			Hex* hex = static_cast<Hex*>(token.second);
 			if (hex->getDiceNum() == num)					// If it's diceNum is the given...
 			{
-				hex->assignResources();
+				if (token.first != robber)
+				{
+					hex->assignResources();
+				}
 			}
 		}
 	}
