@@ -3,7 +3,6 @@
 #include"SubEvents.h"
 #include"Networking.h"
 #include<iostream>
-#include"BasicGUI.h"
 
 enum handShakingStates : StateTypes { WaitingConnection_S,Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S };
 
@@ -16,7 +15,6 @@ private:
 	std::string remoteName;
 	Board *board;
 	bool devCardsOn;
-	BasicGUI* GUI;
 	
 
 #define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&HandShakingFSM::x))
@@ -132,7 +130,7 @@ private:
 	void error(GenericEvent *ev);
 	
 public:
-	HandShakingFSM(Networking* network_,std::string name_, BasicGUI* GUI_);
+	HandShakingFSM(Networking* network_,std::string name_);
 	void setState(handShakingStates newState);
 	std::string getLocalName();
 	std::string getRemoteName();

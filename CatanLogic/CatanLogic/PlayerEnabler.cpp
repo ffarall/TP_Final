@@ -6,9 +6,8 @@ PlayerEnabler::PlayerEnabler()
 {
 }
 
-PlayerEnabler::PlayerEnabler(EventsHandler * handler_, BasicGUI* GUI_) : Enabler(handler_)
+PlayerEnabler::PlayerEnabler(EventsHandler * handler_) : Enabler(handler_)
 {
-	setGUI(GUI_);
 }
 
 
@@ -24,11 +23,6 @@ string PlayerEnabler::getErrMessage()
 string PlayerEnabler::getWaitingMessage()
 {
 	return waitingMessageForUser;
-}
-
-void PlayerEnabler::setGUI(BasicGUI * GUI_)
-{
-	GUI = GUI_;
 }
 
 void PlayerEnabler::setLocalPlayer(Player * localPlayer_)

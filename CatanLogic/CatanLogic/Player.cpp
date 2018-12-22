@@ -13,15 +13,19 @@ Player::Player()
 	init();
 }
 
-Player::Player(string name_, BasicGUI* GUI_)
+Player::Player(string name_)
 {
 	init();
 	name = name_;
-	setGUI(GUI_);
 }
 
 
 Player::~Player()
+{
+	reset();
+}
+
+void Player::reset()
 {
 	for (auto settlement : mySettlements)	// Deletes mySettlement
 	{
@@ -39,11 +43,16 @@ Player::~Player()
 	{
 		delete road.second;
 	}
-}
 
-void Player::setGUI(BasicGUI* GUI_)
-{
-	GUI = GUI_;
+	resources.clear();
+	mySettlements.clear();
+	myRoads.clear();
+	rivalsSettlements.clear();
+	rivalsRoads.clear();
+	availableForRoad.clear();
+	availableForSettlement.clear();
+	devCards.clear();
+	roadsVisited.clear();
 }
 
 void Player::init()

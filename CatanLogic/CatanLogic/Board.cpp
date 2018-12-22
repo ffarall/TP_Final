@@ -14,7 +14,7 @@ Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>&
 {
 }
 
-Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>& ports_, BasicGUI* GUI_) : board(board_), robber(robber_), ports(ports_), GUI(GUI_)
+Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>& ports_) : board(board_), robber(robber_), ports(ports_)
 {
 }
 
@@ -25,11 +25,6 @@ Board::~Board()
 	{
 		delete token.second;
 	}
-}
-
-void Board::setGUI(BasicGUI * GUI_)
-{
-	GUI = GUI_;
 }
 
 void Board::shuffleBoard()
