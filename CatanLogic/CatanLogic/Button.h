@@ -9,8 +9,11 @@ class Button :public ObserverAndController
 public:
 	Button(uint xPos, uint Ypos, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font );
 
+	
 	void toggleButton();
 	bool isPressed();
+	void setMouseOn();
+	void resetMouseOn();
 	bool hasMouseOn();
 	void toggleAvailability();
 	bool isAvailable();
