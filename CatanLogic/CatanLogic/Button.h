@@ -12,9 +12,6 @@ public:
 	
 	void toggleButton();
 	bool isPressed();
-	void setMouseOn();
-	void resetMouseOn();
-	bool hasMouseOn();
 	void toggleAvailability();
 	bool isAvailable();
 	void setXPos(uint pos);
@@ -31,7 +28,6 @@ private:
 	uint buttonYPos;
 	std::string buttonText;
 	bool buttonPressed;
-	bool mouseOnButton;
 	bool buttonEnabled;
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
