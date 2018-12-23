@@ -38,7 +38,7 @@ private:
 
 	void send(const char * msg_);
 
-	void parseInput(const char * mensaje);
+	void parseInput(const char * mensaje, size_t length_);
 	
 	Status estado; //Si funciona como server o como client
 	Activity current;

@@ -13,7 +13,7 @@ class RemotePlayerEnabler :
 {
 public:
 	RemotePlayerEnabler();
-	RemotePlayerEnabler(Networking* pkgSender_, PlayerEnabler* localEnabler_);
+	RemotePlayerEnabler(Networking* pkgSender_,  EventsHandler * nable_);
 	virtual ~RemotePlayerEnabler();
 
 
@@ -22,13 +22,9 @@ public:
 	// Enables events when remote starts.
 	void remoteStarts();
 	
-	void setLocalEnabler(PlayerEnabler* localEnabler_);
 private:
 	void init();
 	void end();
-
-	// To be used to set a common board, localPlayer and remotePlayer.
-	PlayerEnabler* localEnabler;
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(SubtypeEvent* ev);

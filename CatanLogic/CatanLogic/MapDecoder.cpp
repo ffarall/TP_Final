@@ -77,6 +77,12 @@ void MapDecoder::init(char * dataArray, unsigned int x_, unsigned int y_)
 
 			vertexPositioners[catanCoordinates] = getCoordinatesInMatrix(newPixel);
 		}
+		else if ((newPixel.getAlpha()) == T_POSITIONING)
+		{
+			string catanCoordinates;
+			catanCoordinates += newPixel.getR(); // just one character defines de color 
+			tokenPositioners[catanCoordinates] = getCoordinatesInMatrix(newPixel);
+		}
 	}
 }
 
@@ -87,6 +93,7 @@ unsigned char MapDecoder::getPixelType(unsigned int i, unsigned int j)
 		int element = j * x + i;
 		return pixelMatrix[element].getAlpha();
 	}
+	return 0; // para que no tire warning, el 0 no lo usamos en ningun alpha
 }
 
 string MapDecoder::getCoordinateFromPixel(unsigned int i, unsigned int j)
@@ -108,6 +115,7 @@ string MapDecoder::getCoordinateFromPixel(unsigned int i, unsigned int j)
 
 		return ret;
 	}
+	return string(); // error
 }
 
 pair<unsigned int, unsigned int> MapDecoder::getPositioningForEdge(string edge)
@@ -118,6 +126,11 @@ pair<unsigned int, unsigned int> MapDecoder::getPositioningForEdge(string edge)
 pair<unsigned int, unsigned int> MapDecoder::getPositioningForVertex(string vertex)
 {
 	return vertexPositioners[vertex];
+}
+
+pair<unsigned int, unsigned int> MapDecoder::getPositioningForToken(string token)
+{
+	return tokenPositioners[token];
 }
 
 bool MapDecoder::setPixel(Pixel& pixel_, unsigned int i, unsigned int j)
@@ -137,7 +150,7 @@ pair<unsigned int, unsigned int> MapDecoder::getCoordinatesInMatrix(Pixel & p)
 	unsigned int index = distance(pixelMatrix.begin(), it);
 	unsigned int j = index / x;
 	unsigned int i = index % x;
-	return pair<unsigned int, unsigned int>(x, y);
+	return pair<unsigned int, unsigned int>(i, j);
 }
 
 bool MapDecoder::isOk(void)

@@ -4,7 +4,6 @@
 #include"HandShakingFSM.h"
 #include"LocalPlayerEnabler.h"
 #include"RemotePlayerEnabler.h"
-#include"BasicGUI.h"
 
 
 #define TICK_TIME 5//ms
@@ -19,7 +18,6 @@ private:
 	LocalPlayerEnabler *localEnabler;
 	RemotePlayerEnabler *remoteEnabler;
 	Board *board;
-	BasicGUI* GUI;
 
 	unsigned long int timerCount;
 	bool receivedQuit;
@@ -137,7 +135,7 @@ private:
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);
 	void error(GenericEvent *ev);
 public:
-	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote, BasicGUI* GUI_);
+	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote);
 	virtual ~MainFSM();
 	mainStates getCurrState();
 	bool isQuit();

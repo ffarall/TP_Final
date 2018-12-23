@@ -186,16 +186,16 @@ void Networking::workPlease()
 			{
 				buffer[dataLength] = '\0';
 				cout << "Recibi: " << buffer << endl;
-				parseInput(buffer);
+				parseInput(buffer,dataLength);
 			}
 			delete[]buffer;
 		}
 	}
 }
 
-void Networking::parseInput(const char * mensaje) // aca parseo 
+void Networking::parseInput(const char * mensaje, size_t length) // aca parseo 
 {
-	input.append(mensaje);
+	input.append(mensaje,length);
 	bool complete = true; //asumo que el paquete llego completo
 
 	headers name = static_cast<headers>(input[0]);

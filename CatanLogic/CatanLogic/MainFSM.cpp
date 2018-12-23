@@ -161,7 +161,7 @@ void MainFSM::error(GenericEvent * ev)
 
 }
 
-MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote, BasicGUI* GUI_):GenericFsm(mainFsmMap,StartMenu_S)
+MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote):GenericFsm(mainFsmMap,StartMenu_S)
 {
 	handShaking = handshaking;
 	network = network_;
@@ -171,9 +171,6 @@ MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandle
 	receivedQuit = false;
 	timerCount = MAX_TICK_TIME;
 	board = new Board;
-	GUI = GUI_;
-
-	board->setGUI(GUI);
 }
 
 MainFSM::~MainFSM()

@@ -78,9 +78,6 @@
     <ClCompile Include="ObserverAndController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BoardObsAndCon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,6 +97,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardObsAndCon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIEnabler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,9 +182,6 @@
     <ClInclude Include="ObserverAndController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BoardObsAndCon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -201,6 +201,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardObsAndCon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIEnabler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

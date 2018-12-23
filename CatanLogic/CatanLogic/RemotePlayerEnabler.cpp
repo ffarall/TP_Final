@@ -10,11 +10,11 @@ RemotePlayerEnabler::RemotePlayerEnabler()
 {
 }
 
-RemotePlayerEnabler::RemotePlayerEnabler(Networking * pkgSender_, PlayerEnabler* localEnabler_)
+RemotePlayerEnabler::RemotePlayerEnabler(Networking * pkgSender_,EventsHandler * handler_)
 {
 	init();
 	setPkgSender(pkgSender_);
-	setLocalEnabler(localEnabler_);
+	setHandler(handler_);
 }
 
 
@@ -33,6 +33,8 @@ void RemotePlayerEnabler::localStarts()
 
 void RemotePlayerEnabler::remoteStarts()
 {
+	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
+
 	disableAll();
 	enable(NET_SETTLEMENT, { TX(firstSettlement_) });
 	setDefaultRoutine(TX(genericDefault));
@@ -71,47 +73,50 @@ void RemotePlayerEnabler::enableRemoteActions()
 
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 {
-	if (remotePlayer->getDevCardAmount(DevCards::KNIGHT))
+	if (playingWithDev)
 	{
-		enable(NET_KNIGHT, { TX(remUsedKnight) });
-	}
-	else
-	{
-		disable(NET_KNIGHT);
-	}
-	
-	if (remotePlayer->getDevCardAmount(DevCards::MONOPOLY))
-	{
-		enable(NET_MONOPOLY, { TX(remUsedMonopoly) });
-	}
-	else
-	{
-		disable(NET_MONOPOLY);
-	}
-	
-	if (remotePlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
-	{
-		enable(NET_YEARS_OF_PLENTY, { TX(remUsedYoP) });
-	}
-	else
-	{
-		disable(NET_YEARS_OF_PLENTY);
-	}
-	
-	if (remotePlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
-	{
-		enable(NET_ROAD_BUILDING, { TX(remUsedRoadBuilding) });
-	}
-	else
-	{
-		disable(NET_ROAD_BUILDING);
-	}
+		if (remotePlayer->getDevCardAmount(DevCards::KNIGHT))
+		{
+			enable(NET_KNIGHT, { TX(remUsedKnight) });
+		}
+		else
+		{
+			disable(NET_KNIGHT);
+		}
 
-	if (remotePlayer->isThereDevCard(VICTORY_POINTS))
-	{
-		remotePlayer->useDevCard(VICTORY_POINTS);
-		if (remotePlayer->hasWon())
-			enable(NET_I_WON, { TX(finDelJuego) });
+		if (remotePlayer->getDevCardAmount(DevCards::MONOPOLY))
+		{
+			enable(NET_MONOPOLY, { TX(remUsedMonopoly) });
+		}
+		else
+		{
+			disable(NET_MONOPOLY);
+		}
+
+		if (remotePlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
+		{
+			enable(NET_YEARS_OF_PLENTY, { TX(remUsedYoP) });
+		}
+		else
+		{
+			disable(NET_YEARS_OF_PLENTY);
+		}
+
+		if (remotePlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
+		{
+			enable(NET_ROAD_BUILDING, { TX(remUsedRoadBuilding) });
+		}
+		else
+		{
+			disable(NET_ROAD_BUILDING);
+		}
+
+		if (remotePlayer->isThereDevCard(VICTORY_POINTS))
+		{
+			remotePlayer->useDevCard(VICTORY_POINTS);
+			if (remotePlayer->hasWon(playingWithDev))
+				enable(NET_I_WON, { TX(finDelJuego) });
+		}
 	}
 }
 
@@ -135,6 +140,7 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rivala intenteto poner un road en una posicion incorrecta");
 	}
 }
 
@@ -158,6 +164,7 @@ void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rivala intenteto poner un road en una posicion incorrecta");
 	}
 }
 
@@ -167,11 +174,6 @@ void RemotePlayerEnabler::finDelJuego(SubtypeEvent * ev)
 	emitEvent(I_WON);
 }
 
-void RemotePlayerEnabler::setLocalEnabler(PlayerEnabler * localEnabler_)
-{
-	localEnabler = localEnabler_;
-}
-
 void RemotePlayerEnabler::init()
 {
 	setDefaultRoutine(TX(noAct));
@@ -179,7 +181,7 @@ void RemotePlayerEnabler::init()
 	remotePlayer = nullptr;
 	board = nullptr;
 	pkgSender = nullptr;
-	localEnabler = nullptr;
+	
 }
 
 void RemotePlayerEnabler::end()
@@ -210,6 +212,7 @@ void RemotePlayerEnabler::firstSettlement(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su primer Settlement en una posicion incorrecta");
 	}
 }
 
@@ -233,6 +236,7 @@ void RemotePlayerEnabler::firstRoad(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su primer road en una posicion incorrecta");
 	}
 }
 
@@ -257,6 +261,7 @@ void RemotePlayerEnabler::secondSettlement(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su segundo Settlement en una posicion incorrecta");
 	}
 }
 
@@ -281,6 +286,7 @@ void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
 	}
 }
 
@@ -304,6 +310,7 @@ void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su primer Settlement en una posicion incorrecta");
 	}
 }
 
@@ -329,6 +336,7 @@ void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su primer road en una posicion incorrecta");
 	}
 
 }
@@ -354,6 +362,7 @@ void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su segundo Settlement en una posicion incorrecta");
 	}
 }
 
@@ -377,6 +386,7 @@ void RemotePlayerEnabler::secondRoad_(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
 	}
 	
 }
@@ -433,6 +443,7 @@ void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
 	{
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("Error al eliminar las cartas al mover el robber");
 	}
 	else
 	{
@@ -461,6 +472,7 @@ void RemotePlayerEnabler::remoteLoseCards(SubtypeEvent * ev)
 	{
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
+		setErrMessage("Error al eliminar las cartas del rival al mover el robber");
 	}
 	else
 	{
@@ -521,7 +533,7 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 		localPlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
-		if (remotePlayer->hasWon())
+		if (remotePlayer->hasWon(playingWithDev))
 			enable(NET_I_WON, {TX(finDelJuego)});
 	}
 	else
@@ -567,7 +579,7 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 		localPlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
-		if (remotePlayer->hasWon())
+		if (remotePlayer->hasWon(playingWithDev))
 			enable(NET_I_WON, { TX(finDelJuego) });
 	}
 	else
@@ -640,6 +652,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 	{
 		emitEvent(ERR_IN_COM);
 		pkgSender->pushPackage(new package(headers::ERROR_));
+		setErrMessage("Error al intentar concretar el Banck trade del rival");
 	}
 }
 
@@ -655,6 +668,7 @@ void RemotePlayerEnabler::checkDevCards(SubtypeEvent * ev)
 	}
 	else
 	{
+		setErrMessage("Error, el rival no tinene suficientes recursos para comprar una Dev Card");
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
 	}

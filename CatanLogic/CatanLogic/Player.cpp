@@ -13,15 +13,19 @@ Player::Player()
 	init();
 }
 
-Player::Player(string name_, BasicGUI* GUI_)
+Player::Player(string name_)
 {
 	init();
 	name = name_;
-	setGUI(GUI_);
 }
 
 
 Player::~Player()
+{
+	reset();
+}
+
+void Player::reset()
 {
 	for (auto settlement : mySettlements)	// Deletes mySettlement
 	{
@@ -39,11 +43,16 @@ Player::~Player()
 	{
 		delete road.second;
 	}
-}
 
-void Player::setGUI(BasicGUI* GUI_)
-{
-	GUI = GUI_;
+	resources.clear();
+	mySettlements.clear();
+	myRoads.clear();
+	rivalsSettlements.clear();
+	rivalsRoads.clear();
+	availableForRoad.clear();
+	availableForSettlement.clear();
+	devCards.clear();
+	roadsVisited.clear();
 }
 
 void Player::init()
@@ -90,7 +99,7 @@ string Player::getName()
 	return name;
 }
 
-bool Player::hasWon()
+bool Player::hasWon(bool playingWithDevs)
 {
 	size_t totalVictoryPoints = victoryPoints + cardVictoryPoints;
 	if (hasLongestRoad())
@@ -101,7 +110,7 @@ bool Player::hasWon()
 	{
 		totalVictoryPoints++;
 	}
-	if (totalVictoryPoints >= 10)
+	if (totalVictoryPoints >= (playingWithDevs?10:8))
 	{
 		iWon = true;
 	}
@@ -248,6 +257,42 @@ size_t Player::getRemainingRoads()
 size_t Player::getRemainingCities()
 {
 	return remainingCities;
+}
+
+list<string> Player::getMySettlements()
+{
+	list<string> ret;
+	for (auto building : mySettlements)
+	{
+		if (building.second->whatAmI().compare("Settlement"))
+		{
+			ret.push_back(building.first);
+		}
+	}
+	return ret;
+}
+
+list<string> Player::getMyCities()
+{
+	list<string> ret;
+	for (auto building : mySettlements)
+	{
+		if (building.second->whatAmI().compare("City"))
+		{
+			ret.push_back(building.first);
+		}
+	}
+	return ret;
+}
+
+list<string> Player::getMyRoads()
+{
+	list<string> ret;
+	for (auto building :myRoads)
+	{
+		ret.push_back(building.first);
+	}
+	return ret;
 }
 
 bool Player::checkSettlementAvailability(string position)
@@ -632,7 +677,7 @@ void Player::incVictoryPoints()
 {
 	victoryPoints++;
 
-	hasWon();
+	hasWon(true);// aca no me interesa si uso o no las dev cards
 	notifyAllObservers();
 }
 

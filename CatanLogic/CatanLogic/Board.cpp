@@ -14,7 +14,7 @@ Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>&
 {
 }
 
-Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>& ports_, BasicGUI* GUI_) : board(board_), robber(robber_), ports(ports_), GUI(GUI_)
+Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>& ports_) : board(board_), robber(robber_), ports(ports_)
 {
 }
 
@@ -25,11 +25,6 @@ Board::~Board()
 	{
 		delete token.second;
 	}
-}
-
-void Board::setGUI(BasicGUI * GUI_)
-{
-	GUI = GUI_;
 }
 
 void Board::shuffleBoard()
@@ -82,6 +77,7 @@ void Board::shuffleBoard()
 	{
 		size_t randPos = rand() % resources.size();
 		ResourceType randRec = resources.at(randPos);
+		resources.erase(resources.begin() + randPos); // lo saco de la lista
 		Hex * token = new Hex;
 		token->setResource(randRec);
 		board.at('A'+i) = token;
@@ -263,7 +259,10 @@ void Board::assignResourcesForNum(int num)
 			Hex* hex = static_cast<Hex*>(token.second);
 			if (hex->getDiceNum() == num)					// If it's diceNum is the given...
 			{
-				hex->assignResources();
+				if (token.first != robber)
+				{
+					hex->assignResources();
+				}
 			}
 		}
 	}

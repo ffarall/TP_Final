@@ -11,7 +11,6 @@
 #include "Sea.h"
 #include "EDASubject.h"
 #include "Board.h"
-#include "BasicGUI.h"
 
 using namespace std;
 using DevCardRoutine = void (Player::*)();
@@ -27,16 +26,17 @@ class Player :
 {
 public:
 	Player();
-	Player(string name_, BasicGUI* GUI_);
+	Player(string name_);
 	virtual ~Player();
 
-	void setGUI(BasicGUI* GUI_);
+	void reset();
+	void init();
 
 	size_t getVictoryPoints();
 	string getName();
 
 	// Asks if player has won.
-	bool hasWon();
+	bool hasWon(bool playingWithDevs);
 
 	// Increments the given resource.
 	void addResource(ResourceType resource, int amount = 1);
@@ -63,6 +63,10 @@ public:
 	size_t getRemainingSettlements();
 	size_t getRemainingRoads();
 	size_t getRemainingCities();
+
+	list<string> getMySettlements();
+	list<string> getMyCities();
+	list<string> getMyRoads();
 
 	// Checks if position is available for settlement and if player has enough resources. Uses resources.
 	bool checkSettlementAvailability(string position);
@@ -116,7 +120,6 @@ public:
 	size_t getArmySize();
 
 private:
-	void init();
 
 	// True when player has won.
 	bool iWon;
@@ -156,8 +159,6 @@ private:
 	size_t army;
 	// Longest road of this player.
 	size_t longestRoad;
-	// GUI to attach Observers that are also Controllers.
-	BasicGUI* GUI;
 
 	// List used when calculating the longestRoad. Stores all the edges that have roads and have already been visited.
 	list< string > roadsVisited;

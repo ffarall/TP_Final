@@ -10,11 +10,15 @@ LocalPlayerEnabler::LocalPlayerEnabler()
 	init();
 }
 
-LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_, PlayerEnabler* remoteEnabler_, EventsHandler* handler_, BasicGUI* GUI_) : PlayerEnabler(handler_, GUI_)
+LocalPlayerEnabler::LocalPlayerEnabler(Networking * pkgSender_, PlayerEnabler* remoteEnabler_, EventsHandler* handler_, Player* localPlayer_, Player* remotePlayer_) : PlayerEnabler(handler_)
 {
 	init();
+
 	setPkgSender(pkgSender_);
 	setRemoteEnabler(remoteEnabler_);
+
+	remoteEnabler->setLocalPlayer(localPlayer = localPlayer_);
+	remoteEnabler->setRemotePlayer(remotePlayer = remotePlayer_);
 }
 
 
@@ -30,11 +34,11 @@ void LocalPlayerEnabler::setRemoteEnabler(PlayerEnabler * remoteEnabler_)
 
 string LocalPlayerEnabler::whoWon()
 {
-	if (localPlayer->hasWon())
+	if (localPlayer->hasWon(playingWithDev))
 	{
 		return "local";
 	}
-	else if (remotePlayer->hasWon())
+	else if (remotePlayer->hasWon(playingWithDev))
 	{
 		return "remote";
 	}
@@ -56,24 +60,15 @@ void LocalPlayerEnabler::init()
 
 void LocalPlayerEnabler::end()
 {
-	if (localPlayer != nullptr)
-	{
-		delete localPlayer;
-	}
-	if (remotePlayer != nullptr)
-	{
-		delete remotePlayer;
-	}
+	localPlayer->reset();
+	remotePlayer->reset();
 }
 
 void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote, Board* board_)
 {
 	end();																				// Clears possible previous Players and Board from previous games.
 
-	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal, GUI));					// Sets both localPlayer for local enabler and remote enabler.
-	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote, GUI));				// Same for remotePlayer.
-	remoteEnabler->setBoard(board = board_);											// Same for board.
-
+	remoteEnabler->setBoard(board = board_);											// Same board for both.
 
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
@@ -86,10 +81,7 @@ void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote, Board
 {
 	end();																				// Clears possible previous Players and Board from previous games.
 
-	remoteEnabler->setLocalPlayer(localPlayer = new Player(nameLocal, GUI));					// Sets both localPlayer for local enabler and remote enabler.
-	remoteEnabler->setRemotePlayer(remotePlayer = new Player(nameRemote, GUI));				// Same for remotePlayer.
-	remoteEnabler->setBoard(board = board_);											// Same for board.
-
+	remoteEnabler->setBoard(board = board_);											// Same board for both.
 
 	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
 
@@ -767,7 +759,7 @@ void LocalPlayerEnabler::getResourceFromSettlement(string position, Player* who)
 
 void LocalPlayerEnabler::checkIfLocalWon()
 {
-	if (localPlayer->hasWon())
+	if (localPlayer->hasWon(playingWithDev))
 	{
 		emitEvent(I_WON);
 	}

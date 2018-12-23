@@ -6,7 +6,6 @@
 #include <map>
 #include <stack>
 #include "CatanDefs.h"
-#include "BasicGUI.h"
 
 using namespace std;
 using Coordinate = string;
@@ -18,10 +17,8 @@ public:
 	Board();
 	Board(map< char, Token* >& board_, char robber_);
 	Board(map< char, Token* >& board_, char robber_, map< Coordinate, PortType >& ports_);
-	Board(map< char, Token* >& board_, char robber_, map< Coordinate, PortType >& ports_, BasicGUI* GUI_);
+	Board(map< char, Token* >& board_, char robber_, map< Coordinate, PortType >& ports_);
 	virtual ~Board();
-
-	void setGUI(BasicGUI* GUI_);
 
 	// Creates new board randomly and according to game rules.
 	void shuffleBoard();
@@ -73,7 +70,5 @@ private:
 	stack< DevCards > pileOfDevCards;
 	// Vertexes with ports.
 	map< Coordinate, PortType > ports;
-	// GUI to attach Observers that are also Controllers.
-	BasicGUI* GUI;
 };
 
