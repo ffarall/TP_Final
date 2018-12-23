@@ -7,7 +7,7 @@ using uint = unsigned int;
 class Button :public ObserverAndController
 {
 public:
-	Button(uint xPos, uint Ypos, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font );
+	Button(uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font );
 
 	
 	void toggleButton();
@@ -26,6 +26,8 @@ public:
 private:
 	uint buttonXPos;
 	uint buttonYPos;
+	uint buttonHeight;
+	uint buttonWidth;
 	std::string buttonText;
 	bool buttonPressed;
 	bool buttonEnabled;

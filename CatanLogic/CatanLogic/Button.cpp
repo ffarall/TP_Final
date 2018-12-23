@@ -1,9 +1,11 @@
 #include "Button.h"
 
-Button::Button(uint xPos, uint yPos, std::string label, ALLEGRO_BITMAP * image, ALLEGRO_FONT * font)
+Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font)
 {
 	buttonXPos = xPos;
-	buttonYPos = yPos;
+	buttonYPos = Ypos;
+	buttonHeight = height;
+	buttonWidth = width;
 	buttonText = label;
 	buttonBitmap = image;
 	buttonFont = font;
@@ -19,10 +21,7 @@ bool Button::isPressed()
 	return buttonPressed;
 }
 
-bool Button::hasMouseOn()
-{
-	return mouseOnButton;
-}
+
 
 void Button::toggleAvailability()
 {
@@ -92,17 +91,13 @@ void Button::update()
 			{
 				al_draw_tinted_bitmap(buttonBitmap, al_map_rgba_f(1.0, 0.5, 0.5, 1.0), buttonXPos, buttonYPos, 0); // medio rojizo
 			}
-			else if (mouseOnButton)
-			{
-				al_draw_tinted_bitmap(buttonBitmap, al_map_rgba_f(0.5, 0.5, 1.0 , 1.0), buttonXPos, buttonYPos, 0); // medio azulado
-			}
 			else
 			{
 				al_draw_tinted_bitmap(buttonBitmap, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), buttonXPos, buttonYPos, 0); // normal
 			}
 			if (buttonFont != NULL)
 			{
-				//deberia escribir el texto
+				al_draw_text(buttonFont, al_map_rgba(0, 0, 0, 1), buttonXPos + buttonWidth / 2, buttonYPos + buttonHeight / 2, 0, buttonText.c_str());
 			}
 		}
 		else
