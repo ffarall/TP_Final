@@ -1,220 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="BasicGUI.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="BoardController.cpp" />
+    <ClCompile Include="BoardObsAndCon.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonController.cpp" />
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="GUIEnabler.cpp" />
+    <ClCompile Include="GutenbergsPress.cpp" />
+    <ClCompile Include="MapDecoder.cpp" />
+    <ClCompile Include="EDASubject.cpp" />
+    <ClCompile Include="Enabler.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="HandShakingFSM.cpp" />
+    <ClCompile Include="Hex.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="lodepng.cpp" />
+    <ClCompile Include="MainFSM.cpp" />
+    <ClCompile Include="MovableType.cpp" />
+    <ClCompile Include="Networking.cpp" />
+    <ClCompile Include="ObserverAndController.cpp" />
+    <ClCompile Include="Pixel.cpp" />
+    <ClCompile Include="PlayerEnabler.cpp" />
+    <ClCompile Include="RemotePlayerEnabler.cpp" />
+    <ClCompile Include="Sea.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="LocalPlayerEnabler.cpp" />
+    <ClCompile Include="NewEventHandling.cpp" />
+    <ClCompile Include="NewGenericFSM.cpp" />
+    <ClCompile Include="package.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Road.cpp" />
+    <ClCompile Include="Settlement.cpp" />
+    <ClCompile Include="GutenbergsPressAllegro.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NewEventHandling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NewGenericFSM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enabler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="package.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HandShakingFSM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LocalPlayerEnabler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Settlement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="City.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Road.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Token.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RemotePlayerEnabler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerEnabler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Networking.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainFSM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sea.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EDASubject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicGUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObserverAndController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Error.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lodepng.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MapDecoder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pixel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BoardController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BoardObsAndCon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIEnabler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ButtonController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="NewEventHandling.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NewGenericFSM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enabler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="package.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SubEvents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LocalPlayerEnabler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Settlement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="City.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Road.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Token.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RemotePlayerEnabler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerEnabler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Networking.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HandShakingFSM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainFSM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EDAObserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EDASubject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicGUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObserverAndController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lodepng.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MapDecoder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pixel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoardController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoardObsAndCon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIEnabler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="BasicGUI.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardController.h" />
+    <ClInclude Include="BoardObsAndCon.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonController.h" />
+    <ClInclude Include="CatanDefs.h" />
+    <ClInclude Include="City.h" />
+    <ClInclude Include="GUIEnabler.h" />
+    <ClInclude Include="GutenbergsPress.h" />
+    <ClInclude Include="MapDecoder.h" />
+    <ClInclude Include="EDAObserver.h" />
+    <ClInclude Include="EDASubject.h" />
+    <ClInclude Include="Enabler.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="HandShakingFSM.h" />
+    <ClInclude Include="Hex.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="lodepng.h" />
+    <ClInclude Include="MainFSM.h" />
+    <ClInclude Include="MovableType.h" />
+    <ClInclude Include="Networking.h" />
+    <ClInclude Include="ObserverAndController.h" />
+    <ClInclude Include="Pixel.h" />
+    <ClInclude Include="PlayerEnabler.h" />
+    <ClInclude Include="RemotePlayerEnabler.h" />
+    <ClInclude Include="Sea.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="LocalPlayerEnabler.h" />
+    <ClInclude Include="MainEvent.h" />
+    <ClInclude Include="NewEventHandling.h" />
+    <ClInclude Include="NewGenericFSM.h" />
+    <ClInclude Include="package.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Road.h" />
+    <ClInclude Include="Settlement.h" />
+    <ClInclude Include="SubEvents.h" />
+    <ClInclude Include="GutenbergsPressAllegro.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

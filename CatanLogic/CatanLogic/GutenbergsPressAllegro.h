@@ -9,12 +9,12 @@
 using namespace std;
 
 // This class simulates Gutenberg's press, by having a background and a list of MovableTypes, whenever one is changed, using Allegro, it prints the new	stamp on screen.
-class GuntenbergsPressAllegro :
+class GutenbergsPressAllegro :
 	public GutenbergsPress
 {
 public:
-	GuntenbergsPressAllegro(ALLEGRO_BITMAP* background_);
-	virtual ~GuntenbergsPressAllegro();
+	GutenbergsPressAllegro(ALLEGRO_BITMAP* background_);
+	virtual ~GutenbergsPressAllegro();
 
 	void virtual print();
 

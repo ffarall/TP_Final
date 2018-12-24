@@ -1,13 +1,13 @@
-#include "GuntenbergsPressAllegro.h"
+#include "GutenbergsPressAllegro.h"
 #include <functional>
 
 
-GuntenbergsPressAllegro::GuntenbergsPressAllegro(ALLEGRO_BITMAP * background_)
+GutenbergsPressAllegro::GutenbergsPressAllegro(ALLEGRO_BITMAP * background_)
 {
 	setBackgorund(background_);
 }
 
-GuntenbergsPressAllegro::~GuntenbergsPressAllegro()
+GutenbergsPressAllegro::~GutenbergsPressAllegro()
 {
 	al_destroy_bitmap(background);
 	for (auto type : types)
@@ -16,7 +16,7 @@ GuntenbergsPressAllegro::~GuntenbergsPressAllegro()
 	}
 }
 
-void GuntenbergsPressAllegro::print()
+void GutenbergsPressAllegro::print()
 {
 	al_draw_bitmap(background, 0, 0, NULL);				// Draws background.
 	for (auto type : types)								// Then draws every type on top of the background.
@@ -25,7 +25,7 @@ void GuntenbergsPressAllegro::print()
 	}
 }
 
-void GuntenbergsPressAllegro::setBackgorund(ALLEGRO_BITMAP * background_)
+void GutenbergsPressAllegro::setBackgorund(ALLEGRO_BITMAP * background_)
 {
 	if (background != nullptr)
 	{
@@ -34,12 +34,12 @@ void GuntenbergsPressAllegro::setBackgorund(ALLEGRO_BITMAP * background_)
 	background = background_;
 }
 
-void GuntenbergsPressAllegro::addType(MovableType * newType)
+void GutenbergsPressAllegro::addType(MovableType * newType)
 {
 	types.push_back(newType);
 }
 
-void GuntenbergsPressAllegro::delType(MovableType * type)
+void GutenbergsPressAllegro::delType(MovableType * type)
 {
 	types.erase(find(types.begin(), types.end(), type));
 }
