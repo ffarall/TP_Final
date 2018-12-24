@@ -105,13 +105,7 @@
     <ClCompile Include="GUIEnabler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MovableType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GuntenbergsPressAllegro.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GutenbergsPress.cpp">
+    <ClCompile Include="ButtonController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -218,13 +212,7 @@
     <ClInclude Include="GUIEnabler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovableType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GuntenbergsPressAllegro.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GutenbergsPress.h">
+    <ClInclude Include="ButtonController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
