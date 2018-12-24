@@ -25,6 +25,13 @@ void GutenbergsPressAllegro::print()
 	}
 }
 
+MovableType * GutenbergsPressAllegro::createType(ALLEGRO_BITMAP * bitmap_, ALLEGRO_COLOR tint_, double coordinateX_, double coordinateY_, double difX_, double difY_, double scaleX_, double scaleY_, double angle_, int flags_)
+{
+	MovableType* newType = new MovableType(this, bitmap_, tint_, coordinateX_, coordinateY_, difX_, difY_, scaleX_, scaleY_, angle_, flags_);
+	addType(newType);
+	return newType;
+}
+
 void GutenbergsPressAllegro::setBackgorund(ALLEGRO_BITMAP * background_)
 {
 	if (background != nullptr)
