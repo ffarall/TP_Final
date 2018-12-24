@@ -123,6 +123,8 @@
     <ClCompile Include="ButtonController.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="GUIEnabler.cpp" />
+    <ClCompile Include="GuntenbergsPressAllegro.cpp" />
+    <ClCompile Include="GutenbergsPress.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
@@ -132,6 +134,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="MainFSM.cpp" />
+    <ClCompile Include="MovableType.cpp" />
     <ClCompile Include="Networking.cpp" />
     <ClCompile Include="ObserverAndController.cpp" />
     <ClCompile Include="Pixel.cpp" />
@@ -157,6 +160,8 @@
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="GUIEnabler.h" />
+    <ClInclude Include="GuntenbergsPressAllegro.h" />
+    <ClInclude Include="GutenbergsPress.h" />
     <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
     <ClInclude Include="EDASubject.h" />
@@ -167,6 +172,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="MainFSM.h" />
+    <ClInclude Include="MovableType.h" />
     <ClInclude Include="Networking.h" />
     <ClInclude Include="ObserverAndController.h" />
     <ClInclude Include="Pixel.h" />
