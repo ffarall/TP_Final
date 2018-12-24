@@ -1,5 +1,7 @@
 #include "BoardObsAndCon.h"
 #include "BoardController.h"
+#include "allegro5/allegro_primitives.h"
+#include "allegro5/allegro_ttf.h"
 
 #define MAP_FILE "mapaFinal.png"
 #define HILLS_HEX_FILE "colinas.png"
@@ -21,6 +23,7 @@
 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
+#define ROBBER_POS 10
 
 BoardObsAndCon::BoardObsAndCon()
 {
@@ -75,6 +78,7 @@ void BoardObsAndCon::init()
 	{
 		if (imagen.second == NULL) { allegOk = false; }
 	}
+
 	if (!allegOk) // si hubo algún problema limpio
 	{
 		for (auto imagen : bitmaps)
@@ -83,6 +87,11 @@ void BoardObsAndCon::init()
 		}
 		// ver de agregar algo de error o nose
 	}
+
+	al_init_font_addon();
+	al_init_primitives_addon();
+	al_init_ttf_addon();
+	
 }
 
 void BoardObsAndCon::drawMap()
@@ -129,6 +138,12 @@ void BoardObsAndCon::drawMap()
 			pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
 			0, 0);
 	}
+
+	pair<unsigned int, unsigned int> robberPos = decoder->getPositioningForToken(to_string(board->getRobberPos()));
+	al_draw_bitmap(bitmaps[ROBBER_FILE],
+		robberPos.first + BOARD_POS_X + ROBBER_POS, robberPos.second + BOARD_POS_Y + ROBBER_POS,
+		0); // dibujo el robber0
+
 }
 
 void BoardObsAndCon::drawRoad(string edge, bool player)

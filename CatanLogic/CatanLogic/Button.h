@@ -3,11 +3,15 @@
 #include"allegro5/allegro.h"
 #include"allegro5/allegro_font.h"
 #include<iostream>
+#include <functional>
+
+typedef std::function<GUIEnablerEvent(void)> Action;
+
 using uint = unsigned int;
 class Button :public ObserverAndController
 {
 public:
-	Button(uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font );
+	Button(uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font, const Action& callback);
 
 	
 	void toggleButton();

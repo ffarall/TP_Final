@@ -1,7 +1,9 @@
 #include "Button.h"
+#include "ButtonController.h"
 
-Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font)
+Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font, const Action& callback)
 {
+	controller = new ButtonController(this, callback);
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;

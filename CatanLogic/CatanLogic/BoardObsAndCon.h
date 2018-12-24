@@ -7,6 +7,8 @@
 #include <map>
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
+#include "allegro5/allegro_font.h"
+
 
 using namespace std;
 
@@ -30,7 +32,7 @@ private:
 	MapDecoder* decoder;
 	// Map with all of the Allegro bitmaps.
 	map< string, ALLEGRO_BITMAP* > bitmaps;
-	
+	ALLEGRO_FONT * font;
 	/* As observer, this object will make use of public functions of both Board and Players to check for changes and represent them on screen. */
 	// Board to observe.
 	Board* board;
