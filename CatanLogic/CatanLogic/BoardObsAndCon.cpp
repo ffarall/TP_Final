@@ -23,7 +23,8 @@
 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
-#define ROBBER_POS 10
+#define ROBBER_POS 20
+#define CT_RAD 10
 
 BoardObsAndCon::BoardObsAndCon()
 {
@@ -96,6 +97,11 @@ void BoardObsAndCon::init()
 
 void BoardObsAndCon::drawMap()
 {
+	ALLEGRO_BITMAP * fondo = al_create_bitmap(580,524);
+	ALLEGRO_DISPLAY * tempDisplay = al_get_current_display();
+
+	al_set_target_bitmap(fondo);
+
 	for (int i = 0; i < 6; i++) // dibujo el agua
 	{
 		ALLEGRO_BITMAP *  temp = NULL;
@@ -113,7 +119,7 @@ void BoardObsAndCon::drawMap()
 		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
 		al_draw_rotated_bitmap(temp,
 			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
-			pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+			pos.first /*+ BOARD_POS_X*/, pos.second /*+ BOARD_POS_Y*/,
 			ALLEGRO_PI*((((float)i) / 3) - 1), 0);
 	}
 
@@ -135,9 +141,14 @@ void BoardObsAndCon::drawMap()
 		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
 		al_draw_rotated_bitmap(temp,
 			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
-			pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+			pos.first /*+ BOARD_POS_X*/, pos.second /*+ BOARD_POS_Y*/,
 			0, 0);
+		al_draw_filled_circle(pos.first, pos.second, CT_RAD, al_map_rgb(255, 255, 255));
+		al_draw_circle(pos.first, pos.second, CT_RAD, al_map_rgb(255, 255, 255), 5);//revisar
+		al_draw_text(font, al_map_rgb(0, 0, 0), pos.first, pos.second, ALLEGRO_ALIGN_CENTRE, to_string(board->getCircToken(letra[0])).c_str());
 	}
+	// hasta aca dibujo el mapa en un bitmap
+	al_set_target_backbuffer(tempDisplay);
 
 	pair<unsigned int, unsigned int> robberPos = decoder->getPositioningForToken(to_string(board->getRobberPos()));
 	al_draw_bitmap(bitmaps[ROBBER_FILE],
