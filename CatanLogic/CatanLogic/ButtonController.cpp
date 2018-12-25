@@ -1,13 +1,17 @@
 #include "ButtonController.h"
 
-ButtonController::ButtonController(Button * toControl, const Action & callback_)
+ButtonController::ButtonController(Button * toControl)
 {
-	callback = callback_;
 	controldo = toControl;
 }
 
 ButtonController::~ButtonController()
 {
+}
+
+void ButtonController::addUtility(const Action & callback_)
+{
+	callback = callback_;
 }
 
 GUIEnablerEvent ButtonController::parseMouseEvent(uint32_t x, uint32_t y)

@@ -1,9 +1,9 @@
 #include "Button.h"
 #include "ButtonController.h"
 
-Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font, const Action& callback)
+Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font)
 {
-	controller = new ButtonController(this, callback);
+	controller = new ButtonController(this);
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;
@@ -11,6 +11,11 @@ Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label,
 	buttonText = label;
 	buttonBitmap = image;
 	buttonFont = font;
+}
+
+void Button::turnUseful(const Action & callback)
+{
+	(static_cast<ButtonController *>(controller))->addUtility(callback);
 }
 
 void Button::toggleButton()
