@@ -2,6 +2,7 @@
 #include"ObserverAndController.h"
 #include"allegro5/allegro.h"
 #include"allegro5/allegro_font.h"
+#include"GutenbergsPressAllegro.h"
 #include<iostream>
 #include <functional>
 
@@ -38,6 +39,7 @@ private:
 	bool buttonEnabled;
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
+	GutenbergsPressAllegro* press;
 };
 
 /*

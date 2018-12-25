@@ -1,5 +1,6 @@
 #include "Button.h"
 #include "ButtonController.h"
+#define BUTTON_TINT 0,0,0
 
 Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font)
 {
@@ -11,6 +12,7 @@ Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label,
 	buttonText = label;
 	buttonBitmap = image;
 	buttonFont = font;
+	press->addType(press->createType(image, al_map_rgb(BUTTON_TINT), xPos, Ypos));
 }
 
 void Button::turnUseful(const Action & callback)

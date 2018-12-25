@@ -9,7 +9,7 @@ class ButtonController :
 	public BasicController
 {
 public:
-	ButtonController(Button * toControl);
+	ButtonController(Button* toControl);
 	virtual ~ButtonController();
 
 	void addUtility(const Action& callback);
