@@ -123,7 +123,7 @@
     <ClCompile Include="ButtonController.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="GUIEnabler.cpp" />
-    <ClCompile Include="GuntenbergsPressAllegro.cpp" />
+    <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
@@ -160,7 +160,7 @@
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="GUIEnabler.h" />
-    <ClInclude Include="GuntenbergsPressAllegro.h" />
+    <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="GutenbergsPress.h" />
     <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
