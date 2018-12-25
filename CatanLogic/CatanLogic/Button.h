@@ -39,3 +39,20 @@ private:
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
 };
+
+/*
+
+{  // como usar las funciones lambda
+
+	Button a(...),b(...),c(...);
+
+	a.turnUseful([&b]() // entre corchetes con el & le paso los botones, controles, etc, que se vallan a habilitar o desabilitar cuando se clikea el boton 
+				{  	    // entre llaves el callback que se tiene que ejecutar (tiene que tener un retrun GUIEnablerevent)
+					b.toggleAvaliability();
+					return ...;
+				}
+				);
+
+}
+
+*/
