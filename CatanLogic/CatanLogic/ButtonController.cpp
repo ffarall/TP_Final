@@ -16,7 +16,7 @@ void ButtonController::addUtility(const Action & callback_)
 
 GUIEnablerEvent ButtonController::parseMouseEvent(uint32_t x, uint32_t y)
 {
-	if ( /* esta tocando*/)
+	if ( controldo->clickIn(x,y) )
 	{
 		controldo->toggleButton();
 		return callback();

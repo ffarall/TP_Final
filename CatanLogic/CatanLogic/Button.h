@@ -15,7 +15,8 @@ public:
 	Button(uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font);
 
 	void turnUseful(const Action& callback);
-	
+	bool clickIn(uint x_, uint y_);
+
 	void toggleButton();
 	bool isPressed();
 	void toggleAvailability();
