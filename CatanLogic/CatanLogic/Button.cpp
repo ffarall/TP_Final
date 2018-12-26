@@ -20,6 +20,18 @@ void Button::turnUseful(const Action & callback)
 	(static_cast<ButtonController *>(controller))->addUtility(callback);
 }
 
+bool Button::clickIn(uint x_, uint y_)
+{
+	if ((x_ >= (buttonXPos - buttonWidth / 2)) && (x_ <= (buttonXPos + buttonWidth / 2)) && (y_ >= (buttonYPos - buttonHeight / 2)) && (y_ <= (buttonYPos + buttonHeight / 2)))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Button::toggleButton()
 {
 	buttonPressed = !buttonPressed;
