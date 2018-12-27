@@ -39,6 +39,8 @@ public:
 	void setAngle(double angle_);
 	void setFlags(int flags_);
 
+	ALLEGRO_BITMAP * getBitmap();
+
 private:
 	GutenbergsPress* press;
 

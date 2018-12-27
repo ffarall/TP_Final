@@ -17,7 +17,7 @@ public:
 	Board();
 	Board(map< char, Token* >& board_, char robber_);
 	Board(map< char, Token* >& board_, char robber_, map< Coordinate, PortType >& ports_);
-	Board(map< char, Token* >& board_, char robber_, map< Coordinate, PortType >& ports_);
+	
 	virtual ~Board();
 
 	// Creates new board randomly and according to game rules.

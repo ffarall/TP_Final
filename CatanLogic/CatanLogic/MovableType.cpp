@@ -86,3 +86,8 @@ void MovableType::setFlags(int flags_)
 {
 	flags = flags_;
 }
+
+ALLEGRO_BITMAP * MovableType::getBitmap()
+{
+	return bitmap;
+}

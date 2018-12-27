@@ -4,7 +4,7 @@
 #include "MapDecoder.h"
 
 #include "MovableType.h"
-#include "GutenbergsPress.h"
+#include "GutenbergsPressAllegro.h"
 
 #include <map>
 #include <string>
@@ -32,7 +32,7 @@ private:
 	map< string, MovableType * > buildings;
 	map< string, MovableType * > roads;
 
-	GutenbergsPress * impresora;
+	GutenbergsPressAllegro * impresora;
 	map<string, MovableType *> sellos;
 	
 	ALLEGRO_FONT * fuente;

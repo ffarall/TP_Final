@@ -14,11 +14,6 @@ Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>&
 {
 }
 
-Board::Board(map<char, Token*>& board_, char robber_, map<Coordinate, PortType>& ports_) : board(board_), robber(robber_), ports(ports_)
-{
-}
-
-
 Board::~Board()
 {
 	for (auto token : board)
@@ -52,7 +47,7 @@ void Board::shuffleBoard()
 		puertos.erase(puertos.begin()+randPos);
 		Sea * mar = new Sea();
 		mar->setPortType(randPort);
-		board.at(i) = mar;
+		board['0'+i] = mar;
 	}
 
 	for (int i = 0; i < 6; i++) // me armo la lista de puertos
@@ -80,15 +75,15 @@ void Board::shuffleBoard()
 		resources.erase(resources.begin() + randPos); // lo saco de la lista
 		Hex * token = new Hex;
 		token->setResource(randRec);
-		board.at('A'+i) = token;
+		board['A'+i] = token;
 	}
 
 	for (int i = 0; i < 19; i++) // sorteo los circular tokens
 	{
-		size_t randPos = rand() % circTkns.size();
-		char randCirc = circTkns.at(randPos);
 		if (static_cast<Hex *>(board.at('A' + i))->giveResource() != DESIERTO)
 		{
+			size_t randPos = rand() % circTkns.size();
+			char randCirc = circTkns.at(randPos);
 			static_cast<Hex *>(board.at('A' + i))->setDiceNum(randCirc);
 			circTkns.erase(circTkns.begin() + randPos);
 		}
