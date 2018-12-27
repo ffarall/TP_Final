@@ -9,7 +9,6 @@
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_font.h"
 
-
 using namespace std;
 
 class BoardObsAndCon :
@@ -20,6 +19,16 @@ public:
 	virtual ~BoardObsAndCon();
 
 	virtual void update();
+
+	/* para mostrar los disponibles cuando se quiere hacer algo en el board*/
+	void toggleSettlement();
+	void toggleRoad();
+	void toggleCity();
+
+	bool getPuttingCity();
+	bool getPuttingSettlement();
+	bool getPuttingRoad();
+	/*******************************/
 
 private:
 	void init();
@@ -34,6 +43,10 @@ private:
 	map< string, ALLEGRO_BITMAP* > bitmaps;
 	ALLEGRO_FONT * font;
 	/* As observer, this object will make use of public functions of both Board and Players to check for changes and represent them on screen. */
+	bool puttingSettlement;
+	bool puttingCity;
+	bool puttingRoad;
+
 	// Board to observe.
 	Board* board;
 	// localPlayer to observe.

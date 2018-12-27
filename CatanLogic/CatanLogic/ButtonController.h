@@ -20,6 +20,6 @@ public:
 private:
 
 	Action callback;
-	Button * controldo;
+	Button * controlado;
 };
 

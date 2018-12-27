@@ -35,6 +35,8 @@
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Settlement.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
+    <ClCompile Include="RemoteObs.cpp" />
+    <ClCompile Include="LocalObs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -75,6 +77,8 @@
     <ClInclude Include="Settlement.h" />
     <ClInclude Include="SubEvents.h" />
     <ClInclude Include="GutenbergsPressAllegro.h" />
+    <ClInclude Include="RemoteObs.h" />
+    <ClInclude Include="LocalObs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

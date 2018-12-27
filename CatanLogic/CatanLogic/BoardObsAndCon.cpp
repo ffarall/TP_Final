@@ -52,6 +52,36 @@ void BoardObsAndCon::update()
 	for (auto vertex : remotePlayer->getMyCities()) { drawBuilding(vertex, false, false); }
 }
 
+void BoardObsAndCon::toggleSettlement()
+{
+	puttingSettlement = !puttingSettlement;
+}
+
+void BoardObsAndCon::toggleRoad()
+{
+	puttingRoad = !puttingRoad;
+}
+
+void BoardObsAndCon::toggleCity()
+{
+	puttingCity = !puttingCity;
+}
+
+bool BoardObsAndCon::getPuttingCity()
+{
+	return puttingCity;
+}
+
+bool BoardObsAndCon::getPuttingSettlement()
+{
+	return puttingSettlement;
+}
+
+bool BoardObsAndCon::getPuttingRoad()
+{
+	return puttingRoad;
+}
+
 void BoardObsAndCon::init()
 {
 	controller = new BoardController;
@@ -92,7 +122,10 @@ void BoardObsAndCon::init()
 	al_init_font_addon();
 	al_init_primitives_addon();
 	al_init_ttf_addon();
-	
+
+	puttingCity = false;
+	puttingRoad = false;
+	puttingSettlement = false;
 }
 
 void BoardObsAndCon::drawMap()

@@ -125,6 +125,7 @@
     <ClCompile Include="GUIEnabler.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
+    <ClCompile Include="LocalObs.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="ObserverAndController.cpp" />
     <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
+    <ClCompile Include="RemoteObs.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Sea.cpp" />
     <ClCompile Include="Token.cpp" />
@@ -162,6 +164,7 @@
     <ClInclude Include="GUIEnabler.h" />
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="GutenbergsPress.h" />
+    <ClInclude Include="LocalObs.h" />
     <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
     <ClInclude Include="EDASubject.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="ObserverAndController.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="PlayerEnabler.h" />
+    <ClInclude Include="RemoteObs.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Sea.h" />
     <ClInclude Include="Token.h" />

@@ -2,7 +2,7 @@
 
 ButtonController::ButtonController(Button * toControl)
 {
-	controldo = toControl;
+	controlado = toControl;
 }
 
 ButtonController::~ButtonController()
@@ -16,15 +16,17 @@ void ButtonController::addUtility(const Action & callback_)
 
 GUIEnablerEvent ButtonController::parseMouseEvent(uint32_t x, uint32_t y)
 {
-	if ( controldo->clickIn(x,y) )
+	if (controlado->isAvailable())
 	{
-		controldo->toggleButton();
-		return callback();
+		if (controlado->clickIn(x, y))
+		{
+			controlado->toggleButton();
+			return callback();
+		}
 	}
-	else
-	{
-		return GUIEnablerEvent::NO_EV;
-	}
+	
+	return GUIEnablerEvent::NO_EV;
+	
 }
 
 GUIEnablerEvent ButtonController::parseTimerEvent()
