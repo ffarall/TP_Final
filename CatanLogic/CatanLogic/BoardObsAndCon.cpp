@@ -25,9 +25,13 @@
 #define BOARD_POS_Y 88
 #define ROBBER_POS 20
 #define CT_RAD 10
+#define FONT_SIZE 14
+#define D_ALTO 700
+#define D_ANCHO 1200
 
-BoardObsAndCon::BoardObsAndCon()
+BoardObsAndCon::BoardObsAndCon(GutenbergsPressAllegro * prnter_)
 {
+	printer = prnter_;
 	init();
 	update();
 }
@@ -86,6 +90,7 @@ void BoardObsAndCon::init()
 {
 	controller = new BoardController;
 	decoder = new MapDecoder(MAP_FILE);
+	font = NULL;
 
 	bitmaps[HILLS_HEX_FILE] = al_load_bitmap(HILLS_HEX_FILE);
 	bitmaps[WOODS_HEX_FILE] = al_load_bitmap(WOODS_HEX_FILE);
@@ -119,9 +124,15 @@ void BoardObsAndCon::init()
 		// ver de agregar algo de error o nose
 	}
 
-	al_init_font_addon();
-	al_init_primitives_addon();
-	al_init_ttf_addon();
+	//if (!al_init_font_addon() || !al_init_primitives_addon() || !al_init_ttf_addon())
+	//{
+	//	allegOk = false;
+	//}
+
+	if (!allegOk || (font = al_load_font("catanFont.otf", FONT_SIZE, 0))== NULL)
+	{
+		allegOk = false;
+	}
 
 	puttingCity = false;
 	puttingRoad = false;
@@ -130,7 +141,10 @@ void BoardObsAndCon::init()
 
 void BoardObsAndCon::drawMap()
 {
+
 	ALLEGRO_BITMAP * fondo = al_create_bitmap(580,524);
+	ALLEGRO_BITMAP * disp = al_create_bitmap(D_ANCHO, D_ALTO);
+
 	ALLEGRO_DISPLAY * tempDisplay = al_get_current_display();
 
 	al_set_target_bitmap(fondo);
@@ -152,7 +166,7 @@ void BoardObsAndCon::drawMap()
 		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
 		al_draw_rotated_bitmap(temp,
 			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
-			pos.first /*+ BOARD_POS_X*/, pos.second /*+ BOARD_POS_Y*/,
+			pos.first, pos.second ,
 			ALLEGRO_PI*((((float)i) / 3) - 1), 0);
 	}
 
@@ -174,13 +188,21 @@ void BoardObsAndCon::drawMap()
 		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
 		al_draw_rotated_bitmap(temp,
 			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
-			pos.first /*+ BOARD_POS_X*/, pos.second /*+ BOARD_POS_Y*/,
+			pos.first , pos.second ,
 			0, 0);
-		al_draw_filled_circle(pos.first, pos.second, CT_RAD, al_map_rgb(255, 255, 255));
-		al_draw_circle(pos.first, pos.second, CT_RAD, al_map_rgb(255, 255, 255), 5);//revisar
-		al_draw_text(font, al_map_rgb(0, 0, 0), pos.first, pos.second, ALLEGRO_ALIGN_CENTRE, to_string(board->getCircToken(letra[0])).c_str());
+		if ((board->getResourceFromHex('A' + i)) != DESIERTO)
+		{
+			al_draw_filled_circle(pos.first , pos.second , CT_RAD, al_map_rgb(255, 255, 255));
+			al_draw_circle(pos.first , pos.second , CT_RAD, al_map_rgb(0, 0, 0), 1);//revisar
+			string ctoken = to_string(board->getCircToken(letra[0])).c_str();
+			al_draw_text(font, al_map_rgb(0, 0, 0), pos.first, pos.second - CT_RAD / 2, ALLEGRO_ALIGN_CENTRE, ctoken.c_str());
+		}
 	}
 	// hasta aca dibujo el mapa en un bitmap
+	al_set_target_bitmap(disp);
+	al_draw_bitmap(fondo, BOARD_POS_X, BOARD_POS_Y, 0);
+	printer->setBackgorund(disp);
+
 	al_set_target_backbuffer(tempDisplay);
 
 	pair<unsigned int, unsigned int> robberPos = decoder->getPositioningForToken(to_string(board->getRobberPos()));
