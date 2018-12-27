@@ -2,6 +2,7 @@
 #include "EDAObserver.h"
 #include "Player.h"
 #include "MapDecoder.h"
+#include "CatanDefs.h"
 
 #include "MovableType.h"
 #include "GutenbergsPressAllegro.h"
@@ -18,7 +19,7 @@ class LocalObs :
 	public Observer
 {
 public:
-	LocalObs(GutenbergsPress * printer, Player * local);
+	LocalObs(GutenbergsPressAllegro * printer, Player * local);
 	virtual ~LocalObs();
 	virtual void update();
 	bool isOK();
@@ -34,9 +35,11 @@ private:
 
 	GutenbergsPressAllegro * impresora;
 	map<string, MovableType *> sellos;
-	
+	map<ResourceType, pair<int, MovableType*>> cartas;
+
 	ALLEGRO_FONT * fuente;
 	map<string,ALLEGRO_BITMAP *> dibujo;
+	map<ResourceType, ALLEGRO_BITMAP * > cartasfotos;
 	
 };
 

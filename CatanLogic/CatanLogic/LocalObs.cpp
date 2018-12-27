@@ -1,14 +1,22 @@
 #include "LocalObs.h"
 
+#define LADRILLO "ladrillo.png"
+#define PASTO "pasto.png"
+#define PIEDRA "piedra.png"
+#define TRONCO "tronco.png"
+#define LANA "lana.png"
 #define ROAD "road.png"
 #define CITY "city.png"
 #define SETTLE "setllement.png"
-#define FONT ""
+#define FONT "catanFont.otf"
 #define FONT_SIZE 10 // ver 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
 
-LocalObs::LocalObs(GutenbergsPress * printer, Player * local) :toDraw("mapaFinal.png")
+#define D_ALTO 700
+#define D_ANCHO 1200
+
+LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local) :toDraw("mapaFinal.png")
 {
 	working = true;
 	localPlayer = local;
@@ -28,6 +36,40 @@ LocalObs::LocalObs(GutenbergsPress * printer, Player * local) :toDraw("mapaFinal
 		}
 		if (fuente != NULL) { al_destroy_font(fuente); }
 	}
+
+	cartasfotos[COLINAS] = al_load_bitmap(LADRILLO);
+	cartasfotos[PASTOS] = al_load_bitmap(PASTO);
+	cartasfotos[CAMPOS] = al_load_bitmap(LANA);
+	cartasfotos[BOSQUE] = al_load_bitmap(TRONCO);
+	cartasfotos[MONTAÑAS] = al_load_bitmap(PIEDRA);
+	for (auto a : cartasfotos) { if (a.second == NULL) { working = false; } }
+	if (!working) 
+	{
+		for (auto a : cartasfotos) 
+		{
+			if (a.second != NULL) 
+			{ 
+				al_destroy_bitmap(a.second); 
+			}
+		}
+	}
+
+	if (working) 
+	{
+		fuente = al_load_font("catanFont.otf", 10, 0);
+		if (fuente == NULL) 
+		{
+			working = false;
+		}
+	}
+	
+	
+	pair<int, MovableType *> temp(0, NULL);
+	cartas[MONTAÑAS] = temp;
+	cartas[PASTOS] = temp;
+	cartas[COLINAS] = temp;
+	cartas[BOSQUE] = temp;
+	cartas[CAMPOS] = temp;
 }
 
 
@@ -127,6 +169,52 @@ void LocalObs::update()
 		anyChange = true;
 	}//listo los roads
 	
+	list<ResourceType> util = { CAMPOS,MONTAÑAS,PASTOS,COLINAS,BOSQUE };
+	int i = 0;
+	for (auto a : util)
+	{
+		if (localPlayer->getResourceAmount(a) == 0)
+		{
+			if (cartas[a].second != NULL) // si no tiene cartas de este tipo saco el sello que le corresponde
+			{
+				impresora->delType(cartas[a].second);
+				delete cartas[a].second;
+				cartas[a].second = NULL;
+				cartas[a].first = 0;
+				anyChange = true;
+			}
+		}
+		else if (localPlayer->getResourceAmount(a) != cartas[a].first) // si cambio la cantidad de cartas tengo que hacer un nuevo bitmap
+		{
+			if (cartas[a].second != NULL) // si ya existe el sello sobreescribo el birtmap
+			{
+				ALLEGRO_DISPLAY * tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP * temp = cartas[a].second->getBitmap();
+				al_set_target_bitmap(temp);
+				al_clear_to_color(al_map_rgb(255, 255, 255));
+				al_draw_bitmap(cartasfotos[a], 0, 0, 0);
+				al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(pla->getResourceAmount(a)).c_str());
+				al_set_target_backbuffer(tempDisplay);
+				anyChange = true;
+			}
+			else // si no existe lo tengo que crear
+			{
+				ALLEGRO_DISPLAY * tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP * temp = al_create_bitmap(35,65);// numeros magicos
+				al_set_target_bitmap(temp);
+				al_clear_to_color(al_map_rgb(255, 255, 255));
+				al_draw_bitmap(cartasfotos[a], 0, 0, 0);
+				al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
+				al_set_target_backbuffer(tempDisplay);
+
+				cartas[a].second = impresora->createType(temp,
+					al_map_rgb(255, 255, 255), D_ANCHO * 0.05 + al_get_bitmap_width(temp) * 1.05 * i, D_ALTO*0.3
+				);
+				anyChange = true;
+			}
+		}
+		//si son iguales no hago nada, ya se va a imprimir bien 
+	}
 
 }
 

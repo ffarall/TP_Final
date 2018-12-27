@@ -3,6 +3,8 @@
 #include "MapDecoder.h"
 #include "Board.h"
 #include "Player.h"
+#include "GutenbergsPressAllegro.h"
+
 #include <string>
 #include <map>
 #include "allegro5/allegro.h"
@@ -15,7 +17,7 @@ class BoardObsAndCon :
 	public ObserverAndController
 {
 public:
-	BoardObsAndCon();
+	BoardObsAndCon(GutenbergsPressAllegro * prnter_);
 	virtual ~BoardObsAndCon();
 
 	virtual void update();
@@ -37,6 +39,7 @@ private:
 	void drawRoad(string edge, bool player); //true red, false blue
 	void drawBuilding(string edge, bool type, bool player); // false city, true settlement, true red , false blue
 
+	GutenbergsPressAllegro * printer;
 	// Reads the MapCode to determine what the player is touching in the board and also it specifies where to put the bitmaps of Roads and Settlements or Cities.
 	MapDecoder* decoder;
 	// Map with all of the Allegro bitmaps.

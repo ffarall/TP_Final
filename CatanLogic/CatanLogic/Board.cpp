@@ -292,7 +292,7 @@ PortType Board::getPortType(string position)
 
 PortType Board::getPortType(char position)
 {
-	if (board[position]->whatAmI().compare("Sea"))
+	if (board[position]->whatAmI().compare("Sea") == 0)
 	{
 		return static_cast<Sea *>(board[position])->getPortType();
 	}
@@ -304,7 +304,7 @@ PortType Board::getPortType(char position)
 
 char Board::getCircToken(char hex_)
 {
-	if (board[hex_]->whatAmI().compare("Hex"))
+	if (board[hex_]->whatAmI().compare("Hex") == 0)
 	{
 		return static_cast<Hex *>(board[hex_])->getDiceNum();
 	}
