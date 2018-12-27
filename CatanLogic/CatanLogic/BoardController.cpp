@@ -9,6 +9,7 @@ BoardController::BoardController()
 
 BoardController::~BoardController()
 {
+	delete decoder;
 }
 
 GUIEnablerEvent BoardController::parseMouseEvent(uint32_t x, uint32_t y)
@@ -19,6 +20,11 @@ GUIEnablerEvent BoardController::parseMouseEvent(uint32_t x, uint32_t y)
 GUIEnablerEvent BoardController::parseTimerEvent()
 {
 	return GUIEnablerEvent();
+}
+
+MapDecoder * BoardController::getDecoder()
+{
+	return decoder;
 }
 
 void BoardController::init()

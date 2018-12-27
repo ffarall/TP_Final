@@ -12,6 +12,8 @@ public:
 	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
+	MapDecoder* getDecoder();
+
 private:
 	void init();
 
