@@ -40,8 +40,6 @@ private:
 	void drawBuilding(string edge, bool type, bool player); // false city, true settlement, true red , false blue
 
 	GutenbergsPressAllegro * printer;
-	// Reads the MapCode to determine what the player is touching in the board and also it specifies where to put the bitmaps of Roads and Settlements or Cities.
-	MapDecoder* decoder;
 	// Map with all of the Allegro bitmaps.
 	map< string, ALLEGRO_BITMAP* > bitmaps;
 	ALLEGRO_FONT * font;

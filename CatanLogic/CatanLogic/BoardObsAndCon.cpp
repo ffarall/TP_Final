@@ -3,7 +3,6 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_ttf.h"
 
-#define MAP_FILE "mapaFinal.png"
 #define HILLS_HEX_FILE "colinas.png"
 #define WOODS_HEX_FILE "bosque.png"
 #define MOUNTAINS_HEX_FILE "montaña.png"
@@ -40,7 +39,6 @@ BoardObsAndCon::BoardObsAndCon(GutenbergsPressAllegro * prnter_)
 BoardObsAndCon::~BoardObsAndCon()
 {
 	delete controller;
-	delete decoder;
 }
 
 void BoardObsAndCon::update()
@@ -89,7 +87,6 @@ bool BoardObsAndCon::getPuttingRoad()
 void BoardObsAndCon::init()
 {
 	controller = new BoardController;
-	decoder = new MapDecoder(MAP_FILE);
 	font = NULL;
 
 	bitmaps[HILLS_HEX_FILE] = al_load_bitmap(HILLS_HEX_FILE);
@@ -163,7 +160,7 @@ void BoardObsAndCon::drawMap()
 		}
 		string letra = "0";
 		letra[0] += i;
-		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
+		pair<unsigned int, unsigned int> pos = ((BoardController*)controller)->getDecoder()->getPositioningForToken(letra);
 		al_draw_rotated_bitmap(temp,
 			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
 			pos.first, pos.second ,
@@ -185,7 +182,7 @@ void BoardObsAndCon::drawMap()
 
 		string letra = "A";
 		letra[0] += i;
-		pair<unsigned int, unsigned int> pos = decoder->getPositioningForToken(letra);
+		pair<unsigned int, unsigned int> pos = ((BoardController*)controller)->getDecoder()->getPositioningForToken(letra);
 		al_draw_rotated_bitmap(temp,
 			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
 			pos.first , pos.second ,
@@ -205,7 +202,7 @@ void BoardObsAndCon::drawMap()
 
 	al_set_target_backbuffer(tempDisplay);
 
-	pair<unsigned int, unsigned int> robberPos = decoder->getPositioningForToken(to_string(board->getRobberPos()));
+	pair<unsigned int, unsigned int> robberPos = ((BoardController*)controller)->getDecoder()->getPositioningForToken(to_string(board->getRobberPos()));
 	al_draw_bitmap(bitmaps[ROBBER_FILE],
 		robberPos.first + BOARD_POS_X + ROBBER_POS, robberPos.second + BOARD_POS_Y + ROBBER_POS,
 		0); // dibujo el robber0
@@ -247,7 +244,7 @@ void BoardObsAndCon::drawRoad(string edge, bool player)
 		angle_rot = ALLEGRO_PI * desv;
 	}
 
-	pair<unsigned int, unsigned int> pos = decoder->getPositioningForEdge(edge);
+	pair<unsigned int, unsigned int> pos = ((BoardController*)controller)->getDecoder()->getPositioningForEdge(edge);
 
 	al_draw_tinted_rotated_bitmap(bitmaps[ROAD_FILE],
 		player ? al_map_rgba_f(1, 0, 0, 1) : al_map_rgba_f(0, 0, 1, 1),
@@ -260,7 +257,7 @@ void BoardObsAndCon::drawRoad(string edge, bool player)
 void BoardObsAndCon::drawBuilding(string edge, bool type, bool player)
 {
 	ALLEGRO_BITMAP * temp = (type ? bitmaps[CITY_FILE] : bitmaps[SETTLEMENT_FILE]);
-	pair<unsigned int, unsigned int> pos = decoder->getPositioningForVertex(edge);
+	pair<unsigned int, unsigned int> pos = ((BoardController*)controller)->getDecoder()->getPositioningForVertex(edge);
 	al_draw_tinted_rotated_bitmap(temp,
 		player ? al_map_rgba_f(1, 0, 0, 1) : al_map_rgba_f(0, 0, 1, 1),
 		al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
