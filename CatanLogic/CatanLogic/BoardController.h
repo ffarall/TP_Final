@@ -7,6 +7,7 @@ class BoardController :
 {
 public:
 	BoardController();
+	BoardController(EventsHandler* handler_);
 	virtual ~BoardController();
 
 	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y);

@@ -1,8 +1,15 @@
 #include "BoardController.h"
+#include <string>
 
 #define MAP_FILE "mapaFinal.png"
 
+using namespace std;
+
 BoardController::BoardController()
+{
+}
+
+BoardController::BoardController(EventsHandler * handler_) : BasicController(handler_)
 {
 }
 
@@ -18,6 +25,7 @@ GUIEnablerEvent BoardController::parseMouseEvent(uint32_t x, uint32_t y)
 	{
 		if (getPuttingSettlement())												// When user has to select where to put Settlement.
 		{
+			string vertex = decoder->getCoordinateFromPixel(x, y);
 
 		}
 		else if (getPuttingRoad())												// When user has to select where to put Road.
