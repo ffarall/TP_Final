@@ -16,6 +16,20 @@ public:
 	virtual  ~BasicController();
 	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y) = 0;
 	virtual GUIEnablerEvent parseTimerEvent() = 0;
+	
+	void enableMouse();
+	void disableMouse();
+	void enableTimer();
+	void disableTimer();
+
+	bool isMouseActive();
+	bool isTimerActive();
+
+protected:
+	// Determines whether this controller has to be paying attention to mouse events.
+	bool mouseActivated;
+	// Determines whether this controller has to be paying attention to timer events.
+	bool timerActivated;
 };
 
 class BasicGUI :

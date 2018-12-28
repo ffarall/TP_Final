@@ -14,12 +14,22 @@ BoardController::~BoardController()
 
 GUIEnablerEvent BoardController::parseMouseEvent(uint32_t x, uint32_t y)
 {
-	return GUIEnablerEvent();
+	if (isMouseActive())
+	{
+
+	}
+
+	return NO_EV;
 }
 
 GUIEnablerEvent BoardController::parseTimerEvent()
 {
-	return GUIEnablerEvent();
+	if (isTimerActive())
+	{
+
+	}
+
+	return NO_EV;
 }
 
 MapDecoder * BoardController::getDecoder()

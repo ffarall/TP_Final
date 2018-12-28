@@ -66,3 +66,33 @@ BasicController::BasicController()
 BasicController::~BasicController()
 {
 }
+
+void BasicController::enableMouse()
+{
+	mouseActivated = true;
+}
+
+void BasicController::disableMouse()
+{
+	mouseActivated = false;
+}
+
+void BasicController::enableTimer()
+{
+	timerActivated = true;
+}
+
+void BasicController::disableTimer()
+{
+	timerActivated = false;
+}
+
+bool BasicController::isMouseActive()
+{
+	return mouseActivated;
+}
+
+bool BasicController::isTimerActive()
+{
+	return timerActivated;
+}
