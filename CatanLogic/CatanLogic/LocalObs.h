@@ -1,6 +1,8 @@
 #pragma once
 #include "EDAObserver.h"
 #include "Player.h"
+#include "LocalPlayerEnabler.h"
+
 #include "MapDecoder.h"
 #include "CatanDefs.h"
 
@@ -19,7 +21,7 @@ class LocalObs :
 	public Observer
 {
 public:
-	LocalObs(GutenbergsPressAllegro * printer, Player * local);
+	LocalObs(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
 	virtual ~LocalObs();
 	virtual void update();
 	bool isOK();
@@ -28,6 +30,8 @@ private:
 	bool working;
 
 	Player * localPlayer;
+	LocalPlayerEnabler * localEnabler;
+	
 	MapDecoder toDraw;
 
 	map< string, MovableType * > buildings;
@@ -40,6 +44,7 @@ private:
 	ALLEGRO_FONT * fuente;
 	map<string,ALLEGRO_BITMAP *> dibujo;
 	map<ResourceType, ALLEGRO_BITMAP * > cartasfotos;
+	
 	
 };
 
