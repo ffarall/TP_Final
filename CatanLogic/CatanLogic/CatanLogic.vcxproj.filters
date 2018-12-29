@@ -36,7 +36,7 @@
     <ClCompile Include="Settlement.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="RemoteObs.cpp" />
-    <ClCompile Include="LocalObsAndCont.cpp" />
+    <ClCompile Include="LocalController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -78,7 +78,7 @@
     <ClInclude Include="SubEvents.h" />
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="RemoteObs.h" />
-    <ClInclude Include="LocalObsAndCont.h" />
+    <ClInclude Include="LocalController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

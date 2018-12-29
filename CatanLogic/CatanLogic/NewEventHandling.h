@@ -48,6 +48,8 @@ public:
 	EventGenerator(EventsHandler * MainEventHandler = nullptr) { handler = MainEventHandler; }
 	virtual ~EventGenerator() {}
 	void attachHandler(EventsHandler * MainEventHandler) { handler = MainEventHandler; }
+
+	void emitEvent(GenericEvent* ev, int priority = 0) { handler->enqueueEvent(ev, priority); }
 protected:
 	EventsHandler* handler;
 };

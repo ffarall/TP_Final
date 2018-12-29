@@ -29,7 +29,7 @@
 #define D_ALTO 700
 #define D_ANCHO 1200
 
-LocalObsAndCont::LocalObsAndCont(GutenbergsPressAllegro * printer, Player * local,LocalPlayerEnabler * playerEn) :toDraw("mapaFinal.png")
+LocalObsAndCont::LocalObsAndCont(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local,LocalPlayerEnabler * playerEn) : BasicController(handler_), toDraw("mapaFinal.png")
 {
 	working = true;
 	localPlayer = local;

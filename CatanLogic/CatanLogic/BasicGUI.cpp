@@ -64,12 +64,14 @@ BasicController::BasicController()
 {
 }
 
-BasicController::BasicController(EventsHandler * handler_) : EventGenerator(handler_)
+BasicController::BasicController(EventsHandler * handler_)
 {
+	evGen = new EventGenerator(handler_);
 }
 
 BasicController::~BasicController()
 {
+	delete evGen;
 }
 
 void BasicController::enableMouse()
@@ -105,11 +107,11 @@ bool BasicController::isTimerActive()
 void BasicController::emitEvent(EventTypes type)
 {
 	GenericEvent* ev = new MainEvents(type);
-	handler->enqueueEvent(ev);
+	evGen->emitEvent(ev);
 }
 
 void BasicController::emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg)
 {
 	GenericEvent* ev = new SubEvents(type, subtype, pkg);
-	handler->enqueueEvent(ev);
+	evGen->emitEvent(ev);
 }

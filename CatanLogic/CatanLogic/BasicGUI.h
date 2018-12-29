@@ -11,7 +11,7 @@ using namespace std;
 enum GUIEventTypes { GUI_TIMER, GUI_MOUSE };
 
 class BasicController :
-	public EventGenerator
+	public Observer
 {
 public:
 	BasicController();
@@ -33,6 +33,8 @@ protected:
 	bool mouseActivated;
 	// Determines whether this controller has to be paying attention to timer events.
 	bool timerActivated;
+	// For emitting events.
+	EventGenerator* evGen;
 
 	// Auxiliary functions for emitting event.
 	void emitEvent(EventTypes type);

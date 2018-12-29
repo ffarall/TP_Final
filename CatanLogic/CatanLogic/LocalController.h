@@ -19,10 +19,10 @@
 using namespace std;
 
 class LocalObsAndCont :
-	public ObserverAndController
+	public BasicController
 {
 public:
-	LocalObsAndCont(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
+	LocalObsAndCont(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
 	virtual ~LocalObsAndCont();
 	virtual void update();
 	bool isOK();
