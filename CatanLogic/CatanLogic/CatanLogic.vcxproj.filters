@@ -37,6 +37,8 @@
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="RemoteObs.cpp" />
     <ClCompile Include="LocalObs.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="AllegroGUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -79,6 +81,7 @@
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="RemoteObs.h" />
     <ClInclude Include="LocalObs.h" />
+    <ClInclude Include="AllegroGUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

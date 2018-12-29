@@ -69,7 +69,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_LibraryType>DynamicDebug</Allegro_LibraryType>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -115,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllegroGUI.cpp" />
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardController.cpp" />
@@ -126,6 +134,7 @@
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
     <ClCompile Include="LocalObs.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
@@ -153,6 +162,7 @@
     <ClCompile Include="Settlement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllegroGUI.h" />
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardController.h" />
