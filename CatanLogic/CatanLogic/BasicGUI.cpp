@@ -42,7 +42,7 @@ void BasicGUI::parseEvent()
 		}
 	}
 		break;
-	case GUI_MOUSE:
+	case GUI_MOUSE_DOWN:
 	{
 		for (auto controller : controllers)
 		{
@@ -50,6 +50,17 @@ void BasicGUI::parseEvent()
 		}
 	}
 		break;
+	case GUI_MOUSE_UP:
+	{
+		for (auto controller : controllers)
+		{
+			controller->parseMouseEvent(mouseCoordinates.first, mouseCoordinates.second);
+		}
+	}
+	break;
+	case GUI_CLOSE_DISPLAY:
+	//que  hacemo?
+	break;
 	default:
 		break;
 	}
