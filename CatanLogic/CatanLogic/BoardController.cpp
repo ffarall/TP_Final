@@ -96,7 +96,7 @@ bool BoardController::isOK()
 
 GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
-	if (isMouseActive())
+	if (isMouseDownActive())
 	{
 		if (getPuttingSettlement())												// When user has to select where to put Settlement.
 		{

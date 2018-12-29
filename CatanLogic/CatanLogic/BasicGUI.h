@@ -28,7 +28,8 @@ public:
 	void enableTimer();
 	void disableTimer();
 
-	bool isMouseActive();
+	bool isMouseDownActive();
+	bool isMouseUpActive();
 	bool isTimerActive();
 
 protected:
