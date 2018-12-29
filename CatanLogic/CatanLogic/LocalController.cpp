@@ -29,7 +29,7 @@
 #define D_ALTO 700
 #define D_ANCHO 1200
 
-LocalObsAndCont::LocalObsAndCont(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local,LocalPlayerEnabler * playerEn) : BasicController(handler_), toDraw("mapaFinal.png")
+LocalController::LocalController(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local,LocalPlayerEnabler * playerEn) : BasicController(handler_), toDraw("mapaFinal.png")
 {
 	working = true;
 	localPlayer = local;
@@ -100,7 +100,7 @@ LocalObsAndCont::LocalObsAndCont(EventsHandler* handler_, GutenbergsPressAllegro
 }
 
 
-LocalObsAndCont::~LocalObsAndCont()
+LocalController::~LocalController()
 {
 	if (working)
 	{
@@ -112,7 +112,7 @@ LocalObsAndCont::~LocalObsAndCont()
 	}
 }
 
-void LocalObsAndCont::update()
+void LocalController::update()
 {
 	bool anyChange = false;
 	map<string, bool> buildings;
@@ -281,7 +281,7 @@ void LocalObsAndCont::update()
 	
 }
 
-bool LocalObsAndCont::isOK()
+bool LocalController::isOK()
 {
 	return working;
 }
