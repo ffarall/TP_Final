@@ -4,9 +4,7 @@
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardController.cpp" />
-    <ClCompile Include="BoardObsAndCon.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ButtonController.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="GUIEnabler.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
@@ -37,14 +35,14 @@
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="RemoteObs.cpp" />
     <ClCompile Include="LocalController.cpp" />
+    <ClCompile Include="++BoardObsAndCon.cpp" />
+    <ClCompile Include="++ButtonController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardController.h" />
-    <ClInclude Include="BoardObsAndCon.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="ButtonController.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="GUIEnabler.h" />
@@ -79,6 +77,8 @@
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="RemoteObs.h" />
     <ClInclude Include="LocalController.h" />
+    <ClInclude Include="++BoardObsAndCon.h" />
+    <ClInclude Include="++ButtonController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
