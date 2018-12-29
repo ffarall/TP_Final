@@ -5,6 +5,7 @@
 
 BasicGUI::BasicGUI()
 {
+	needToClose = false;
 }
 
 
@@ -59,11 +60,16 @@ void BasicGUI::parseEvent()
 	}
 	break;
 	case GUI_CLOSE_DISPLAY:
-	//que  hacemo?
+		needToClose = true;
 	break;
 	default:
 		break;
 	}
+}
+
+bool BasicGUI::displayWasClosed()
+{
+	return needToClose;
 }
 
 void BasicGUI::attachController(BasicController * newController)

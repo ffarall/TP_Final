@@ -59,6 +59,7 @@ public:
 	// Calls all of the controllers' parse function corresponding to the GUIEv type.
 	void parseEvent();
 
+	bool displayWasClosed();
 	void attachController(BasicController* newController);
 
 protected:
@@ -66,4 +67,5 @@ protected:
 	GUIEnablerEvent enablerEv;
 	GUIEventTypes GUIEv;
 	pair< uint32_t, uint32_t > mouseCoordinates;
+	bool needToClose;
 };
