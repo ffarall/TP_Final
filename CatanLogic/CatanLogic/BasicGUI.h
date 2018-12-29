@@ -4,18 +4,39 @@
 #include <cstdint>
 #include "NewEventHandling.h"
 #include "GUIEnabler.h"
+#include "package.h"
 
 using namespace std;
 
 enum GUIEventTypes { GUI_TIMER, GUI_MOUSE };
 
-class BasicController
+class BasicController :
+	public EventGenerator
 {
 public:
 	BasicController();
+	BasicController(EventsHandler* handler_);
 	virtual  ~BasicController();
 	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y) = 0;
 	virtual GUIEnablerEvent parseTimerEvent() = 0;
+	
+	void enableMouse();
+	void disableMouse();
+	void enableTimer();
+	void disableTimer();
+
+	bool isMouseActive();
+	bool isTimerActive();
+
+protected:
+	// Determines whether this controller has to be paying attention to mouse events.
+	bool mouseActivated;
+	// Determines whether this controller has to be paying attention to timer events.
+	bool timerActivated;
+
+	// Auxiliary functions for emitting event.
+	void emitEvent(EventTypes type);
+	void emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg);
 };
 
 class BasicGUI :
