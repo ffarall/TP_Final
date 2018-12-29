@@ -57,6 +57,17 @@ GUIEnablerEvent BoardController::parseMouseEvent(uint32_t x, uint32_t y)
 				return POSITION_SELECTED;
 			}
 		}
+		else if (getMovingRobber())
+		{
+			if (decoder->getPixelType(x, y) == TOKEN)
+			{
+				string token = decoder->getCoordinateFromPixel(x, y);
+				RobberMovePkg* robberPkg = new RobberMovePkg(token[0]);
+				emitSubEvent(PLAYER_ACTION, PLA_ROBBER_MOVE, robberPkg);
+
+				return POSITION_SELECTED;
+			}
+		}
 	}
 
 	return NO_EV;
@@ -92,6 +103,11 @@ void BoardController::toggleCity()
 	puttingCity = !puttingCity;
 }
 
+void BoardController::toggleRobber()
+{
+	movingRobber = !movingRobber;
+}
+
 bool BoardController::getPuttingCity()
 {
 	return puttingCity;
@@ -105,6 +121,11 @@ bool BoardController::getPuttingSettlement()
 bool BoardController::getPuttingRoad()
 {
 	return puttingRoad;
+}
+
+bool BoardController::getMovingRobber()
+{
+	return movingRobber;
 }
 
 void BoardController::init()

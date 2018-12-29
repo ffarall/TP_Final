@@ -19,9 +19,11 @@ public:
 	void toggleSettlement();
 	void toggleRoad();
 	void toggleCity();
+	void toggleRobber();
 	bool getPuttingCity();
 	bool getPuttingSettlement();
 	bool getPuttingRoad();
+	bool getMovingRobber();
 
 private:
 	void init();
@@ -33,5 +35,6 @@ private:
 	bool puttingSettlement;
 	bool puttingCity;
 	bool puttingRoad;
+	bool movingRobber;
 };
 
