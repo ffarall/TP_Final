@@ -37,6 +37,8 @@
     <ClCompile Include="LocalController.cpp" />
     <ClCompile Include="++BoardObsAndCon.cpp" />
     <ClCompile Include="++ButtonController.cpp" />
+    <ClCompile Include="AllegroGUI.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -79,6 +81,7 @@
     <ClInclude Include="LocalController.h" />
     <ClInclude Include="++BoardObsAndCon.h" />
     <ClInclude Include="++ButtonController.h" />
+    <ClInclude Include="AllegroGUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

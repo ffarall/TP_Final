@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllegroGUI.cpp" />
     <ClCompile Include="BasicGUI.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardController.cpp" />
@@ -126,6 +127,7 @@
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
     <ClCompile Include="LocalController.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
     <ClCompile Include="Enabler.cpp" />
@@ -153,6 +155,7 @@
     <ClCompile Include="Settlement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllegroGUI.h" />
     <ClInclude Include="BasicGUI.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardController.h" />
