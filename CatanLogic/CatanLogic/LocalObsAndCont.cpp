@@ -1,4 +1,4 @@
-#include "LocalObs.h"
+#include "LocalObsAndCont.h"
 
 #define LADRILLO "ladrillo.png"
 #define PASTO "pasto.png"
@@ -20,6 +20,7 @@
 #define Y_OF_PLENTY "YofP.png"
 #define MONOPOLY "Monopoly.png"
 #define KNIGHT "Knight.png"
+#define ROBBER "robber.png"
 
 #define FONT_SIZE 10 // ver 
 #define BOARD_POS_X 310
@@ -28,7 +29,7 @@
 #define D_ALTO 700
 #define D_ANCHO 1200
 
-LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local,LocalPlayerEnabler * playerEn) :toDraw("mapaFinal.png")
+LocalObsAndCont::LocalObsAndCont(GutenbergsPressAllegro * printer, Player * local,LocalPlayerEnabler * playerEn) :toDraw("mapaFinal.png")
 {
 	working = true;
 	localPlayer = local;
@@ -41,17 +42,33 @@ LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local,LocalPlayerE
 	dibujo[SETTLE] = al_load_bitmap(SETTLE);
 	dibujo[LROAD] = al_load_bitmap(LROAD);
 	dibujo[LARMY] = al_load_bitmap(LARMY);
+	dibujo[CROSS] = al_load_bitmap(CROSS);
+	dibujo[TICK] = al_load_bitmap(TICK);
+	dibujo[VICTORY_POINT] = al_load_bitmap(VICTORY_POINT);
+	dibujo[ROAD_BUILDING] = al_load_bitmap(ROAD_BUILDING);
+	dibujo[MONOPOLY] = al_load_bitmap(MONOPOLY);
+	dibujo[Y_OF_PLENTY] = al_load_bitmap(Y_OF_PLENTY);
+	dibujo[KNIGHT] = al_load_bitmap(KNIGHT);
+	dibujo[ROBBER] = al_load_bitmap(ROBBER);
+
+	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
+	if (!working)
+	{
+		for (auto each : dibujo)
+		{
+			if (each.second != NULL)
+			{
+				al_destroy_bitmap(each.second);
+			}
+		}
+	}
 
 	fuente = al_load_font(FONT, FONT_SIZE, 0);
 
-	if (dibujo[ROAD] == NULL || dibujo[SETTLE] == NULL || dibujo[CITY] == NULL || fuente == NULL || dibujo[ICONO]==NULL)
+	if (fuente == NULL)
 	{
 		working = false;
-		for (auto each : dibujo)
-		{
-			if (each.second != NULL) {al_destroy_bitmap(each.second);}
-		}
-		if (fuente != NULL) { al_destroy_font(fuente); }
+		al_destroy_font(fuente); 
 	}
 
 	cartasfotos[COLINAS] = al_load_bitmap(LADRILLO);
@@ -71,16 +88,6 @@ LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local,LocalPlayerE
 		}
 	}
 
-	if (working) 
-	{
-		fuente = al_load_font("catanFont.otf", 10, 0);
-		if (fuente == NULL) 
-		{
-			working = false;
-		}
-	}
-	
-	
 	pair<int, MovableType *> temp(0, NULL);
 	cartas[MONTAÑAS] = temp;
 	cartas[PASTOS] = temp;
@@ -93,7 +100,7 @@ LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local,LocalPlayerE
 }
 
 
-LocalObs::~LocalObs()
+LocalObsAndCont::~LocalObsAndCont()
 {
 	if (working)
 	{
@@ -105,16 +112,25 @@ LocalObs::~LocalObs()
 	}
 }
 
-void LocalObs::update()
+void LocalObsAndCont::update()
 {
 	bool anyChange = false;
 	map<string, bool> buildings;
+
+	if (sellos[ICONO] == NULL)
+	{
+		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgb(255, 255, 255),
+			D_ANCHO * 0.05, D_ALTO * 0.05
+		);
+		impresora->addType(sellos[ICONO]);
+	}
+
 	for (auto ciudad : localPlayer->getMyCities())
 	{
 		buildings[ciudad] = true;
 	}
 	
-	for (auto settlement : localPlayer->getMySettlements)
+	for (auto settlement : localPlayer->getMySettlements())
 	{
 		buildings[settlement] = false;
 	}
@@ -237,14 +253,6 @@ void LocalObs::update()
 		//si son iguales no hago nada, ya se va a imprimir bien 
 	}
 
-	if (sellos[ICONO] == NULL)
-	{
-		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgb(255, 255, 255),
-			D_ANCHO * 0.05, D_ALTO * 0.05
-			);
-		impresora->addType(sellos[ICONO]);
-	}
-
 	if (localPlayer->hasLargestArmy())
 	{
 		if (sellos[LARMY] == NULL)
@@ -270,11 +278,10 @@ void LocalObs::update()
 		impresora->delType(sellos[LROAD]);
 		delete sellos[LROAD];
 	}
-
 	
 }
 
-bool LocalObs::isOK()
+bool LocalObsAndCont::isOK()
 {
 	return working;
 }

@@ -19,6 +19,7 @@
 #define CITY_FILE "city.png"
 #define ROAD_FILE "road.png"
 #define ROBBER_FILE "robber.png"
+#define DEV_FILE "DevBack2.png"
 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
@@ -43,21 +44,53 @@ BoardObsAndCon::~BoardObsAndCon()
 
 void BoardObsAndCon::update()
 {
-	drawMap();
-	for (auto edge : localPlayer->getMyRoads()) { drawRoad(edge, true); }
-	for (auto edge : remotePlayer->getMyRoads()) { drawRoad(edge, false); }
+	if (!fondoListo)
+	{
+		fondoListo = true;
+		drawMap();
+	}
+	
+	if (sellos[ROBBER_FILE] == NULL)
+	{
+		string foo;
+		foo += board->getRobberPos();
+		pair<unsigned int, unsigned int > pos = ((BoardController*)controller)->getDecoder()->getPositioningForToken(foo);
+		pos.first += ROBBER_POS + BOARD_POS_X;
+		pos.second += BOARD_POS_Y;
+		sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgb(255, 255, 255),
+			pos.first, pos.second, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
+			1, 1, 0, 0);
+		printer->addType(sellos[ROBBER_FILE]);
+	}
+	else
+	{
+		string foo;
+		foo += board->getRobberPos();
+		pair<unsigned int, unsigned int > pos = ((BoardController*)controller)->getDecoder()->getPositioningForToken(foo);
+		pos.first += ROBBER_POS + BOARD_POS_X;
+		pos.second += BOARD_POS_Y;
+		sellos[ROBBER_FILE]->setDX(pos.first);
+		sellos[ROBBER_FILE]->setDY(pos.first);
+	}
 
-	for (auto vertex : localPlayer->getMySettlements()) { drawBuilding(vertex, true, true); }
-	for (auto vertex : remotePlayer->getMySettlements()) { drawBuilding(vertex, true, false); }
+	if (sellos[DEV_FILE] == NULL)
+	{
+		al_draw_text(font, al_map_rgb(0, 0, 0), D_ANCHO*0.65, D_ALTO*0.82, 0, "Pile of DevCards");
+		al_draw_tinted_bitmap(bitmaps[DEV_FILE], al_map_rgb(255, 170, 10), D_ANCHO * 0.65, D_ALTO * 0.85, 0);
+	}
+}
 
-	for (auto vertex : localPlayer->getMyCities()) { drawBuilding(vertex, false, true); }
-	for (auto vertex : remotePlayer->getMyCities()) { drawBuilding(vertex, false, false); }
+bool BoardObsAndCon::isOK()
+{
+	return working;
 }
 
 void BoardObsAndCon::init()
 {
 	controller = new BoardController;
 	font = NULL;
+	fondoListo = false;
+	working = true;
 
 	bitmaps[HILLS_HEX_FILE] = al_load_bitmap(HILLS_HEX_FILE);
 	bitmaps[WOODS_HEX_FILE] = al_load_bitmap(WOODS_HEX_FILE);
@@ -75,40 +108,30 @@ void BoardObsAndCon::init()
 	bitmaps[ROAD_FILE] = al_load_bitmap(ROAD_FILE);
 	bitmaps[SETTLEMENT_FILE] = al_load_bitmap(SETTLEMENT_FILE);
 	bitmaps[ROBBER_FILE] = al_load_bitmap(ROBBER_FILE);
-	bool allegOk = true;
+	bitmaps[DEV_FILE] = al_load_bitmap(DEV_FILE);
 
 	for (auto imagen : bitmaps) // me fijo si esta todo inicializado
 	{
-		if (imagen.second == NULL) { allegOk = false; }
+		if (imagen.second == NULL) { working = false; }
 	}
 
-	if (!allegOk) // si hubo algún problema limpio
+	if (working) // si hubo algún problema limpio
 	{
 		for (auto imagen : bitmaps)
 		{
 			if (imagen.second != NULL) { al_destroy_bitmap(imagen.second); }
 		}
-		// ver de agregar algo de error o nose
 	}
 
-	//if (!al_init_font_addon() || !al_init_primitives_addon() || !al_init_ttf_addon())
-	//{
-	//	allegOk = false;
-	//}
-
-	if (!allegOk || (font = al_load_font("catanFont.otf", FONT_SIZE, 0))== NULL)
+	if (working || (font = al_load_font("catanFont.otf", FONT_SIZE, 0))== NULL)
 	{
-		allegOk = false;
+		working = false;
 	}
 
-	puttingCity = false;
-	puttingRoad = false;
-	puttingSettlement = false;
 }
 
 void BoardObsAndCon::drawMap()
 {
-
 	ALLEGRO_BITMAP * fondo = al_create_bitmap(580,524);
 	ALLEGRO_BITMAP * disp = al_create_bitmap(D_ANCHO, D_ALTO);
 
@@ -172,65 +195,7 @@ void BoardObsAndCon::drawMap()
 
 	al_set_target_backbuffer(tempDisplay);
 
-	pair<unsigned int, unsigned int> robberPos = ((BoardController*)controller)->getDecoder()->getPositioningForToken(to_string(board->getRobberPos()));
-	al_draw_bitmap(bitmaps[ROBBER_FILE],
-		robberPos.first + BOARD_POS_X + ROBBER_POS, robberPos.second + BOARD_POS_Y + ROBBER_POS,
-		0); // dibujo el robber0
+	
 
 }
 
-void BoardObsAndCon::drawRoad(string edge, bool player)
-{
-	float angle_rot;
-	if (edge.length() == 2)
-	{
-		if ((edge[1] - edge[0]) == 1)
-		{
-			angle_rot = 0;
-		}
-		else if (edge[0] <= '9' && edge[0] >= '0')
-		{
-			angle_rot = ALLEGRO_PI * (((float)(1 - 2 * (edge[0] - '0'))) / 3);
-		}
-		else
-		{
-			float sing = ((edge[1] - edge[0]) % 2 ? -1 : 1); // si la diferencia es par va inclinado para un lado
-			if (edge[0] >= 'D' && edge[0] <= 'L') { sing = (sing * -1); }
-			angle_rot = sing * ALLEGRO_PI / 3;
-		}
-	}
-	else // aristas de 3 letras
-	{
-		float desv = 0;
-		switch (edge[0] - '0')
-		{
-		case 0:desv = ((edge[1] - edge[2]) > 0 ? 1.0 / 3.0 : -1.0 / 3.0); break;
-		case 1:desv = ((edge[1] - edge[2]) > 0 ? -1.0 / 3.0 : 0); break;
-		case 2:desv = ((edge[1] - edge[2]) > 0 ? 0 : 1.0 / 3.0); break;
-		case 3:desv = ((edge[1] - edge[2]) == 1 ? -1.0 / 3.0 : 1.0 / 3.0); break;
-		case 4:desv = ((edge[1] - edge[2]) & 0xF0 ? -1.0 / 3.0 : 0); break;
-		case 5:desv = ((edge[1] - edge[2]) & 0xF0 ? 0 : 1.0 / 3.0); break;
-		}
-		angle_rot = ALLEGRO_PI * desv;
-	}
-
-	pair<unsigned int, unsigned int> pos = ((BoardController*)controller)->getDecoder()->getPositioningForEdge(edge);
-
-	al_draw_tinted_rotated_bitmap(bitmaps[ROAD_FILE],
-		player ? al_map_rgba_f(1, 0, 0, 1) : al_map_rgba_f(0, 0, 1, 1),
-		al_get_bitmap_width(bitmaps[ROAD_FILE]) / 2, al_get_bitmap_height(bitmaps[ROAD_FILE]) / 2,
-		pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
-		angle_rot, 0
-	);
-}
-
-void BoardObsAndCon::drawBuilding(string edge, bool type, bool player)
-{
-	ALLEGRO_BITMAP * temp = (type ? bitmaps[CITY_FILE] : bitmaps[SETTLEMENT_FILE]);
-	pair<unsigned int, unsigned int> pos = ((BoardController*)controller)->getDecoder()->getPositioningForVertex(edge);
-	al_draw_tinted_rotated_bitmap(temp,
-		player ? al_map_rgba_f(1, 0, 0, 1) : al_map_rgba_f(0, 0, 1, 1),
-		al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2,
-		pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
-		0, 0);
-}

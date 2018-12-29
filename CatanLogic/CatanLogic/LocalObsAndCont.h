@@ -1,5 +1,5 @@
 #pragma once
-#include "EDAObserver.h"
+#include "ObserverAndController.h"
 #include "Player.h"
 #include "LocalPlayerEnabler.h"
 #include "Button.h"
@@ -18,12 +18,12 @@
 
 using namespace std;
 
-class LocalObs :
-	public Observer
+class LocalObsAndCont :
+	public ObserverAndController
 {
 public:
-	LocalObs(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
-	virtual ~LocalObs();
+	LocalObsAndCont(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
+	virtual ~LocalObsAndCont();
 	virtual void update();
 	bool isOK();
 private:
@@ -32,21 +32,21 @@ private:
 
 	Player * localPlayer;
 	LocalPlayerEnabler * localEnabler;
+	GutenbergsPressAllegro * impresora;
 	
 	MapDecoder toDraw;
 
-	map< string, MovableType * > buildings;
 	map< string, MovableType * > roads;
-
-	GutenbergsPressAllegro * impresora;
-	map<string, MovableType *> sellos;
+	map< string, MovableType * > sellos; // aca voy guardando los 
+	
+	
 	map<ResourceType, pair<int, MovableType*>> cartas;
 
 	ALLEGRO_FONT * fuente;
 	map<string,ALLEGRO_BITMAP *> dibujo;
 	map<ResourceType, ALLEGRO_BITMAP * > cartasfotos;
 
-	map<string, pair<Button*, MovableType*>> botones;
+	map<string,MovableType*> botones;
 	
 	
 };
