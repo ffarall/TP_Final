@@ -2,6 +2,7 @@
 #include "EDAObserver.h"
 #include "Player.h"
 #include "LocalPlayerEnabler.h"
+#include "Button.h"
 
 #include "MapDecoder.h"
 #include "CatanDefs.h"
@@ -44,6 +45,8 @@ private:
 	ALLEGRO_FONT * fuente;
 	map<string,ALLEGRO_BITMAP *> dibujo;
 	map<ResourceType, ALLEGRO_BITMAP * > cartasfotos;
+
+	map<string, pair<Button*, MovableType*>> botones;
 	
 	
 };

@@ -13,6 +13,14 @@
 #define LROAD "LongestRoad.png"
 #define LARMY "LargestArmy.png"
 
+#define CROSS "cruz.png"
+#define TICK "tick.png"
+#define ROAD_BUILDING "RoadBuilding.png"
+#define VICTORY_POINT "VictoryPoint.png"
+#define Y_OF_PLENTY "YofP.png"
+#define MONOPOLY "Monopoly.png"
+#define KNIGHT "Knight.png"
+
 #define FONT_SIZE 10 // ver 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
@@ -26,8 +34,7 @@ LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local,LocalPlayerE
 	localPlayer = local;
 	localEnabler = playerEn;
 	impresora = printer;
-	sellos[ICONO] = NULL; // por las dudas
-	
+		
 	dibujo[ICONO] = al_load_bitmap(ICONO);
 	dibujo[ROAD] = al_load_bitmap(ROAD);
 	dibujo[CITY] = al_load_bitmap(CITY);
@@ -82,6 +89,7 @@ LocalObs::LocalObs(GutenbergsPressAllegro * printer, Player * local,LocalPlayerE
 	cartas[CAMPOS] = temp;
 	
 	
+	
 }
 
 
@@ -105,6 +113,7 @@ void LocalObs::update()
 	{
 		buildings[ciudad] = true;
 	}
+	
 	for (auto settlement : localPlayer->getMySettlements)
 	{
 		buildings[settlement] = false;
@@ -261,6 +270,8 @@ void LocalObs::update()
 		impresora->delType(sellos[LROAD]);
 		delete sellos[LROAD];
 	}
+
+	
 }
 
 bool LocalObs::isOK()
