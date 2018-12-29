@@ -46,7 +46,7 @@ void BasicGUI::parseEvent()
 	{
 		for (auto controller : controllers)
 		{
-			controller->parseMouseEvent(mouseCoordinates.first, mouseCoordinates.second);
+			controller->parseMouseDownEvent(mouseCoordinates.first, mouseCoordinates.second);
 		}
 	}
 		break;
@@ -74,14 +74,24 @@ BasicController::~BasicController()
 	delete evGen;
 }
 
-void BasicController::enableMouse()
+void BasicController::enableMouseDown()
 {
-	mouseActivated = true;
+	mouseDownActivated = true;
 }
 
-void BasicController::disableMouse()
+void BasicController::disableMouseDown()
 {
-	mouseActivated = false;
+	mouseDownActivated = false;
+}
+
+void BasicController::enableMouseUp()
+{
+	mouseUpActivated = true;
+}
+
+void BasicController::disableMouseUp()
+{
+	mouseUpActivated = false;
 }
 
 void BasicController::enableTimer()
@@ -96,7 +106,7 @@ void BasicController::disableTimer()
 
 bool BasicController::isMouseActive()
 {
-	return mouseActivated;
+	return mouseDownActivated;
 }
 
 bool BasicController::isTimerActive()

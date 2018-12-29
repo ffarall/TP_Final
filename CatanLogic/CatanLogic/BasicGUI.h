@@ -17,11 +17,14 @@ public:
 	BasicController();
 	BasicController(EventsHandler* handler_);
 	virtual  ~BasicController();
-	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y) = 0;
+	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y) = 0;
+	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y) = 0;
 	virtual GUIEnablerEvent parseTimerEvent() = 0;
 	
-	void enableMouse();
-	void disableMouse();
+	void enableMouseDown();
+	void disableMouseDown();
+	void enableMouseUp();
+	void disableMouseUp();
 	void enableTimer();
 	void disableTimer();
 
@@ -29,8 +32,10 @@ public:
 	bool isTimerActive();
 
 protected:
-	// Determines whether this controller has to be paying attention to mouse events.
-	bool mouseActivated;
+	// Determines whether this controller has to be paying attention to mouse down events.
+	bool mouseDownActivated;
+	// Determines whether this controller has to be paying attention to up down events.
+	bool mouseUpActivated;
 	// Determines whether this controller has to be paying attention to timer events.
 	bool timerActivated;
 	// For emitting events.

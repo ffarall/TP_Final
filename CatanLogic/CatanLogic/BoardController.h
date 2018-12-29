@@ -22,7 +22,7 @@ public:
 	virtual void update();
 	bool isOK();
 
-	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
 	MapDecoder* getDecoder();

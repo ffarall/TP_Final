@@ -94,7 +94,7 @@ bool BoardController::isOK()
 	return working;
 }
 
-GUIEnablerEvent BoardController::parseMouseEvent(uint32_t x, uint32_t y)
+GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
 	if (isMouseActive())
 	{

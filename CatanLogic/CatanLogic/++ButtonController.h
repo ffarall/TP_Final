@@ -14,7 +14,7 @@ public:
 
 	void addUtility(const Action& callback);
 
-	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
 private:

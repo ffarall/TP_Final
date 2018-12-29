@@ -132,7 +132,7 @@ void Button::addUtility(const Action & callback_)
 	callback = callback_;
 }
 
-GUIEnablerEvent Button::parseMouseEvent(uint32_t x, uint32_t y)
+GUIEnablerEvent Button::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
 	if (controlado->isAvailable())
 	{
