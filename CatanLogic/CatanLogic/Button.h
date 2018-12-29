@@ -9,10 +9,10 @@
 typedef std::function<GUIEnablerEvent(void)> Action;
 
 using uint = unsigned int;
-class Button :public ObserverAndController
+class Button :public BasicController
 {
 public:
-	Button(uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font);
+	Button(EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font);
 
 	void turnUseful(const Action& callback);
 	bool clickIn(uint x_, uint y_);
@@ -30,6 +30,12 @@ public:
 	bool setFont(ALLEGRO_FONT* font);
 
 	virtual void update();
+
+	void addUtility(const Action& callback_);
+
+	virtual GUIEnablerEvent parseMouseEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseTimerEvent();
+
 private:
 	uint buttonXPos;
 	uint buttonYPos;
@@ -41,6 +47,9 @@ private:
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
 	GutenbergsPressAllegro* press;
+
+	Action callback;
+	Button * controlado;
 };
 
 /*

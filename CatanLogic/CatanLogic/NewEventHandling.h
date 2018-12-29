@@ -14,6 +14,8 @@ using EventSubtypes = unsigned int;
 class GenericEvent
 {
 public:
+	GenericEvent() {}
+	virtual ~GenericEvent() {}
 	virtual EventTypes getType() = 0;
 	bool operator==(EventTypes ev) { return (this->getType() == ev); }		//Easy Compare an Event With its types.
 	virtual bool const operator!() const { return  false; } 		        //This operator can be used to understand if the event is present or not. ie: No Event.
@@ -22,6 +24,8 @@ public:
 class SubtypeEvent : public GenericEvent
 {
 public:
+	SubtypeEvent() {}
+	virtual ~SubtypeEvent() {}
 	virtual EventSubtypes getSubtype() = 0;
 	bool operator==(SubtypeEvent& ev) { return ((this->getType() == ev.getType()) && (this->getSubtype() == ev.getSubtype())); }
 };
@@ -44,6 +48,8 @@ public:
 	EventGenerator(EventsHandler * MainEventHandler = nullptr) { handler = MainEventHandler; }
 	virtual ~EventGenerator() {}
 	void attachHandler(EventsHandler * MainEventHandler) { handler = MainEventHandler; }
+
+	void emitEvent(GenericEvent* ev, int priority = 0) { handler->enqueueEvent(ev, priority); }
 protected:
 	EventsHandler* handler;
 };

@@ -2,9 +2,8 @@
 #include "ButtonController.h"
 #define BUTTON_TINT 0,0,0
 
-Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font)
+Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font) : BasicController(handler_)
 {
-	controller = new ButtonController(this);
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;
@@ -17,7 +16,7 @@ Button::Button(uint xPos, uint Ypos, uint height, uint width, std::string label,
 
 void Button::turnUseful(const Action & callback)
 {
-	(static_cast<ButtonController *>(controller))->addUtility(callback);
+	addUtility(callback);
 }
 
 bool Button::clickIn(uint x_, uint y_)
@@ -126,4 +125,28 @@ void Button::update()
 			//podria dibujarlo con primitives
 		}
 	}
+}
+
+void Button::addUtility(const Action & callback_)
+{
+	callback = callback_;
+}
+
+GUIEnablerEvent Button::parseMouseEvent(uint32_t x, uint32_t y)
+{
+	if (controlado->isAvailable())
+	{
+		if (controlado->clickIn(x, y))
+		{
+			controlado->toggleButton();
+			return callback();
+		}
+	}
+
+	return GUIEnablerEvent::NO_EV;
+}
+
+GUIEnablerEvent Button::parseTimerEvent()
+{
+	return GUIEnablerEvent::NO_EV; // ver
 }

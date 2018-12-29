@@ -1,5 +1,6 @@
 #include "BasicGUI.h"
-
+#include "MainEvent.h"
+#include "SubEvents.h"
 
 
 BasicGUI::BasicGUI()
@@ -63,6 +64,54 @@ BasicController::BasicController()
 {
 }
 
+BasicController::BasicController(EventsHandler * handler_)
+{
+	evGen = new EventGenerator(handler_);
+}
+
 BasicController::~BasicController()
 {
+	delete evGen;
+}
+
+void BasicController::enableMouse()
+{
+	mouseActivated = true;
+}
+
+void BasicController::disableMouse()
+{
+	mouseActivated = false;
+}
+
+void BasicController::enableTimer()
+{
+	timerActivated = true;
+}
+
+void BasicController::disableTimer()
+{
+	timerActivated = false;
+}
+
+bool BasicController::isMouseActive()
+{
+	return mouseActivated;
+}
+
+bool BasicController::isTimerActive()
+{
+	return timerActivated;
+}
+
+void BasicController::emitEvent(EventTypes type)
+{
+	GenericEvent* ev = new MainEvents(type);
+	evGen->emitEvent(ev);
+}
+
+void BasicController::emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg)
+{
+	GenericEvent* ev = new SubEvents(type, subtype, pkg);
+	evGen->emitEvent(ev);
 }
