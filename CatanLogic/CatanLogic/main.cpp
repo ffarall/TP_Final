@@ -9,6 +9,7 @@
 #include"HandShakingFSM.h"
 #include"Button.h"
 #include"NewEventHandling.h"
+#include"AllegroGUI.h"
 
 
 

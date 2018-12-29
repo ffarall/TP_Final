@@ -8,7 +8,7 @@
 #define DIS_HEIGHT 600
 #define TIMER_TIME 100
 
-AllegroGUI::AllegroGUI()
+AllegroGUI::AllegroGUI():BasicGUI()
 {
 	allegroError = false;
 	
@@ -60,28 +60,25 @@ bool AllegroGUI::checkForEvents()
 		switch (ev->type)
 		{
 		case ALLEGRO_EVENT_TIMER:
-			for (BasicController* controller : controllers)
-			{
-				controller->parseTimerEvent();
-			}
+			GUIEv = GUI_TIMER;
 			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-			for (BasicController* controller : controllers)
-			{
-				controller->parseMouseEvent(ev->mouse.x, ev->mouse.y);
-			}
+			GUIEv = GUI_MOUSE_DOWN;
+			mouseCoordinates =std::make_pair(ev->mouse.x,ev->mouse.y);
 			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+			GUIEv = GUI_MOUSE_UP;
+			mouseCoordinates = std::make_pair(ev->mouse.x, ev->mouse.y);
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
-			//que hacer aca
+			GUIEv = GUI_CLOSE_DISPLAY;
 			break;
 		default:
-			//error?
+			return false;//error?
 			break;
 		}
 	}
-	return false;
+	return true;
 }
 
 bool AllegroGUI::allegroInit()

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum GUIEventTypes { GUI_TIMER, GUI_MOUSE };
+enum GUIEventTypes { GUI_TIMER, GUI_MOUSE_UP, GUI_MOUSE_DOWN, GUI_CLOSE_DISPLAY };
 
 class BasicController :
 	public Observer
