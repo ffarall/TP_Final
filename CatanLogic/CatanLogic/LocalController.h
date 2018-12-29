@@ -26,8 +26,8 @@ public:
 	virtual ~LocalObsAndCont();
 	virtual void update();
 	bool isOK();
-private:
 
+private:
 	bool working;
 
 	Player * localPlayer;
