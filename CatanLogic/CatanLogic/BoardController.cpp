@@ -98,6 +98,25 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
 	if (isMouseDownActive())
 	{
+		if (getPuttingSettlement() || getPuttingRoad() || getPuttingCity() || getMovingRobber())
+		{
+			unsigned char temp = decoder->getPixelType(x, y);
+			if (temp == VERTEX || temp == EDGE || temp == TOKEN)
+			{
+				enableMouseUp();
+				return POSITION_SELECTED;
+			}
+		}
+	}
+
+	return NO_EV;
+}
+
+GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
+{
+	if (isMouseUpActive())
+	{
+		disableMouseUp();
 		if (getPuttingSettlement())												// When user has to select where to put Settlement.
 		{
 			if (decoder->getPixelType(x, y) == VERTEX)
@@ -105,8 +124,6 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 				string vertex = decoder->getCoordinateFromPixel(x, y);
 				SettlementPkg* setPkg = new SettlementPkg(vertex);
 				emitSubEvent(PLAYER_ACTION, PLA_SETTLEMENT, setPkg);
-
-				return POSITION_SELECTED;
 			}
 		}
 		else if (getPuttingRoad())												// When user has to select where to put Road.
@@ -116,8 +133,6 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 				string edge = decoder->getCoordinateFromPixel(x, y);
 				RoadPkg* roadPkg = new RoadPkg(edge);
 				emitSubEvent(PLAYER_ACTION, PLA_ROAD, roadPkg);
-
-				return POSITION_SELECTED;
 			}
 		}
 		else if (getPuttingCity())												// When user has to select where to put City.
@@ -127,8 +142,6 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 				string vertex = decoder->getCoordinateFromPixel(x, y);
 				CityPkg* cityPkg = new CityPkg(vertex);
 				emitSubEvent(PLAYER_ACTION, PLA_CITY, cityPkg);
-
-				return POSITION_SELECTED;
 			}
 		}
 		else if (getMovingRobber())
@@ -138,8 +151,6 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 				string token = decoder->getCoordinateFromPixel(x, y);
 				RobberMovePkg* robberPkg = new RobberMovePkg(token[0]);
 				emitSubEvent(PLAYER_ACTION, PLA_ROBBER_MOVE, robberPkg);
-
-				return POSITION_SELECTED;
 			}
 		}
 	}

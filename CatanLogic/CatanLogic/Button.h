@@ -34,6 +34,7 @@ public:
 	void addUtility(const Action& callback_);
 
 	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
 private:
@@ -49,7 +50,6 @@ private:
 	GutenbergsPressAllegro* press;
 
 	Action callback;
-	Button * controlado;
 };
 
 /*

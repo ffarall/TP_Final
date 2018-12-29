@@ -1,5 +1,4 @@
 #include "Button.h"
-#include "ButtonController.h"
 #define BUTTON_TINT 0,0,0
 
 Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font) : BasicController(handler_)
@@ -134,16 +133,34 @@ void Button::addUtility(const Action & callback_)
 
 GUIEnablerEvent Button::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
-	if (controlado->isAvailable())
+	if (isMouseDownActive())
 	{
-		if (controlado->clickIn(x, y))
+		if (isAvailable())
 		{
-			controlado->toggleButton();
-			return callback();
+			if (clickIn(x, y))
+			{
+				toggleButton();
+				enableMouseUp();
+			}
 		}
 	}
+	return NO_EV;
+}
 
-	return GUIEnablerEvent::NO_EV;
+GUIEnablerEvent Button::parseMouseUpEvent(uint32_t x, uint32_t y)
+{
+	if (isMouseUpActive())
+	{
+		disableMouseUp();
+		if (isAvailable())
+		{
+			if (clickIn(x, y))
+			{
+				return callback();
+			}
+		}
+	}
+	return NO_EV;
 }
 
 GUIEnablerEvent Button::parseTimerEvent()
