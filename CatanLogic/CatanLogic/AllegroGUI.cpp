@@ -66,12 +66,18 @@ bool AllegroGUI::checkForEvents()
 			}
 			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+			for (BasicController* controller : controllers)
+			{
+				controller->parseMouseEvent(ev->mouse.x, ev->mouse.y);
+			}
 			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
+			//que hacer aca
 			break;
 		default:
+			//error?
 			break;
 		}
 	}
