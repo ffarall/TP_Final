@@ -54,7 +54,7 @@ void BasicGUI::parseEvent()
 	{
 		for (auto controller : controllers)
 		{
-			controller->parseMouseEvent(mouseCoordinates.first, mouseCoordinates.second);
+			controller->parseMouseUpEvent(mouseCoordinates.first, mouseCoordinates.second);
 		}
 	}
 	break;
