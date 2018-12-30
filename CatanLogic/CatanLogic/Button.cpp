@@ -2,7 +2,7 @@
 //#include "ButtonController.h"
 #define BUTTON_TINT 0,0,0
 
-Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, ALLEGRO_FONT *font) : BasicController(handler_)
+Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize) : BasicController(handler_)
 {
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
@@ -10,11 +10,12 @@ Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint 
 	buttonWidth = width;
 	buttonText = label;
 	buttonBitmap = al_load_bitmap(imagePath.c_str);
-	if (buttonBitmap != nullptr)
+	buttonFont = al_load_font(fontPath.c_str(),fontSize,0);
+	if (buttonBitmap == nullptr||buttonFont==nullptr)
 	{
-		buttonFont = font;
-		press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos); 
+		//error
 	}
+	press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
 	
 }
 
@@ -83,23 +84,24 @@ ALLEGRO_BITMAP * Button::getBitmap()
 	return buttonBitmap;
 }
 
-bool Button::setBitmap(ALLEGRO_BITMAP * image)
+bool Button::setBitmap(std::string imagePath)
 {
-	if (image == nullptr)
+	buttonBitmap = al_load_bitmap(imagePath.c_str);
+	if (buttonBitmap == nullptr)
 	{
 		return false;
 	}
-	buttonBitmap = image;
 	return true;
 }
 
-bool Button::setFont(ALLEGRO_FONT * font)
+bool Button::setFont(std::string fontPath, int fontSize)
 {
-	if (font == nullptr)
+	buttonFont = al_load_font(fontPath.c_str(), fontSize, 0);
+	if (buttonFont == nullptr)
 	{
 		return false;
 	}
-	buttonFont = font;
+	
 	return true;
 
 	

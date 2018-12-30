@@ -12,7 +12,7 @@ using uint = unsigned int;
 class Button :public BasicController
 {
 public:
-	Button(EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, std::string imagePath, ALLEGRO_FONT *font);
+	Button(EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize);
 
 	void turnUseful(const Action& callback);
 	bool clickIn(uint x_, uint y_);
@@ -26,8 +26,8 @@ public:
 	uint getXPos();
 	uint getYPos();
 	ALLEGRO_BITMAP* getBitmap();	
-	bool setBitmap(ALLEGRO_BITMAP* image);
-	bool setFont(ALLEGRO_FONT* font);
+	bool setBitmap(std::string imagePath);
+	bool setFont(std::string fontPath, int fontSize);
 
 	virtual void update();
 
