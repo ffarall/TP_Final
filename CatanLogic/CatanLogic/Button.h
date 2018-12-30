@@ -12,7 +12,7 @@ using uint = unsigned int;
 class Button :public BasicController
 {
 public:
-	Button(EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font);
+	Button(EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, std::string imagePath, ALLEGRO_FONT *font);
 
 	void turnUseful(const Action& callback);
 	bool clickIn(uint x_, uint y_);

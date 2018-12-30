@@ -13,6 +13,7 @@
 
 
 
+
 int main(int argc, char* argv[])
 {
 	std::string localPlayerName(argv[1]);
@@ -23,6 +24,17 @@ int main(int argc, char* argv[])
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
 	HandShakingFSM hsFSM(&network,localPlayerName);
-	MainFSM(&hsFSM,&network,&handler,&localPlayerEnabler,&remotePlayerEnabler);
+	MainFSM mainFSM (&hsFSM,&network,&handler,&localPlayerEnabler,&remotePlayerEnabler);
 	AllegroGUI GUI;
+
+	//faltan observers
+
+
+	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
+	{
+		GenericEvent* ev = handler.getNextEvent();
+		mainFSM.cycle(ev);
+		GUI.cycle();
+		network.workPlease();
+	}
 }

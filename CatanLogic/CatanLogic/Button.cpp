@@ -1,17 +1,21 @@
 #include "Button.h"
-#include "ButtonController.h"
+//#include "ButtonController.h"
 #define BUTTON_TINT 0,0,0
 
-Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, ALLEGRO_BITMAP *image, ALLEGRO_FONT *font) : BasicController(handler_)
+Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, ALLEGRO_FONT *font) : BasicController(handler_)
 {
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;
 	buttonWidth = width;
 	buttonText = label;
-	buttonBitmap = image;
-	buttonFont = font;
-	press->createType(image, al_map_rgb(BUTTON_TINT), xPos, Ypos);
+	buttonBitmap = al_load_bitmap(imagePath.c_str);
+	if (buttonBitmap != nullptr)
+	{
+		buttonFont = font;
+		press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos); 
+	}
+	
 }
 
 void Button::turnUseful(const Action & callback)
