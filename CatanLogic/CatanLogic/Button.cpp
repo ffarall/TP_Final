@@ -140,11 +140,11 @@ void Button::addUtility(const Action & callback_)
 
 GUIEnablerEvent Button::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
-	if (controlado->isAvailable())
+	if (buttonEnabled)
 	{
-		if (controlado->clickIn(x, y))
+		if (this->clickIn(x, y))
 		{
-			controlado->toggleButton();
+			this->toggleButton();
 			return callback();
 		}
 	}

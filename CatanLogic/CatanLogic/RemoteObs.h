@@ -20,7 +20,7 @@ private:
 	bool working;
 
 	Player * localPlayer;
-	LocalPlayerEnabler * localEnabler;
+	RemotePlayerEnabler * localEnabler;
 	GutenbergsPressAllegro * impresora;
 
 	MapDecoder toDraw;
