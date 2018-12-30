@@ -1,4 +1,4 @@
-#include "LocalObsAndCont.h"
+#include "LocalController.h"
 
 #define LADRILLO "ladrillo.png"
 #define PASTO "pasto.png"
@@ -13,8 +13,8 @@
 #define LROAD "LongestRoad.png"
 #define LARMY "LargestArmy.png"
 
-#define CROSS "cruz.png"
-#define TICK "tick.png"
+#define CANCEL "cruz.png"
+#define ACCEPT "tick.png"
 #define ROAD_BUILDING "RoadBuilding.png"
 #define VICTORY_POINT "VictoryPoint.png"
 #define Y_OF_PLENTY "YofP.png"
@@ -42,8 +42,8 @@ LocalController::LocalController(EventsHandler* handler_, GutenbergsPressAllegro
 	dibujo[SETTLE] = al_load_bitmap(SETTLE);
 	dibujo[LROAD] = al_load_bitmap(LROAD);
 	dibujo[LARMY] = al_load_bitmap(LARMY);
-	dibujo[CROSS] = al_load_bitmap(CROSS);
-	dibujo[TICK] = al_load_bitmap(TICK);
+	dibujo[CANCEL] = al_load_bitmap(CANCEL);
+	dibujo[ACCEPT] = al_load_bitmap(ACCEPT);
 	dibujo[VICTORY_POINT] = al_load_bitmap(VICTORY_POINT);
 	dibujo[ROAD_BUILDING] = al_load_bitmap(ROAD_BUILDING);
 	dibujo[MONOPOLY] = al_load_bitmap(MONOPOLY);
@@ -284,4 +284,22 @@ void LocalController::update()
 bool LocalController::isOK()
 {
 	return working;
+}
+
+GUIEnablerEvent LocalController::parseMouseDownEvent(uint32_t x, uint32_t y)
+{
+	if (isMouseDownActive())
+	{
+
+	}
+	return NO_EV;
+}
+
+GUIEnablerEvent LocalController::parseTimerEvent()
+{
+	if (isTimerActive())
+	{
+
+	}
+	return NO_EV;
 }
