@@ -2,7 +2,7 @@
 
 
 
-RemoteObs::RemoteObs()
+RemoteObs::RemoteObs(GutenbergsPressAllegro * printer, Player * local, RemotePlayerEnabler * remotelEn)
 {
 }
 

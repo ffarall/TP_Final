@@ -23,7 +23,7 @@
 #define ROAD_FILE "road.png"
 #define ROBBER_FILE "robber.png"
 #define DEV_FILE "DevBack2.png"
-
+#define FONDO "fondo.jpg"
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
 #define ROBBER_POS 20
@@ -261,7 +261,7 @@ void BoardController::drawMap()
 {
 	ALLEGRO_BITMAP * fondo = al_create_bitmap(580, 524);
 	ALLEGRO_BITMAP * disp = al_create_bitmap(D_ANCHO, D_ALTO);
-
+	ALLEGRO_BITMAP * tempFondo = al_load_bitmap(FONDO);
 	ALLEGRO_DISPLAY * tempDisplay = al_get_current_display();
 
 	al_set_target_bitmap(fondo);
@@ -317,9 +317,16 @@ void BoardController::drawMap()
 	}
 	// hasta aca dibujo el mapa en un bitmap
 	al_set_target_bitmap(disp);
+	if (tempFondo != NULL)
+	{
+		al_draw_scaled_bitmap(tempFondo, 0, 0,
+			al_get_bitmap_width(tempFondo), al_get_bitmap_height(tempFondo),
+			0, 0, D_ANCHO, D_ALTO, 0);
+	}
 	al_draw_bitmap(fondo, BOARD_POS_X, BOARD_POS_Y, 0);
 	printer->setBackgorund(disp);
-
+	al_destroy_bitmap(tempFondo);
+	al_destroy_bitmap(fondo); // el bitmap del display hay que destruirlo despues
 	al_set_target_backbuffer(tempDisplay);
 }
 
