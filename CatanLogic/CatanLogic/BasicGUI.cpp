@@ -121,9 +121,14 @@ void BasicController::disableTimer()
 	timerActivated = false;
 }
 
-bool BasicController::isMouseActive()
+bool BasicController::isMouseDownActive()
 {
 	return mouseDownActivated;
+}
+
+bool BasicController::isMouseUpActive()
+{
+	return mouseUpActivated;
 }
 
 bool BasicController::isTimerActive()

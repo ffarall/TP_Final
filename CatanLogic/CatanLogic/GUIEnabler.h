@@ -4,7 +4,7 @@
 #include <list>
 
 
-enum GUIEnablerEvent { NO_EV, POSITION_SELECTED };
+enum GUIEnablerEvent { NO_EV, POSITION_SELECTED, NO_EV };
 
 class GUIEnabler;
 using namespace std;

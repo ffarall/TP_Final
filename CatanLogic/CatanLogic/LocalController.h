@@ -18,16 +18,20 @@
 
 using namespace std;
 
-class LocalObsAndCont :
+class LocalController :
 	public BasicController
 {
 public:
-	LocalObsAndCont(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
-	virtual ~LocalObsAndCont();
+	LocalController(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
+	virtual ~LocalController();
 	virtual void update();
 	bool isOK();
-private:
 
+	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseTimerEvent();
+
+private:
 	bool working;
 
 	Player * localPlayer;
