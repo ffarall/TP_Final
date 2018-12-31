@@ -284,6 +284,11 @@ bool LocalController::isOK()
 {
 	return working;
 }
+
+void LocalController::attachAllButtons(list<Button*>& lista)
+{
+	allButtons = lista;
+}
 
 GUIEnablerEvent LocalController::parseMouseDownEvent(uint32_t x, uint32_t y)
 {

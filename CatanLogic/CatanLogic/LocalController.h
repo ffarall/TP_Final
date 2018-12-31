@@ -39,6 +39,7 @@ public:
 	virtual ~LocalController();
 	virtual void update();
 	bool isOK();
+	void attachAllButtons(list<Button * >& lista);
 
 	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
@@ -119,6 +120,7 @@ private:
 
 	map<string,MovableType*> botones;
 	
+	list<Button *> allButtons;
 	// Flags that determine whether a button is activated.
 	bool throwDiceActivated;
 	bool passActivated;

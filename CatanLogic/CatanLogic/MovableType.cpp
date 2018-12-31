@@ -19,7 +19,7 @@ MovableType::MovableType(GutenbergsPress* press_, ALLEGRO_BITMAP * bitmap_, ALLE
 
 MovableType::~MovableType()
 {
-	al_destroy_bitmap(bitmap);
+	//al_destroy_bitmap(bitmap);
 }
 
 void MovableType::printType()
