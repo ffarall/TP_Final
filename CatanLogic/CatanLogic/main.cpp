@@ -94,4 +94,7 @@ void createButtons(std::vector<Button*>& buttonList, EventsHandler * handler)
 		a->disableTimer();
 	}
 
+	buttonList[0]->addUtility([]() {
+		return GUIEnablerEvent::NO_EV;
+	})
 }
