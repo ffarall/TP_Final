@@ -1,4 +1,5 @@
 #include "LocalController.h"
+#include "PosDef.h"
 
 #define LADRILLO "ladrillo.png"
 #define PASTO "pasto.png"
@@ -94,8 +95,6 @@ LocalController::LocalController(EventsHandler* handler_, GutenbergsPressAllegro
 	cartas[COLINAS] = temp;
 	cartas[BOSQUE] = temp;
 	cartas[CAMPOS] = temp;
-	
-	
 	
 }
 
@@ -302,4 +301,281 @@ GUIEnablerEvent LocalController::parseTimerEvent()
 
 	}
 	return NO_EV;
+}
+
+bool LocalController::isThrowDiceActive()
+{
+	return throwDiceActivated;
+}
+
+bool LocalController::isPassActive()
+{
+	return passActivated;
+}
+
+bool LocalController::isAcceptActive()
+{
+	return acceptActivated;
+}
+
+bool LocalController::isCancelActive()
+{
+	return cancelActivated;
+}
+
+bool LocalController::isNewRoadActive()
+{
+	return newRoadActivated;
+}
+
+bool LocalController::isNewSettlementActive()
+{
+	return newSettlementActivated;
+}
+
+bool LocalController::isNewCityActive()
+{
+	return newCityActivated;
+}
+
+bool LocalController::isBuyDevCardActive()
+{
+	return buyDevCardActivated;
+}
+
+bool LocalController::isNewBankTradeActive()
+{
+	return newBankTradeActivated;
+}
+
+bool LocalController::isNewOfferTradeActive()
+{
+	return newOfferTradeActivated;
+}
+
+bool LocalController::isUseKnightActive()
+{
+	return useKnightActivated;
+}
+
+bool LocalController::isUseYearsOfPlentyActive()
+{
+	return useYearsOfPlentyActivated;
+}
+
+bool LocalController::isUseMonopolyActive()
+{
+	return useMonopolyActivated;
+}
+
+bool LocalController::isUseRoadBuildingActive()
+{
+	return useRoadBuildingActivated;
+}
+
+bool LocalController::isSelectWoolActive()
+{
+	return selectWoolActivated;
+}
+
+bool LocalController::isSelectOreActive()
+{
+	return selectOreActivated;
+}
+
+bool LocalController::isSelectLumberActive()
+{
+	return selectLumberActivated;
+}
+
+bool LocalController::isSelectGrainActive()
+{
+	return selectGrainActivated;
+}
+
+bool LocalController::isSelectBrickActive()
+{
+	return selectBrickActivated;
+}
+
+bool LocalController::isSelect4x1Active()
+{
+	return select4x1Activated;
+}
+
+bool LocalController::isSelect3x1Active()
+{
+	return select3x1Activated;
+}
+
+bool LocalController::isSelect2Tx1Active()
+{
+	return select2Tx1Activated;
+}
+
+bool LocalController::isSelect2Ox1Active()
+{
+	return select2Ox1Activated;
+}
+
+bool LocalController::isSelect2Lx1Active()
+{
+	return select2Lx1Activated;
+}
+
+bool LocalController::isSelect2Px1Active()
+{
+	return select2Px1Activated;
+}
+
+bool LocalController::isSelect2Mx1Active()
+{
+	return select2Mx1Activated;
+}
+
+void LocalController::setThrowDice(bool value)
+{
+	throwDiceActivated = value;
+}
+
+void LocalController::setPass(bool value)
+{
+	passActivated = value;
+}
+
+void LocalController::setAccept(bool value)
+{
+	acceptActivated = value;
+}
+
+void LocalController::setCancel(bool value)
+{
+	cancelActivated = value;
+}
+
+void LocalController::setNewRoad(bool value)
+{
+	newRoadActivated = value;
+}
+
+void LocalController::setNewSettlement(bool value)
+{
+	newSettlementActivated = value;
+}
+
+void LocalController::setNewCity(bool value)
+{
+	newCityActivated = value;
+}
+
+void LocalController::setBuyDevCard(bool value)
+{
+	buyDevCardActivated = value;
+}
+
+void LocalController::setNewBankTrade(bool value)
+{
+	newBankTradeActivated = value;
+}
+
+void LocalController::setNewOfferTrade(bool value)
+{
+	newOfferTradeActivated = value;
+}
+
+void LocalController::setUseKnight(bool value)
+{
+	useKnightActivated = value;
+}
+
+void LocalController::setUseYearsOfPlenty(bool value)
+{
+	useYearsOfPlentyActivated = value;
+}
+
+void LocalController::setUseMonopoly(bool value)
+{
+	useMonopolyActivated = value;
+}
+
+void LocalController::setUseRoadBuilding(bool value)
+{
+	useRoadBuildingActivated = value;
+}
+
+void LocalController::setSelectWool(bool value)
+{
+	selectWoolActivated = value;
+}
+
+void LocalController::setSelectOre(bool value)
+{
+	selectOreActivated = value;
+}
+
+void LocalController::setSelectLumber(bool value)
+{
+	selectLumberActivated = value;
+}
+
+void LocalController::setSelectGrain(bool value)
+{
+	selectGrainActivated = value;
+}
+
+void LocalController::setSelectBrick(bool value)
+{
+	selectBrickActivated = value;
+}
+
+void LocalController::setSelect4x1(bool value)
+{
+	select4x1Activated = value;
+}
+
+void LocalController::setSelect3x1(bool value)
+{
+	select3x1Activated = value;
+}
+
+void LocalController::setSelect2Tx1(bool value)
+{
+	select2Tx1Activated = value;
+}
+
+void LocalController::setSelect2Ox1(bool value)
+{
+	select2Ox1Activated = value;
+}
+
+void LocalController::setSelect2Lx1(bool value)
+{
+	select2Lx1Activated = value;
+}
+
+void LocalController::setSelect2Px1(bool value)
+{
+	select2Px1Activated = value;
+}
+
+void LocalController::setSelect2Mx1(bool value)
+{
+	select2Mx1Activated = value;
+}
+
+ClickZone::ClickZone(uint32_t fromX, uint32_t fromY, uint32_t toX, uint32_t toY)
+{
+	from.first = fromX;
+	from.second = fromY;
+	to.first = toX;
+	to.second = toY;
+}
+
+ClickZone::~ClickZone()
+{
+}
+
+bool ClickZone::isInZone(int x, int y)
+{
+	return (x >= from.first) && (x <= to.first) && (y <= from.second) && (y >= to.second);
 }

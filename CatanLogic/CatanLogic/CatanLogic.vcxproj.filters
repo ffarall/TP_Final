@@ -82,6 +82,7 @@
     <ClInclude Include="++BoardObsAndCon.h" />
     <ClInclude Include="++ButtonController.h" />
     <ClInclude Include="AllegroGUI.h" />
+    <ClInclude Include="PosDef.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -167,6 +167,7 @@
     <ClInclude Include="GUIEnabler.h" />
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="GutenbergsPress.h" />
+    <ClInclude Include="PosDef.h" />
     <ClInclude Include="LocalController.h" />
     <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
