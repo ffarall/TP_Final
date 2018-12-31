@@ -69,11 +69,11 @@ void RemoteObs::update()
 {
 	bool anyChange = false;
 	map<string, bool> buildings;
-
+	// D_ANCHO * 0.95 - al_get_bitmap_width(visitante), D_ALTO*0.05
 	if (sellos[ICONO] == NULL)
 	{
 		sellos[ICONO] = impresora->createType(bitmaps[ICONO], al_map_rgb(255, 255, 255),
-			D_ANCHO * 0.05, D_ALTO * 0.05
+			D_ANCHO * 0.95 - al_get_bitmap_width(bitmaps[ICONO]), D_ALTO*0.05
 		);
 		impresora->addType(sellos[ICONO]);
 	}
@@ -163,7 +163,7 @@ void RemoteObs::update()
 	{
 		if (sellos[LARMY] == NULL)
 		{
-			sellos[LARMY] = impresora->createType(bitmaps[LARMY], al_map_rgb(255, 255, 255), D_ANCHO * 0.2, D_ALTO * 0.15);
+			sellos[LARMY] = impresora->createType(bitmaps[LARMY], al_map_rgb(255, 255, 255), D_ANCHO * 0.72, D_ALTO * 0.15);
 		}
 	}
 	else if (sellos[LARMY] != NULL)
@@ -176,7 +176,7 @@ void RemoteObs::update()
 	{
 		if (sellos[LROAD] == NULL)
 		{
-			sellos[LROAD] = impresora->createType(bitmaps[LROAD], al_map_rgb(255, 255, 255), D_ANCHO * 0.25, D_ALTO * 0.15);
+			sellos[LROAD] = impresora->createType(bitmaps[LROAD], al_map_rgb(255, 255, 255), D_ANCHO * 0.77, D_ALTO * 0.15);
 		}
 	}
 	else if (sellos[LROAD] != NULL)
