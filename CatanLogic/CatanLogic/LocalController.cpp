@@ -284,7 +284,8 @@ bool LocalController::isOK()
 {
 	return working;
 }
-
+
+
 void LocalController::attachAllButtons(list<Button*>& lista)
 {
 	for (auto boton : lista)
