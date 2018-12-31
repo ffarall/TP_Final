@@ -16,7 +16,7 @@
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 
-void createButtons(std::vector<Button*>& buttonListn, EventsHandler * evH);
+void createButtons(std::vector<Button*>& buttonListn, EventsHandler * evH,Player * jugador);
 
 
 int main(int argc, char* argv[])
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 
 	std::vector<Button*> buttonList;
 	
-	createButtons(buttonList,&handler);
+	createButtons(buttonList,&handler,&localPlayer);
 
 	//faltan observers
 
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 }
 
 
-void createButtons(std::vector<Button*>& buttonList, EventsHandler * handler)
+void createButtons(std::vector<Button*>& buttonList, EventsHandler * handler,Player * localPlayer)
 {
 	buttonList.push_back(new Button(handler, START_PLAYING_X,START_PLAYING_Y,START_PLAYING_H, START_PLAYING_W,"Start Playing","","",14)); //startPlayingButton()
 	buttonList.push_back(new Button(handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "", "", 14));//quitButton()
@@ -94,7 +94,15 @@ void createButtons(std::vector<Button*>& buttonList, EventsHandler * handler)
 		a->disableTimer();
 	}
 
-	buttonList[0]->addUtility([]() {
-		return GUIEnablerEvent::NO_EV;
-	})
+	buttonList[0]->addUtility([]() {return GUIEnablerEvent::NO_EV;});
+
+	buttonList[4]->addUtility(
+		[&localPlayer]()
+		{
+			if (localPlayer->checkRoadResources())
+			{
+				return GUIEnablerEvent::NO_EV; // cambiar por lo que edebe ser
+			}
+		}
+	)
 }

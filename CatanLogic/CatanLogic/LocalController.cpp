@@ -286,7 +286,7 @@ bool LocalController::isOK()
 }
 
 
-void LocalController::attachAllButtons(list<Button*>& lista)
+void LocalController::attachAllButtons(vector<Button*>& lista)
 {
 	for (auto boton : lista)
 	{
