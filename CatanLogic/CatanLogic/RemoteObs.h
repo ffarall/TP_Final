@@ -6,6 +6,12 @@
 #include "RemotePlayerEnabler.h"
 #include "GutenbergsPressAllegro.h"
 
+#include "allegro5/allegro_font.h"
+#include "allegro5/allegro_image.h"
+
+#include <map>
+#include <string>
+
 class RemoteObs :
 	public Observer
 {
@@ -19,13 +25,15 @@ public:
 private:
 	bool working;
 
-	Player * localPlayer;
-	RemotePlayerEnabler * localEnabler;
+	Player * remotePlayer;
+	RemotePlayerEnabler * remoteEnabler;
 	GutenbergsPressAllegro * impresora;
 
 	MapDecoder toDraw;
 
 	map< string, MovableType * > roads;
-	map< string, MovableType * > buildngs; 
+	map< string, MovableType * > sellos; 
+	map< string, ALLEGRO_BITMAP * > bitmaps;
+	ALLEGRO_FONT * fuente;
 };
 
