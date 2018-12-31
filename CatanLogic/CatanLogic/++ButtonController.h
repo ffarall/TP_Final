@@ -49,7 +49,12 @@ private:
 	RoadBuilding  (D_ANCHO * 0.145, D_ALTO * 0.83)-(D_ANCHO * 0.145+50, D_ALTO * 0.83+77)
 	victory point (D_ANCHO * 0.095, D_ALTO * 0.83)-(D_ANCHO * 0.095+50, D_ALTO * 0.83+77)
 
-
+	35x53
+	Campo  (D_ANCHO * 0.05, D_ALTO*0.3)- (D_ANCHO * 0.05 + 35 , D_ALTO*0.3 + 53)
+	montaña (D_ANCHO * 0.05 + 35 * 1.05 , D_ALTO*0.3)-(D_ANCHO * 0.05 + 35 * 1.05  + 35 , D_ALTO*0.3 + 53)
+	pasto (D_ANCHO * 0.05 + 35 * 1.05 * 2 , D_ALTO*0.3)-(D_ANCHO * 0.05 + 35 * 1.05 * 2  + 35 , D_ALTO*0.3 + 53)
+	colina (D_ANCHO * 0.05 + 35 * 1.05 * 3 , D_ALTO*0.3)-(D_ANCHO * 0.05 + 35 * 1.05 * 3  + 35 , D_ALTO*0.3 + 53)
+	bosque (D_ANCHO * 0.05 + 35 * 1.05 * 4 , D_ALTO*0.3)-(D_ANCHO * 0.05 + 35 * 1.05 * 4  + 35 , D_ALTO*0.3 + 53)
 
 
 */
