@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 #include"Board.h"
 #include"Player.h"
 #include"RemotePlayerEnabler.h"
@@ -15,7 +16,7 @@
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 
-void createButtons(std::list<Button*>& buttonListn, EventsHandler * evH);
+void createButtons(std::vector<Button*>& buttonListn, EventsHandler * evH);
 
 
 int main(int argc, char* argv[])
@@ -35,7 +36,7 @@ int main(int argc, char* argv[])
 	LocalController localCont(&handler, &printer, &localPlayer, &localPlayerEnabler);
 	BoardController boarCont(&handler, &printer);
 
-	std::list<Button*> buttonList;
+	std::vector<Button*> buttonList;
 	
 	createButtons(buttonList,&handler);
 
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
 }
 
 
-void createButtons(std::list<Button*>& buttonList, EventsHandler * handler)
+void createButtons(std::vector<Button*>& buttonList, EventsHandler * handler)
 {
 	buttonList.push_back(new Button(handler, START_PLAYING_X,START_PLAYING_Y,START_PLAYING_H, START_PLAYING_W,"Start Playing","","",14)); //startPlayingButton()
 	buttonList.push_back(new Button(handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "", "", 14));//quitButton()
@@ -88,7 +89,7 @@ void createButtons(std::list<Button*>& buttonList, EventsHandler * handler)
 	//ahora le tengo que poner las funciones a cada boton
 	for (auto a : buttonList)
 	{
-		a->disableMouseDown(); // por las dudas
+		a->disableMouseDown(); // por las dudas deshabilito todo
 		a->disableMouseUp();
 		a->disableTimer();
 	}

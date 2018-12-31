@@ -12,6 +12,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_image.h"
@@ -39,7 +40,7 @@ public:
 	virtual ~LocalController();
 	virtual void update();
 	bool isOK();
-	void attachAllButtons(list<Button * >& lista);
+	void attachAllButtons(vector<Button * >& lista);
 
 	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
@@ -120,7 +121,7 @@ private:
 
 	map<string,MovableType*> botones;
 	
-	list<Button *> allButtons;
+	vector<Button *> allButtons;
 	// Flags that determine whether a button is activated.
 	bool throwDiceActivated;
 	bool passActivated;

@@ -287,7 +287,10 @@ bool LocalController::isOK()
 
 void LocalController::attachAllButtons(list<Button*>& lista)
 {
-	allButtons = lista;
+	for (auto boton : lista)
+	{
+		allButtons.push_back(boton);
+	}
 }
 
 GUIEnablerEvent LocalController::parseMouseDownEvent(uint32_t x, uint32_t y)
