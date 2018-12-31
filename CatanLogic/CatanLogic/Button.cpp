@@ -2,8 +2,10 @@
 //#include "ButtonController.h"
 #define BUTTON_TINT 0,0,0
 
-Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize) : BasicController(handler_)
+Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize) : BasicController(handler_)
 {
+	press = press_;
+	type = new MovableType(press, NULL);
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;
@@ -17,11 +19,6 @@ Button::Button(EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint 
 	}
 	press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
 	
-}
-
-void Button::turnUseful(const Action & callback)
-{
-	addUtility(callback);
 }
 
 bool Button::clickIn(uint x_, uint y_)
@@ -109,33 +106,18 @@ bool Button::setFont(std::string fontPath, int fontSize)
 
 void Button::update()
 {
-	if (buttonEnabled)
-	{
-		if (buttonBitmap != NULL)
-		{
-			if (buttonPressed)
-			{
-				al_draw_tinted_bitmap(buttonBitmap, al_map_rgba_f(1.0, 0.5, 0.5, 1.0), buttonXPos, buttonYPos, 0); // medio rojizo
-			}
-			else
-			{
-				al_draw_tinted_bitmap(buttonBitmap, al_map_rgba_f(1.0, 1.0, 1.0, 1.0), buttonXPos, buttonYPos, 0); // normal
-			}
-			if (buttonFont != NULL)
-			{
-				al_draw_text(buttonFont, al_map_rgba(0, 0, 0, 1), buttonXPos + buttonWidth / 2, buttonYPos + buttonHeight / 2, 0, buttonText.c_str());
-			}
-		}
-		else
-		{
-			//podria dibujarlo con primitives
-		}
-	}
+	updateCallback(type);
+	type->redraw();
 }
 
-void Button::addUtility(const Action & callback_)
+void Button::addUtility(const ParseAction & callback_)
 {
-	callback = callback_;
+	parseCallback = callback_;
+}
+
+void Button::addUpdate(const UpdateAction & callback_)
+{
+	updateCallback = callback_;
 }
 
 GUIEnablerEvent Button::parseMouseDownEvent(uint32_t x, uint32_t y)
@@ -145,11 +127,25 @@ GUIEnablerEvent Button::parseMouseDownEvent(uint32_t x, uint32_t y)
 		if (this->clickIn(x, y))
 		{
 			this->toggleButton();
-			return callback();
 		}
 	}
 
 	return GUIEnablerEvent::NO_EV;
+}
+
+GUIEnablerEvent Button::parseMouseUpEvent(uint32_t x, uint32_t y)
+{
+	if (buttonEnabled)
+	{
+		if (this->clickIn(x, y))
+		{
+			if (buttonPressed)
+			{
+				return parseCallback();
+			}
+		}
+	}
+	return NO_EV;
 }
 
 GUIEnablerEvent Button::parseTimerEvent()

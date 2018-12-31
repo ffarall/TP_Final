@@ -12,14 +12,14 @@ public:
 	ButtonController(Button* toControl);
 	virtual ~ButtonController();
 
-	void addUtility(const Action& callback);
+	void addUtility(const ParseAction& parseCallback);
 
 	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
 private:
 
-	Action callback;
+	ParseAction parseCallback;
 	Button * controlado;
 };
 

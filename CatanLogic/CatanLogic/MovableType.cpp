@@ -24,7 +24,10 @@ MovableType::~MovableType()
 
 void MovableType::printType()
 {
-	al_draw_tinted_scaled_rotated_bitmap(bitmap, tint, coordinateX, coordinateY, difX, difY, scaleX, scaleY, angle, flags);
+	if (bitmap != NULL)
+	{
+		al_draw_tinted_scaled_rotated_bitmap(bitmap, tint, coordinateX, coordinateY, difX, difY, scaleX, scaleY, angle, flags);
+	}
 }
 
 void MovableType::redraw()

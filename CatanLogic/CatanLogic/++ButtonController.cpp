@@ -9,9 +9,9 @@ ButtonController::~ButtonController()
 {
 }
 
-void ButtonController::addUtility(const Action & callback_)
+void ButtonController::addUtility(const ParseAction & callback_)
 {
-	callback = callback_;
+	parseCallback = callback_;
 }
 
 GUIEnablerEvent ButtonController::parseMouseDownEvent(uint32_t x, uint32_t y)
@@ -21,7 +21,7 @@ GUIEnablerEvent ButtonController::parseMouseDownEvent(uint32_t x, uint32_t y)
 		if (controlado->clickIn(x, y))
 		{
 			controlado->toggleButton();
-			return callback();
+			return parseCallback();
 		}
 	}
 	

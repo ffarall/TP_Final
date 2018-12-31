@@ -6,15 +6,15 @@
 #include<iostream>
 #include <functional>
 
-typedef std::function<GUIEnablerEvent(void)> Action;
+typedef std::function<GUIEnablerEvent(void)> ParseAction;
+typedef std::function<void(MovableType*)> UpdateAction;
 
 using uint = unsigned int;
 class Button :public BasicController
 {
 public:
-	Button(EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize);
+	Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize);
 
-	void turnUseful(const Action& callback);
 	bool clickIn(uint x_, uint y_);
 
 	void toggleButton();
@@ -29,15 +29,18 @@ public:
 	bool setBitmap(std::string imagePath);
 	bool setFont(std::string fontPath, int fontSize);
 
-	virtual void update();
+	void addUtility(const ParseAction& callback_);
+	void addUpdate(const UpdateAction& callback_);
 
-	void addUtility(const Action& callback_);
+	virtual void update();
 
 	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
 private:
+	GutenbergsPressAllegro* press;
+	MovableType* type;
 	uint buttonXPos;
 	uint buttonYPos;
 	uint buttonHeight;
@@ -49,7 +52,8 @@ private:
 	ALLEGRO_FONT* buttonFont;
 	GutenbergsPressAllegro* press;
 
-	Action callback;
+	UpdateAction updateCallback;
+	ParseAction parseCallback;
 };
 
 /*
