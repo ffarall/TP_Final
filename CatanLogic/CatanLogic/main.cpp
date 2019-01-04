@@ -96,33 +96,35 @@ void createButtons(GutenbergsPressAllegro* printer, std::vector<Button*>& button
 
 	buttonList[0]->addUtility([]() {
 		return GUIEnablerEvent::NO_EV;
-		//start
+		//emitir evento start
 	});
 
 	buttonList[1]->addUtility(
 		[&localPlayer]()
-	{
-		return GUIEnablerEvent::QUIT;
-		//quit
-	}
+		{
+			return GUIEnablerEvent::QUIT;
+			//emitir evento quit
+		}
 	);
 	buttonList[2]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkCityResources())
 		{
-			return GUIEnablerEvent::NEW_CITY; // cambiar por lo que edebe ser
+			if (localPlayer->checkCityResources())
+			{
+				return GUIEnablerEvent::NEW_CITY; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 	buttonList[3]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkSettlementResources())
 		{
-			return GUIEnablerEvent::NEW_SETTLEMENT; // cambiar por lo que edebe ser
+			if (localPlayer->checkSettlementResources())
+			{
+				return GUIEnablerEvent::NEW_SETTLEMENT; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[4]->addUtility(
@@ -130,251 +132,222 @@ void createButtons(GutenbergsPressAllegro* printer, std::vector<Button*>& button
 		{
 			if (localPlayer->checkRoadResources())
 			{
-				return GUIEnablerEvent::NEW_ROAD; // cambiar por lo que edebe ser
+				return GUIEnablerEvent::NEW_ROAD; 
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[5]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkResourcesForDevCard())
 		{
-			return GUIEnablerEvent::BUY_DEV_CARD; // cambiar por lo que edebe ser
+			if (localPlayer->checkResourcesForDevCard())
+			{
+				return GUIEnablerEvent::BUY_DEV_CARD; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 	buttonList[6]->addUtility(
 		[&localPlayer]()
-	{
-		return GUIEnablerEvent::PASS; // cambiar por lo que edebe ser
-	}
+		{
+			return GUIEnablerEvent::PASS; 
+		}
 	);
 	
 	buttonList[7]->addUtility(
 		[&localPlayer]()
-	{
-		return GUIEnablerEvent::BANK_TRADE; // cambiar por lo que edebe ser
-	});
+		{
+			return GUIEnablerEvent::BANK_TRADE; 
+		}
+	);
 
 	buttonList[8]->addUtility(
-			[&localPlayer]()
-	{
-		return GUIEnablerEvent::OFFER_TRADE; // cambiar por lo que edebe ser
-	}
+		[&localPlayer]()
+		{
+			return GUIEnablerEvent::OFFER_TRADE; 
+		}
 	);
 
 	buttonList[9]->addUtility(
 		[&localPlayer]()
-	{
-		return GUIEnablerEvent::TRHOW_DICE; // cambiar por lo que edebe ser
-	}
+		{
+			return GUIEnablerEvent::TRHOW_DICE; 
+		}
 	);
 
 	buttonList[10]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->getDevCardAmount(DevCards::KNIGHT))
 		{
-			return GUIEnablerEvent::USE_KNIGHT; // cambiar por lo que edebe ser
+			if (localPlayer->getDevCardAmount(DevCards::KNIGHT))
+			{
+				return GUIEnablerEvent::USE_KNIGHT; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[11]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::USE_ROAD_BUILDING; // cambiar por lo que edebe ser
+			if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
+			{
+				return GUIEnablerEvent::USE_ROAD_BUILDING; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[12]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::USE_MONOPOLY; // cambiar por lo que edebe ser
+			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY))
+			{
+				return GUIEnablerEvent::USE_MONOPOLY;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[13]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::USE_YOP; // cambiar por lo que edebe ser
+			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
+			{
+				return GUIEnablerEvent::USE_YOP; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[14]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_4X1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_4X1; 
 		}
-	}
 	);
 
 	buttonList[15]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_3X1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_3X1;
 		}
-	}
 	);
 
 	buttonList[16]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_2MX1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_2MX1; 
 		}
-	}
 	);
 
 	buttonList[17]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_2TX1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_2TX1; 
 		}
-	}
 	);
 
 	buttonList[18]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_2LX1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_2LX1;
 		}
-	}
 	);
 
 	buttonList[19]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_2OX1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_2OX1;
 		}
-	}
 	);
 
 	buttonList[20]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::_2PX1; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::_2PX1; 
 		}
-	}
 	);
 
 	buttonList[21]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent:BRICK; // cambiar por lo que edebe ser
+			if (localPlayer->getResourceAmount(ResourceType::COLINAS))
+			{
+				return GUIEnablerEvent::BRICK; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[22]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::LUMBER; // cambiar por lo que edebe ser
+			if (localPlayer->getResourceAmount(ResourceType::BOSQUE))
+			{
+				return GUIEnablerEvent::LUMBER; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[23]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::ORE; // cambiar por lo que edebe ser
+			if (localPlayer->getResourceAmount(ResourceType::MONTAÑAS))
+			{
+				return GUIEnablerEvent::ORE; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[24]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::GRAIN; // cambiar por lo que edebe ser
+			if (localPlayer->getResourceAmount(ResourceType::CAMPOS))
+			{
+				return GUIEnablerEvent::GRAIN; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 
 	buttonList[25]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::WOOL; // cambiar por lo que edebe ser
+			if (localPlayer->getResourceAmount(ResourceType::PASTOS))
+			{
+				return GUIEnablerEvent::WOOL; 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-	}
 	);
 	
-	buttonList[25]->addUtility(
-		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
-		{
-			return GUIEnablerEvent::GRAIN; // cambiar por lo que edebe ser
-		}
-	}
-	);
-
 	buttonList[26]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::ACCEPT; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::ACCEPT;
 		}
-	}
 	);
+
 	buttonList[27]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::CANCEL; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::CANCEL; 
 		}
-	}
 	);
+
 	buttonList[28]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::PLAY_AGAING; // cambiar por lo que edebe ser
+			return GUIEnablerEvent::PLAY_AGAING; 
 		}
-	}
 	);
+
 	buttonList[29]->addUtility(
 		[&localPlayer]()
-	{
-		if (localPlayer->checkRoadResources())
 		{
-			return GUIEnablerEvent::STOP_PLAYING; // cambiar por lo que edebe ser
-		}
-	}
+			return GUIEnablerEvent::STOP_PLAYING; 
 	);
 }
