@@ -348,6 +348,7 @@ void createButtons(GutenbergsPressAllegro* printer, std::vector<Button*>& button
 	buttonList[29]->addUtility(
 		[&localPlayer]()
 		{
-			return GUIEnablerEvent::STOP_PLAYING; 
+			return GUIEnablerEvent::STOP_PLAYING;
+		}
 	);
 }
