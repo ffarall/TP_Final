@@ -40,7 +40,6 @@ int main(int argc, char* argv[])
 	
 	createButtons(&printer,buttonList,&handler,&localPlayer,&mainFSM);
 
-	//faltan observers
 
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
