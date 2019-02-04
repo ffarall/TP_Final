@@ -85,7 +85,7 @@ void createButtons(GutenbergsPressAllegro* printer, std::vector<Button*>& button
 	buttonList.push_back(new Button(printer, handler, USE_KNIGHT_X, USE_KNIGHT_Y, USE_KNIGHT_H, USE_KNIGHT_W, "", "Knight.png", "catanFont.otf", 14));//playAgainButton
 	buttonList.push_back(new Button(printer, handler, USE_KNIGHT_X, USE_KNIGHT_Y, USE_KNIGHT_H, USE_KNIGHT_W, "", "Knight.png", "catanFont.otf", 14));//stopPlayinButton
 	
-	//ahora le tengo que poner las funciones a cada boton
+	//ahora le tengo que poner las funciones a cada botón
 	for (auto a : buttonList)
 	{
 		a->disableMouseDown(); // por las dudas deshabilito todo
@@ -340,7 +340,7 @@ void createButtons(GutenbergsPressAllegro* printer, std::vector<Button*>& button
 	buttonList[28]->addUtility(
 		[&localPlayer]()
 		{
-			return GUIEnablerEvent::PLAY_AGAING; 
+			return GUIEnablerEvent::PLAY_AGAIN; 
 		}
 	);
 
@@ -349,5 +349,128 @@ void createButtons(GutenbergsPressAllegro* printer, std::vector<Button*>& button
 		{
 			return GUIEnablerEvent::STOP_PLAYING;
 		}
+	);
+
+
+	// Specifying how every button should update its movable type.
+
+	buttonList[0]->addUpdate(
+
+	);
+
+	buttonList[1]->addUpdate(
+
+	);
+
+	buttonList[2]->addUpdate(
+
+	);
+
+	buttonList[3]->addUpdate(
+
+	);
+
+	buttonList[4]->addUpdate(
+
+	);
+
+	buttonList[5]->addUpdate(
+
+	);
+
+	buttonList[6]->addUpdate(
+
+	);
+
+	buttonList[7]->addUpdate(
+
+	);
+
+	buttonList[8]->addUpdate(
+
+	);
+
+	buttonList[9]->addUpdate(
+
+	);
+
+	buttonList[10]->addUpdate(
+
+	);
+
+	buttonList[11]->addUpdate(
+
+	);
+
+	buttonList[12]->addUpdate(
+
+	);
+
+	buttonList[13]->addUpdate(
+
+	);
+
+	buttonList[14]->addUpdate(
+
+	);
+
+	buttonList[15]->addUpdate(
+
+	);
+
+	buttonList[16]->addUpdate(
+
+	);
+
+	buttonList[17]->addUpdate(
+
+	);
+
+	buttonList[18]->addUpdate(
+
+	);
+
+	buttonList[19]->addUpdate(
+
+	);
+
+	buttonList[20]->addUpdate(
+
+	);
+
+	buttonList[21]->addUpdate(
+
+	);
+
+	buttonList[22]->addUpdate(
+
+	);
+
+	buttonList[23]->addUpdate(
+
+	);
+
+	buttonList[24]->addUpdate(
+
+	);
+
+	buttonList[25]->addUpdate(
+
+	);
+
+	buttonList[26]->addUpdate(
+
+	);
+
+	buttonList[27]->addUpdate(
+
+	);
+
+	buttonList[28]->addUpdate(
+
+	);
+
+	buttonList[29]->addUpdate(
+
 	);
 }
