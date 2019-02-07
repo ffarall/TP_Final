@@ -8,6 +8,10 @@ public:
 	AllegroGUI();
 	virtual bool checkForEvents();
 	virtual ~AllegroGUI();
+
+	// To be called after attaching all controllers.
+	void initGUIEnabler();
+
 private:
 	bool allegroInit();
 	bool initAddOn();
@@ -19,6 +23,9 @@ private:
 	void closeEvents();
 	void closeTimer();
 	
+	// Disables all controllers
+	void disableAll();
+	void enableAll();
 
 	ALLEGRO_DISPLAY* display;
 	ALLEGRO_EVENT_QUEUE* eventQueue;
@@ -28,5 +35,4 @@ private:
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(GUIEnablerEvent ev);
-	void 
 };

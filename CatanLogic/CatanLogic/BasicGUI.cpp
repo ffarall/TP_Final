@@ -91,6 +91,20 @@ BasicController::~BasicController()
 	delete evGen;
 }
 
+void BasicController::enable()
+{
+	enableMouseDown();
+	enableMouseUp();
+	enableTimer();
+}
+
+void BasicController::disable()
+{
+	disableMouseDown();
+	disableMouseUp();
+	disableTimer();
+}
+
 void BasicController::enableMouseDown()
 {
 	mouseDownActivated = true;

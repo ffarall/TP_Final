@@ -22,6 +22,8 @@ public:
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y) = 0;
 	virtual GUIEnablerEvent parseTimerEvent() = 0;
 	
+	virtual void enable();
+	virtual void disable();
 	void enableMouseDown();
 	void disableMouseDown();
 	void enableMouseUp();

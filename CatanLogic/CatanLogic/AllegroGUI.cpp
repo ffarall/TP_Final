@@ -188,10 +188,46 @@ void AllegroGUI::closeTimer()
 	al_destroy_timer(timer);
 }
 
+void AllegroGUI::disableAll()
+{
+	for (auto controller : controllers)
+	{
+		controller.second->disable();
+	}
+}
+
+void AllegroGUI::enableAll()
+{
+	for (auto controller : controllers)
+	{
+		controller.second->enable();
+	}
+}
+
 void AllegroGUI::noAct(GUIEnablerEvent ev)
 {
 }
 
 AllegroGUI::~AllegroGUI()
 {
+}
+
+void AllegroGUI::initGUIEnabler()
+{
+	enableAll();
+	controllers["BoardController"]->disable();
+	controllers["Port4x1"]->disable();
+	controllers["Port3x1"]->disable();
+	controllers["Port2Mx1"]->disable();
+	controllers["Port2Tx1"]->disable();
+	controllers["Port2Lx1"]->disable();
+	controllers["Port2Ox1"]->disable();
+	controllers["Port2Px1"]->disable();
+	controllers["Brick"]->disable();
+	controllers["Lumber"]->disable();
+	controllers["Ore"]->disable();
+	controllers["Grain"]->disable();
+	controllers["Wool"]->disable();
+	controllers["Confirm"]->disable();
+	controllers["Cancel"]->disable();
 }
