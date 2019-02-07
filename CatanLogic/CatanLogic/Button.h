@@ -19,8 +19,9 @@ public:
 
 	void toggleButton();
 	bool isPressed();
-	void toggleAvailability();
-	bool isAvailable();
+	void enable();
+	void disable();
+	bool isEnabled();
 	void setXPos(uint pos);
 	void setYpos(uint pos);
 	uint getXPos();

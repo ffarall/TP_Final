@@ -24,6 +24,9 @@ struct EnablerLogic
 };
 
 
+// This Enabler implementation will ease emitting events that require more than one action from the user,
+// like making a trade, requires clicking the New Trade button as well as selecting which trade type to request
+// and selecting the resources.
 class GUIEnabler
 {
 public:
@@ -37,6 +40,8 @@ protected:
 	// Map containing all enabled events and its actions.
 	EnablerLogic enabledActions;
 
+	void init();
+
 	// To enable an event and its action.
 	void enable(EventSubtypes subtype, list< EnablerRoutine > routine);
 	// To disable an event.
@@ -47,5 +52,6 @@ protected:
 	void disableAllBut(list<EventSubtypes> thisEvents);
 	// Sets default routine.
 	void setDefaultRoutine(EnablerRoutine defaultRoutine_);
+
 };
 

@@ -45,12 +45,17 @@ bool Button::isPressed()
 
 
 
-void Button::toggleAvailability()
+void Button::enable()
 {
-	buttonEnabled = !buttonEnabled;
+	buttonEnabled = true;
 }
 
-bool Button::isAvailable()
+void Button::disable()
+{
+	buttonEnabled = false;
+}
+
+bool Button::isEnabled()
 {
 	return buttonEnabled;
 }

@@ -163,9 +163,6 @@ bool AllegroGUI::initTimer()
 	}
 		return true;
 }
-
-
-
 	
 void AllegroGUI::closeAdd()
 {
@@ -181,17 +178,20 @@ void AllegroGUI::closeDisplay()
 	al_destroy_display(display);
 }
 
-
-
-
 void AllegroGUI::closeEvents()
 {
  	al_destroy_event_queue(eventQueue);
 }
+
 void AllegroGUI::closeTimer()
 {
 	al_destroy_timer(timer);
 }
+
+void AllegroGUI::noAct(GUIEnablerEvent ev)
+{
+}
+
 AllegroGUI::~AllegroGUI()
 {
 }

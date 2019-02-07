@@ -26,5 +26,7 @@ private:
 	bool allegroError;
 
 
-
+	/* ROUTINES TO BE EXECTUED IN CYCLE */
+	void noAct(GUIEnablerEvent ev);
+	void 
 };
