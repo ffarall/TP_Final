@@ -35,7 +35,7 @@ void BasicGUI::parseEvent()
 	{
 		for (auto controller : controllers)
 		{
-			GUIEnablerEvent temp = controller->parseTimerEvent();
+			GUIEnablerEvent temp = controller.second->parseTimerEvent();
 			if (temp != NO_EV)													// It is assumed that only one parser will generate a new event.
 			{																	// Also, every new enablerEv will be used right away.
 				enablerEv = temp;												// Therefore, an eventQueue is unnecessary.
@@ -47,7 +47,7 @@ void BasicGUI::parseEvent()
 	{
 		for (auto controller : controllers)
 		{
-			controller->parseMouseDownEvent(mouseCoordinates.first, mouseCoordinates.second);
+			controller.second->parseMouseDownEvent(mouseCoordinates.first, mouseCoordinates.second);
 		}
 	}
 		break;
@@ -55,7 +55,7 @@ void BasicGUI::parseEvent()
 	{
 		for (auto controller : controllers)
 		{
-			controller->parseMouseUpEvent(mouseCoordinates.first, mouseCoordinates.second);
+			controller.second->parseMouseUpEvent(mouseCoordinates.first, mouseCoordinates.second);
 		}
 	}
 	break;
@@ -72,9 +72,9 @@ bool BasicGUI::displayWasClosed()
 	return needToClose;
 }
 
-void BasicGUI::attachController(BasicController * newController)
+void BasicGUI::attachController(string name, BasicController * newController)
 {
-	controllers.push_back(newController);
+	controllers[name] = newController;
 }
 
 BasicController::BasicController()

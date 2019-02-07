@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include <map>
+#include <string>
 #include <cstdint>
 #include "NewEventHandling.h"
 #include "GUIEnabler.h"
@@ -61,10 +62,10 @@ public:
 	void parseEvent();
 
 	bool displayWasClosed();
-	void attachController(BasicController* newController);
+	void attachController(string name, BasicController* newController);
 
 protected:
-	list< BasicController* > controllers;
+	map< string, BasicController* > controllers;
 	GUIEnablerEvent enablerEv;
 	GUIEventTypes GUIEv;
 	pair< uint32_t, uint32_t > mouseCoordinates;
