@@ -16,10 +16,10 @@ class GUIEnabler;
 using namespace std;
 using EventTypes = unsigned int;
 using EventSubtypes = unsigned int;
-using EnablerRoutine = void (GUIEnabler::*)(GUIEnablerEvent);
+using EnablerRoutine = void (GUIEnabler::*)();
 struct EnablerLogic
 {
-	map< EventSubtypes, list< EnablerRoutine > > enablerMap;
+	map< GUIEnablerEvent, list< EnablerRoutine > > enablerMap;
 	EnablerRoutine defaultRoutine;
 };
 
@@ -43,13 +43,13 @@ protected:
 	void init();
 
 	// To enable an event and its action.
-	void enable(EventSubtypes subtype, list< EnablerRoutine > routine);
+	void enable(GUIEnablerEvent type, list< EnablerRoutine > routine);
 	// To disable an event.
-	void disable(EventSubtypes subtype);
+	void disable(GUIEnablerEvent type);
 	// Disables all events.
 	void disableAll();
 	// Disables all events but the ones passed through the list;
-	void disableAllBut(list<EventSubtypes> thisEvents);
+	void disableAllBut(list<GUIEnablerEvent> theseEvents);
 	// Sets default routine.
 	void setDefaultRoutine(EnablerRoutine defaultRoutine_);
 

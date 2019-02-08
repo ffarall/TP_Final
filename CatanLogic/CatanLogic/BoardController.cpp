@@ -168,6 +168,12 @@ GUIEnablerEvent BoardController::parseTimerEvent()
 	return NO_EV;
 }
 
+void BoardController::disable()
+{
+	BasicController::disable();
+	puttingSettlement = puttingCity = puttingRoad = movingRobber = false;
+}
+
 MapDecoder * BoardController::getDecoder()
 {
 	return decoder;

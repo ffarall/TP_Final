@@ -3,10 +3,13 @@
 #include"allegro5/allegro_primitives.h"
 #include"allegro5/allegro_ttf.h"
 #include"allegro5/allegro_font.h"
+#include "BoardController.h"
 
 #define DIS_WIDTH 1000
 #define DIS_HEIGHT 600
 #define TIMER_TIME 100
+
+#define TX(x) (static_cast<void (GUIEnabler::* )()>(&AllegroGUI::x))
 
 AllegroGUI::AllegroGUI():BasicGUI()
 {
@@ -45,6 +48,10 @@ AllegroGUI::AllegroGUI():BasicGUI()
 		cout << "presione una tecla para finalizar...\n";
 		getchar();
 	}
+
+	// Initialising Enabler aspect of GUI.
+	setDefaultRoutine(TX(noAct));
+	
 }
 
 bool AllegroGUI::checkForEvents()
@@ -204,8 +211,53 @@ void AllegroGUI::enableAll()
 	}
 }
 
-void AllegroGUI::noAct(GUIEnablerEvent ev)
+void AllegroGUI::noAct()
 {
+}
+
+void AllegroGUI::nowSelectRoad()
+{
+	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
+	if (!(boardCon->getPuttingRoad()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	{
+		boardCon->toggleRoad();
+		enable(POSITION_SELECTED, { TX(backToNormal) });
+	}
+}
+
+void AllegroGUI::nowSelectSettlement()
+{
+	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
+	if (!(boardCon->getPuttingSettlement()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	{
+		boardCon->toggleSettlement();
+		enable(POSITION_SELECTED, { TX(backToNormal) });
+	}
+}
+
+void AllegroGUI::nowSelectCity()
+{
+	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
+	if (!(boardCon->getPuttingCity()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	{
+		boardCon->toggleCity();
+		enable(POSITION_SELECTED, { TX(backToNormal) });
+	}
+}
+
+void AllegroGUI::nowSelectRobberPos()
+{
+	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
+	if (!(boardCon->getMovingRobber()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	{
+		boardCon->toggleRobber();
+		enable(POSITION_SELECTED, { TX(backToNormal) });
+	}
+}
+
+void AllegroGUI::backToNormal()
+{
+	initGUIEnabler();
 }
 
 AllegroGUI::~AllegroGUI()
