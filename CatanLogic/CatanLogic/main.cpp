@@ -16,7 +16,7 @@
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI);
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero);
 
 
 int main(int argc, char* argv[])
@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
 	std::string localPlayerName(argv[1]);
 	Player localPlayer(localPlayerName);
 	Player remotePlayer;
+	Board globalBoard; // aca esta el board, revisar si hay que pasarselo a alguien mas
 	Networking network;
 	EventsHandler handler;
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
@@ -36,7 +37,7 @@ int main(int argc, char* argv[])
 	//LocalController localCont(&handler, &printer, &localPlayer, &localPlayerEnabler);
 	BoardController boardCont(&handler, &printer);
 	
-	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI);	// Also adds them to the GUI.
+	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard);	// Also adds them to the GUI.
 	//GUI.attachController("LocalController", &localCont);
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
 }
 
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI)
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero)
 {
 	std::vector<Button*> buttonList;
 
@@ -124,23 +125,36 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		a->disableMouseUp();
 		a->disableTimer();
 	}
-
-	buttonList[0]->addUtility([]() {
-		return GUIEnablerEvent::NO_EV;
-		//emitir evento start
-	});
+	/****** attach to each button its routine to executte when is pressed *******/
+	/******* verifiying if the main FSM is in an appropiate state and the button might be avaliable*********/
+	buttonList[0]->addUtility(
+		[&mainFSM,&handler]() 
+		{
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				//emitir evento start
+				//handler->enqueueEvent(new MainEvents(MainTypes::START_GAME));
+			}
+			return GUIEnablerEvent::NO_EV;
+		}
+	);
 
 	buttonList[1]->addUtility(
-		[&localPlayer]()
+		[&mainFSM, &handler]()
 		{
-			return GUIEnablerEvent::QUIT;
-			//emitir evento quit
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				//emitir evento de quit
+				//handler->enqueueEvent(new MainEvents(MainTypes::QUIT));
+				return GUIEnablerEvent::QUIT;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 	buttonList[2]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			if (localPlayer->checkCityResources())
+			if (localPlayer->checkCityResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
 				return GUIEnablerEvent::NEW_CITY; 
 			}
@@ -148,9 +162,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[3]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			if (localPlayer->checkSettlementResources())
+			if (localPlayer->checkSettlementResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
 				return GUIEnablerEvent::NEW_SETTLEMENT; 
 			}
@@ -159,9 +173,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[4]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM ]()
 		{
-			if (localPlayer->checkRoadResources())
+			if (localPlayer->checkRoadResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
 				return GUIEnablerEvent::NEW_ROAD; 
 			}
@@ -170,9 +184,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[5]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM ]()
 		{
-			if (localPlayer->checkResourcesForDevCard())
+			if (localPlayer->checkResourcesForDevCard() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
 				return GUIEnablerEvent::BUY_DEV_CARD; 
 			}
@@ -180,37 +194,53 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[6]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			return GUIEnablerEvent::PASS; 
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+			{
+				return GUIEnablerEvent::PASS;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 	
 	buttonList[7]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM]()
 		{
-			return GUIEnablerEvent::BANK_TRADE; 
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+			{
+				return GUIEnablerEvent::BANK_TRADE;
+			}
+			return GUIEnablerEvent::NO_EV; 
 		}
 	);
 
 	buttonList[8]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM]()
 		{
-			return GUIEnablerEvent::OFFER_TRADE; 
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+			{
+				return GUIEnablerEvent::OFFER_TRADE;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[9]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM ]()
 		{
-			return GUIEnablerEvent::TRHOW_DICE; 
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+			{
+				return GUIEnablerEvent::TRHOW_DICE;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[10]->addUtility(
-		[&localPlayer]()
+		[&localPlayer ,&mainFSM]()
 		{
-			if (localPlayer->getDevCardAmount(DevCards::KNIGHT))
+			if (localPlayer->getDevCardAmount(DevCards::KNIGHT) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
 				return GUIEnablerEvent::USE_KNIGHT; 
 			}
@@ -219,9 +249,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[11]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM]()
 		{
-			if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING))
+			if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
 				return GUIEnablerEvent::USE_ROAD_BUILDING; 
 			}
@@ -230,9 +260,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[12]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY))
+			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
 				return GUIEnablerEvent::USE_MONOPOLY;
 			}
@@ -241,9 +271,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[13]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM ]()
 		{
-			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY))
+			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
 				return GUIEnablerEvent::USE_YOP; 
 			}
@@ -252,104 +282,132 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[14]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			return GUIEnablerEvent::_4X1; 
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3) )
+			{
+				return GUIEnablerEvent::_4X1;
+			}
+			return GUIEnablerEvent::NO_EV; 
 		}
 	);
 
 	buttonList[15]->addUtility(
-		[&localPlayer]()
+		[&mainFSM, &localPlayer , &tablero]()
 		{
-			return GUIEnablerEvent::_3X1;
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero,PortType::_3x1)) )
+			{
+				return GUIEnablerEvent::_3X1;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[16]->addUtility(
-		[&localPlayer]()
+		[&mainFSM, &localPlayer, &tablero]()
 		{
-			return GUIEnablerEvent::_2MX1; 
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
+			{
+				return GUIEnablerEvent::_2MX1;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[17]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM,&tablero]()
 		{
-			return GUIEnablerEvent::_2TX1; 
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
+			{
+				return GUIEnablerEvent::_2TX1;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[18]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM, &tablero]()
 		{
-			return GUIEnablerEvent::_2LX1;
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
+			{
+				return GUIEnablerEvent::_2LX1;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[19]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM , &tablero]()
 		{
-			return GUIEnablerEvent::_2OX1;
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
+			{
+				return GUIEnablerEvent::_2OX1;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[20]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM , &tablero ]()
 		{
-			return GUIEnablerEvent::_2PX1; 
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
+			{
+				return GUIEnablerEvent::_2PX1;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[21]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::COLINAS))
+			if (localPlayer->getResourceAmount(ResourceType::COLINAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::BRICK; 
+				return GUIEnablerEvent::RESOURCE; 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[22]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::BOSQUE))
+			if (localPlayer->getResourceAmount(ResourceType::BOSQUE) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::LUMBER; 
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[23]->addUtility(
-		[&localPlayer]()
+		[&localPlayer , &mainFSM]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::MONTAÑAS))
+			if (localPlayer->getResourceAmount(ResourceType::MONTAÑAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::ORE; 
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[24]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::CAMPOS))
+			if (localPlayer->getResourceAmount(ResourceType::CAMPOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::GRAIN; 
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[25]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::PASTOS))
+			if (localPlayer->getResourceAmount(ResourceType::PASTOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::WOOL; 
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -370,19 +428,28 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[28]->addUtility(
-		[&localPlayer]()
+		[&mainFSM]()
 		{
-			return GUIEnablerEvent::PLAY_AGAIN; 
+		 //revisar si es en estos estados que aparecen estos botones
+			if ((mainFSM->getCurrState() == mainStates::LocalGameOver_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
+			{
+				return GUIEnablerEvent::PLAY_AGAIN;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[29]->addUtility(
-		[&localPlayer]()
+		[&mainFSM]()
 		{
-			return GUIEnablerEvent::STOP_PLAYING;
+			if ((mainFSM->getCurrState() == mainStates::LocalGameOver_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
+			{
+				return GUIEnablerEvent::STOP_PLAYING;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
-
+	// all the action routines added 
 
 	// Specifying how every button should update its movable type.
 

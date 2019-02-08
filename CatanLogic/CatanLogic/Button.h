@@ -3,6 +3,7 @@
 #include"allegro5/allegro.h"
 #include"allegro5/allegro_font.h"
 #include"GutenbergsPressAllegro.h"
+#include"package.h"
 #include<iostream>
 #include <functional>
 
@@ -39,6 +40,9 @@ public:
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
+	package * getPackage();
+	void setPackage(package * data);
+
 private:
 	GutenbergsPressAllegro* press;
 	MovableType* type;
@@ -52,6 +56,7 @@ private:
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
 	GutenbergsPressAllegro* press;
+	package * info;
 
 	UpdateAction updateCallback;
 	ParseAction parseCallback;
