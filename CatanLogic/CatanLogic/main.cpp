@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	//LocalController localCont(&handler, &printer, &localPlayer, &localPlayerEnabler);
 	BoardController boardCont(&handler, &printer);
 	
-	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI);	// Also adds them to the GUI.
+	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard);	// Also adds them to the GUI.
 	//GUI.attachController("LocalController", &localCont);
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
@@ -363,7 +363,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::COLINAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::BRICK; 
+				return GUIEnablerEvent::RESOURCE_CARD; 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -374,7 +374,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::BOSQUE) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::LUMBER; 
+				return GUIEnablerEvent::RESOURCE_CARD;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -385,7 +385,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::MONTAÑAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::ORE; 
+				return GUIEnablerEvent::RESOURCE_CARD;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -396,7 +396,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::CAMPOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::GRAIN; 
+				return GUIEnablerEvent::RESOURCE_CARD;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -407,7 +407,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::PASTOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::WOOL; 
+				return GUIEnablerEvent::RESOURCE_CARD;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
