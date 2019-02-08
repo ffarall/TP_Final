@@ -45,11 +45,14 @@ private:
 	void nowSelectCity();
 	// Enables Robber movement selection for the BoardController after UseKnight has been clicked.
 	void nowSelectRobberPos();
-
-	// Gets called after user clicks on NewTrade.
+	// Gets called after user clicks on BankTrade.
 	void nowSelectPortType();
-	//
-	void nowSelectResources();
+	// Gets called after user clicks on OfferTrade or selects a 3x1 or 4x1 BankTrade
+	void nowSelectResourcesToGive();
+	// Gets called after user clicks on Confirm after having selected the resources to give, or after selecting a 2STHx1 BankTrade.	
+	void nowSelectResourcesToReceive();
+	// Gets called after Confirm button was clicked following the selection of resources to give.
+	void finishedSelectingResourcesToGive();
 	// Goes back to the way initGUIEnabler leaves everything.
 	void backToNormal();
 };
