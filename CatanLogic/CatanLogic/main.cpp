@@ -468,9 +468,14 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	
 	buttonList[26]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM, bankbutton, offerbutton]()
 		{
-			return GUIEnablerEvent::ACCEPT;
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
+			{
+
+				return GUIEnablerEvent::ACCEPT;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
