@@ -48,10 +48,6 @@ AllegroGUI::AllegroGUI():BasicGUI()
 		cout << "presione una tecla para finalizar...\n";
 		getchar();
 	}
-
-	// Initialising Enabler aspect of GUI.
-	setDefaultRoutine(TX(noAct));
-	
 }
 
 bool AllegroGUI::checkForEvents()
@@ -222,6 +218,7 @@ void AllegroGUI::nowSelectRoad()
 	{
 		boardCon->toggleRoad();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -232,6 +229,7 @@ void AllegroGUI::nowSelectSettlement()
 	{
 		boardCon->toggleSettlement();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -242,6 +240,7 @@ void AllegroGUI::nowSelectCity()
 	{
 		boardCon->toggleCity();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -252,7 +251,69 @@ void AllegroGUI::nowSelectRobberPos()
 	{
 		boardCon->toggleRobber();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
+}
+
+void AllegroGUI::nowSelectPortType()
+{
+	controllers["Port4x1"]->enable();
+	controllers["Port3x1"]->enable();
+	controllers["Port2Mx1"]->enable();
+	controllers["Port2Tx1"]->enable();
+	controllers["Port2Lx1"]->enable();
+	controllers["Port2Ox1"]->enable();
+	controllers["Port2Px1"]->enable();
+
+	GUIEnabler::disableAll();
+	enable(GUIEnablerEvent::_2LX1, { TX(nowSelectResourcesToReceive) });
+	enable(GUIEnablerEvent::_2MX1, { TX(nowSelectResourcesToReceive) });
+	enable(GUIEnablerEvent::_2TX1, { TX(nowSelectResourcesToReceive) });
+	enable(GUIEnablerEvent::_2OX1, { TX(nowSelectResourcesToReceive) });
+	enable(GUIEnablerEvent::_2PX1, { TX(nowSelectResourcesToReceive) });
+	enable(GUIEnablerEvent::_3X1, { TX(nowSelectResourcesToGive) });
+	enable(GUIEnablerEvent::_4X1, { TX(nowSelectResourcesToGive) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowSelectResourcesToGive()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+	
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowUserCanConfirmResourcesToGive) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowUserCanConfirmResourcesToGive()
+{
+	enable(GUIEnablerEvent::ACCEPT, { TX(nowSelectResourcesToReceive) });
+}
+
+void AllegroGUI::nowSelectResourcesToReceive()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowUserCanConfirmResourcesToReceive) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowUserCanConfirmResourcesToReceive()
+{
+	enable(GUIEnablerEvent::ACCEPT, { TX(backToNormal) });
 }
 
 void AllegroGUI::backToNormal()
@@ -282,4 +343,12 @@ void AllegroGUI::initGUIEnabler()
 	controllers["Wool"]->disable();
 	controllers["Confirm"]->disable();
 	controllers["Cancel"]->disable();
+
+	setDefaultRoutine(TX(noAct));
+	enable(GUIEnablerEvent::BANK_TRADE, { TX(nowSelectPortType) });
+	enable(GUIEnablerEvent::OFFER_TRADE, { TX(nowSelectResourcesToGive) });
+	enable(GUIEnablerEvent::NEW_ROAD, { TX(nowSelectRoad) });
+	enable(GUIEnablerEvent::NEW_SETTLEMENT, { TX(nowSelectSettlement) });
+	enable(GUIEnablerEvent::NEW_CITY, { TX(nowSelectCity) });
+	enable(GUIEnablerEvent::USE_KNIGHT, { TX(nowSelectRobberPos) });
 }

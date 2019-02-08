@@ -12,7 +12,7 @@
 #include"NewEventHandling.h"
 #include"AllegroGUI.h"
 #include "PosDef.h"
-#include "LocalController.h"
+#include "LocalObserver.h"
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 	std::string localPlayerName(argv[1]);
 	Player localPlayer(localPlayerName);
 	Player remotePlayer;
-	Board globalBoard; // aca esta el board, revisar si hay que pasarselo a alguien mas
+	Board globalBoard;
 	Networking network;
 	EventsHandler handler;
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
@@ -34,14 +34,24 @@ int main(int argc, char* argv[])
 	AllegroGUI GUI;
 
 	GutenbergsPressAllegro printer(NULL);
-	//LocalController localCont(&handler, &printer, &localPlayer, &localPlayerEnabler);
 	BoardController boardCont(&handler, &printer);
-	
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard);	// Also adds them to the GUI.
-	//GUI.attachController("LocalController", &localCont);
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
 
+	LocalObserver localObs(&handler, &printer, &localPlayer, &localPlayerEnabler);
+	localPlayer.attach(&localObs);
+	localPlayer.attach(&boardCont);													// localObs and boardCont are observers of localPlayer.
+	remotePlayer.attach(&localObs);
+	remotePlayer.attach(&boardCont);												// localObs and boardCont are observers of remotePlayer.
+	globalBoard.attach(&localObs);
+	globalBoard.attach(&boardCont);													// localObs and boardCont are observers of globalBoard.
+	remotePlayerEnabler.attach(&localObs);
+	remotePlayerEnabler.attach(&boardCont);											// localObs and boardCont are observers of remotePlayerEnabler.
+	localPlayerEnabler.attach(&localObs);
+	localPlayerEnabler.attach(&boardCont);											// localObs and boardCont are observers of localPlayerEnabler.
+	mainFSM.attach(&localObs);
+	mainFSM.attach(&boardCont);														// localObs and boardCont are observers of mainFSM.
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{

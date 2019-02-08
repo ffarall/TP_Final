@@ -112,7 +112,7 @@ bool Button::setFont(std::string fontPath, int fontSize)
 
 void Button::update()
 {
-	updateCallback(type);
+	updateCallback();
 	type->redraw();
 }
 

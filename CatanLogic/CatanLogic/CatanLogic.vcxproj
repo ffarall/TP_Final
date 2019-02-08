@@ -126,7 +126,7 @@
     <ClCompile Include="GUIEnabler.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
-    <ClCompile Include="LocalController.cpp" />
+    <ClCompile Include="LocalObserver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapDecoder.cpp" />
     <ClCompile Include="EDASubject.cpp" />
@@ -168,7 +168,7 @@
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="GutenbergsPress.h" />
     <ClInclude Include="PosDef.h" />
-    <ClInclude Include="LocalController.h" />
+    <ClInclude Include="LocalObserver.h" />
     <ClInclude Include="MapDecoder.h" />
     <ClInclude Include="EDAObserver.h" />
     <ClInclude Include="EDASubject.h" />
