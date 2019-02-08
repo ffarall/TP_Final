@@ -4,6 +4,7 @@
 #include "allegro5/allegro_image.h"
 #include "GutenbergsPress.h"
 
+
 using namespace std;
 
 // This class simulates Gutenberg's movable types, to be moved around a matrix and then printed. Contains all the information needed regarding the characteristics of the bitmap.

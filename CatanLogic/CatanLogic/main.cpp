@@ -515,8 +515,18 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 	// Specifying how every button should update its movable type.
 
+	Button* startButton = buttonList[0];
 	buttonList[0]->addUpdate(
-
+		[&mainFSM, startButton]()
+	{
+		//revisar si es en estos estados que aparecen estos botones
+		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+		{
+			startButton->setTypeTint(1, 1, 1, 1);
+				return GUIEnablerEvent::PLAY_AGAIN;
+		}
+		return GUIEnablerEvent::NO_EV;
+	}
 	);
 
 	buttonList[1]->addUpdate(
