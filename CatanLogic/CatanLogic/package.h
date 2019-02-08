@@ -171,13 +171,16 @@ public:
 	void setType(char num);
 	void setPaid(std::vector<ResourceType>& myResources);
 	void setBougth(ResourceType pedido);
+	void closeOffer();
 
 	virtual std::string getPackage();
 	bool isComplete();
+	bool offerclosed();
 private:
 	char nOfResources;
 	std::vector<ResourceType> misRecursos;
 	ResourceType pedido;
+	bool offer;
 };
 
 class OfferTradePkg :
@@ -189,9 +192,9 @@ public:
 	std::vector<ResourceType> getMyOnes();
 	std::vector<ResourceType> getOpponentOnes();
 
-	void addToMyOffer(std::vector<ResourceType>& offer);
+	void addToMyOffer(ResourceType offer);
 	void closeOffer();
-	void addToMyRequest(std::vector<ResourceType>& pedido);
+	void addToMyRequest(ResourceType pedido);
 
 	virtual std::string getPackage();
 	bool isComplete();

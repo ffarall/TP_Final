@@ -433,6 +433,7 @@ BankTradePkg::BankTradePkg():package(headers::BANK_TRADE) // crea el package vac
 	nOfResources = 0;
 	misRecursos.clear();
 	pedido = ResourceType::DESIERTO; // es el recurso que no existe
+	offer = false;
 }
 
 BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido) :package(headers::BANK_TRADE)
@@ -440,6 +441,7 @@ BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _
 	nOfResources = myResouces.size();
 	misRecursos = myResouces;
 	pedido = _pedido;
+	offer = false;
 }
 
 char BankTradePkg::getLength()
@@ -472,6 +474,11 @@ void BankTradePkg::setBougth(ResourceType pedido_)
 	pedido = pedido_;
 }
 
+void BankTradePkg::closeOffer()
+{
+	offer = true;
+}
+
 std::string BankTradePkg::getPackage()
 {
 	std::string ret;
@@ -490,6 +497,11 @@ bool BankTradePkg::isComplete()
 		ret = true;
 	}
 	return ret;
+}
+
+bool BankTradePkg::offerclosed()
+{
+	return offer;
 }
 
 OfferTradePkg::OfferTradePkg():package(headers::OFFER_TRADE)
@@ -516,15 +528,13 @@ std::vector<ResourceType> OfferTradePkg::getOpponentOnes()
 	return esperoAcambio;
 }
 
-void OfferTradePkg::addToMyOffer(std::vector<ResourceType>& offer)
+void OfferTradePkg::addToMyOffer(ResourceType offer_)
 {
-	for (auto recurso : offer)
+	if (myOffer.size() < 9)
 	{
-		if (myOffer.size() < 9)
-		{
-			myOffer.emplace_back(recurso);
-		}
+		myOffer.emplace_back(offer_);
 	}
+	
 }
 
 void OfferTradePkg::closeOffer()
@@ -532,14 +542,11 @@ void OfferTradePkg::closeOffer()
 	offer = true;
 }
 
-void OfferTradePkg::addToMyRequest(std::vector<ResourceType>& pedido)
+void OfferTradePkg::addToMyRequest(ResourceType pedido_)
 {
-	for (auto recurso : pedido)
+	if (esperoAcambio.size() < 9)
 	{
-		if (esperoAcambio.size() < 9)
-		{
-			esperoAcambio.emplace_back(recurso);
-		}
+		esperoAcambio.emplace_back(pedido_);
 	}
 }
 

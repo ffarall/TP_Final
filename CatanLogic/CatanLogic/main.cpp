@@ -15,9 +15,10 @@
 #include "LocalObserver.h"
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
+#include "SubEvents.h"
 
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList);
-
+GUIEnablerEvent ResourceButton();
 
 int main(int argc, char* argv[])
 {
@@ -144,7 +145,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
 				//emitir evento start
-				//handler->enqueueEvent(new MainEvents(MainTypes::START_GAME));
+				handler->enqueueEvent(new MainEvents(MainTypes::START_GAME));
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -156,7 +157,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
 				//emitir evento de quit
-				//handler->enqueueEvent(new MainEvents(MainTypes::QUIT));
+				handler->enqueueEvent(new MainEvents(MainTypes::QUIT));
 				return GUIEnablerEvent::QUIT;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -195,20 +196,23 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[5]->addUtility(
-		[&localPlayer , &mainFSM ]()
+		[&localPlayer , &mainFSM,&tablero, &handler ]()
 		{
 			if (localPlayer->checkResourcesForDevCard() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
+				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION,SubType::PLA_DEV_CARD,new package(headers::DEV_CARD)));
 				return GUIEnablerEvent::BUY_DEV_CARD; 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 	buttonList[6]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[&localPlayer , &mainFSM, &handler]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
+				//ver si esta bien el mainType ?
+				handler->enqueueEvent(new SubEvents(MainTypes::TURN_FINISHED, SubType::PLA_PASS, new package(headers::PASS)));
 				return GUIEnablerEvent::PASS;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -217,7 +221,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	
 	Button * bankbutton = buttonList[7];
 	buttonList[7]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton]()
+		[&localPlayer, &mainFSM, bankbutton ]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -242,10 +246,12 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[9]->addUtility(
-		[&localPlayer , &mainFSM ]()
+		[&localPlayer , &mainFSM, &handler ]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
+				//sorteo aca los dados??
+				//handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE, new DicePkg()));
 				return GUIEnablerEvent::TRHOW_DICE;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -338,6 +344,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					mandar.emplace_back(ResourceType::BOSQUE);
 					mandar.emplace_back(ResourceType::BOSQUE);
 					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
 					return GUIEnablerEvent::_2MX1;
 				}
 			}
@@ -357,6 +364,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					mandar.emplace_back(ResourceType::CAMPOS);
 					mandar.emplace_back(ResourceType::CAMPOS);
 					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
 					return GUIEnablerEvent::_2TX1;
 				}
 			}
@@ -376,6 +384,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					mandar.emplace_back(ResourceType::COLINAS);
 					mandar.emplace_back(ResourceType::COLINAS);
 					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
 					return GUIEnablerEvent::_2LX1;
 				}
 			}
@@ -395,6 +404,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					mandar.emplace_back(ResourceType::PASTOS);
 					mandar.emplace_back(ResourceType::PASTOS);
 					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
 					return GUIEnablerEvent::_2OX1;
 				}
 			}
@@ -414,6 +424,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					mandar.emplace_back(ResourceType::MONTAÑAS);
 					mandar.emplace_back(ResourceType::MONTAÑAS);
 					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
 					return GUIEnablerEvent::_2PX1;
 				}
 			}
@@ -422,57 +433,37 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[21]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[&localPlayer, &mainFSM, bankbutton, offerbutton]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::COLINAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
-			{
-				return GUIEnablerEvent::RESOURCE; 
-			}
-			return GUIEnablerEvent::NO_EV;
+			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::COLINAS);
 		}
 	);
 
 	buttonList[22]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[&localPlayer , &mainFSM, bankbutton, offerbutton]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::BOSQUE) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
-			{
-				return GUIEnablerEvent::RESOURCE;
-			}
-			return GUIEnablerEvent::NO_EV;
+			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::BOSQUE);
 		}
 	);
 
 	buttonList[23]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[&localPlayer , &mainFSM, bankbutton, offerbutton]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::MONTAÑAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
-			{
-				return GUIEnablerEvent::RESOURCE;
-			}
-			return GUIEnablerEvent::NO_EV;
+			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::MONTAÑAS);
 		}
 	);
 
 	buttonList[24]->addUtility(
-		[&localPlayer, &mainFSM]()
+		[&localPlayer, &mainFSM , bankbutton, offerbutton]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::CAMPOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
-			{
-				return GUIEnablerEvent::RESOURCE;
-			}
-			return GUIEnablerEvent::NO_EV;
+			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::CAMPOS);
 		}
 	);
 
 	buttonList[25]->addUtility(
-		[&localPlayer, &mainFSM]()
+		[&localPlayer, &mainFSM, bankbutton, offerbutton]()
 		{
-			if (localPlayer->getResourceAmount(ResourceType::PASTOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
-			{
-				return GUIEnablerEvent::RESOURCE;
-			}
-			return GUIEnablerEvent::NO_EV;
+			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::PASTOS);
 		}
 	);
 	
@@ -491,11 +482,12 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[28]->addUtility(
-		[&mainFSM]()
+		[&mainFSM, &handler]()
 		{
 		 //revisar si es en estos estados que aparecen estos botones
-			if ((mainFSM->getCurrState() == mainStates::LocalGameOver_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
+				handler->enqueueEvent(new MainEvents(MainTypes::PLAY_AGAIN));
 				return GUIEnablerEvent::PLAY_AGAIN;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -503,10 +495,11 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[29]->addUtility(
-		[&mainFSM]()
+		[&mainFSM, &handler]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalGameOver_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
+				handler->enqueueEvent(new MainEvents(MainTypes::GAME_OVER));
 				return GUIEnablerEvent::STOP_PLAYING;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -657,4 +650,46 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	buttonList[29]->addUpdate(
 
 	);
+}
+
+GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, MainFSM * mainFSM,Player * localPlayer, ResourceType recurso)
+{
+	if (localPlayer->getResourceAmount(recurso) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+	{
+		if (bankbutton->getPackage() != nullptr)
+		{
+			BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
+			if (!paquete->offerclosed())
+			{
+				char i;
+				std::vector<ResourceType> payment;
+				for (i = paquete->getLength(); i > 0; i--)
+				{
+					payment.emplace_back(recurso);
+				}
+				paquete->setPaid(payment);
+				return GUIEnablerEvent::RESOURCE;
+			}
+			else if (!paquete->isComplete())
+			{
+				paquete->setBougth(ResourceType::COLINAS);
+				return GUIEnablerEvent::RESOURCE;
+			}
+		}
+		else if (offerbutton != nullptr)
+		{
+			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
+			if (!paquete->offerclosed())
+			{
+				paquete->addToMyOffer(recurso);
+				return GUIEnablerEvent::RESOURCE;
+			}
+			else if (!paquete->isComplete())
+			{
+				paquete->addToMyRequest(recurso);
+				return GUIEnablerEvent::RESOURCE;
+			}
+		}
+	}
+	return GUIEnablerEvent::NO_EV;
 }
