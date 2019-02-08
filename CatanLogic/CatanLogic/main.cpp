@@ -16,7 +16,7 @@
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero);
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList);
 
 
 int main(int argc, char* argv[])
@@ -35,6 +35,7 @@ int main(int argc, char* argv[])
 
 	GutenbergsPressAllegro printer(NULL);
 	BoardController boardCont(&handler, &printer);
+	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard);	// Also adds them to the GUI.
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
@@ -63,9 +64,9 @@ int main(int argc, char* argv[])
 }
 
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero)
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList)
 {
-	std::vector<Button*> buttonList;
+	
 
 	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "", "", 14)); //startPlayingButton()
 	GUI->attachController("StartPlaying", buttonList[0]);
@@ -515,17 +516,29 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 	// Specifying how every button should update its movable type.
 
-	Button* startButton = buttonList[0];
+
 	buttonList[0]->addUpdate(
-		[&mainFSM, startButton]()
-	{
-		//revisar si es en estos estados que aparecen estos botones
+		[&mainFSM, buttonList]()
+		{
 		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
-			startButton->setTypeTint(1, 1, 1, 1);
-				return GUIEnablerEvent::PLAY_AGAIN;
+			if(!buttonList[0].isPressed())
+			{ 
+				buttonList[0].setTypeTint(1, 1, 1, 1);
+				buttonList[0].enable;
+			}
+			else
+			{
+				buttonList[0].setTypeTint(1, 0.5, 0.5, 1);
+				buttonList[0].disable;
+			}				
 		}
-		return GUIEnablerEvent::NO_EV;
+		else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
+		{
+			buttonList[0].setTypeTint(1, 1, 1, 0);
+			buttonList[0].disable;
+		}
+		
 	}
 	);
 
