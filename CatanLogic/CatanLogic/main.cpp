@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	//LocalController localCont(&handler, &printer, &localPlayer, &localPlayerEnabler);
 	BoardController boardCont(&handler, &printer);
 	
-	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI, &globalBoard);	// Also adds them to the GUI.
+	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI);	// Also adds them to the GUI.
 	//GUI.attachController("LocalController", &localCont);
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
