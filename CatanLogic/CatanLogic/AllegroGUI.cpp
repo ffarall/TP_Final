@@ -218,6 +218,7 @@ void AllegroGUI::nowSelectRoad()
 	{
 		boardCon->toggleRoad();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -228,6 +229,7 @@ void AllegroGUI::nowSelectSettlement()
 	{
 		boardCon->toggleSettlement();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -238,6 +240,7 @@ void AllegroGUI::nowSelectCity()
 	{
 		boardCon->toggleCity();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -248,6 +251,7 @@ void AllegroGUI::nowSelectRobberPos()
 	{
 		boardCon->toggleRobber();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
 }
 
@@ -269,6 +273,7 @@ void AllegroGUI::nowSelectPortType()
 	enable(GUIEnablerEvent::_2PX1, { TX(nowSelectResourcesToReceive) });
 	enable(GUIEnablerEvent::_3X1, { TX(nowSelectResourcesToGive) });
 	enable(GUIEnablerEvent::_4X1, { TX(nowSelectResourcesToGive) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 }
 
 void AllegroGUI::nowSelectResourcesToGive()
@@ -281,6 +286,34 @@ void AllegroGUI::nowSelectResourcesToGive()
 	controllers["Ore"]->enable();
 	controllers["Grain"]->enable();
 	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowUserCanConfirmResourcesToGive) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowUserCanConfirmResourcesToGive()
+{
+	enable(GUIEnablerEvent::ACCEPT, { TX(nowSelectResourcesToReceive) });
+}
+
+void AllegroGUI::nowSelectResourcesToReceive()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowUserCanConfirmResourcesToReceive) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowUserCanConfirmResourcesToReceive()
+{
+	enable(GUIEnablerEvent::ACCEPT, { TX(backToNormal) });
 }
 
 void AllegroGUI::backToNormal()

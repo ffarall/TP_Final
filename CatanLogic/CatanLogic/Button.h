@@ -8,7 +8,7 @@
 #include <functional>
 
 typedef std::function<GUIEnablerEvent(void)> ParseAction;
-typedef std::function<void(MovableType*)> UpdateAction;
+typedef std::function<void()> UpdateAction;
 
 using uint = unsigned int;
 class Button :public BasicController
