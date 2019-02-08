@@ -522,21 +522,21 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
-			if(!buttonList[0].isPressed())
+			if(!buttonList[0]->isPressed())
 			{ 
-				buttonList[0].setTypeTint(1, 1, 1, 1);
-				buttonList[0].enable;
+				buttonList[0]->setTypeTint(1, 1, 1, 1);
+				buttonList[0]->enable;
 			}
 			else
 			{
-				buttonList[0].setTypeTint(1, 0.5, 0.5, 1);
-				buttonList[0].disable;
+				buttonList[0]->setTypeTint(1, 0.5, 0.5, 1);
+				buttonList[0]->disable;
 			}				
 		}
 		else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
 		{
-			buttonList[0].setTypeTint(1, 1, 1, 0);
-			buttonList[0].disable;
+			buttonList[0]->setTypeTint(1, 1, 1, 0);
+			buttonList[0]->disable;
 		}
 		
 	}
