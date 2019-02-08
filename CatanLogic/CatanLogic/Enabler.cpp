@@ -68,11 +68,11 @@ void Enabler::disableAll()
 	enabledActions.enablerMap.clear();
 }
 
-void Enabler::disableAllBut(list<EventSubtypes> thisEvents)
+void Enabler::disableAllBut(list<EventSubtypes> theseEvents)
 {
 	for (auto ev : enabledActions.enablerMap)
 	{
-		if (find(thisEvents.begin(), thisEvents.end(), ev.first) == thisEvents.end())		// If it's not in the but list.
+		if (find(theseEvents.begin(), theseEvents.end(), ev.first) == theseEvents.end())		// If it's not in the but list.
 		{
 			disable(ev.first);
 		}

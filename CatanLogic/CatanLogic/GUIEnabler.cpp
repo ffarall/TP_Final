@@ -19,27 +19,27 @@ void GUIEnabler::cycle(GUIEnablerEvent ev)
 		{
 			for (auto action : enabledActions.enablerMap[ev])
 			{
-				auto f = bind(action, this, ev);
+				auto f = bind(action, this);
 				f();
 			}
 		}
 		else
 		{
-			auto f = bind(enabledActions.defaultRoutine, this, ev);
+			auto f = bind(enabledActions.defaultRoutine, this);
 			f();
 		}
 }
 
-void GUIEnabler::enable(EventSubtypes subtype, list<EnablerRoutine> routine)
+void GUIEnabler::enable(GUIEnablerEvent type, list<EnablerRoutine> routine)
 {
-	enabledActions.enablerMap[subtype] = routine;
+	enabledActions.enablerMap[type] = routine;
 }
 
-void GUIEnabler::disable(EventSubtypes subtype)
+void GUIEnabler::disable(GUIEnablerEvent type)
 {
-	if (enabledActions.enablerMap.find(subtype) != enabledActions.enablerMap.end())
+	if (enabledActions.enablerMap.find(type) != enabledActions.enablerMap.end())
 	{
-		enabledActions.enablerMap.erase(subtype);
+		enabledActions.enablerMap.erase(type);
 	}
 }
 
@@ -48,11 +48,11 @@ void GUIEnabler::disableAll()
 	enabledActions.enablerMap.clear();
 }
 
-void GUIEnabler::disableAllBut(list<EventSubtypes> thisEvents)
+void GUIEnabler::disableAllBut(list<GUIEnablerEvent> theseEvents)
 {
 	for (auto ev : enabledActions.enablerMap)
 	{
-		if (find(thisEvents.begin(), thisEvents.end(), ev.first) == thisEvents.end())		// If it's not in the but list.
+		if (find(theseEvents.begin(), theseEvents.end(), ev.first) == theseEvents.end())		// If it's not in the but list.
 		{
 			disable(ev.first);
 		}

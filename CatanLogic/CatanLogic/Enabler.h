@@ -45,7 +45,7 @@ protected:
 	// Disables all events.
 	void disableAll();
 	// Disables all events but the ones passed through the list;
-	void disableAllBut(list<EventSubtypes> thisEvents);
+	void disableAllBut(list<EventSubtypes> theseEvents);
 	// Sets default routine.
 	void setDefaultRoutine(EnablerRoutine defaultRoutine_);
 

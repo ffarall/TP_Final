@@ -26,6 +26,8 @@ public:
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
+	virtual void disable();
+
 	MapDecoder* getDecoder();
 
 	// Functions that determine whether controller is active for clicking, and therefore must me shown as such.
