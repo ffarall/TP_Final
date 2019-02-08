@@ -42,7 +42,7 @@ public:
 
 	package * getPackage();
 	void setPackage(package * data);
-
+	
 private:
 	GutenbergsPressAllegro* press;
 	MovableType* type;
@@ -56,8 +56,9 @@ private:
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
 	GutenbergsPressAllegro* press;
+	
 	package * info;
-
+	
 	UpdateAction updateCallback;
 	ParseAction parseCallback;
 };

@@ -4,6 +4,7 @@
 
 Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize) : BasicController(handler_)
 {
+	info = nullptr;
 	press = press_;
 	type = new MovableType(press, NULL);
 	buttonXPos = xPos;
@@ -157,3 +158,15 @@ GUIEnablerEvent Button::parseTimerEvent()
 {
 	return GUIEnablerEvent::NO_EV; // ver
 }
+
+package * Button::getPackage()
+{
+	return info;
+}
+
+void Button::setPackage(package * data)
+{
+	info = data;
+}
+
+

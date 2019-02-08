@@ -204,22 +204,26 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	
+	Button * bankbutton = buttonList[7];
 	buttonList[7]->addUtility(
-		[&localPlayer, &mainFSM]()
+		[&localPlayer, &mainFSM, bankbutton]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
+				bankbutton->setPackage(new BankTradePkg()); // creo el paquete vacio
 				return GUIEnablerEvent::BANK_TRADE;
 			}
 			return GUIEnablerEvent::NO_EV; 
 		}
 	);
 
+	Button * offerbutton = buttonList[7];
 	buttonList[8]->addUtility(
-		[&localPlayer, &mainFSM]()
+		[&localPlayer, &mainFSM, offerbutton]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
+				offerbutton->setPackage(new OfferTradePkg()); // crep el paquete vacio para empezar a completarlo
 				return GUIEnablerEvent::OFFER_TRADE;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -282,77 +286,125 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[14]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[&localPlayer , &mainFSM, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3) )
 			{
-				return GUIEnablerEvent::_4X1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(4);
+					return GUIEnablerEvent::_4X1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV; 
 		}
 	);
 
 	buttonList[15]->addUtility(
-		[&mainFSM, &localPlayer , &tablero]()
+		[&mainFSM, &localPlayer , &tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero,PortType::_3x1)) )
 			{
-				return GUIEnablerEvent::_3X1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(3);
+					return GUIEnablerEvent::_3X1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[16]->addUtility(
-		[&mainFSM, &localPlayer, &tablero]()
+		[&mainFSM, &localPlayer, &tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 			{
-				return GUIEnablerEvent::_2MX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::BOSQUE);
+					mandar.emplace_back(ResourceType::BOSQUE);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					return GUIEnablerEvent::_2MX1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[17]->addUtility(
-		[&localPlayer, &mainFSM,&tablero]()
+		[&localPlayer, &mainFSM,&tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 			{
-				return GUIEnablerEvent::_2TX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::CAMPOS);
+					mandar.emplace_back(ResourceType::CAMPOS);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					return GUIEnablerEvent::_2TX1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[18]->addUtility(
-		[&localPlayer, &mainFSM, &tablero]()
+		[&localPlayer, &mainFSM, &tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 			{
-				return GUIEnablerEvent::_2LX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::COLINAS);
+					mandar.emplace_back(ResourceType::COLINAS);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					return GUIEnablerEvent::_2LX1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[19]->addUtility(
-		[&localPlayer , &mainFSM , &tablero]()
+		[&localPlayer , &mainFSM , &tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 			{
-				return GUIEnablerEvent::_2OX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::PASTOS);
+					mandar.emplace_back(ResourceType::PASTOS);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					return GUIEnablerEvent::_2OX1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[20]->addUtility(
-		[&localPlayer, &mainFSM , &tablero ]()
+		[&localPlayer, &mainFSM , &tablero , bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 			{
-				return GUIEnablerEvent::_2PX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::MONTAÑAS);
+					mandar.emplace_back(ResourceType::MONTAÑAS);
+					static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
+					return GUIEnablerEvent::_2PX1;
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}

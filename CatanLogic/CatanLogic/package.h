@@ -161,11 +161,19 @@ class BankTradePkg :
 	public package
 {
 public:
+	BankTradePkg();
 	BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType pedido);
+	
 	char getLength();//devuelve la cantidad de ResourceType pagados
 	std::vector<ResourceType> getResoucesPaid();
 	ResourceType getResouceBougth();
+	
+	void setType(char num);
+	void setPaid(std::vector<ResourceType>& myResources);
+	void setBougth(ResourceType pedido);
+
 	virtual std::string getPackage();
+	bool isComplete();
 private:
 	char nOfResources;
 	std::vector<ResourceType> misRecursos;
@@ -180,10 +188,19 @@ public:
 	OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido);
 	std::vector<ResourceType> getMyOnes();
 	std::vector<ResourceType> getOpponentOnes();
+
+	void addToMyOffer(std::vector<ResourceType>& offer);
+	void closeOffer();
+	void addToMyRequest(std::vector<ResourceType>& pedido);
+
 	virtual std::string getPackage();
+	bool isComplete();
+	bool offerclosed();
 private:
 	std::vector<ResourceType> myOffer;
 	std::vector<ResourceType> esperoAcambio;
+	bool offer;
+
 };
 class KnightPkg :
 	public package
