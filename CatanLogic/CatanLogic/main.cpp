@@ -363,7 +363,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::COLINAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::RESOURCE_CARD; 
+				return GUIEnablerEvent::RESOURCE; 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -374,7 +374,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::BOSQUE) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::RESOURCE_CARD;
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -385,7 +385,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::MONTAÑAS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::RESOURCE_CARD;
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -396,7 +396,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::CAMPOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::RESOURCE_CARD;
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -407,7 +407,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getResourceAmount(ResourceType::PASTOS) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::RESOURCE_CARD;
+				return GUIEnablerEvent::RESOURCE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
