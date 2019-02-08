@@ -20,7 +20,7 @@ void HandShakingFSM::saveCircularTokens(GenericEvent * ev)
 
 void HandShakingFSM::saveMap(GenericEvent * ev)
 {
-	//FALTA!
+	board->copyBoard(((MapIsPkg*)((SubEvents*)ev)->getPackage())->getBoard());
 }
 
 void HandShakingFSM::tryToConnect(GenericEvent * ev)
@@ -131,8 +131,9 @@ void HandShakingFSM::error(GenericEvent * ev)
 	//do error stuff
 }
 
-HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_) :GenericFsm(fsmMap,Client_S)
+HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, Board* board_) :GenericFsm(fsmMap,Client_S)
 {
+	board = board_;
 	network = network_;
 	localName = name_;
 	srand(time(NULL));	
