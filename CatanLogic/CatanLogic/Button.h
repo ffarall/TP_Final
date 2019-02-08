@@ -40,6 +40,7 @@ public:
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
+	MovableType* getType();
 	package * getPackage();
 	void setPackage(package * data);
 	

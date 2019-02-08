@@ -159,6 +159,11 @@ GUIEnablerEvent Button::parseTimerEvent()
 	return GUIEnablerEvent::NO_EV; // ver
 }
 
+MovableType * Button::getType()
+{
+	return type;
+}
+
 package * Button::getPackage()
 {
 	return info;
