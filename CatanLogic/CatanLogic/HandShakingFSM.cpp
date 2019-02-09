@@ -131,7 +131,7 @@ void HandShakingFSM::error(GenericEvent * ev)
 	//do error stuff
 }
 
-HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, Board* board_) :GenericFsm(fsmMap,Client_S)
+HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, Board* board_) :GenericFsm(&fsmMap,Client_S)
 {
 	board = board_;
 	network = network_;

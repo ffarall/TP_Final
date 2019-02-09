@@ -27,8 +27,8 @@ class GenericFsm :
 {
 public:
 
-	GenericFsm( const FsmMap fsmMap_, StateTypes initState);
-	GenericFsm(const FsmMap fsmMap_, StateTypes initState, EventsHandler* handler_);
+	GenericFsm(const FsmMap * fsmMap_, StateTypes initState);
+	GenericFsm(const FsmMap * fsmMap_, StateTypes initState, EventsHandler* handler_);
 	GenericEvent * getEvent();
 	void setHandler(EventsHandler* handler_);
 	void cycle(GenericEvent * ev);
@@ -38,7 +38,7 @@ protected:
 	StateTypes state;
 	GenericEvent * fsmEvent = nullptr;
 
-	FsmMap fsmMap;
+	const FsmMap * fsmMap_;
 
 	EventsHandler* handler;
 };

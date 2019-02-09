@@ -161,7 +161,7 @@ void MainFSM::error(GenericEvent * ev)
 
 }
 
-MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote):GenericFsm(mainFsmMap,StartMenu_S)
+MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote):GenericFsm(&mainFsmMap,StartMenu_S)
 {
 	handShaking = handshaking;
 	network = network_;
