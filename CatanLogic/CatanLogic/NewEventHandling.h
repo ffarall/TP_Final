@@ -36,6 +36,7 @@ public:
 	EventsHandler();
 	virtual ~EventsHandler();
 	GenericEvent * getNextEvent();
+	bool isEvent();
 	virtual bool enqueueEvent(GenericEvent* ev, int priority = 0);			// By default, events go to first queue. Returns false when event priority > eventQueues.size() (Event couldn't be added)
 
 private:

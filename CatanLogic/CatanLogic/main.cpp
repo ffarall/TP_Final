@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 	EventsHandler handler;
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
-	HandShakingFSM hsFSM(&network, localPlayerName);
+	HandShakingFSM hsFSM(&network, localPlayerName, &globalBoard);
 	MainFSM mainFSM(&hsFSM, &network, &handler, &localPlayerEnabler, &remotePlayerEnabler);
 	AllegroGUI GUI;
 
@@ -57,10 +57,13 @@ int main(int argc, char* argv[])
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
-		GenericEvent* ev = handler.getNextEvent();
-		mainFSM.cycle(ev);
-		GUI.cycle();
-		network.workPlease();
+		if (handler.isEvent())
+		{
+			GenericEvent* ev = handler.getNextEvent();
+			mainFSM.cycle(ev);
+			GUI.cycle();
+			network.workPlease();
+		}
 	}
 }
 

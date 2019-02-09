@@ -24,6 +24,18 @@ GenericEvent * EventsHandler::getNextEvent()
 	eventQueues[i].pop();
 }
 
+bool EventsHandler::isEvent()
+{
+	for (auto queue : eventQueues)
+	{
+		if (!queue.empty())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool EventsHandler::enqueueEvent(GenericEvent* ev, int priority)
 {
 	if (priority < eventQueues.size())										// If this priority order exists already...
