@@ -8,7 +8,7 @@
 
 #define HILLS_HEX_FILE "colinas.png"
 #define WOODS_HEX_FILE "bosque.png"
-#define MOUNTAINS_HEX_FILE "montaña.png"
+#define MOUNTAINS_HEX_FILE "montana.png"
 #define FIELDS_HEX_FILE "campo.png"
 #define PASTURES_HEX_FILE "pastura.png"
 #define DESERT_HEX_FILE "desierto.png"
@@ -42,7 +42,6 @@ BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegr
 {
 	printer = prnter_;
 	init();
-	update();
 }
 
 
@@ -249,7 +248,7 @@ void BoardController::init()
 		if (imagen.second == NULL) { working = false; }
 	}
 
-	if (working) // si hubo algún problema limpio
+	if (!working) // si hubo algún problema limpio
 	{
 		for (auto imagen : bitmaps)
 		{
@@ -257,7 +256,7 @@ void BoardController::init()
 		}
 	}
 
-	if (working || (font = al_load_font("catanFont.otf", FONT_SIZE, 0)) == NULL)
+	if (!working || (font = al_load_font("catanFont.otf", FONT_SIZE, 0)) == NULL)
 	{
 		working = false;
 	}

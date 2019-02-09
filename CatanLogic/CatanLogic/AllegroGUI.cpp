@@ -58,20 +58,20 @@ bool AllegroGUI::checkForEvents()
 	}
 	else
 	{
-		ALLEGRO_EVENT* ev = NULL;
-		al_get_next_event(eventQueue, ev);
-		switch (ev->type)
+		ALLEGRO_EVENT ev;
+		al_get_next_event(eventQueue, &ev);
+		switch (ev.type)
 		{
 		case ALLEGRO_EVENT_TIMER:
 			GUIEv = GUI_TIMER;
 			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 			GUIEv = GUI_MOUSE_DOWN;
-			mouseCoordinates =std::make_pair(ev->mouse.x,ev->mouse.y);
+			mouseCoordinates =std::make_pair(ev.mouse.x,ev.mouse.y);
 			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 			GUIEv = GUI_MOUSE_UP;
-			mouseCoordinates = std::make_pair(ev->mouse.x, ev->mouse.y);
+			mouseCoordinates = std::make_pair(ev.mouse.x, ev.mouse.y);
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
 			GUIEv = GUI_CLOSE_DISPLAY;
