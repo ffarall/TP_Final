@@ -40,8 +40,6 @@ protected:
 	// Map containing all enabled events and its actions.
 	EnablerLogic enabledActions;
 
-	void init();
-
 	// To enable an event and its action.
 	void enable(GUIEnablerEvent type, list< EnablerRoutine > routine);
 	// To disable an event.

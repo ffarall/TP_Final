@@ -23,7 +23,7 @@ class LocalObserver :
 	public Observer
 {
 public:
-	LocalObserver(EventsHandler* handler_, GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
+	LocalObserver(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
 	virtual ~LocalObserver();
 	virtual void update();
 	bool isOK();

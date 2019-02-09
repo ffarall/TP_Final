@@ -2,8 +2,8 @@
 using namespace std;
 Error::Error()
 {
-	errorType = ErrType::NO_ERROR;
-	errorDetail = string("NO_ERROR DEFAULT STRING");
+	errorType = ErrType::NO_ERR;
+	errorDetail = string("NO_ERR DEFAULT STRING");
 }
 
 ErrType Error::getErrType()

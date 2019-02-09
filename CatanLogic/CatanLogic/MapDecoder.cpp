@@ -155,7 +155,7 @@ pair<unsigned int, unsigned int> MapDecoder::getCoordinatesInMatrix(Pixel & p)
 
 bool MapDecoder::isOk(void)
 {
-	return (compressorError.getErrType() == ErrType::NO_ERROR);
+	return (compressorError.getErrType() == ErrType::NO_ERR);
 }
 
 string MapDecoder::getError(void)
