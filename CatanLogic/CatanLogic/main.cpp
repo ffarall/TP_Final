@@ -73,9 +73,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 {
 	
 
-	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "DevBack2.PNG", "", 14)); //startPlayingButton()
+	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "tick.png", "", 14)); //startPlayingButton()
 	GUI->attachController("StartPlaying", buttonList[0]);
-	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "pasto.png", "", 14));//quitButton()
+	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "cruz.png", "", 14));//quitButton()
 	GUI->attachController("Quit", buttonList[1]);
 	buttonList.push_back(new Button(printer, handler, NEW_SETTLEMENT_X, NEW_SETTLEMENT_Y, NEW_SETTLEMENT_H, NEW_SETTLEMENT_W, "", "settlement.png", "", 0));//newSettlementButton
 	GUI->attachController("NewSettlement", buttonList[2]);

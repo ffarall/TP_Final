@@ -7,7 +7,7 @@
 #define START_PLAYING_Y (D_ALTO*0.85)
 #define START_PLAYING_W 144
 #define START_PLAYING_H 35
-#define QUIT_X (D_ANCHO*0.23)
+#define QUIT_X (D_ANCHO*0.23 + 40)
 #define QUIT_Y (D_ALTO*0.85)
 #define QUIT_W 144
 #define QUIT_H 35
