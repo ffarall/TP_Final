@@ -22,18 +22,6 @@ RemotePlayerEnabler::~RemotePlayerEnabler()
 {
 }
 
-bool RemotePlayerEnabler::waitingForThisSubtype(SubtypeEvent * ev)
-{
-	bool ret = false;
-
-	if (enabledActions.enablerMap.find(ev->getSubtype()) != enabledActions.enablerMap.end())
-	{
-		ret = true;
-	}
-	delete ev;
-	return ret;
-}
-
 void RemotePlayerEnabler::localStarts()
 {
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
