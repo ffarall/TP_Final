@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	BoardController boardCont(&handler, &printer);
 	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler);	// Also adds them to the GUI.
-	GUI.attachController("BoarController", &boardCont);
+	GUI.attachController("BoardController", &boardCont);
 	GUI.initGUIEnabler();
 
 	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler);
@@ -57,12 +57,12 @@ int main(int argc, char* argv[])
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
+		GUI.cycle();
+		network.workPlease();
 		if (handler.isEvent())
 		{
 			GenericEvent* ev = handler.getNextEvent();
 			mainFSM.cycle(ev);
-			GUI.cycle();
-			network.workPlease();
 		}
 	}
 }
