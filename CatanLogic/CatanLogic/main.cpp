@@ -17,6 +17,8 @@
 #include "GutenbergsPressAllegro.h"
 #include "SubEvents.h"
 
+#define TINT_CORR(r, g, b, a) (r*255), (g*255), (b*255), (a*255)
+
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb);
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
 
@@ -676,23 +678,29 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	buttonList[0]->addUpdate(
 		[mainFSM, buttonList]()
 		{
-		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
-		{
-			if(!buttonList[0]->isPressed() && buttonList[0]->isEnabled())
-			{ 
-				buttonList[0]->setTypeTint(1, 1, 1, 1);
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				if (buttonList[26]->isEnabled())
+				{
+					if (!buttonList[26]->isPressed())
+					{
+						buttonList[26]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[26]->setTypeTint(1, 0.5, 0.5, 1);
+					}
+				}
+				else
+				{
+					buttonList[26]->setTypeTint(1, 1, 1, 0.5);
+				}
 			}
 			else
 			{
-				buttonList[0]->setTypeTint(1, 0.5, 0.5, 1);
-			}				
+				buttonList[26]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el boton es invisible y esta desactivado
+			}
 		}
-		else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
-		{
-			buttonList[0]->setTypeTint(1, 1, 1, 0);
-		}
-		
-	}
 	);
 
 	buttonList[1]->addUpdate(
@@ -702,7 +710,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			{
 				if (!buttonList[1]->isPressed() && buttonList[1]->isEnabled())
 				{
-					buttonList[1]->setTypeTint(1, 1, 1, 1);
+					buttonList[1]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 				}
 				else
 				{
@@ -886,7 +894,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			}
 			else
 			{
-				buttonList[26]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+				buttonList[26]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el boton es invisible y esta desactivado
 			}
 		}
 	);
@@ -914,7 +922,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			}
 			else
 			{
-				buttonList[27]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+				buttonList[27]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el boton es invisible y esta desactivado
 			}
 		}
 	);

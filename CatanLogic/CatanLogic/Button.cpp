@@ -119,9 +119,9 @@ bool Button::setFont(std::string fontPath, int fontSize)
 	
 }
 
-void Button::setTypeTint(char r, char g, char b, char a)
+void Button::setTypeTint(char r_, char g_, char b_, char a_)
 {
-	type->setTint(al_map_rgba_f(r, g, b, a));
+	type->setTint(al_map_rgba(r_, g_, b_, a_));
 }
 
 void Button::update()
