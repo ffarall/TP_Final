@@ -721,7 +721,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 				buttonList[1]->setTypeTint(1, 1, 1, 0);
 			}
 
-		}
+	}
 	);
 
 	buttonList[2]->addUpdate(
