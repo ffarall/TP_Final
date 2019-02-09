@@ -55,6 +55,7 @@ int main(int argc, char* argv[])
 	mainFSM.attach(&localObs);
 	mainFSM.attach(&boardCont);														// localObs and boardCont are observers of mainFSM.
 
+	mainFSM.notifyAllObservers();
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
 		GUI.cycle();
@@ -673,7 +674,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 
 	buttonList[0]->addUpdate(
-		[&mainFSM, buttonList]()
+		[mainFSM, buttonList]()
 		{
 		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
