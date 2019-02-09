@@ -4,7 +4,7 @@
 
 GutenbergsPressAllegro::GutenbergsPressAllegro(ALLEGRO_BITMAP * background_)
 {
-	setBackgorund(background_);
+	setBackgorund(al_load_bitmap("Backround.jpg"));
 }
 
 GutenbergsPressAllegro::~GutenbergsPressAllegro()
