@@ -945,7 +945,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	buttonList[9]->addUpdate(
 		[mainFSM, localPlayerEnabler, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayerEnabler.waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE))
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayerEnabler->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 		{
 			if (!buttonList[9]->isPressed())
 			{
@@ -973,6 +973,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	}
 
 	);
+
 
 		buttonList[10]->addUpdate(
 			[mainFSM, localPlayer, buttonList]()
@@ -1102,40 +1103,215 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 		);
 
-	buttonList[14]->addUpdate(
-		[]()
-		{}
-	);
+		buttonList[14]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[14]->isEnabled())
+			{
+				if (!buttonList[14]->isPressed())
+				{
+					buttonList[14]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[14]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
 
-	buttonList[15]->addUpdate(
-		[]()
-		{}
-	);
 
-	buttonList[16]->addUpdate(
-		[]()
-		{}
-	);
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[14]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[14]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
 
-	buttonList[17]->addUpdate(
-		[]()
-		{}
-	);
 
-	buttonList[18]->addUpdate(
-		[]()
-		{}
-	);
+		}
 
-	buttonList[19]->addUpdate(
-		[]()
-		{}
-	);
 
-	buttonList[20]->addUpdate(
-		[]()
-		{}
-	);
+		);
+
+		buttonList[15]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[15]->isEnabled())
+			{
+				if (!buttonList[15]->isPressed())
+				{
+					buttonList[15]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[15]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+
+
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[15]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[15]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+
+
+		}
+
+		);
+
+		buttonList[16]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[16]->isEnabled())
+			{
+				if (!buttonList[16]->isPressed())
+				{
+					buttonList[16]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[16]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+
+
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[16]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[16]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+
+
+		}
+
+		);
+
+		buttonList[17]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[17]->isEnabled())
+			{
+				if (!buttonList[17]->isPressed())
+				{
+					buttonList[17]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[17]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+
+
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[17]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[17]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+
+
+		}
+
+		);
+
+		buttonList[18]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[18]->isEnabled())
+			{
+				if (!buttonList[18]->isPressed())
+				{
+					buttonList[18]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[18]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+
+
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[18]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[18]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+
+
+		}
+
+		);
+
+		buttonList[19]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[19]->isEnabled())
+			{
+				if (!buttonList[19]->isPressed())
+				{
+					buttonList[19]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[19]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+
+		
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+			buttonList[19]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+			buttonList[19]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+
+
+		}
+
+		);
+
+		buttonList[20]->addUpdate(
+			[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[20]->isEnabled())
+			{
+				if (!buttonList[20]->isPressed())
+				{
+					buttonList[20]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[20]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[20]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[20]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+
+
+		}
+
+		);
 
 	buttonList[21]->addUpdate(
 		[]()
