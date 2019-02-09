@@ -687,7 +687,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 		}
 	);
-
+	/*
 	buttonList[3]->addUpdate(
 
 	);
@@ -794,7 +794,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 	buttonList[29]->addUpdate(
 
-	);
+	);*/
 }
 
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton,Button * Yop, Button * monopoly, MainFSM * mainFSM,Player * localPlayer, ResourceType recurso)
