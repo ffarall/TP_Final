@@ -1,5 +1,5 @@
 #include "Hex.h"
-
+#include "Player.h"
 
 
 Hex::Hex()
@@ -43,11 +43,11 @@ void Hex::assignResources()
 {
 	for (auto owner : settlementOwners)
 	{
-		owner->addResource(resource);		// 1 resource per Settlement.
+		(static_cast<Player*>(owner))->addResource(resource);		// 1 resource per Settlement.
 	}
 	for (auto owner : cityOwners)
 	{
-		owner->addResource(resource, 2);		// 2 per City.
+		(static_cast<Player*>(owner))->addResource(resource, 2);		// 2 per City.
 	}
 }
 

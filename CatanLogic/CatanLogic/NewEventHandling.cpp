@@ -4,8 +4,8 @@ using namespace std;
 
 EventsHandler::EventsHandler()
 {
-	eventQueues.push_back(queue<GenericEvent *>({  }));			// Initialising at least one empty queue.
-
+	queue<GenericEvent*> emptyQueue;
+	eventQueues.push_back(emptyQueue);			// Initialising at least one empty queue.
 }
 
 EventsHandler::~EventsHandler()
@@ -22,6 +22,8 @@ GenericEvent * EventsHandler::getNextEvent()
 
 	GenericEvent* ret = eventQueues[i].front();
 	eventQueues[i].pop();
+
+	return ret;
 }
 
 bool EventsHandler::isEvent()

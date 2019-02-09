@@ -65,7 +65,7 @@ MapIsPkg::MapIsPkg(Board * board_)
 
 MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 {
-	int i = 0, j, RobberPos = 0;
+	int i = 0, j = 0, RobberPos = 0;
 	map<char, Token*> table;
 	map<string, PortType> puertos;
 

@@ -10,7 +10,8 @@
 #include "Hex.h"
 #include "Sea.h"
 #include "EDASubject.h"
-#include "Board.h"
+
+class Player;
 
 using namespace std;
 using DevCardRoutine = void (Player::*)();
@@ -18,7 +19,7 @@ using DevCardRoutine = void (Player::*)();
 struct DevCardUsage
 {
 	size_t amount;
-	void (Player::*useDevCard)();
+	DevCardRoutine useDevCard;
 };
 
 class Player :
@@ -84,16 +85,16 @@ public:
 	bool isThereSetOrCity(char token);
 
 	// Checks if given position is a port in given board.
-	bool checkIfIsPort(string position, Board* board);
+	bool checkIfIsPort(string position, EDASubject* board_);
 	// Check if any settlement or city is connected to a port
-	bool checkForAnyPort(Board * board, PortType port_);
+	bool checkForAnyPort(EDASubject * board_, PortType port_);
 	// Does the bank trade and exchanges the resources. When the bank trade is with a port that has fixed resourcesOffered, this parameter is not needed.
 	void makeBankTrade(PortType type, ResourceType resourceAsked, ResourceType resourcesOffered = MONTAÑAS);
 	// Checks if player has enough resources for the given type of port.
 	bool checkResourcesForBankTrade(PortType type);
 
 	// Picks DevCard from the pile in the board. Uses resources.
-	void getNewDevCard(Board* board);
+	void getNewDevCard(EDASubject* board_);
 	// Uses DevCard.
 	void useDevCard(DevCards card);
 	// Returns amount of given DevCard.

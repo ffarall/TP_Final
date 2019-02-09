@@ -12,7 +12,7 @@ Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPo
 	buttonHeight = height;
 	buttonWidth = width;
 	buttonText = label;
-	buttonBitmap = al_load_bitmap(imagePath.c_str);
+	buttonBitmap = al_load_bitmap(imagePath.c_str());
 	buttonFont = al_load_font(fontPath.c_str(),fontSize,0);
 	if (buttonBitmap == nullptr||buttonFont==nullptr)
 	{
@@ -89,7 +89,7 @@ ALLEGRO_BITMAP * Button::getBitmap()
 
 bool Button::setBitmap(std::string imagePath)
 {
-	buttonBitmap = al_load_bitmap(imagePath.c_str);
+	buttonBitmap = al_load_bitmap(imagePath.c_str());
 	if (buttonBitmap == nullptr)
 	{
 		return false;

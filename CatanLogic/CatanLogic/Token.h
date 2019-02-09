@@ -1,6 +1,6 @@
 #pragma once
 #include <array>
-#include "Player.h"
+#include "EDASubject.h"
 #include "CatanDefs.h"
 
 using namespace std;
@@ -14,17 +14,17 @@ public:
 	virtual string whatAmI() = 0;
 
 	// Returns true if owner could be added, false otherwise.
-	bool addSettlement(Player* owner);
+	bool addSettlement(EDASubject* owner_);
 	// Returns true if owner could be added, false otherwise.
-	bool addCity(Player* owner);
+	bool addCity(EDASubject* owner_);
 	// Returns true if owner could be added, false otherwise.
-	bool addRoad(Player* owner);
+	bool addRoad(EDASubject* owner_);
 
 	// Gives a resource of this token's type
 
 protected:
-	array< Player*, 6 > settlementOwners;
-	array< Player*, 6 > cityOwners;
-	array< Player*, 6 > roadOwners;
+	array< EDASubject*, 6 > settlementOwners;
+	array< EDASubject*, 6 > cityOwners;
+	array< EDASubject*, 6 > roadOwners;
 };
 

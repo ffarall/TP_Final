@@ -160,7 +160,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
 				//emitir evento de quit
-				handler->enqueueEvent(new MainEvents(MainTypes::QUIT));
+				handler->enqueueEvent(new MainEvents(MainTypes::QUIT_MT));
 				return GUIEnablerEvent::QUIT;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -590,7 +590,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
-				handler->enqueueEvent(new MainEvents(MainTypes::PLAY_AGAIN));
+				handler->enqueueEvent(new MainEvents(MainTypes::PLAY_AGAIN_MT));
 				return GUIEnablerEvent::PLAY_AGAIN;
 			}
 			return GUIEnablerEvent::NO_EV;

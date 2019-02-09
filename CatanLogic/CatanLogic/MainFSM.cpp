@@ -39,7 +39,7 @@ void MainFSM::decAndRun(GenericEvent * ev)
 	}
 	else
 	{
-		emitSubEvent(MainTypes::TIME_OUT, SubType::TIME_OUT);
+		emitSubEvent(MainTypes::TIME_OUT_MT, SubType::TIME_OUT);
 	}
 }
 
@@ -93,12 +93,12 @@ void MainFSM::defaultGameOverS(GenericEvent * ev)
 
 void MainFSM::sendGameOver(GenericEvent * ev)
 {
-	network->pushPackage(new package(headers::GAME_OVER));
+	network->pushPackage(new package(headers::GAME_OVER_H));
 }
 
 void MainFSM::sendPlayAgain(GenericEvent * ev)
 {
-	network->pushPackage(new package(headers::PLAY_AGAIN));
+	network->pushPackage(new package(headers::PLAY_AGAIN_H));
 }
 
 void MainFSM::continuePlaying(GenericEvent * ev)
@@ -141,7 +141,7 @@ void MainFSM::decTimeCounter(GenericEvent * ev)
 	timerCount--;
 	if (timerCount == 0)
 	{
-		emitSubEvent(MainTypes::TIME_OUT, SubType::TIME_OUT);
+		emitSubEvent(MainTypes::TIME_OUT_MT, SubType::TIME_OUT);
 	}
 }
 

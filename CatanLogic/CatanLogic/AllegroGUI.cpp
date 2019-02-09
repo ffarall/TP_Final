@@ -26,7 +26,7 @@ AllegroGUI::AllegroGUI():BasicGUI()
 			{
 				closeAdd();
 			}
-			else if (!initTimer)
+			else if (!initTimer())
 			{
 				closeDisplay();
 				closeAdd();
@@ -58,7 +58,7 @@ bool AllegroGUI::checkForEvents()
 	}
 	else
 	{
-		ALLEGRO_EVENT* ev;
+		ALLEGRO_EVENT* ev = NULL;
 		al_get_next_event(eventQueue, ev);
 		switch (ev->type)
 		{

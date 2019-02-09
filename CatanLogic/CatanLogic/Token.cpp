@@ -1,5 +1,5 @@
 #include "Token.h"
-
+#include "Player.h"
 
 
 Token::Token()
@@ -11,8 +11,9 @@ Token::~Token()
 {
 }
 
-bool Token::addSettlement(Player * owner)
+bool Token::addSettlement(EDASubject * owner_)
 {
+	Player* owner = static_cast<Player*>(owner_);
 	int i = 0;
 	while ((settlementOwners[i] != nullptr) && (i != settlementOwners.size()))
 	{
@@ -29,8 +30,9 @@ bool Token::addSettlement(Player * owner)
 	}
 }
 
-bool Token::addCity(Player * owner)
+bool Token::addCity(EDASubject * owner_)
 {
+	Player* owner = static_cast<Player*>(owner_);
 	int i = 0;
 	bool ret = false;
 
@@ -60,8 +62,9 @@ bool Token::addCity(Player * owner)
 	}
 }
 
-bool Token::addRoad(Player * owner)
+bool Token::addRoad(EDASubject * owner_)
 {
+	Player* owner = static_cast<Player*>(owner_);
 	int i = 0;
 	while ((roadOwners[i] != nullptr) && (i != roadOwners.size()))
 	{

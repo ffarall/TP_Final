@@ -425,18 +425,18 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
-	case headers::PLAY_AGAIN:
-		evento->setEvent(MainTypes::PLAY_AGAIN);
+	case headers::PLAY_AGAIN_H:
+		evento->setEvent(MainTypes::PLAY_AGAIN_MT);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
-	case headers::GAME_OVER:
+	case headers::GAME_OVER_H:
 		evento->setEvent(MainTypes::GAME_OVER);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
-	case headers::QUIT:
-		evento->setEvent(MainTypes::QUIT);
+	case headers::QUIT_H:
+		evento->setEvent(MainTypes::QUIT_MT);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;

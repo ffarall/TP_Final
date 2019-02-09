@@ -29,7 +29,7 @@ void GUIEnabler::cycle(GUIEnablerEvent ev)
 		}
 }
 
-void GUIEnabler::enable(GUIEnablerEvent type, list<EnablerRoutine> routine)
+void GUIEnabler::enable(GUIEnablerEvent type, list<GUIEnablerRoutine> routine)
 {
 	enabledActions.enablerMap[type] = routine;
 }
@@ -58,7 +58,7 @@ void GUIEnabler::disableAllBut(list<GUIEnablerEvent> theseEvents)
 	}
 }
 
-void GUIEnabler::setDefaultRoutine(EnablerRoutine defaultRoutine_)
+void GUIEnabler::setDefaultRoutine(GUIEnablerRoutine defaultRoutine_)
 {
 	enabledActions.defaultRoutine = defaultRoutine_;
 }

@@ -536,13 +536,13 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 
 		if (tradeType == _4x1)
 		{
-			localPlayer->makeBankTrade(tradeType, pkg->getResouceBougth(), pkg->getResoucesPaid[0]);
+			localPlayer->makeBankTrade(tradeType, pkg->getResouceBougth(), (pkg->getResoucesPaid())[0]);
 		}
 		else
 		{
 			if (localPlayer->checkForAnyPort(board, tradeType))
 			{
-				localPlayer->makeBankTrade(tradeType, pkg->getResouceBougth(), pkg->getResoucesPaid[0]);
+				localPlayer->makeBankTrade(tradeType, pkg->getResouceBougth(), (pkg->getResoucesPaid())[0]);
 			}
 			else
 			{

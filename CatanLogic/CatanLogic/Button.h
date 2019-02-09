@@ -1,5 +1,6 @@
 #pragma once
-#include"ObserverAndController.h"
+#include "GUIEnabler.h"
+#include "BasicGUI.h"
 #include"allegro5/allegro.h"
 #include"allegro5/allegro_font.h"
 #include"GutenbergsPressAllegro.h"
@@ -56,7 +57,6 @@ private:
 	bool buttonEnabled;
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
-	GutenbergsPressAllegro* press;
 	
 	package * info;
 	
