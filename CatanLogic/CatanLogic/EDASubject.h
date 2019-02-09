@@ -13,7 +13,7 @@ public:
 	void attach( Observer * observerPtr);
 	void detach( Observer * observerPtr);
 	
-protected:
+//protected:
 	void notifyAllObservers(void);
 	
 private:
