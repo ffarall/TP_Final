@@ -202,7 +202,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	/****** attach to each button its routine to executte when is pressed *******/
 	/******* verifiying if the main FSM is in an appropiate state and the button might be avaliable*********/
 	buttonList[0]->addUtility(
-		[&mainFSM,&handler]() 
+		[mainFSM,handler]() 
 		{
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
@@ -214,7 +214,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[1]->addUtility(
-		[&mainFSM, &handler]()
+		[mainFSM, handler]()
 		{
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
@@ -226,7 +226,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[2]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[localPlayer , mainFSM]()
 		{
 			if (localPlayer->checkCityResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
@@ -236,7 +236,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[3]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[localPlayer , mainFSM]()
 		{
 			if (localPlayer->checkSettlementResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
@@ -247,7 +247,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[4]->addUtility(
-		[&localPlayer , &mainFSM ]()
+		[localPlayer , mainFSM ]()
 		{
 			if (localPlayer->checkRoadResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -258,7 +258,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[5]->addUtility(
-		[&localPlayer , &mainFSM,&tablero, &handler ]()
+		[localPlayer , mainFSM,tablero, handler ]()
 		{
 			if (localPlayer->checkResourcesForDevCard() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -269,7 +269,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[6]->addUtility(
-		[&localPlayer , &mainFSM, &handler]()
+		[localPlayer , mainFSM, handler]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -283,7 +283,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	
 	Button * bankbutton = buttonList[7];
 	buttonList[7]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton ]()
+		[localPlayer, mainFSM, bankbutton ]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -296,7 +296,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 	Button * offerbutton = buttonList[7];
 	buttonList[8]->addUtility(
-		[&localPlayer, &mainFSM, offerbutton]()
+		[localPlayer, mainFSM, offerbutton]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -308,7 +308,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[9]->addUtility(
-		[&localPlayer , &mainFSM, &handler ]()
+		[localPlayer , mainFSM, handler ]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -324,7 +324,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[10]->addUtility(
-		[&localPlayer ,&mainFSM]()
+		[localPlayer ,mainFSM]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::KNIGHT) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -335,7 +335,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[11]->addUtility(
-		[&localPlayer, &mainFSM]()
+		[localPlayer, mainFSM]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -346,7 +346,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	Button * monopoly = buttonList[12];
 	buttonList[12]->addUtility(
-		[&localPlayer , &mainFSM , &monopoly]()
+		[localPlayer , mainFSM , monopoly]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -358,7 +358,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	Button * Yop = buttonList[13];
 	buttonList[13]->addUtility(
-		[&localPlayer , &mainFSM, &Yop ]()
+		[localPlayer , mainFSM, Yop ]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
@@ -370,7 +370,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[14]->addUtility(
-		[&localPlayer , &mainFSM, bankbutton]()
+		[localPlayer , mainFSM, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3) )
 			{
@@ -385,7 +385,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[15]->addUtility(
-		[&mainFSM, &localPlayer , &tablero, bankbutton]()
+		[mainFSM, localPlayer , tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero,PortType::_3x1)) )
 			{
@@ -400,7 +400,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[16]->addUtility(
-		[&mainFSM, &localPlayer, &tablero, bankbutton]()
+		[mainFSM, localPlayer, tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 			{
@@ -420,7 +420,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[17]->addUtility(
-		[&localPlayer, &mainFSM,&tablero, bankbutton]()
+		[localPlayer, mainFSM,tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 			{
@@ -440,7 +440,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[18]->addUtility(
-		[&localPlayer, &mainFSM, &tablero, bankbutton]()
+		[localPlayer, mainFSM, tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 			{
@@ -460,7 +460,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[19]->addUtility(
-		[&localPlayer , &mainFSM , &tablero, bankbutton]()
+		[localPlayer , mainFSM , tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 			{
@@ -480,7 +480,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[20]->addUtility(
-		[&localPlayer, &mainFSM , &tablero , bankbutton]()
+		[localPlayer, mainFSM , tablero , bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 			{
@@ -535,7 +535,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	
 	buttonList[26]->addUtility(
-		[&localPlayer, &mainFSM,&handler, bankbutton, offerbutton, Yop, monopoly, &remEneb]()
+		[localPlayer, mainFSM,handler, bankbutton, offerbutton, Yop, monopoly, remEneb]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
@@ -603,7 +603,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[27]->addUtility(
-		[&localPlayer, &mainFSM, &handler, bankbutton, offerbutton, Yop, monopoly, &remEneb]()
+		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEneb]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
@@ -645,7 +645,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[28]->addUtility(
-		[&mainFSM, &handler]()
+		[mainFSM, handler]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
@@ -657,7 +657,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[29]->addUtility(
-		[&mainFSM, &handler]()
+		[mainFSM, handler]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
