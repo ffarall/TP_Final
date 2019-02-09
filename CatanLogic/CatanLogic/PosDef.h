@@ -116,3 +116,12 @@
 #define SELECT_2Mx1_Y (D_ALTO * 0.85)
 #define SELECT_2Mx1_W 48
 #define SELECT_2Mx1_H 35
+
+#define PLAY_AGAIN_X (D_ANCHO*0.23)
+#define PLAY_AGAIN_Y (D_ALTO*0.75)
+#define PLAY_AGAIN_W 144
+#define PLAY_AGAIN_H 35
+#define GAME_OVER_X (D_ANCHO*0.23)
+#define GAME_OVER_Y (D_ALTO*0.85)
+#define GAME_OVER_W 144
+#define GAME_OVER_H 35
