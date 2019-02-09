@@ -513,7 +513,7 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 {
 	disableAllBut({ NET_KNIGHT,NET_YEARS_OF_PLENTY,NET_MONOPOLY,NET_ROAD_BUILDING });
 	setErrMessage("");
-	setWaitingMessage("Please accept or deny the offer");
+	setWaitingMessage("Please accept or deny the offer"); // falta aclarar cual es la oferta ver como amarla para mostrarla!!!
 
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	OfferTradePkg* pkg = static_cast<OfferTradePkg*>(auxEv->getPackage());
