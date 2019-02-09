@@ -17,9 +17,9 @@ void BasicGUI::cycle()
 {
 	if (enablerEv != NO_EV)
 	{
-		((GUIEnabler*)this)->cycle(enablerEv);
+		GUIEnabler::cycle(enablerEv);
+		enablerEv = NO_EV;									// Clearing event used.
 	}
-	enablerEv = NO_EV;									// Clearing event used.
 	
 	if (checkForEvents())
 	{

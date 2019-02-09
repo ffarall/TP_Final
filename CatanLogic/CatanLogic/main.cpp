@@ -57,10 +57,13 @@ int main(int argc, char* argv[])
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
-		GenericEvent* ev = handler.getNextEvent();
-		mainFSM.cycle(ev);
-		GUI.cycle();
-		network.workPlease();
+		if (handler.isEvent())
+		{
+			GenericEvent* ev = handler.getNextEvent();
+			mainFSM.cycle(ev);
+			GUI.cycle();
+			network.workPlease();
+		}
 	}
 }
 
