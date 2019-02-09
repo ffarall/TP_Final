@@ -729,15 +729,14 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources() && buttonList[2]->isEnabled())
 		{
-			)
-	{
-		if (!buttonList[2]->isPressed())
-			buttonList[2]->setTypeTint(1, 1, 1, 1);
-	}
-		else
-		{
-			buttonList[2]->setTypeTint(1, 0.5, 0.5, 1);
-		}
+			if (!buttonList[2]->isPressed())
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 1);
+			}
+			else
+			{
+				buttonList[2]->setTypeTint(1, 0.5, 0.5, 1);
+			}
 		}
 		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkSettlementResources() || !buttonList[2]->isEnabled())) //si no tengo recursos, boton semitransparente para mostrarlo
 		{
@@ -751,8 +750,6 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			buttonList[2]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
 		}
-
-
 	}
 	);
 	buttonList[3]->addUpdate(
@@ -950,9 +947,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[9]->addUpdate(
-		[mainFSM, localPlayerEnabler, buttonList]()
+		[mainFSM, locEneb, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayerEnabler.waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE))
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 		{
 			if (!buttonList[9]->isPressed())
 			{
@@ -963,7 +960,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 				buttonList[9]->setTypeTint(1, 0.5, 0.5, 1);
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayerEnabler.waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE))) //si no tengo recursos, boton semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE))) //si no tengo recursos, boton semitransparente para mostrarlo
 		{
 			buttonList[9]->setTypeTint(1, 1, 1, 0.5);
 		}
