@@ -13,12 +13,22 @@ Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPo
 	buttonText = label;
 	buttonBitmap = al_load_bitmap(imagePath.c_str());
 	buttonFont = al_load_font(fontPath.c_str(),fontSize,0);
-	if (buttonBitmap == nullptr||buttonFont==nullptr)
+	if (buttonBitmap == NULL||buttonFont==NULL)
 	{
 		//error
 	}
 	type = press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
 	
+}
+
+Button::~Button()
+{
+	if (buttonBitmap != NULL)
+		al_destroy_bitmap(buttonBitmap);
+	if (buttonFont != NULL)
+		al_destroy_font(buttonFont);
+	if (info != NULL)
+		delete info;
 }
 
 bool Button::clickIn(uint x_, uint y_)
