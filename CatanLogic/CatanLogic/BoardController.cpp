@@ -38,9 +38,10 @@ BoardController::BoardController()
 {
 }
 
-BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegro * prnter_) : BasicController(handler_)
+BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_) : BasicController(handler_)
 {
 	printer = prnter_;
+	mainFSM = mainFSM_;
 	init();
 }
 
@@ -52,39 +53,42 @@ BoardController::~BoardController()
 
 void BoardController::update()
 {
-	if (!fondoListo)
+	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 	{
-		fondoListo = true;
-		drawMap();
-	}
+		if (!fondoListo)
+		{
+			fondoListo = true;
+			drawMap();
+		}
 
-	if (sellos[ROBBER_FILE] == NULL)
-	{
-		string foo;
-		foo += board->getRobberPos();
-		pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
-		pos.first += ROBBER_POS + BOARD_POS_X;
-		pos.second += BOARD_POS_Y;
-		sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgb(255, 255, 255),
-			pos.first, pos.second, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
-			1, 1, 0, 0);
-		printer->addType(sellos[ROBBER_FILE]);
-	}
-	else
-	{
-		string foo;
-		foo += board->getRobberPos();
-		pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
-		pos.first += ROBBER_POS + BOARD_POS_X;
-		pos.second += BOARD_POS_Y;
-		sellos[ROBBER_FILE]->setDX(pos.first);
-		sellos[ROBBER_FILE]->setDY(pos.first);
-	}
+		if (sellos[ROBBER_FILE] == NULL)
+		{
+			string foo;
+			foo += board->getRobberPos();
+			pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
+			pos.first += ROBBER_POS + BOARD_POS_X;
+			pos.second += BOARD_POS_Y;
+			sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgb(255, 255, 255),
+				pos.first, pos.second, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
+				1, 1, 0, 0);
+			printer->addType(sellos[ROBBER_FILE]);
+		}
+		else
+		{
+			string foo;
+			foo += board->getRobberPos();
+			pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
+			pos.first += ROBBER_POS + BOARD_POS_X;
+			pos.second += BOARD_POS_Y;
+			sellos[ROBBER_FILE]->setDX(pos.first);
+			sellos[ROBBER_FILE]->setDY(pos.first);
+		}
 
-	if (sellos[DEV_FILE] == NULL)
-	{
-		al_draw_text(font, al_map_rgb(0, 0, 0), D_ANCHO*0.65, D_ALTO*0.82, 0, "Pile of DevCards");
-		al_draw_tinted_bitmap(bitmaps[DEV_FILE], al_map_rgb(255, 170, 10), D_ANCHO * 0.65, D_ALTO * 0.85, 0);
+		if (sellos[DEV_FILE] == NULL)
+		{
+			al_draw_text(font, al_map_rgb(0, 0, 0), D_ANCHO * 0.65, D_ALTO * 0.82, 0, "Pile of DevCards");
+			al_draw_tinted_bitmap(bitmaps[DEV_FILE], al_map_rgb(255, 170, 10), D_ANCHO * 0.65, D_ALTO * 0.85, 0);
+		}
 	}
 }
 

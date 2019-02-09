@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	AllegroGUI GUI;
 
 	GutenbergsPressAllegro printer(NULL);		// HARCODEAR EL BACKGROUND PARA QUE EL CONSTRUCTOR NO RECIBA NADA.
-	BoardController boardCont(&handler, &printer);
+	BoardController boardCont(&handler, &printer, &mainFSM);
 	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler);	// Also adds them to the GUI.
 	GUI.attachController("BoardController", &boardCont);
@@ -73,9 +73,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 {
 	
 
-	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "", "", 14)); //startPlayingButton()
+	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "DevBack2.PNG", "", 14)); //startPlayingButton()
 	GUI->attachController("StartPlaying", buttonList[0]);
-	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "", "", 14));//quitButton()
+	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "pasto.png", "", 14));//quitButton()
 	GUI->attachController("Quit", buttonList[1]);
 	buttonList.push_back(new Button(printer, handler, NEW_SETTLEMENT_X, NEW_SETTLEMENT_Y, NEW_SETTLEMENT_H, NEW_SETTLEMENT_W, "", "settlement.png", "", 0));//newSettlementButton
 	GUI->attachController("NewSettlement", buttonList[2]);
@@ -83,7 +83,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	GUI->attachController("NewCity", buttonList[3]);
 	buttonList.push_back(new Button(printer, handler, NEW_ROAD_X, NEW_ROAD_Y, NEW_ROAD_H, NEW_ROAD_W, "", "ROAD.png", "", 0));//newRoadButton
 	GUI->attachController("NewRoad", buttonList[4]);
-	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "BUY_DEV_CARD.png", "", 0));//getDevCardButton
+	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "DevBack2.PNG", "", 0));//getDevCardButton
 	GUI->attachController("GetDevCard", buttonList[5]);
 	buttonList.push_back(new Button(printer, handler, PASS_X, PASS_Y, PASS_H, PASS_W, "", "PASS.png", "", 0));//endTurnButton
 	GUI->attachController("EndTurn", buttonList[6]);
@@ -696,7 +696,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[1]->addUpdate(
-		[&mainFSM, buttonList]()
+		[mainFSM, buttonList]()
 		{
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
@@ -718,7 +718,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[2]->addUpdate(
-		[&mainFSM, &localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources())
 			{
@@ -747,114 +747,141 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 		}
 	);
-	/*
-	buttonList[3]->addUpdate(
 
+	buttonList[3]->addUpdate(
+		[]()
+		{}
 	);
 
 	buttonList[4]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[5]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[6]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[7]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[8]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[9]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[10]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[11]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[12]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[13]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[14]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[15]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[16]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[17]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[18]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[19]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[20]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[21]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[22]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[23]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[24]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[25]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[26]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[27]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[28]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[29]->addUpdate(
-
-	);*/
+		[]()
+		{}
+	);
 }
 
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton,Button * Yop, Button * monopoly, MainFSM * mainFSM,Player * localPlayer, ResourceType recurso)

@@ -29,7 +29,9 @@ void GutenbergsPressAllegro::print()
 	for (auto type : types)								// Then draws every type on top of the background.
 	{
 		type->printType();
+		al_flip_display();
 	}
+	al_flip_display();
 }
 
 MovableType * GutenbergsPressAllegro::createType(ALLEGRO_BITMAP * bitmap_, ALLEGRO_COLOR tint_, double coordinateX_, double coordinateY_, double difX_, double difY_, double scaleX_, double scaleY_, double angle_, int flags_)

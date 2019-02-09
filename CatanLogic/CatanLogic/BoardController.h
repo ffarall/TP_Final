@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "GutenbergsPressAllegro.h"
+#include "MainFSM.h"
 
 #include <string>
 #include <map>
@@ -16,7 +17,7 @@ class BoardController :
 {
 public:
 	BoardController();
-	BoardController(EventsHandler* handler_, GutenbergsPressAllegro * prnter_);
+	BoardController(EventsHandler* handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_);
 	virtual ~BoardController();
 
 	virtual void update();
@@ -54,6 +55,8 @@ private:
 	map< string, MovableType * > sellos; // robber y devCards por ahora
 	ALLEGRO_FONT * font;
 
+	// MainFSM to observe.
+	MainFSM* mainFSM;
 	// Board to observe.
 	Board* board;
 	// localPlayer to observe.

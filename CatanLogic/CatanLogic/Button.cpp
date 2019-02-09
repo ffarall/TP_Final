@@ -6,7 +6,6 @@ Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPo
 {
 	info = nullptr;
 	press = press_;
-	type = new MovableType(press, NULL);
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;
@@ -18,7 +17,7 @@ Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPo
 	{
 		//error
 	}
-	press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
+	type = press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
 	
 }
 
@@ -112,7 +111,7 @@ bool Button::setFont(std::string fontPath, int fontSize)
 
 void Button::setTypeTint(char r, char g, char b, char a)
 {
-	type->setTint(al_map_rgba(r, g, b, a));
+	type->setTint(al_map_rgba_f(r, g, b, a));
 }
 
 void Button::update()
