@@ -513,7 +513,7 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 {
 	disableAllBut({ NET_KNIGHT,NET_YEARS_OF_PLENTY,NET_MONOPOLY,NET_ROAD_BUILDING });
 	setErrMessage("");
-	setWaitingMessage("Please accept or deny the offer"); // falta aclarar cual es la oferta ver como amarla para mostrarla!!!
+	setWaitingMessage(""); // falta aclarar cual es la oferta ver como amarla para mostrarla!!! Acepta la oferta de: 
 
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	OfferTradePkg* pkg = static_cast<OfferTradePkg*>(auxEv->getPackage());
@@ -521,7 +521,54 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 	if (validateOffer(pkg))
 	{
 		pendingOffer = *pkg;													// Saving offer for response.
-
+		map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
+		for (auto recurso : pendingOffer.getMyOnes())
+		{
+			oferta[recurso] += 1; // armo una lista con los recursos y cantidades
+		}
+		for (auto recurso : pendingOffer.getOpponentOnes())
+		{
+			pedido[recurso] += 1; // armo una lista con los recursos y cantidades
+		}
+		string mensaje("Acepta la oferta de: ");
+		for (auto par : oferta)
+		{
+			mensaje += to_string(par.second);
+			switch (par.first)
+			{
+			case BOSQUE : 
+				mensaje += " de madera - ";
+			case COLINAS :
+				mensaje += " de ladrillo - ";
+			case MONTAÑAS :
+				mensaje += " de piedra - ";
+			case CAMPOS :
+				mensaje += " de trigo - ";
+			case PASTOS :
+				mensaje += " de oveja - ";
+			default:break;
+			}
+		}
+		mensaje += " Por: ";
+		for (auto par : pedido)
+		{
+			mensaje += to_string(par.second);
+			switch (par.first)
+			{
+			case BOSQUE:
+				mensaje += " de madera - ";
+			case COLINAS:
+				mensaje += " de ladrillo - ";
+			case MONTAÑAS:
+				mensaje += " de piedra - ";
+			case CAMPOS:
+				mensaje += " de trigo - ";
+			case PASTOS:
+				mensaje += " de oveja - ";
+			default:break;
+			}
+		}
+		setWaitingMessage(mensaje); // cargo el mensaje con la oferta
 		enable(PLA_YES, { TX(exchangeResources), TX(enableRemoteActions) });
 		enable(PLA_NO, { TX(rejectOffer),TX(enableRemoteActions) });
 	}

@@ -4,6 +4,7 @@ using namespace std;
 
 package::package()
 {
+
 }
 
 package::package(headers paquete)
