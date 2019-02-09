@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	GutenbergsPressAllegro printer(NULL);
 	BoardController boardCont(&handler, &printer);
 	std::vector<Button*> buttonList;
-	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard);	// Also adds them to the GUI.
+	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList);	// Also adds them to the GUI.
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
 
@@ -515,7 +515,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
-			if(!buttonList[0]->isPressed())
+			if(!buttonList[0]->isPressed() && buttonList[0]->isEnabled())
 			{ 
 				buttonList[0]->setTypeTint(1, 1, 1, 1);
 				buttonList[0]->enable;
@@ -536,11 +536,53 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[1]->addUpdate(
+		[&mainFSM, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				if (!buttonList[1]->isPressed() && buttonList[1]->isEnabled())
+				{
+					buttonList[1]->setTypeTint(1, 1, 1, 1);
+					buttonList[1]->enable;
+				}
+				else
+				{
+					buttonList[1]->setTypeTint(1, 0.5, 0.5, 1);
+					buttonList[1]->disable;
+				}
+			}
+			else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
+			{
+				buttonList[1]->setTypeTint(1, 1, 1, 0);
+				buttonList[1]->disable;
+			}
 
+		}
 	);
 
 	buttonList[2]->addUpdate(
+		[&mainFSM, &localPlayer, buttonList]()
+	{
+		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+		{
+			if (!buttonList[1]->isPressed() && buttonList[1]->isEnabled())
+			{
+				buttonList[1]->setTypeTint(1, 1, 1, 1);
+				buttonList[1]->enable;
+			}
+			else
+			{
+				buttonList[1]->setTypeTint(1, 0.5, 0.5, 1);
+				buttonList[1]->disable;
+			}
+		}
+		else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
+		{
+			buttonList[1]->setTypeTint(1, 1, 1, 0);
+			buttonList[1]->disable;
+		}
 
+	}
 	);
 
 	buttonList[3]->addUpdate(
