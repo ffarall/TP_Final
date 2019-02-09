@@ -29,7 +29,6 @@ void GutenbergsPressAllegro::print()
 	for (auto type : types)								// Then draws every type on top of the background.
 	{
 		type->printType();
-		al_flip_display();
 	}
 	al_flip_display();
 }
