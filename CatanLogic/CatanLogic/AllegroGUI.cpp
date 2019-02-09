@@ -316,6 +316,62 @@ void AllegroGUI::nowUserCanConfirmResourcesToReceive()
 	enable(GUIEnablerEvent::ACCEPT, { TX(backToNormal) });
 }
 
+void AllegroGUI::nowSelectFirstRoad()
+{
+	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
+	if (!(boardCon->getPuttingRoad()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	{
+		boardCon->toggleRoad();
+		enable(POSITION_SELECTED, { TX(nowSelectRoad) });
+		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+	}
+}
+
+void AllegroGUI::nowSelectMonopolyResource()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(backToNormal) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowSelectFirstResource()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowSelectSecondResource) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowSelectSecondResource()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::RESOURCE, { TX(backToNormal) });
+	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
 void AllegroGUI::backToNormal()
 {
 	initGUIEnabler();
@@ -341,8 +397,6 @@ void AllegroGUI::initGUIEnabler()
 	controllers["Ore"]->disable();
 	controllers["Grain"]->disable();
 	controllers["Wool"]->disable();
-	controllers["Confirm"]->disable();
-	controllers["Cancel"]->disable();
 
 	setDefaultRoutine(TX(noAct));
 	enable(GUIEnablerEvent::BANK_TRADE, { TX(nowSelectPortType) });
