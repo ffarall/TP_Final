@@ -19,7 +19,6 @@
     <ClCompile Include="MainFSM.cpp" />
     <ClCompile Include="MovableType.cpp" />
     <ClCompile Include="Networking.cpp" />
-    <ClCompile Include="ObserverAndController.cpp" />
     <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="PlayerEnabler.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
@@ -34,8 +33,6 @@
     <ClCompile Include="Settlement.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="RemoteObs.cpp" />
-    <ClCompile Include="++BoardObsAndCon.cpp" />
-    <ClCompile Include="++ButtonController.cpp" />
     <ClCompile Include="AllegroGUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LocalObserver.cpp" />
@@ -61,7 +58,6 @@
     <ClInclude Include="MainFSM.h" />
     <ClInclude Include="MovableType.h" />
     <ClInclude Include="Networking.h" />
-    <ClInclude Include="ObserverAndController.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="PlayerEnabler.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
@@ -78,8 +74,6 @@
     <ClInclude Include="SubEvents.h" />
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="RemoteObs.h" />
-    <ClInclude Include="++BoardObsAndCon.h" />
-    <ClInclude Include="++ButtonController.h" />
     <ClInclude Include="AllegroGUI.h" />
     <ClInclude Include="PosDef.h" />
     <ClInclude Include="LocalObserver.h" />

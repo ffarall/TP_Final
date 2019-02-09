@@ -5,7 +5,6 @@
 
 GUIEnabler::GUIEnabler()
 {
-	init();
 }
 
 
