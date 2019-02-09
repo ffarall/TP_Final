@@ -16,7 +16,7 @@ public:
 	RemotePlayerEnabler(Networking* pkgSender_,  EventsHandler * nable_);
 	virtual ~RemotePlayerEnabler();
 
-
+	bool waitingForThisSubtype(SubtypeEvent * ev);
 	// Enables events for when local starts.
 	void localStarts();
 	// Enables events when remote starts.

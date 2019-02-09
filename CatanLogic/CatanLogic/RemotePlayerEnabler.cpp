@@ -22,6 +22,18 @@ RemotePlayerEnabler::~RemotePlayerEnabler()
 {
 }
 
+bool RemotePlayerEnabler::waitingForThisSubtype(SubtypeEvent * ev)
+{
+	bool ret = false;
+
+	if (enabledActions.enablerMap.find(ev->getSubtype()) != enabledActions.enablerMap.end())
+	{
+		ret = true;
+	}
+	delete ev;
+	return ret;
+}
+
 void RemotePlayerEnabler::localStarts()
 {
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
@@ -501,7 +513,7 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 {
 	disableAllBut({ NET_KNIGHT,NET_YEARS_OF_PLENTY,NET_MONOPOLY,NET_ROAD_BUILDING });
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Please accept or deny the offer");
 
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	OfferTradePkg* pkg = static_cast<OfferTradePkg*>(auxEv->getPackage());
