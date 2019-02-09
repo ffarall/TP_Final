@@ -250,8 +250,11 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
-				//sorteo aca los dados??
-				//handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE, new DicePkg()));
+				srand(time(NULL));
+				char dado1, dado2;
+				dado1 = rand() % 6 + 1;
+				dado2 = rand() % 6 + 1;
+				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE, new DicePkg(dado1,dado2)));
 				return GUIEnablerEvent::TRHOW_DICE;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -263,7 +266,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getDevCardAmount(DevCards::KNIGHT) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
-				return GUIEnablerEvent::USE_KNIGHT; 
+				return GUIEnablerEvent::USE_KNIGHT; // no hace nada mas
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -274,7 +277,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
-				return GUIEnablerEvent::USE_ROAD_BUILDING; 
+				return GUIEnablerEvent::USE_ROAD_BUILDING; //no hace nada mas
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -285,7 +288,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
-				return GUIEnablerEvent::USE_MONOPOLY;
+				return GUIEnablerEvent::USE_MONOPOLY; // crear paquete 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -296,7 +299,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
-				return GUIEnablerEvent::USE_YOP; 
+				return GUIEnablerEvent::USE_YOP;  // crear paquete
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -468,21 +471,64 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	
 	buttonList[26]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton]()
+		[&localPlayer, &mainFSM,&handler, bankbutton, offerbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
-
-				return GUIEnablerEvent::ACCEPT;
+				if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
+				{
+					BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
+					if (!paquete->offerclosed())
+					{
+						paquete->closeOffer();
+						return GUIEnablerEvent::ACCEPT;
+					}
+					else if (paquete->isComplete())
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_BANK_TRADE, paquete)); // emito evento de bank trade
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
+				else if (offerbutton->getPackage() != nullptr) // Me fijo el OfferTrade
+				{
+					OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
+					if (!paquete->offerclosed())
+					{
+						paquete->closeOffer();
+						return GUIEnablerEvent::ACCEPT;
+					}
+					else if (paquete->isComplete())
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_OFFER_TRADE, paquete)); // emito evento de offertrade
+						return GUIEnablerEvent::ACCEPT;
+					} 
+				} // me falta revisar monopoly, yop, aceptar o recahzar oferta 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[27]->addUtility(
-		[&localPlayer]()
+		[&localPlayer, &mainFSM, &handler, bankbutton, offerbutton]()
 		{
-			return GUIEnablerEvent::CANCEL; 
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
+			{
+				if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
+				{
+					BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
+					delete paquete;
+					bankbutton->setPackage(nullptr);
+					return GUIEnablerEvent::CANCEL;
+				}
+				else if (offerbutton->getPackage() != nullptr) // Me fijo el OfferTrade
+				{
+					OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
+					delete paquete;
+					offerbutton->setPackage(nullptr);
+					return GUIEnablerEvent::CANCEL;
+				}
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
@@ -681,7 +727,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, MainFS
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (offerbutton != nullptr)
+		else if (offerbutton->getPackage() != nullptr)
 		{
 			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
 			if (!paquete->offerclosed())
