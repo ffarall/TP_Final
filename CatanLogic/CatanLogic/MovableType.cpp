@@ -26,9 +26,7 @@ void MovableType::printType()
 {
 	if (bitmap != NULL)
 	{
-		//al_draw_bitmap(bitmap, coordinateX, coordinateY, flags);				// AGREGADO
-		al_draw_tinted_bitmap(bitmap, tint, coordinateX, coordinateY, flags);	// AGREGADO
-		al_draw_tinted_scaled_rotated_bitmap(bitmap, tint, coordinateX, coordinateY, difX, difY, scaleX, scaleY, angle, flags);
+		al_draw_tinted_scaled_rotated_bitmap(bitmap, tint, difX, difY, coordinateX, coordinateY, scaleX, scaleY, angle, flags);
 	}
 }
 
