@@ -4,7 +4,14 @@
 
 GutenbergsPressAllegro::GutenbergsPressAllegro(ALLEGRO_BITMAP * background_)
 {
-	setBackgorund(al_load_bitmap("Backround.jpg"));
+	if (background_ == NULL)
+	{
+		setBackgorund(al_load_bitmap("Backround.jpg"));
+	}
+	else
+	{
+		setBackgorund(background_);
+	}
 }
 
 GutenbergsPressAllegro::~GutenbergsPressAllegro()
