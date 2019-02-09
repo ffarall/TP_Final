@@ -24,7 +24,7 @@ private:
 #define TX(x) (static_cast<void (GenericFsm::* )(GenericEvent *)>(&MainFSM::x))
 	const FsmMap mainFsmMap = {
 		{StartMenu_S,{{
-				{MainTypes::QUIT,{StartMenu_S,TX(endProgram)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(endProgram)}},
 				{MainTypes::START_GAME,{HandShaking_S,TX(initHandShakingFSM)}},
 				{MainTypes::TICKS,{StartMenu_S,TX(nonActRoutine)}}
 			},
@@ -32,12 +32,12 @@ private:
 
 		{HandShaking_S,{{
 				{MainTypes::NETWORK,{HandShaking_S,TX(handShakingFSMRun)}},
-				{MainTypes::TIME_OUT,{HandShaking_S,TX(handShakingFSMRun)}},
+				{MainTypes::TIME_OUT_MT,{HandShaking_S,TX(handShakingFSMRun)}},
 				{MainTypes::TICKS,{HandShaking_S,TX(decAndRun)}},
 				{MainTypes::LOCAL_STARTS,{LocalPlayer_S,TX(localStartsRoutine)}},
 				{MainTypes::REMOTE_START,{RemotePlayer_S,TX(remoteStartsRoutine)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultHandShakingS)}}},
 
@@ -48,7 +48,7 @@ private:
 				{MainTypes::TICKS,{LocalPlayer_S,TX(decTimeCounter)}},
 				{MainTypes::I_WON,{LocalGameOver_S,TX(nonActRoutine)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultLocalPlayerS)}}},
 
@@ -59,43 +59,43 @@ private:
 				{MainTypes::PLAYER_ACTION,{RemotePlayer_S,TX(remoteFSMRun)}},
 				{MainTypes::TICKS,{RemotePlayer_S,TX(decTimeCounter)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultRemotePlayerS)}} },
 
 		{LocalGameOver_S,{{
 				{MainTypes::TICKS,{LocalGameOver_S,TX(decTimeCounter)}},
-				{MainTypes::PLAY_AGAIN,{LocalPlayAgain_S,TX(nonActRoutine)}},
+				{MainTypes::PLAY_AGAIN_MT,{LocalPlayAgain_S,TX(nonActRoutine)}},
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultGameOverS)}} },
 
 		{LocalPlayAgain_S,{{
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendGameOver)}},
 				{MainTypes::TICKS,{LocalPlayAgain_S,TX(decTimeCounter)}},
-				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(continuePlaying)}},
+				{MainTypes::PLAY_AGAIN_MT,{HandShaking_S,TX(continuePlaying)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultPlayAgainS)}} },
 
 		{RemoteGameOver_S,{{
 				{MainTypes::TICKS,{RemoteGameOver_S,TX(decTimeCounter)}},
-				{MainTypes::PLAY_AGAIN,{RemotePlayAgain_S,TX(sendPlayAgain)}},
+				{MainTypes::PLAY_AGAIN_MT,{RemotePlayAgain_S,TX(sendPlayAgain)}},
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendGameOver)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultGameOverS)}} },
 
 		{RemotePlayAgain_S,{{
 				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
 				{MainTypes::TICKS,{RemotePlayAgain_S,TX(decTimeCounter)}},
-				{MainTypes::PLAY_AGAIN,{HandShaking_S,TX(ackAndcontinuePlaying)}},
+				{MainTypes::PLAY_AGAIN_MT,{HandShaking_S,TX(ackAndcontinuePlaying)}},
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
-				{MainTypes::QUIT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
 			},
 			{StartMenu_S,TX(defaultPlayAgainS)}} }
 

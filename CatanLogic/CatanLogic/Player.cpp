@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Board.h"
 #include <algorithm>
 #include <vector>
 #include <functional>
@@ -82,11 +83,11 @@ void Player::init()
 	resources[PASTOS] = 0;
 	resources[DESIERTO] = 0;
 
-	devCards[KNIGHT] = { 0, useKnight };
-	devCards[VICTORY_POINTS] = { 0, useVictoryPoint };
-	devCards[MONOPOLY] = { 0, useMonopoly };
-	devCards[YEARS_OF_PLENTY] = { 0, useYearsOfPlenty };
-	devCards[ROAD_BUILDING] = { 0, useRoadBuilding };
+	devCards[KNIGHT] = { 0, &Player::useKnight };
+	devCards[VICTORY_POINTS] = { 0, &Player::useVictoryPoint };
+	devCards[MONOPOLY] = { 0, &Player::useMonopoly };
+	devCards[YEARS_OF_PLENTY] = { 0, &Player::useYearsOfPlenty };
+	devCards[ROAD_BUILDING] = { 0, &Player::useRoadBuilding };
 }
 
 size_t Player::getVictoryPoints()
@@ -361,8 +362,9 @@ bool Player::checkResourcesForBankTrade(PortType type)
 	}
 }
 
-void Player::getNewDevCard(Board * board)
+void Player::getNewDevCard(EDASubject * board_)
 {
+	Board* board = static_cast<Board*>(board_);
 	devCards[board->pickDevCard()].amount++;
 
 	useResource(CAMPOS);
@@ -545,7 +547,8 @@ void Player::updateAvailability()
 		tempVert.push_back(boardInStrings[row + 1][colum]);
 		tempVert.push_back(boardInStrings[row + 1][colum + 1]);
 
-		for (bool fin = false, int i = 0; i < 8 && !fin; i++)
+		bool fin = false;
+		for (int i = 0; i < 8 && !fin; i++)
 		{
 			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()) )
 			{
@@ -621,8 +624,9 @@ bool Player::isThereSetOrCity(char token)
 	return false;
 }
 
-bool Player::checkIfIsPort(string position, Board* board)
+bool Player::checkIfIsPort(string position, EDASubject* board_)
 {
+	Board* board = static_cast<Board*>(board_);
 	if (board->checkIfIsPort(position))
 	{
 		if (checkResourcesForBankTrade(board->getPortType(position)))
@@ -633,8 +637,9 @@ bool Player::checkIfIsPort(string position, Board* board)
 	return false;
 }
 
-bool Player::checkForAnyPort(Board * board, PortType port_)
+bool Player::checkForAnyPort(EDASubject * board_, PortType port_)
 {
+	Board* board = static_cast< Board* >(board_);
 	for (auto settlement : mySettlements)
 	{
 		if (board->checkIfIsPort(settlement.first))
@@ -775,7 +780,7 @@ vector<string> Player::getAdjacentEdges(string vertex)
 		{
 			for (string str : allEdges)
 			{
-				if (str.find(vertex[0]) != str.end && str.find(vertex[1]) != str.end) // las aristas que contengan ambos caracteres
+				if (str.find(vertex[0]) != str.npos && str.find(vertex[1]) != str.npos) // las aristas que contengan ambos caracteres
 				{
 					adyacentes.push_back(str);
 				}

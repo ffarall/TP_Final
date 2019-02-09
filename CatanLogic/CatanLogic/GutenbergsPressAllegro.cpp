@@ -4,7 +4,14 @@
 
 GutenbergsPressAllegro::GutenbergsPressAllegro(ALLEGRO_BITMAP * background_)
 {
-	setBackgorund(background_);
+	if (background_ == NULL)
+	{
+		setBackgorund(al_load_bitmap("Backround.jpg"));
+	}
+	else
+	{
+		setBackgorund(background_);
+	}
 }
 
 GutenbergsPressAllegro::~GutenbergsPressAllegro()
@@ -23,6 +30,7 @@ void GutenbergsPressAllegro::print()
 	{
 		type->printType();
 	}
+	al_flip_display();
 }
 
 MovableType * GutenbergsPressAllegro::createType(ALLEGRO_BITMAP * bitmap_, ALLEGRO_COLOR tint_, double coordinateX_, double coordinateY_, double difX_, double difY_, double scaleX_, double scaleY_, double angle_, int flags_)

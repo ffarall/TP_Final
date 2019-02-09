@@ -7,8 +7,8 @@ enum class headers : char{
 	SETTLMENT = 0x24, ROAD = 0x25, CITY = 0x26, BANK_TRADE = 0x27, OFFER_TRADE = 0x28, PASS = 0x29,
 	DEV_CARD = 0x30, MONOPOLY = 0x31, YEARS_OF_PLENTY = 0x32, ROAD_BUILDING = 0x33, KNIGHT = 0x34,
 	YES = 0x40, NO = 0x41,
-	I_WON = 0x50, PLAY_AGAIN = 0x51, GAME_OVER = 0x52,
-	ERROR_ = 0xFE, QUIT = 0xFF
+	I_WON = 0x50, PLAY_AGAIN_H = 0x51, GAME_OVER_H = 0x52,
+	ERROR_ = 0xFE, QUIT_H = 0xFF
 };
 
 enum ResourceType : char {
@@ -21,12 +21,12 @@ enum ResourceType : char {
 };
 
 enum SeaType : char {
-	_3X1 = 'N',
-	_3X1_2TX1 = 'T',
-	_3X1_2OX1 = 'O',
-	_3X1_2LX1 = 'L',
-	_2PX1 = 'P',
-	_2MX1 = 'M'
+	ST_3X1 = 'N',
+	ST_3X1_2TX1 = 'T',
+	ST_3X1_2OX1 = 'O',
+	ST_3X1_2LX1 = 'L',
+	ST_2PX1 = 'P',
+	ST_2MX1 = 'M'
 };
 
 enum DevCards : char {

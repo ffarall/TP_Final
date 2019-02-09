@@ -35,10 +35,10 @@ int main(int argc, char* argv[])
 	AllegroGUI GUI;
 
 	GutenbergsPressAllegro printer(NULL);		// HARCODEAR EL BACKGROUND PARA QUE EL CONSTRUCTOR NO RECIBA NADA.
-	BoardController boardCont(&handler, &printer);
+	BoardController boardCont(&handler, &printer, &mainFSM);
 	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler);	// Also adds them to the GUI.
-	GUI.attachController("BoarController", &boardCont);
+	GUI.attachController("BoardController", &boardCont);
 	GUI.initGUIEnabler();
 
 	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler);
@@ -55,14 +55,15 @@ int main(int argc, char* argv[])
 	mainFSM.attach(&localObs);
 	mainFSM.attach(&boardCont);														// localObs and boardCont are observers of mainFSM.
 
+	mainFSM.notifyAllObservers();
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
+		GUI.cycle();
+		network.workPlease();
 		if (handler.isEvent())
 		{
 			GenericEvent* ev = handler.getNextEvent();
 			mainFSM.cycle(ev);
-			GUI.cycle();
-			network.workPlease();
 		}
 	}
 }
@@ -72,9 +73,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 {
 	
 
-	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "", "", 14)); //startPlayingButton()
+	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "Start Playing", "tick.png", "", 14)); //startPlayingButton()
 	GUI->attachController("StartPlaying", buttonList[0]);
-	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "", "", 14));//quitButton()
+	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "QUIT", "cruz.png", "", 14));//quitButton()
 	GUI->attachController("Quit", buttonList[1]);
 	buttonList.push_back(new Button(printer, handler, NEW_SETTLEMENT_X, NEW_SETTLEMENT_Y, NEW_SETTLEMENT_H, NEW_SETTLEMENT_W, "", "settlement.png", "", 0));//newSettlementButton
 	GUI->attachController("NewSettlement", buttonList[2]);
@@ -82,7 +83,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	GUI->attachController("NewCity", buttonList[3]);
 	buttonList.push_back(new Button(printer, handler, NEW_ROAD_X, NEW_ROAD_Y, NEW_ROAD_H, NEW_ROAD_W, "", "ROAD.png", "", 0));//newRoadButton
 	GUI->attachController("NewRoad", buttonList[4]);
-	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "BUY_DEV_CARD.png", "", 0));//getDevCardButton
+	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "DevBack2.PNG", "", 0));//getDevCardButton
 	GUI->attachController("GetDevCard", buttonList[5]);
 	buttonList.push_back(new Button(printer, handler, PASS_X, PASS_Y, PASS_H, PASS_W, "", "PASS.png", "", 0));//endTurnButton
 	GUI->attachController("EndTurn", buttonList[6]);
@@ -133,6 +134,65 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	buttonList.push_back(new Button(printer, handler, USE_KNIGHT_X, USE_KNIGHT_Y, USE_KNIGHT_H, USE_KNIGHT_W, "", "Knight.png", "catanFont.otf", 14));//stopPlayinButton
 	GUI->attachController("StopPlaying", buttonList[29]);
 
+	// attach de los botones a los modelos de los que son observers
+	mainFSM->attach(buttonList[0]);
+	mainFSM->attach(buttonList[1]);
+	mainFSM->attach(buttonList[2]);
+	mainFSM->attach(buttonList[3]);
+	mainFSM->attach(buttonList[4]);
+	mainFSM->attach(buttonList[5]);
+	mainFSM->attach(buttonList[6]);
+	mainFSM->attach(buttonList[7]);
+	mainFSM->attach(buttonList[8]);
+	mainFSM->attach(buttonList[9]);
+	mainFSM->attach(buttonList[10]);
+	mainFSM->attach(buttonList[11]);
+	mainFSM->attach(buttonList[12]);
+	mainFSM->attach(buttonList[13]);
+	mainFSM->attach(buttonList[14]);
+	mainFSM->attach(buttonList[15]);
+	mainFSM->attach(buttonList[16]);
+	mainFSM->attach(buttonList[17]);
+	mainFSM->attach(buttonList[18]);
+	mainFSM->attach(buttonList[19]);
+	mainFSM->attach(buttonList[20]);
+	mainFSM->attach(buttonList[21]);
+	mainFSM->attach(buttonList[22]);
+	mainFSM->attach(buttonList[23]);
+	mainFSM->attach(buttonList[24]);
+	mainFSM->attach(buttonList[25]);
+	mainFSM->attach(buttonList[26]);
+	mainFSM->attach(buttonList[27]);
+	mainFSM->attach(buttonList[28]);
+	mainFSM->attach(buttonList[29]);
+	
+	localPlayer->attach(buttonList[2]);
+	localPlayer->attach(buttonList[3]);
+	localPlayer->attach(buttonList[4]);
+	localPlayer->attach(buttonList[5]);
+	localPlayer->attach(buttonList[6]);
+	localPlayer->attach(buttonList[7]);
+	localPlayer->attach(buttonList[8]);
+	localPlayer->attach(buttonList[9]);
+	localPlayer->attach(buttonList[10]);
+	localPlayer->attach(buttonList[11]);
+	localPlayer->attach(buttonList[12]);
+	localPlayer->attach(buttonList[13]);
+	localPlayer->attach(buttonList[14]);
+	localPlayer->attach(buttonList[15]);
+	localPlayer->attach(buttonList[16]);
+	localPlayer->attach(buttonList[17]);
+	localPlayer->attach(buttonList[18]);
+	localPlayer->attach(buttonList[19]);
+	localPlayer->attach(buttonList[20]);
+	localPlayer->attach(buttonList[21]);
+	localPlayer->attach(buttonList[22]);
+	localPlayer->attach(buttonList[23]);
+	localPlayer->attach(buttonList[24]);
+	localPlayer->attach(buttonList[25]);
+	localPlayer->attach(buttonList[26]);
+	localPlayer->attach(buttonList[27]);
+
 	//ahora le tengo que poner las funciones a cada botón
 	for (auto a : buttonList)
 	{
@@ -143,7 +203,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	/****** attach to each button its routine to executte when is pressed *******/
 	/******* verifiying if the main FSM is in an appropiate state and the button might be avaliable*********/
 	buttonList[0]->addUtility(
-		[&mainFSM,&handler]() 
+		[mainFSM,handler]() 
 		{
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
@@ -155,19 +215,19 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[1]->addUtility(
-		[&mainFSM, &handler]()
+		[mainFSM, handler]()
 		{
 			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 			{
 				//emitir evento de quit
-				handler->enqueueEvent(new MainEvents(MainTypes::QUIT));
+				handler->enqueueEvent(new MainEvents(MainTypes::QUIT_MT));
 				return GUIEnablerEvent::QUIT;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 	buttonList[2]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[localPlayer , mainFSM]()
 		{
 			if (localPlayer->checkCityResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
@@ -177,7 +237,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[3]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[localPlayer , mainFSM]()
 		{
 			if (localPlayer->checkSettlementResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
@@ -188,7 +248,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[4]->addUtility(
-		[&localPlayer , &mainFSM ]()
+		[localPlayer , mainFSM ]()
 		{
 			if (localPlayer->checkRoadResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -199,7 +259,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[5]->addUtility(
-		[&localPlayer , &mainFSM,&tablero, &handler ]()
+		[localPlayer , mainFSM,tablero, handler ]()
 		{
 			if (localPlayer->checkResourcesForDevCard() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -210,7 +270,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		}
 	);
 	buttonList[6]->addUtility(
-		[&localPlayer , &mainFSM, &handler]()
+		[localPlayer , mainFSM, handler]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -224,7 +284,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	
 	Button * bankbutton = buttonList[7];
 	buttonList[7]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton ]()
+		[localPlayer, mainFSM, bankbutton ]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -237,7 +297,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 	Button * offerbutton = buttonList[7];
 	buttonList[8]->addUtility(
-		[&localPlayer, &mainFSM, offerbutton]()
+		[localPlayer, mainFSM, offerbutton]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -249,7 +309,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[9]->addUtility(
-		[&localPlayer , &mainFSM, &handler ]()
+		[localPlayer , mainFSM, handler ]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 			{
@@ -265,7 +325,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[10]->addUtility(
-		[&localPlayer ,&mainFSM]()
+		[localPlayer ,mainFSM]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::KNIGHT) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -276,7 +336,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[11]->addUtility(
-		[&localPlayer, &mainFSM]()
+		[localPlayer, mainFSM]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -287,7 +347,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	Button * monopoly = buttonList[12];
 	buttonList[12]->addUtility(
-		[&localPlayer , &mainFSM , &monopoly]()
+		[localPlayer , mainFSM , monopoly]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
@@ -299,7 +359,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	Button * Yop = buttonList[13];
 	buttonList[13]->addUtility(
-		[&localPlayer , &mainFSM, &Yop ]()
+		[localPlayer , mainFSM, Yop ]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
@@ -311,7 +371,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[14]->addUtility(
-		[&localPlayer , &mainFSM, bankbutton]()
+		[localPlayer , mainFSM, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3) )
 			{
@@ -326,7 +386,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[15]->addUtility(
-		[&mainFSM, &localPlayer , &tablero, bankbutton]()
+		[mainFSM, localPlayer , tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero,PortType::_3x1)) )
 			{
@@ -341,7 +401,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[16]->addUtility(
-		[&mainFSM, &localPlayer, &tablero, bankbutton]()
+		[mainFSM, localPlayer, tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 			{
@@ -361,7 +421,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[17]->addUtility(
-		[&localPlayer, &mainFSM,&tablero, bankbutton]()
+		[localPlayer, mainFSM,tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 			{
@@ -381,7 +441,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[18]->addUtility(
-		[&localPlayer, &mainFSM, &tablero, bankbutton]()
+		[localPlayer, mainFSM, tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 			{
@@ -401,7 +461,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[19]->addUtility(
-		[&localPlayer , &mainFSM , &tablero, bankbutton]()
+		[localPlayer , mainFSM , tablero, bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 			{
@@ -421,7 +481,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[20]->addUtility(
-		[&localPlayer, &mainFSM , &tablero , bankbutton]()
+		[localPlayer, mainFSM , tablero , bankbutton]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 			{
@@ -476,7 +536,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 	
 	buttonList[26]->addUtility(
-		[&localPlayer, &mainFSM,&handler, bankbutton, offerbutton, Yop, monopoly, &remEneb]()
+		[localPlayer, mainFSM,handler, bankbutton, offerbutton, Yop, monopoly, remEneb]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
@@ -544,7 +604,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[27]->addUtility(
-		[&localPlayer, &mainFSM, &handler, bankbutton, offerbutton, Yop, monopoly, &remEneb]()
+		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEneb]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
@@ -586,11 +646,11 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[28]->addUtility(
-		[&mainFSM, &handler]()
+		[mainFSM, handler]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
-				handler->enqueueEvent(new MainEvents(MainTypes::PLAY_AGAIN));
+				handler->enqueueEvent(new MainEvents(MainTypes::PLAY_AGAIN_MT));
 				return GUIEnablerEvent::PLAY_AGAIN;
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -598,7 +658,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[29]->addUtility(
-		[&mainFSM, &handler]()
+		[mainFSM, handler]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
@@ -613,115 +673,215 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	// Specifying how every button should update its movable type.
 
 
-	
-	/*
-	buttonList[3]->addUpdate(
+	buttonList[0]->addUpdate(
+		[mainFSM, buttonList]()
+		{
+		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+		{
+			if(!buttonList[0]->isPressed() && buttonList[0]->isEnabled())
+			{ 
+				buttonList[0]->setTypeTint(1, 1, 1, 1);
+			}
+			else
+			{
+				buttonList[0]->setTypeTint(1, 0.5, 0.5, 1);
+			}				
+		}
+		else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
+		{
+			buttonList[0]->setTypeTint(1, 1, 1, 0);
+		}
+		
+	}
+	);
 
+	buttonList[1]->addUpdate(
+		[mainFSM, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				if (!buttonList[1]->isPressed() && buttonList[1]->isEnabled())
+				{
+					buttonList[1]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[1]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+			else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
+			{
+				buttonList[1]->setTypeTint(1, 1, 1, 0);
+			}
+
+		}
+	);
+
+	buttonList[2]->addUpdate(
+		[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources())
+			{
+				if (!buttonList[2]->isPressed() && buttonList[2]->isEnabled())
+				{
+					buttonList[2]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[2]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+			else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->checkSettlementResources()) //si no tengo recursos, boton semitransparente para mostrarlo
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+		
+
+		}
+	);
+
+	buttonList[3]->addUpdate(
+		[]()
+		{}
 	);
 
 	buttonList[4]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[5]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[6]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[7]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[8]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[9]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[10]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[11]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[12]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[13]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[14]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[15]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[16]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[17]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[18]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[19]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[20]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[21]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[22]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[23]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[24]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[25]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[26]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[27]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[28]->addUpdate(
-
+		[]()
+		{}
 	);
 
 	buttonList[29]->addUpdate(
-
-	);*/
+		[]()
+		{}
+	);
 }
 
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton,Button * Yop, Button * monopoly, MainFSM * mainFSM,Player * localPlayer, ResourceType recurso)

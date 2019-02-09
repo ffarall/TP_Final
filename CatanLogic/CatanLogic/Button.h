@@ -1,5 +1,6 @@
 #pragma once
-#include"ObserverAndController.h"
+#include "GUIEnabler.h"
+#include "BasicGUI.h"
 #include"allegro5/allegro.h"
 #include"allegro5/allegro_font.h"
 #include"GutenbergsPressAllegro.h"
@@ -14,8 +15,8 @@ using uint = unsigned int;
 class Button :public BasicController
 {
 public:
-	Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos,uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize);
-
+	Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize);
+	~Button();
 	bool clickIn(uint x_, uint y_);
 
 	void toggleButton();
@@ -56,7 +57,6 @@ private:
 	bool buttonEnabled;
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
-	GutenbergsPressAllegro* press;
 	
 	package * info;
 	

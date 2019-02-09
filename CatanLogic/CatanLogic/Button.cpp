@@ -6,20 +6,29 @@ Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPo
 {
 	info = nullptr;
 	press = press_;
-	type = new MovableType(press, NULL);
 	buttonXPos = xPos;
 	buttonYPos = Ypos;
 	buttonHeight = height;
 	buttonWidth = width;
 	buttonText = label;
-	buttonBitmap = al_load_bitmap(imagePath.c_str);
+	buttonBitmap = al_load_bitmap(imagePath.c_str());
 	buttonFont = al_load_font(fontPath.c_str(),fontSize,0);
-	if (buttonBitmap == nullptr||buttonFont==nullptr)
+	if (buttonBitmap == NULL||buttonFont==NULL)
 	{
 		//error
 	}
-	press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
+	type = press->createType(buttonBitmap, al_map_rgb(BUTTON_TINT), xPos, Ypos);
 	
+}
+
+Button::~Button()
+{
+	if (buttonBitmap != NULL)
+		al_destroy_bitmap(buttonBitmap);
+	if (buttonFont != NULL)
+		al_destroy_font(buttonFont);
+	if (info != NULL)
+		delete info;
 }
 
 bool Button::clickIn(uint x_, uint y_)
@@ -89,7 +98,7 @@ ALLEGRO_BITMAP * Button::getBitmap()
 
 bool Button::setBitmap(std::string imagePath)
 {
-	buttonBitmap = al_load_bitmap(imagePath.c_str);
+	buttonBitmap = al_load_bitmap(imagePath.c_str());
 	if (buttonBitmap == nullptr)
 	{
 		return false;
@@ -112,7 +121,7 @@ bool Button::setFont(std::string fontPath, int fontSize)
 
 void Button::setTypeTint(char r, char g, char b, char a)
 {
-	type->setTint(al_map_rgba(r, g, b, a));
+	type->setTint(al_map_rgba_f(r, g, b, a));
 }
 
 void Button::update()
