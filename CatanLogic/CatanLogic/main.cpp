@@ -30,11 +30,11 @@ int main(int argc, char* argv[])
 	EventsHandler handler;
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
-	HandShakingFSM hsFSM(&network, localPlayerName);
+	HandShakingFSM hsFSM(&network, localPlayerName, &globalBoard);
 	MainFSM mainFSM(&hsFSM, &network, &handler, &localPlayerEnabler, &remotePlayerEnabler);
 	AllegroGUI GUI;
 
-	GutenbergsPressAllegro printer(NULL);
+	GutenbergsPressAllegro printer(NULL);		// HARCODEAR EL BACKGROUND PARA QUE EL CONSTRUCTOR NO RECIBA NADA.
 	BoardController boardCont(&handler, &printer);
 	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler);	// Also adds them to the GUI.
@@ -57,10 +57,13 @@ int main(int argc, char* argv[])
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
-		GenericEvent* ev = handler.getNextEvent();
-		mainFSM.cycle(ev);
-		GUI.cycle();
-		network.workPlease();
+		if (handler.isEvent())
+		{
+			GenericEvent* ev = handler.getNextEvent();
+			mainFSM.cycle(ev);
+			GUI.cycle();
+			network.workPlease();
+		}
 	}
 }
 
@@ -615,32 +618,74 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
-			if(!buttonList[0]->isPressed())
+			if(!buttonList[0]->isPressed() && buttonList[0]->isEnabled())
 			{ 
 				buttonList[0]->setTypeTint(1, 1, 1, 1);
-				buttonList[0]->enable;
 			}
 			else
 			{
 				buttonList[0]->setTypeTint(1, 0.5, 0.5, 1);
-				buttonList[0]->disable;
 			}				
 		}
 		else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
 		{
 			buttonList[0]->setTypeTint(1, 1, 1, 0);
-			buttonList[0]->disable;
 		}
 		
 	}
 	);
 
 	buttonList[1]->addUpdate(
+		[&mainFSM, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				if (!buttonList[1]->isPressed() && buttonList[1]->isEnabled())
+				{
+					buttonList[1]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[1]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+			else //si no estoy en el menu de inicio el boton es invisible y esta desactivado
+			{
+				buttonList[1]->setTypeTint(1, 1, 1, 0);
+			}
 
+		}
 	);
 
 	buttonList[2]->addUpdate(
+		[&mainFSM, &localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources())
+			{
+				if (!buttonList[2]->isPressed() && buttonList[2]->isEnabled())
+				{
+					buttonList[2]->setTypeTint(1, 1, 1, 1);
+				}
+				else
+				{
+					buttonList[2]->setTypeTint(1, 0.5, 0.5, 1);
+				}
+			}
+			else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->checkSettlementResources()) //si no tengo recursos, boton semitransparente para mostrarlo
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, boton desactivado
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 0.5);
+			}
+			else
+			{
+				buttonList[2]->setTypeTint(1, 1, 1, 0);//si no estoy en el juego el boton es invisible y esta desactivado
+			}
+		
 
+		}
 	);
 
 	buttonList[3]->addUpdate(

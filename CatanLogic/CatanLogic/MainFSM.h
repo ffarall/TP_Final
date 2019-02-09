@@ -1,4 +1,4 @@
-b#pragma once
+#pragma once
 #include"NewGenericFSM.h"
 #include"MainEvent.h"
 #include"HandShakingFSM.h"

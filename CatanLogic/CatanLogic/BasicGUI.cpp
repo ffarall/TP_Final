@@ -17,9 +17,9 @@ void BasicGUI::cycle()
 {
 	if (enablerEv != NO_EV)
 	{
-		((GUIEnabler*)this)->cycle(enablerEv);
+		GUIEnabler::cycle(enablerEv);
+		enablerEv = NO_EV;									// Clearing event used.
 	}
-	enablerEv = NO_EV;									// Clearing event used.
 	
 	if (checkForEvents())
 	{
@@ -42,12 +42,16 @@ void BasicGUI::parseEvent()
 			}
 		}
 	}
-		break;
+	break;
 	case GUI_MOUSE_DOWN:
 	{
 		for (auto controller : controllers)
 		{
-			controller.second->parseMouseDownEvent(mouseCoordinates.first, mouseCoordinates.second);
+			GUIEnablerEvent temp = controller.second->parseMouseDownEvent(mouseCoordinates.first, mouseCoordinates.second);
+			if (temp != NO_EV)													// It is assumed that only one parser will generate a new event.
+			{																	// Also, every new enablerEv will be used right away.
+				enablerEv = temp;												// Therefore, an eventQueue is unnecessary.
+			}
 		}
 	}
 		break;
@@ -55,15 +59,17 @@ void BasicGUI::parseEvent()
 	{
 		for (auto controller : controllers)
 		{
-			controller.second->parseMouseUpEvent(mouseCoordinates.first, mouseCoordinates.second);
+			GUIEnablerEvent temp = controller.second->parseMouseUpEvent(mouseCoordinates.first, mouseCoordinates.second);
+			if (temp != NO_EV)													// It is assumed that only one parser will generate a new event.
+			{																	// Also, every new enablerEv will be used right away.
+				enablerEv = temp;												// Therefore, an eventQueue is unnecessary.
+			}
 		}
 	}
 	break;
-	case GUI_CLOSE_DISPLAY:
-		needToClose = true;
+	case GUI_CLOSE_DISPLAY: needToClose = true;
 	break;
-	default:
-		break;
+	default: break;
 	}
 }
 

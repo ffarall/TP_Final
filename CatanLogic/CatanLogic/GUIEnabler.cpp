@@ -15,7 +15,7 @@ GUIEnabler::~GUIEnabler()
 
 void GUIEnabler::cycle(GUIEnablerEvent ev)
 {
-		if (enabledActions.enablerMap.count(ev))
+		if (enabledActions.enablerMap.count(ev))						// Checking there is an action enabled for ev.
 		{
 			for (auto action : enabledActions.enablerMap[ev])
 			{
