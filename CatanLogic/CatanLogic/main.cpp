@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	MainFSM mainFSM(&hsFSM, &network, &handler, &localPlayerEnabler, &remotePlayerEnabler);
 	AllegroGUI GUI;
 
-	GutenbergsPressAllegro printer(NULL);
+	GutenbergsPressAllegro printer(NULL);		// HARCODEAR EL BACKGROUND PARA QUE EL CONSTRUCTOR NO RECIBA NADA.
 	BoardController boardCont(&handler, &printer);
 	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList);	// Also adds them to the GUI.
