@@ -4,6 +4,7 @@
 
 Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize) : BasicController(handler_)
 {
+	info = nullptr;
 	press = press_;
 	type = new MovableType(press, NULL);
 	buttonXPos = xPos;
@@ -109,6 +110,11 @@ bool Button::setFont(std::string fontPath, int fontSize)
 	
 }
 
+void Button::setTypeTint(char r, char g, char b, char a)
+{
+	type->setTint(al_map_rgba(r, g, b, a));
+}
+
 void Button::update()
 {
 	updateCallback();
@@ -157,3 +163,20 @@ GUIEnablerEvent Button::parseTimerEvent()
 {
 	return GUIEnablerEvent::NO_EV; // ver
 }
+
+MovableType * Button::getType()
+{
+	return type;
+}
+
+package * Button::getPackage()
+{
+	return info;
+}
+
+void Button::setPackage(package * data)
+{
+	info = data;
+}
+
+

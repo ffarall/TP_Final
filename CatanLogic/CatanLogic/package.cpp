@@ -428,11 +428,20 @@ std::string RoadPkg::getPackage()
 	return ret;
 }
 
+BankTradePkg::BankTradePkg():package(headers::BANK_TRADE) // crea el package vacio
+{
+	nOfResources = 0;
+	misRecursos.clear();
+	pedido = ResourceType::DESIERTO; // es el recurso que no existe
+	offer = false;
+}
+
 BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _pedido) :package(headers::BANK_TRADE)
 {
 	nOfResources = myResouces.size();
 	misRecursos = myResouces;
 	pedido = _pedido;
+	offer = false;
 }
 
 char BankTradePkg::getLength()
@@ -450,6 +459,26 @@ ResourceType BankTradePkg::getResouceBougth()
 	return pedido;
 }
 
+void BankTradePkg::setType(char num)
+{
+	nOfResources = num;
+}
+
+void BankTradePkg::setPaid(std::vector<ResourceType>& myResources)
+{
+	misRecursos = myResources;
+}
+
+void BankTradePkg::setBougth(ResourceType pedido_)
+{
+	pedido = pedido_;
+}
+
+void BankTradePkg::closeOffer()
+{
+	offer = true;
+}
+
 std::string BankTradePkg::getPackage()
 {
 	std::string ret;
@@ -460,14 +489,33 @@ std::string BankTradePkg::getPackage()
 	return ret;
 }
 
-OfferTradePkg::OfferTradePkg()
+bool BankTradePkg::isComplete()
 {
+	bool ret = false;
+	if (nOfResources != 0 && pedido != ResourceType::DESIERTO)
+	{
+		ret = true;
+	}
+	return ret;
+}
+
+bool BankTradePkg::offerclosed()
+{
+	return offer;
+}
+
+OfferTradePkg::OfferTradePkg():package(headers::OFFER_TRADE)
+{
+	myOffer.clear();
+	esperoAcambio.clear();
+	offer = false;
 }
 
 OfferTradePkg::OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido):package(headers::OFFER_TRADE)
 {
 	myOffer = offer;
 	esperoAcambio = pedido;
+	offer = false;
 }
 
 std::vector<ResourceType> OfferTradePkg::getMyOnes()
@@ -480,6 +528,28 @@ std::vector<ResourceType> OfferTradePkg::getOpponentOnes()
 	return esperoAcambio;
 }
 
+void OfferTradePkg::addToMyOffer(ResourceType offer_)
+{
+	if (myOffer.size() < 9)
+	{
+		myOffer.emplace_back(offer_);
+	}
+	
+}
+
+void OfferTradePkg::closeOffer()
+{
+	offer = true;
+}
+
+void OfferTradePkg::addToMyRequest(ResourceType pedido_)
+{
+	if (esperoAcambio.size() < 9)
+	{
+		esperoAcambio.emplace_back(pedido_);
+	}
+}
+
 std::string OfferTradePkg::getPackage()
 {
 	std::string ret;
@@ -489,6 +559,21 @@ std::string OfferTradePkg::getPackage()
 	for (ResourceType a : myOffer) { ret.push_back(static_cast<char>(a)); }
 	for (ResourceType a : esperoAcambio) { ret.push_back(static_cast<char>(a)); }
 	return ret;
+}
+
+bool OfferTradePkg::isComplete()
+{
+	bool ret = false;
+	if (myOffer.size() > 0 && esperoAcambio.size() > 0)
+	{
+		ret = true;
+	}
+	return ret;
+}
+
+bool OfferTradePkg::offerclosed()
+{
+	return offer;
 }
 
 KnightPkg::KnightPkg(char newPos):package(headers::KNIGHT)

@@ -30,7 +30,7 @@ public:
 	ALLEGRO_BITMAP* getBitmap();	
 	bool setBitmap(std::string imagePath);
 	bool setFont(std::string fontPath, int fontSize);
-
+	void setTypeTint(char r, char g, char b, char a);
 	void addUtility(const ParseAction& callback_);
 	void addUpdate(const UpdateAction& callback_);
 
@@ -40,9 +40,10 @@ public:
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
 
+	MovableType* getType();
 	package * getPackage();
 	void setPackage(package * data);
-
+	
 private:
 	GutenbergsPressAllegro* press;
 	MovableType* type;
@@ -56,8 +57,9 @@ private:
 	ALLEGRO_BITMAP* buttonBitmap;
 	ALLEGRO_FONT* buttonFont;
 	GutenbergsPressAllegro* press;
+	
 	package * info;
-
+	
 	UpdateAction updateCallback;
 	ParseAction parseCallback;
 };
