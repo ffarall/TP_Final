@@ -444,6 +444,17 @@ BankTradePkg::BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType _
 	offer = false;
 }
 
+BankTradePkg::BankTradePkg(BankTradePkg * copiar) :package(headers::BANK_TRADE)
+{
+	nOfResources = copiar->getLength();
+	pedido = copiar->getResouceBougth();
+	for (auto rec : copiar->getResoucesPaid())
+	{
+		misRecursos.push_back(rec);
+	}
+	offer = false;
+}
+
 char BankTradePkg::getLength()
 {
 	return nOfResources;
@@ -511,10 +522,23 @@ OfferTradePkg::OfferTradePkg():package(headers::OFFER_TRADE)
 	offer = false;
 }
 
-OfferTradePkg::OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido):package(headers::OFFER_TRADE)
+OfferTradePkg::OfferTradePkg(std::vector<ResourceType>& offer_, std::vector<ResourceType>& pedido):package(headers::OFFER_TRADE)
 {
-	myOffer = offer;
+	myOffer = offer_;
 	esperoAcambio = pedido;
+	offer = false;
+}
+
+OfferTradePkg::OfferTradePkg(OfferTradePkg * copiar) :package(headers::OFFER_TRADE)
+{
+	for (auto rec : copiar->getMyOnes())
+	{
+		addToMyOffer(rec);
+	}
+	for (auto req : copiar->getOpponentOnes())
+	{
+		addToMyRequest(req);
+	}
 	offer = false;
 }
 
@@ -595,6 +619,11 @@ std::string KnightPkg::getPackage()
 	return ret;
 }
 
+MonopolyPkg::MonopolyPkg():package(headers::MONOPOLY)
+{
+	resource = ResourceType::DESIERTO; // es el que no puede ser nunca
+}
+
 MonopolyPkg::MonopolyPkg(ResourceType recurso):package(headers::MONOPOLY)
 {
 	resource = recurso;
@@ -611,6 +640,16 @@ std::string MonopolyPkg::getPackage()
 	ret.push_back(static_cast<char>(nombre));
 	ret.push_back(static_cast<char>(resource));
 	return ret;
+}
+
+void MonopolyPkg::setResource(ResourceType rec)
+{
+	resource = rec;
+}
+
+YearsOfPlentyPkg::YearsOfPlentyPkg():package(headers::YEARS_OF_PLENTY)
+{
+	rec1 = rec2 = ResourceType::DESIERTO; 
 }
 
 YearsOfPlentyPkg::YearsOfPlentyPkg(ResourceType rec1_, ResourceType rec2_):package(headers::YEARS_OF_PLENTY)
@@ -631,6 +670,18 @@ std::string YearsOfPlentyPkg::getPackage()
 ResourceType YearsOfPlentyPkg::getResource(bool cual)
 {
 	return cual ? rec1:rec2 ;
+}
+
+void YearsOfPlentyPkg::setResource(bool cual, ResourceType recurso)
+{
+	if (cual)
+	{
+		rec1 = recurso;
+	}
+	else
+	{
+		rec2 = recurso;
+	}
 }
 
 CardIsPkg::CardIsPkg(char resource) :package(headers::CARD_IS)

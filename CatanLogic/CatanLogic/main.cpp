@@ -17,8 +17,8 @@
 #include "GutenbergsPressAllegro.h"
 #include "SubEvents.h"
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList);
-GUIEnablerEvent ResourceButton();
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb);
+GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
 
 int main(int argc, char* argv[])
 {
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	GutenbergsPressAllegro printer(NULL);
 	BoardController boardCont(&handler, &printer);
 	std::vector<Button*> buttonList;
-	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard);	// Also adds them to the GUI.
+	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler);	// Also adds them to the GUI.
 	GUI.attachController("BoarController", &boardCont);
 	GUI.initGUIEnabler();
 
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 }
 
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList)
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb)
 {
 	
 
@@ -282,23 +282,25 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
-
+	Button * monopoly = buttonList[12];
 	buttonList[12]->addUtility(
-		[&localPlayer , &mainFSM]()
+		[&localPlayer , &mainFSM , &monopoly]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::MONOPOLY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
+				monopoly->setPackage(new MonopolyPkg());
 				return GUIEnablerEvent::USE_MONOPOLY; // crear paquete 
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
-
+	Button * Yop = buttonList[13];
 	buttonList[13]->addUtility(
-		[&localPlayer , &mainFSM ]()
+		[&localPlayer , &mainFSM, &Yop ]()
 		{
 			if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
 			{
+				Yop->setPackage(new YearsOfPlentyPkg());
 				return GUIEnablerEvent::USE_YOP;  // crear paquete
 			}
 			return GUIEnablerEvent::NO_EV;
@@ -436,42 +438,42 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[21]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton]()
+		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::COLINAS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::COLINAS);
 		}
 	);
 
 	buttonList[22]->addUtility(
-		[&localPlayer , &mainFSM, bankbutton, offerbutton]()
+		[&localPlayer , &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::BOSQUE);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::BOSQUE);
 		}
 	);
 
 	buttonList[23]->addUtility(
-		[&localPlayer , &mainFSM, bankbutton, offerbutton]()
+		[&localPlayer , &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::MONTAÑAS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::MONTAÑAS);
 		}
 	);
 
 	buttonList[24]->addUtility(
-		[&localPlayer, &mainFSM , bankbutton, offerbutton]()
+		[&localPlayer, &mainFSM , bankbutton, offerbutton, Yop, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::CAMPOS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::CAMPOS);
 		}
 	);
 
 	buttonList[25]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton]()
+		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, mainFSM, localPlayer, ResourceType::PASTOS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::PASTOS);
 		}
 	);
 	
 	buttonList[26]->addUtility(
-		[&localPlayer, &mainFSM,&handler, bankbutton, offerbutton]()
+		[&localPlayer, &mainFSM,&handler, bankbutton, offerbutton, Yop, monopoly, &remEneb]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
@@ -485,7 +487,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					}
 					else if (paquete->isComplete())
 					{
-						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_BANK_TRADE, paquete)); // emito evento de bank trade
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_BANK_TRADE, new BankTradePkg(paquete))); // emito evento de bank trade
+						delete paquete;
+						bankbutton->setPackage(nullptr);
 						return GUIEnablerEvent::ACCEPT;
 					}
 				}
@@ -499,19 +503,47 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					}
 					else if (paquete->isComplete())
 					{
-						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_OFFER_TRADE, paquete)); // emito evento de offertrade
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_OFFER_TRADE, new OfferTradePkg(paquete))); // emito evento de offertrade
+						delete paquete;
+						offerbutton->setPackage(nullptr);
 						return GUIEnablerEvent::ACCEPT;
 					} 
-				} // me falta revisar monopoly, yop, aceptar o recahzar oferta 
+				} 
+				else if (Yop->getPackage() != nullptr)
+				{
+					YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(Yop->getPackage());
+					if (paquete->getResource(false) != ResourceType::DESIERTO) // si ya se eligieron los dos, confirmo el paquete 
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YEARS_OF_PLENTY,new YearsOfPlentyPkg(paquete->getResource(true), paquete->getResource(false)))); // ver quien elimina el paquete
+						delete paquete;
+						Yop->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
+				else if (monopoly->getPackage() != nullptr)
+				{
+					MonopolyPkg * paquete = static_cast<MonopolyPkg *>(monopoly->getPackage());
+					if (paquete->getResource() != ResourceType::DESIERTO)
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_MONOPOLY, new MonopolyPkg(paquete->getResource()))); 
+						delete paquete;
+						monopoly->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
+				else if (remEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES))) // contesto la oferta que me manda el otro player
+				{
+					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES, new package(headers::YES)));
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[27]->addUtility(
-		[&localPlayer, &mainFSM, &handler, bankbutton, offerbutton]()
+		[&localPlayer, &mainFSM, &handler, bankbutton, offerbutton, Yop, monopoly, &remEneb]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
 				if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
 				{
@@ -527,6 +559,24 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 					offerbutton->setPackage(nullptr);
 					return GUIEnablerEvent::CANCEL;
 				}
+				else if (Yop->getPackage() != nullptr)
+				{
+					YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(Yop->getPackage());
+					delete paquete;
+					offerbutton->setPackage(nullptr);
+					return GUIEnablerEvent::CANCEL;
+				}
+				else if (monopoly->getPackage() != nullptr)
+				{
+					MonopolyPkg * paquete = static_cast<MonopolyPkg *>(monopoly->getPackage());
+					delete paquete;
+					offerbutton->setPackage(nullptr);
+					return GUIEnablerEvent::CANCEL;
+				}
+				else if (remEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO))) // contesto la oferta que me manda el otro player
+				{
+					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION,SubType::PLA_NO,new package(headers::NO)));
+				}
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
@@ -535,7 +585,6 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	buttonList[28]->addUtility(
 		[&mainFSM, &handler]()
 		{
-		 //revisar si es en estos estados que aparecen estos botones
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
 			{
 				handler->enqueueEvent(new MainEvents(MainTypes::PLAY_AGAIN));
@@ -703,23 +752,26 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 }
 
-GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, MainFSM * mainFSM,Player * localPlayer, ResourceType recurso)
+GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton,Button * Yop, Button * monopoly, MainFSM * mainFSM,Player * localPlayer, ResourceType recurso)
 {
-	if (localPlayer->getResourceAmount(recurso) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 	{
-		if (bankbutton->getPackage() != nullptr)
+		if (localPlayer->getResourceAmount(recurso) && bankbutton->getPackage() != nullptr )
 		{
 			BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
 			if (!paquete->offerclosed())
 			{
-				char i;
-				std::vector<ResourceType> payment;
-				for (i = paquete->getLength(); i > 0; i--)
+				char i = paquete->getLength();
+				if (localPlayer->getResourceAmount(recurso) >= i) // me fijo si tiene los recursos necesarios
 				{
-					payment.emplace_back(recurso);
+					std::vector<ResourceType> payment;
+					for (i; i > 0; i--)
+					{
+						payment.emplace_back(recurso);
+					}
+					paquete->setPaid(payment);
+					return GUIEnablerEvent::RESOURCE;
 				}
-				paquete->setPaid(payment);
-				return GUIEnablerEvent::RESOURCE;
 			}
 			else if (!paquete->isComplete())
 			{
@@ -727,19 +779,53 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, MainFS
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (offerbutton->getPackage() != nullptr)
+		else if (localPlayer->getResourceAmount(recurso) && offerbutton->getPackage() != nullptr)
 		{
 			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
 			if (!paquete->offerclosed())
 			{
-				paquete->addToMyOffer(recurso);
-				return GUIEnablerEvent::RESOURCE;
+				int amount = 0;
+				for (auto rec : paquete->getMyOnes())
+				{
+					amount += (rec == recurso ? 1 : 0);
+				}
+				if (localPlayer->getResourceAmount(recurso) > amount) // me fijo que tenga los recursos que esta ofreciendo
+				{
+					paquete->addToMyOffer(recurso);
+					return GUIEnablerEvent::RESOURCE;
+				}
 			}
 			else if (!paquete->isComplete())
 			{
 				paquete->addToMyRequest(recurso);
 				return GUIEnablerEvent::RESOURCE;
 			}
+		}
+		else if (Yop->getPackage() != nullptr)
+		{
+			YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(bankbutton->getPackage());
+			if (paquete->getResource(true) == ResourceType::DESIERTO) // me fijo si esta completo el primer recurso
+			{
+				paquete->setResource(true, recurso);
+				return GUIEnablerEvent::RESOURCE;
+			}
+			else if (paquete->getResource(false) == ResourceType::DESIERTO) // ahora me fijo el segundo
+			{
+				paquete->setResource(false, recurso);
+				return GUIEnablerEvent::RESOURCE;
+			}
+			else
+			{
+				paquete->setResource(true, paquete->getResource(false)); // paso el segundo al primero
+				paquete->setResource(false, recurso); // el nuevo lo pongo en el segundo
+				return GUIEnablerEvent::RESOURCE;
+			}
+		}
+		else if (monopoly->getPackage() != nullptr)
+		{
+			MonopolyPkg * paquete = static_cast<MonopolyPkg *>(bankbutton->getPackage());
+			paquete->setResource(recurso);
+			return GUIEnablerEvent::RESOURCE;
 		}
 	}
 	return GUIEnablerEvent::NO_EV;

@@ -163,7 +163,7 @@ class BankTradePkg :
 public:
 	BankTradePkg();
 	BankTradePkg(std::vector<ResourceType>& myResouces, ResourceType pedido);
-	
+	BankTradePkg(BankTradePkg * copiar);
 	char getLength();//devuelve la cantidad de ResourceType pagados
 	std::vector<ResourceType> getResoucesPaid();
 	ResourceType getResouceBougth();
@@ -188,7 +188,8 @@ class OfferTradePkg :
 {
 public:
 	OfferTradePkg();
-	OfferTradePkg(std::vector<ResourceType>& offer, std::vector<ResourceType>& pedido);
+	OfferTradePkg(std::vector<ResourceType>& offer_, std::vector<ResourceType>& pedido);
+	OfferTradePkg(OfferTradePkg * copiar);
 	std::vector<ResourceType> getMyOnes();
 	std::vector<ResourceType> getOpponentOnes();
 
@@ -220,9 +221,12 @@ class MonopolyPkg :
 	public package
 {
 public:
+	MonopolyPkg();
 	MonopolyPkg(ResourceType recurso);
 	ResourceType getResource();
 	virtual std::string getPackage();
+
+	void setResource(ResourceType rec);
 private:
 	ResourceType resource;
 };
@@ -231,9 +235,12 @@ class YearsOfPlentyPkg :
 	public package
 {
 public:
+	YearsOfPlentyPkg();
 	YearsOfPlentyPkg(ResourceType rec1_, ResourceType rec2_);
 	virtual std::string getPackage();
 	ResourceType getResource(bool cual); // true es el 1 y false el 2
+
+	void setResource(bool cual, ResourceType recurso);
 private:
 	ResourceType rec1;
 	ResourceType rec2;
