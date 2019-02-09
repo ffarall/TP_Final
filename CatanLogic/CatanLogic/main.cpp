@@ -133,6 +133,65 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	buttonList.push_back(new Button(printer, handler, USE_KNIGHT_X, USE_KNIGHT_Y, USE_KNIGHT_H, USE_KNIGHT_W, "", "Knight.png", "catanFont.otf", 14));//stopPlayinButton
 	GUI->attachController("StopPlaying", buttonList[29]);
 
+	// attach de los botones a los modelos de los que son observers
+	mainFSM->attach(buttonList[0]);
+	mainFSM->attach(buttonList[1]);
+	mainFSM->attach(buttonList[2]);
+	mainFSM->attach(buttonList[3]);
+	mainFSM->attach(buttonList[4]);
+	mainFSM->attach(buttonList[5]);
+	mainFSM->attach(buttonList[6]);
+	mainFSM->attach(buttonList[7]);
+	mainFSM->attach(buttonList[8]);
+	mainFSM->attach(buttonList[9]);
+	mainFSM->attach(buttonList[10]);
+	mainFSM->attach(buttonList[11]);
+	mainFSM->attach(buttonList[12]);
+	mainFSM->attach(buttonList[13]);
+	mainFSM->attach(buttonList[14]);
+	mainFSM->attach(buttonList[15]);
+	mainFSM->attach(buttonList[16]);
+	mainFSM->attach(buttonList[17]);
+	mainFSM->attach(buttonList[18]);
+	mainFSM->attach(buttonList[19]);
+	mainFSM->attach(buttonList[20]);
+	mainFSM->attach(buttonList[21]);
+	mainFSM->attach(buttonList[22]);
+	mainFSM->attach(buttonList[23]);
+	mainFSM->attach(buttonList[24]);
+	mainFSM->attach(buttonList[25]);
+	mainFSM->attach(buttonList[26]);
+	mainFSM->attach(buttonList[27]);
+	mainFSM->attach(buttonList[28]);
+	mainFSM->attach(buttonList[29]);
+	
+	localPlayer->attach(buttonList[2]);
+	localPlayer->attach(buttonList[3]);
+	localPlayer->attach(buttonList[4]);
+	localPlayer->attach(buttonList[5]);
+	localPlayer->attach(buttonList[6]);
+	localPlayer->attach(buttonList[7]);
+	localPlayer->attach(buttonList[8]);
+	localPlayer->attach(buttonList[9]);
+	localPlayer->attach(buttonList[10]);
+	localPlayer->attach(buttonList[11]);
+	localPlayer->attach(buttonList[12]);
+	localPlayer->attach(buttonList[13]);
+	localPlayer->attach(buttonList[14]);
+	localPlayer->attach(buttonList[15]);
+	localPlayer->attach(buttonList[16]);
+	localPlayer->attach(buttonList[17]);
+	localPlayer->attach(buttonList[18]);
+	localPlayer->attach(buttonList[19]);
+	localPlayer->attach(buttonList[20]);
+	localPlayer->attach(buttonList[21]);
+	localPlayer->attach(buttonList[22]);
+	localPlayer->attach(buttonList[23]);
+	localPlayer->attach(buttonList[24]);
+	localPlayer->attach(buttonList[25]);
+	localPlayer->attach(buttonList[26]);
+	localPlayer->attach(buttonList[27]);
+
 	//ahora le tengo que poner las funciones a cada botón
 	for (auto a : buttonList)
 	{
