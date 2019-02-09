@@ -25,6 +25,18 @@ string PlayerEnabler::getWaitingMessage()
 	return waitingMessageForUser;
 }
 
+bool PlayerEnabler::waitingForThisSubtype(SubtypeEvent * ev)
+{
+	bool ret = false;
+
+	if (enabledActions.enablerMap.find(ev->getSubtype()) != enabledActions.enablerMap.end())
+	{
+		ret = true;
+	}
+	delete ev;
+	return ret;
+}
+
 void PlayerEnabler::setLocalPlayer(Player * localPlayer_)
 {
 	localPlayer = localPlayer_;

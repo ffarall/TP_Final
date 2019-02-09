@@ -17,6 +17,7 @@ public:
 	string getErrMessage();
 	string getWaitingMessage();
 
+	bool waitingForThisSubtype(SubtypeEvent * ev);
 	// Allows other PlayerEnabler to create common new Player objects for localPlayer.
 	void setLocalPlayer(Player* localPlayer_);
 	// Allows other PlayerEnabler to create common new Player objects for remotePlayer.
