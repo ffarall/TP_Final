@@ -154,27 +154,27 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	/******* verifiying if the main FSM is in an appropiate state and the button might be avaliable*********/
 	buttonList[0]->addUtility(
 		[mainFSM, handler]()
-	{
-		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
-			//emitir evento start
-			handler->enqueueEvent(new MainEvents(MainTypes::START_GAME));
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				//emitir evento start
+				handler->enqueueEvent(new MainEvents(MainTypes::START_GAME));
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[1]->addUtility(
 		[mainFSM, handler]()
-	{
-		if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 		{
-			//emitir evento de quit
-			handler->enqueueEvent(new MainEvents(MainTypes::QUIT_MT));
-			return GUIEnablerEvent::QUIT;
+			if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+			{
+				//emitir evento de quit
+				handler->enqueueEvent(new MainEvents(MainTypes::QUIT_MT));
+				return GUIEnablerEvent::QUIT;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 	buttonList[2]->addUtility(
 		[locEnab]()
@@ -260,297 +260,297 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 
 	buttonList[9]->addUtility(
 		[localPlayer, mainFSM, handler, locEnab]()
-	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 		{
-			srand(time(NULL));
-			char dado1, dado2;
-			dado1 = rand() % 6 + 1;
-			dado2 = rand() % 6 + 1;
-			handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE, new DicePkg(dado1, dado2)));
-			return GUIEnablerEvent::TRHOW_DICE;
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
+			{
+				srand(time(NULL));
+				char dado1, dado2;
+				dado1 = rand() % 6 + 1;
+				dado2 = rand() % 6 + 1;
+				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE, new DicePkg(dado1, dado2)));
+				return GUIEnablerEvent::TRHOW_DICE;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[10]->addUtility(
-		[localPlayer, mainFSM]()
-	{
-		if (localPlayer->getDevCardAmount(DevCards::KNIGHT) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab]()
 		{
-			return GUIEnablerEvent::USE_KNIGHT; // no hace nada mas
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_KNIGHT)))
+			{
+				return GUIEnablerEvent::USE_KNIGHT; // no hace nada mas
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[11]->addUtility(
-		[localPlayer, mainFSM]()
-	{
-		if (localPlayer->getDevCardAmount(DevCards::ROAD_BUILDING) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab]()
 		{
-			return GUIEnablerEvent::USE_ROAD_BUILDING; //no hace nada mas
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD_BUILDING)))
+			{
+				return GUIEnablerEvent::USE_ROAD_BUILDING; //no hace nada mas
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 	Button * monopoly = buttonList[12];
 	buttonList[12]->addUtility(
-		[localPlayer, mainFSM, monopoly]()
-	{
-		if (localPlayer->getDevCardAmount(DevCards::MONOPOLY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab, monopoly]()
 		{
-			monopoly->setPackage(new MonopolyPkg());
-			return GUIEnablerEvent::USE_MONOPOLY; // crear paquete 
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_MONOPOLY)))
+			{
+				monopoly->setPackage(new MonopolyPkg());
+				return GUIEnablerEvent::USE_MONOPOLY; // crear paquete 
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 	Button * Yop = buttonList[13];
 	buttonList[13]->addUtility(
-		[localPlayer, mainFSM, Yop]()
-	{
-		if (localPlayer->getDevCardAmount(DevCards::YEARS_OF_PLENTY) && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab, Yop]()
 		{
-			Yop->setPackage(new YearsOfPlentyPkg());
-			return GUIEnablerEvent::USE_YOP;  // crear paquete
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YEARS_OF_PLENTY)))
+			{
+				Yop->setPackage(new YearsOfPlentyPkg());
+				return GUIEnablerEvent::USE_YOP;  // crear paquete
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[14]->addUtility(
 		[localPlayer, mainFSM, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(4);
-				return GUIEnablerEvent::_4X1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(4);
+					return GUIEnablerEvent::_4X1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[15]->addUtility(
 		[mainFSM, localPlayer, tablero, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero, PortType::_3x1)))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero, PortType::_3x1)))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(3);
-				return GUIEnablerEvent::_3X1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(3);
+					return GUIEnablerEvent::_3X1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[16]->addUtility(
 		[mainFSM, localPlayer, tablero, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
-				std::vector<ResourceType> mandar;
-				mandar.emplace_back(ResourceType::BOSQUE);
-				mandar.emplace_back(ResourceType::BOSQUE);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
-				return GUIEnablerEvent::_2MX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::BOSQUE);
+					mandar.emplace_back(ResourceType::BOSQUE);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->closeOffer();
+					return GUIEnablerEvent::_2MX1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[17]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
-				std::vector<ResourceType> mandar;
-				mandar.emplace_back(ResourceType::CAMPOS);
-				mandar.emplace_back(ResourceType::CAMPOS);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
-				return GUIEnablerEvent::_2TX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::CAMPOS);
+					mandar.emplace_back(ResourceType::CAMPOS);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->closeOffer();
+					return GUIEnablerEvent::_2TX1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[18]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
-				std::vector<ResourceType> mandar;
-				mandar.emplace_back(ResourceType::COLINAS);
-				mandar.emplace_back(ResourceType::COLINAS);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
-				return GUIEnablerEvent::_2LX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::COLINAS);
+					mandar.emplace_back(ResourceType::COLINAS);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->closeOffer();
+					return GUIEnablerEvent::_2LX1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[19]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
-				std::vector<ResourceType> mandar;
-				mandar.emplace_back(ResourceType::PASTOS);
-				mandar.emplace_back(ResourceType::PASTOS);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
-				return GUIEnablerEvent::_2OX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::PASTOS);
+					mandar.emplace_back(ResourceType::PASTOS);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->closeOffer();
+					return GUIEnablerEvent::_2OX1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[20]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 			{
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setType(2);
-				std::vector<ResourceType> mandar;
-				mandar.emplace_back(ResourceType::MONTAÑAS);
-				mandar.emplace_back(ResourceType::MONTAÑAS);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->setPaid(mandar);
-				static_cast<BankTradePkg *>(bankbutton->getPackage())->closeOffer();
-				return GUIEnablerEvent::_2PX1;
+				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				{
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
+					std::vector<ResourceType> mandar;
+					mandar.emplace_back(ResourceType::MONTAÑAS);
+					mandar.emplace_back(ResourceType::MONTAÑAS);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->setPaid(mandar);
+					static_cast<BankTradePkg*>(bankbutton->getPackage())->closeOffer();
+					return GUIEnablerEvent::_2PX1;
+				}
 			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[21]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
-	{
-		return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::COLINAS);
-	}
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		{
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::COLINAS);
+		}
 	);
 
 	buttonList[22]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
-	{
-		return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::BOSQUE);
-	}
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		{
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::BOSQUE);
+		}
 	);
 
 	buttonList[23]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
-	{
-		return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::MONTAÑAS);
-	}
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		{
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::MONTAÑAS);
+		}
 	);
 
 	buttonList[24]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
-	{
-		return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::CAMPOS);
-	}
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		{
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::CAMPOS);
+		}
 	);
 
 	buttonList[25]->addUtility(
-		[&localPlayer, &mainFSM, bankbutton, offerbutton, Yop, monopoly]()
-	{
-		return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::PASTOS);
-	}
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		{
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::PASTOS);
+		}
 	);
 
 	buttonList[26]->addUtility(
 		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab]()
-	{
-		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
-				BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
-				if (!paquete->offerclosed())
+				if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
 				{
-					paquete->closeOffer();
-					return GUIEnablerEvent::ACCEPT;
+					BankTradePkg* paquete = static_cast<BankTradePkg*>(bankbutton->getPackage());
+					if (!paquete->offerclosed())
+					{
+						paquete->closeOffer();
+						return GUIEnablerEvent::ACCEPT;
+					}
+					else if (paquete->isComplete())
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_BANK_TRADE, new BankTradePkg(paquete))); // emito evento de bank trade
+						delete paquete;
+						bankbutton->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
 				}
-				else if (paquete->isComplete())
+				else if (offerbutton->getPackage() != nullptr) // Me fijo el OfferTrade
 				{
-					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_BANK_TRADE, new BankTradePkg(paquete))); // emito evento de bank trade
-					delete paquete;
-					bankbutton->setPackage(nullptr);
-					return GUIEnablerEvent::ACCEPT;
+					OfferTradePkg* paquete = static_cast<OfferTradePkg*>(bankbutton->getPackage());
+					if (!paquete->offerclosed())
+					{
+						paquete->closeOffer();
+						return GUIEnablerEvent::ACCEPT;
+					}
+					else if (paquete->isComplete())
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_OFFER_TRADE, new OfferTradePkg(paquete))); // emito evento de offertrade
+						delete paquete;
+						offerbutton->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
+				else if (Yop->getPackage() != nullptr)
+				{
+					YearsOfPlentyPkg* paquete = static_cast<YearsOfPlentyPkg*>(Yop->getPackage());
+					if (paquete->getResource(false) != ResourceType::DESIERTO) // si ya se eligieron los dos, confirmo el paquete 
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YEARS_OF_PLENTY, new YearsOfPlentyPkg(paquete->getResource(true), paquete->getResource(false)))); // ver quien elimina el paquete
+						delete paquete;
+						Yop->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
+				else if (monopoly->getPackage() != nullptr)
+				{
+					MonopolyPkg* paquete = static_cast<MonopolyPkg*>(monopoly->getPackage());
+					if (paquete->getResource() != ResourceType::DESIERTO)
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_MONOPOLY, new MonopolyPkg(paquete->getResource())));
+						delete paquete;
+						monopoly->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
+				else if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES))) // contesto la oferta que me manda el otro player
+				{
+					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES, new package(headers::YES)));
 				}
 			}
-			else if (offerbutton->getPackage() != nullptr) // Me fijo el OfferTrade
-			{
-				OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
-				if (!paquete->offerclosed())
-				{
-					paquete->closeOffer();
-					return GUIEnablerEvent::ACCEPT;
-				}
-				else if (paquete->isComplete())
-				{
-					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_OFFER_TRADE, new OfferTradePkg(paquete))); // emito evento de offertrade
-					delete paquete;
-					offerbutton->setPackage(nullptr);
-					return GUIEnablerEvent::ACCEPT;
-				}
-			}
-			else if (Yop->getPackage() != nullptr)
-			{
-				YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(Yop->getPackage());
-				if (paquete->getResource(false) != ResourceType::DESIERTO) // si ya se eligieron los dos, confirmo el paquete 
-				{
-					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YEARS_OF_PLENTY, new YearsOfPlentyPkg(paquete->getResource(true), paquete->getResource(false)))); // ver quien elimina el paquete
-					delete paquete;
-					Yop->setPackage(nullptr);
-					return GUIEnablerEvent::ACCEPT;
-				}
-			}
-			else if (monopoly->getPackage() != nullptr)
-			{
-				MonopolyPkg * paquete = static_cast<MonopolyPkg *>(monopoly->getPackage());
-				if (paquete->getResource() != ResourceType::DESIERTO)
-				{
-					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_MONOPOLY, new MonopolyPkg(paquete->getResource())));
-					delete paquete;
-					monopoly->setPackage(nullptr);
-					return GUIEnablerEvent::ACCEPT;
-				}
-			}
-			else if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES))) // contesto la oferta que me manda el otro player
-			{
-				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES, new package(headers::YES)));
-			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[27]->addUtility(
