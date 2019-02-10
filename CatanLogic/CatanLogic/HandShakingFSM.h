@@ -136,5 +136,5 @@ public:
 	std::string getRemoteName();
 	void setBoard(Board* board_);
 	bool playingWithDev();
-
+	virtual void cycle(GenericEvent* ev);
 };

@@ -6,8 +6,8 @@
 #include"RemotePlayerEnabler.h"
 
 
-#define TICK_TIME 500//ms
-#define MAX_TICK_TIME 300//set to be 2 min 30 sec
+#define TICK_TIME 100//ms
+#define MAX_TICK_TIME 1500//set to be 2 min 30 sec
 enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, LocalGameOver_S, LocalPlayAgain_S, RemoteGameOver_S, RemotePlayAgain_S };
 class MainFSM: public GenericFsm
 {

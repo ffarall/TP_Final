@@ -168,6 +168,10 @@ GUIEnablerEvent Button::parseMouseUpEvent(uint32_t x, uint32_t y)
 				toggleButton();
 			}
 		}
+		else
+		{
+			buttonPressed = false;
+		}
 	}
 	return NO_EV;
 }
