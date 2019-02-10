@@ -1336,17 +1336,63 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[24]->addUpdate(
-		[]()
-		{}
+		[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+			{
+				if (buttonList[26]->isEnabled() && localPlayer->getResourceAmount(ResourceType::GRAIN))
+				{
+					if (!buttonList[26]->isPressed())
+					{
+						buttonList[26]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[26]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else
+				{
+					buttonList[26]->setTypeTint(TINT_CORR(1, 1, 1, 0.5));
+				}
+			}
+			else
+			{
+				buttonList[26]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+			}
+		}
 	);
 
 	buttonList[25]->addUpdate(
-		[]()
-		{}
+		[mainFSM, localPlayer, buttonList]()
+		{
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+			{
+				if (buttonList[26]->isEnabled() && localPlayer->getResourceAmount(ResourceType::PASTOS))
+				{
+					if (!buttonList[26]->isPressed())
+					{
+						buttonList[26]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[26]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else
+				{
+					buttonList[26]->setTypeTint(TINT_CORR(1, 1, 1, 0.5));
+				}
+			}
+			else
+			{
+				buttonList[26]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+			}
+		}
 	);
 
 	buttonList[26]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, buttonList]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 			{
@@ -1374,7 +1420,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[27]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, buttonList]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 			{
@@ -1402,7 +1448,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[28]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, buttonList]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayAgain_S || mainFSM->getCurrState() == mainStates::RemoteGameOver_S)
 			{
@@ -1430,7 +1476,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 	);
 
 	buttonList[29]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, buttonList]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayAgain_S || mainFSM->getCurrState() == mainStates::RemoteGameOver_S)
 			{
