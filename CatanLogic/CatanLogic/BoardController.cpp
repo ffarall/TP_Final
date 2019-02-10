@@ -53,7 +53,7 @@ BoardController::~BoardController()
 
 void BoardController::update()
 {
-	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 	{
 		if (!fondoListo)
 		{
