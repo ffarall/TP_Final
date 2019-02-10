@@ -48,6 +48,7 @@ void MainFSM::localStartsRoutine(GenericEvent * ev)
 
 void MainFSM::remoteStartsRoutine(GenericEvent * ev)
 {
+	sendAck(ev);
 	localEnabler->remoteStarts(handShaking->getLocalName(), handShaking->getRemoteName(),board);
 	remoteEnabler->remoteStarts();
 }
