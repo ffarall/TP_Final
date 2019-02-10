@@ -61,7 +61,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	GUI->attachController("Port2Ox1", buttonList[19]);
 	buttonList.push_back(new Button(printer, handler, SELECT_2Px1_X, SELECT_2Px1_Y, SELECT_2Px1_H, SELECT_2Px1_W, "", "2Ppor1.png", "", 14));//port2Px1Button
 	GUI->attachController("Port2Px1", buttonList[20]);
-	buttonList.push_back(new Button(printer, handler, SELECT_BRICK_X, SELECT_BRICK_Y, SELECT_BRICK_H, SELECT_BRICK_W, "", "ladrillo.png", "", 14));//brickButton
+	buttonList.push_back(new Button(printer, handler, SELECT_BRICK_X, SELECT_BRICK_Y, SELECT_BRICK_H, SELECT_BRICK_W, "", "ladrillo.png", "catanFont.otf", 14));//brickButton
 	GUI->attachController("Brick", buttonList[21]);
 	buttonList.push_back(new Button(printer, handler, SELECT_LUMBER_X, SELECT_LUMBER_Y, SELECT_LUMBER_H, SELECT_LUMBER_W, "", "tronco.png", "", 14));//lumberButton
 	GUI->attachController("Lumber", buttonList[22]);
@@ -1289,10 +1289,10 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		[mainFSM, localPlayer, buttonList]()
 	{
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[20]->getType()->getBitmap();
+		ALLEGRO_BITMAP * temp = buttonList[21]->getType()->getBitmap();
 		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[20]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[20]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.9, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
+		al_draw_bitmap(buttonList[21]->getBitmap(), 0, 0, 0);
+		al_draw_text(buttonList[21]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.9, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
 
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(COLINAS))
