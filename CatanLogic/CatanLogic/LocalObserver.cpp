@@ -87,6 +87,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 			if (a.second != NULL)
 			{
 				al_destroy_bitmap(a.second);
+				a.second = NULL;
 			}
 		}
 	}
@@ -106,7 +107,11 @@ LocalObserver::~LocalObserver()
 	{
 		for (auto each : dibujo)
 		{
-			if (each.second != NULL) { al_destroy_bitmap(each.second); }
+			if (each.second != NULL) 
+			{ 
+				al_destroy_bitmap(each.second);
+				each.second = NULL;
+			}
 		}
 		if (fuente != NULL) { al_destroy_font(fuente); }
 	}
@@ -119,7 +124,7 @@ void LocalObserver::update()
 		bool anyChange = false;
 		map<string, bool> buildings;
 
-		if (sellos[ICONO] == NULL)
+		if (sellos[ICONO] != NULL)
 		{
 			sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
 				D_ANCHO * 0.05, D_ALTO * 0.05
