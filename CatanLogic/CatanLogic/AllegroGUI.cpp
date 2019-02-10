@@ -7,7 +7,7 @@
 
 #define DIS_WIDTH 1200
 #define DIS_HEIGHT 700
-#define TIMER_TIME (0.5)
+#define TIMER_TIME (0.1)
 
 #define TX(x) (static_cast<void (GUIEnabler::* )()>(&AllegroGUI::x))
 

@@ -164,6 +164,10 @@ GUIEnablerEvent Button::parseMouseUpEvent(uint32_t x, uint32_t y)
 				return parseCallback();
 			}
 		}
+		else
+		{
+			buttonPressed = false;
+		}
 	}
 	return NO_EV;
 }
