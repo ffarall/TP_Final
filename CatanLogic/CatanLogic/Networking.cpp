@@ -192,7 +192,7 @@ void Networking::workPlease()
 			else
 			{
 				buffer[dataLength] = '\0';
-				cout << "Recibi: " << buffer << endl;
+				cout << "Recibi: " << msgDecoder(buffer) << endl;
 				parseInput(buffer,dataLength);
 			}
 			delete[]buffer;
