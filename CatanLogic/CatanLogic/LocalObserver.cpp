@@ -121,7 +121,7 @@ void LocalObserver::update()
 		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgb(255, 255, 255),
 			D_ANCHO * 0.05, D_ALTO * 0.05
 		);
-		impresora->addType(sellos[ICONO]);
+		anyChange = true;
 	}
 
 	for (auto ciudad : localPlayer->getMyCities())
@@ -146,7 +146,6 @@ void LocalObserver::update()
 				al_map_rgba_f(1.0, 0.0, 0.0, 1.0), pos.first+BOARD_POS_X, pos.second+BOARD_POS_Y,
 				al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2
 			);
-			impresora->addType(sellos[a.first]);
 			anyChange = true;
 		}
 		else if (itr->second->getBitmap() != temp)
@@ -278,6 +277,11 @@ void LocalObserver::update()
 		delete sellos[LROAD];
 	}
 	
+	if (anyChange)
+	{
+		sellos[ICONO]->redraw();
+	}
+
 }
 
 bool LocalObserver::isOK()
