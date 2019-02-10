@@ -16,6 +16,7 @@
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 #include "SubEvents.h"
+#include "TimerController.h"
 
 #define TINT_CORR(r, g, b, a) (r*255), (g*255), (b*255), (a*255)
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb, LocalPlayerEnabler * locEneb);
@@ -37,12 +38,15 @@ int main(int argc, char* argv[])
 
 	GutenbergsPressAllegro printer(NULL);		// HARCODEAR EL BACKGROUND PARA QUE EL CONSTRUCTOR NO RECIBA NADA.
 	BoardController boardCont(&handler, &printer, &mainFSM);
+	TimerController timerCont(&handler);
 	std::vector<Button*> buttonList;
 	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler, &localPlayerEnabler);	// Also adds them to the GUI.
 	GUI.attachController("BoardController", &boardCont);
+	GUI.attachController("TimerController", &timerCont);
 	GUI.initGUIEnabler();
 
 	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler, &mainFSM);
+
 	localPlayer.attach(&localObs);
 	localPlayer.attach(&boardCont);													// localObs and boardCont are observers of localPlayer.
 	remotePlayer.attach(&localObs);

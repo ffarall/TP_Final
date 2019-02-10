@@ -156,14 +156,14 @@ bool BasicController::isTimerActive()
 	return timerActivated;
 }
 
-void BasicController::emitEvent(EventTypes type)
+void BasicController::emitEvent(EventTypes type, int priority)
 {
 	GenericEvent* ev = new MainEvents(type);
-	evGen->emitEvent(ev);
+	evGen->emitEvent(ev, priority);
 }
 
-void BasicController::emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg)
+void BasicController::emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg, int priority)
 {
 	GenericEvent* ev = new SubEvents(type, subtype, pkg);
-	evGen->emitEvent(ev);
+	evGen->emitEvent(ev, priority);
 }

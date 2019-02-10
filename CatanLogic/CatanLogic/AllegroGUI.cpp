@@ -7,7 +7,7 @@
 
 #define DIS_WIDTH 1200
 #define DIS_HEIGHT 700
-#define TIMER_TIME (0.005)
+#define TIMER_TIME (0.5)
 
 #define TX(x) (static_cast<void (GUIEnabler::* )()>(&AllegroGUI::x))
 
@@ -62,9 +62,6 @@ bool AllegroGUI::checkForEvents()
 		al_get_next_event(eventQueue, &ev);
 		switch (ev.type)
 		{
-		case ALLEGRO_EVENT_TIMER:
-			GUIEv = GUI_TIMER;
-			break;
 		case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 			GUIEv = GUI_MOUSE_DOWN;
 			mouseCoordinates =std::make_pair(ev.mouse.x,ev.mouse.y);
@@ -75,6 +72,9 @@ bool AllegroGUI::checkForEvents()
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
 			GUIEv = GUI_CLOSE_DISPLAY;
+			break;
+		case ALLEGRO_EVENT_TIMER:
+			GUIEv = GUI_TIMER;
 			break;
 		default:
 			return false;//error?

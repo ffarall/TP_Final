@@ -27,6 +27,10 @@ GUIEnablerEvent TimerController::parseMouseUpEvent(uint32_t x, uint32_t y)
 
 GUIEnablerEvent TimerController::parseTimerEvent()
 {
-	emitSubEvent(TICKS, TICK, NULL);
+	emitSubEvent(TICKS, TICK, NULL, 1);
 	return NO_EV;
+}
+
+void TimerController::update()
+{
 }
