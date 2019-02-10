@@ -268,12 +268,12 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 			complete = false;
 		break;
 	case headers::YOU_START:
-		evento->setSubtype(SubType::NET_YOU_START);
+		evento->setEvent(MainTypes::LOCAL_STARTS);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
 	case headers::I_START:
-		evento->setSubtype(SubType::NET_I_START);
+		evento->setEvent(MainTypes::REMOTE_START);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
 		break;
