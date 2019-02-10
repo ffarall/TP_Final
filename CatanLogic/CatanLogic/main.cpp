@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	Networking network(&handler, argv[2]);
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
-	HandShakingFSM hsFSM(&network, localPlayerName, &globalBoard);
+	HandShakingFSM hsFSM(&network, localPlayerName, &globalBoard, &handler);
 	MainFSM mainFSM(&hsFSM, &network, &handler, &localPlayerEnabler, &remotePlayerEnabler);
 	AllegroGUI GUI;
 

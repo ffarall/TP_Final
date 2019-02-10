@@ -137,7 +137,7 @@ private:
 	void error(GenericEvent *ev);
 	
 public:
-	HandShakingFSM(Networking* network_,std::string name_, Board* board_);
+	HandShakingFSM(Networking* network_,std::string name_, Board* board_, EventsHandler* handler_);
 	void setState(handShakingStates newState);
 	std::string getLocalName();
 	std::string getRemoteName();

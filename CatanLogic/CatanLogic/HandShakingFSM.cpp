@@ -169,7 +169,7 @@ void HandShakingFSM::error(GenericEvent * ev)
 	handler->enqueueEvent(new SubEvents(MainTypes::ERR_IN_COM, SubType::TIME_OUT));// revisar si esta bien, asumo error en la comunicacion
 }
 
-HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, Board* board_) :GenericFsm(&fsmMap,Client_S)
+HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, Board* board_, EventsHandler* handler_) : GenericFsm(&fsmMap,Client_S, handler_)
 {
 	board = board_;
 	network = network_;
