@@ -217,6 +217,7 @@ void AllegroGUI::nowSelectRoad()
 	if (!(boardCon->getPuttingRoad()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
 	{
 		boardCon->toggleRoad();
+		boardCon->enable();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
 		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
@@ -228,6 +229,7 @@ void AllegroGUI::nowSelectSettlement()
 	if (!(boardCon->getPuttingSettlement()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
 	{
 		boardCon->toggleSettlement();
+		boardCon->enable();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
 		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
@@ -239,6 +241,7 @@ void AllegroGUI::nowSelectCity()
 	if (!(boardCon->getPuttingCity()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
 	{
 		boardCon->toggleCity();
+		boardCon->enable();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
 		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
@@ -250,6 +253,7 @@ void AllegroGUI::nowSelectRobberPos()
 	if (!(boardCon->getMovingRobber()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
 	{
 		boardCon->toggleRobber();
+		boardCon->enable();
 		enable(POSITION_SELECTED, { TX(backToNormal) });
 		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
@@ -322,6 +326,7 @@ void AllegroGUI::nowSelectFirstRoad()
 	if (!(boardCon->getPuttingRoad()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
 	{
 		boardCon->toggleRoad();
+		boardCon->enable();
 		enable(POSITION_SELECTED, { TX(nowSelectRoad) });
 		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
