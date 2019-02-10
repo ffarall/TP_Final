@@ -103,7 +103,7 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 	{
 		if (getPuttingSettlement() || getPuttingRoad() || getPuttingCity() || getMovingRobber())
 		{
-			unsigned char temp = decoder->getPixelType(x, y);
+			unsigned char temp = decoder->getPixelType(x-BOARD_POS_X, y-BOARD_POS_Y);
 			if (temp == VERTEX || temp == EDGE || temp == TOKEN)
 			{
 				enableMouseUp();
@@ -117,6 +117,8 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 
 GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 {
+	x -= BOARD_POS_X;
+	y -= BOARD_POS_Y;
 	if (isMouseUpActive())
 	{
 		disableMouseUp();
