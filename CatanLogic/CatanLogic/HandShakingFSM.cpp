@@ -164,7 +164,7 @@ void HandShakingFSM::defaultSendingDevCardsS(GenericEvent * ev)
 }
 
 void HandShakingFSM::error(GenericEvent * ev)
-{
+{ // aca esta lo de time out, para pushear denuevo
 	network->pushPackage(new package(headers::ERROR_));//do error stuff
 	handler->enqueueEvent(new SubEvents(MainTypes::ERR_IN_COM, SubType::TIME_OUT));// revisar si esta bien, asumo error en la comunicacion
 }
