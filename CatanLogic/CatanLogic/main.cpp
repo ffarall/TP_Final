@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	Player localPlayer(localPlayerName);
 	Player remotePlayer;
 	Board globalBoard;
-	Networking network;
+	Networking network(argv[2]);
 	EventsHandler handler;
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
