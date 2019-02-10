@@ -16,7 +16,7 @@
 #define TINT_CORR(r, g, b, a) (r*255), (g*255), (b*255), (a*255)
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb, LocalPlayerEnabler * locEneb)
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab)
 {
 
 	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "", "start.png", "", 14)); //startPlayingButton()
@@ -259,9 +259,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[9]->addUtility(
-		[localPlayer, mainFSM, handler, locEneb]()
+		[localPlayer, mainFSM, handler, locEnab]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 		{
 			srand(time(NULL));
 			char dado1, dado2;
@@ -486,7 +486,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[26]->addUtility(
-		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEneb]()
+		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab]()
 	{
 		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 		{
@@ -544,7 +544,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					return GUIEnablerEvent::ACCEPT;
 				}
 			}
-			else if (remEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES))) // contesto la oferta que me manda el otro player
+			else if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES))) // contesto la oferta que me manda el otro player
 			{
 				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES, new package(headers::YES)));
 			}
@@ -554,7 +554,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[27]->addUtility(
-		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEneb]()
+		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab]()
 	{
 		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 		{
@@ -586,7 +586,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				offerbutton->setPackage(nullptr);
 				return GUIEnablerEvent::CANCEL;
 			}
-			else if (remEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO))) // contesto la oferta que me manda el otro player
+			else if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO))) // contesto la oferta que me manda el otro player
 			{
 				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO, new package(headers::NO)));
 			}
@@ -907,9 +907,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[9]->addUpdate(
-		[mainFSM, locEneb, buttonList]()
+		[mainFSM, locEnab, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 		{
 			if (!buttonList[9]->isPressed())
 			{
@@ -920,7 +920,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				buttonList[9]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEneb->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE))) //si no tengo recursos, botón semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE))) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
 			buttonList[9]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
 		}
