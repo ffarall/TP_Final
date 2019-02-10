@@ -70,17 +70,23 @@ void HandShakingFSM::nonActRoutine(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingClientNameS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::defaultServerS(GenericEvent * ev)
 {
-	error(ev);
+	//error(ev);
 }
 
 void HandShakingFSM::defaultWaitingForNameS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::sendMap(GenericEvent * ev)
@@ -91,7 +97,10 @@ void HandShakingFSM::sendMap(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingServerNameS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::sendCircTokens(GenericEvent * ev)
@@ -101,7 +110,10 @@ void HandShakingFSM::sendCircTokens(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingMapS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
@@ -111,7 +123,10 @@ void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingCircTokensS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::sendDevCards(GenericEvent * ev)
@@ -134,17 +149,24 @@ void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
 
 void HandShakingFSM::defaultPlayWithDevCardsS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::defaultSendingDevCardsS(GenericEvent * ev)
 {
-	error(ev);
+	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
+	{
+		error(ev);
+	}
 }
 
 void HandShakingFSM::error(GenericEvent * ev)
 {
-	//do error stuff
+	network->pushPackage(new package(headers::ERROR_));//do error stuff
+	handler->enqueueEvent(new SubEvents(MainTypes::ERR_IN_COM, SubType::TIME_OUT));// revisar si esta bien, asumo error en la comunicacion
 }
 
 HandShakingFSM::HandShakingFSM(Networking* network_, std::string name_, Board* board_) :GenericFsm(&fsmMap,Client_S)
