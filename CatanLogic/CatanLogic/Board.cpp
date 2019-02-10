@@ -52,7 +52,7 @@ void Board::shuffleBoard()
 
 	for (int i = 0; i < 6; i++) // me armo la lista de puertos
 	{
-		PortType water = static_cast<Sea *>(board[i])->getPortType();
+		PortType water = static_cast<Sea *>(board['0'+i])->getPortType();
 		switch (water)
 		{
 		case PortType::_2Tx1: case PortType::_2Ox1: case PortType::_2Lx1:
@@ -89,6 +89,7 @@ void Board::shuffleBoard()
 		}
 		else
 		{
+			robber = 'A' + i;
 			static_cast<Hex *>(board.at('A' + i))->setDiceNum(0);
 		}
 	}

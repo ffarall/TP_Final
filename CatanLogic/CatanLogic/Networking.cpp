@@ -233,7 +233,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 			complete = false;
 		break;
 	case headers::MAP_IS:
-		evento->setSubtype(SubType::NET_NAME_IS);
+		evento->setSubtype(SubType::NET_MAP_IS);
 		if (input.length() >= 26)
 		{
 			evento->addPackage(new MapIsPkg(input.substr(1, 25).c_str()));

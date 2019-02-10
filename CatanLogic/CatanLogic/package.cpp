@@ -48,13 +48,13 @@ std::string NameIsPkg::getPackage()
 	return ret;
 }
 
-MapIsPkg::MapIsPkg(Board * board_)
+MapIsPkg::MapIsPkg(Board * board_) :package(headers::MAP_IS)
 {
 	board = new Board(*board_);
 
 	for (int i = 0; i < 6; i++)
 	{
-		all[i] = static_cast<char>(board->getPortType(i));
+		all[i] = static_cast<char>(board->getPortType(i+'0'));
 	}
 
 	for (int i = 0; i < 19; i++)
@@ -184,7 +184,7 @@ Board * MapIsPkg::getBoard()
 	return board;
 }
 
-CircularTokensPkg::CircularTokensPkg(Board * tablero)
+CircularTokensPkg::CircularTokensPkg(Board * tablero) :package(headers::CIRCULAR_TOKENS)
 {
 	for (int i = 0; i < 19; i++)
 	{
