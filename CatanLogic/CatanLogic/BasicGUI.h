@@ -46,8 +46,8 @@ protected:
 	EventGenerator* evGen;
 
 	// Auxiliary functions for emitting event.
-	void emitEvent(EventTypes type);
-	void emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg);
+	void emitEvent(EventTypes type, int priority = 0);
+	void emitSubEvent(EventTypes type, EventSubtypes subtype, package * pkg, int priority = 0);
 };
 
 class BasicGUI :

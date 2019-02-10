@@ -71,7 +71,6 @@ void BoardController::update()
 			sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgb(255, 255, 255),
 				pos.first, pos.second, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
 				1, 1, 0, 0);
-			printer->addType(sellos[ROBBER_FILE]);
 		}
 		else
 		{

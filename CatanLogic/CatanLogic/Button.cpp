@@ -33,7 +33,7 @@ Button::~Button()
 
 bool Button::clickIn(uint x_, uint y_)
 {
-	if ((x_ >= (buttonXPos - buttonWidth / 2)) && (x_ <= (buttonXPos + buttonWidth / 2)) && (y_ >= (buttonYPos - buttonHeight / 2)) && (y_ <= (buttonYPos + buttonHeight / 2)))
+	if ((x_ >= buttonXPos ) && (x_ <= (buttonXPos + buttonWidth)) && (y_ >= buttonYPos) && (y_ <= (buttonYPos + buttonHeight)))
 	{
 		return true;
 	}
@@ -157,12 +157,20 @@ GUIEnablerEvent Button::parseMouseUpEvent(uint32_t x, uint32_t y)
 {
 	if (buttonEnabled)
 	{
-		if (this->clickIn(x, y))
+		if (buttonPressed)
 		{
-			if (buttonPressed)
+			if (this->clickIn(x, y))
 			{
 				return parseCallback();
 			}
+			else
+			{
+				toggleButton();
+			}
+		}
+		else
+		{
+			buttonPressed = false;
 		}
 	}
 	return NO_EV;

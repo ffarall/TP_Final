@@ -36,6 +36,7 @@
     <ClCompile Include="AllegroGUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LocalObserver.cpp" />
+    <ClCompile Include="TimerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="AllegroGUI.h" />
     <ClInclude Include="PosDef.h" />
     <ClInclude Include="LocalObserver.h" />
+    <ClInclude Include="TimerController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
