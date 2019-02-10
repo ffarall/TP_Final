@@ -157,11 +157,15 @@ GUIEnablerEvent Button::parseMouseUpEvent(uint32_t x, uint32_t y)
 {
 	if (buttonEnabled)
 	{
-		if (this->clickIn(x, y))
+		if (buttonPressed)
 		{
-			if (buttonPressed)
+			if (this->clickIn(x, y))
 			{
 				return parseCallback();
+			}
+			else
+			{
+				toggleButton();
 			}
 		}
 		else
