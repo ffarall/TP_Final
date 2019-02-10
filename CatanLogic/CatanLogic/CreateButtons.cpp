@@ -1292,7 +1292,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		ALLEGRO_BITMAP * temp = buttonList[21]->getType()->getBitmap();
 		al_set_target_bitmap(temp);
 		al_draw_bitmap(buttonList[21]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[21]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.9, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
+		al_draw_text(buttonList[21]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
 
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(COLINAS))
