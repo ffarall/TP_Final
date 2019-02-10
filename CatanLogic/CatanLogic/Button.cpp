@@ -96,6 +96,11 @@ ALLEGRO_BITMAP * Button::getBitmap()
 	return buttonBitmap;
 }
 
+ALLEGRO_FONT * Button::getFont()
+{
+	return buttonFont;
+}
+
 bool Button::setBitmap(std::string imagePath)
 {
 	buttonBitmap = al_load_bitmap(imagePath.c_str());

@@ -28,7 +28,8 @@ public:
 	void setYpos(uint pos);
 	uint getXPos();
 	uint getYPos();
-	ALLEGRO_BITMAP* getBitmap();	
+	ALLEGRO_BITMAP* getBitmap();
+	ALLEGRO_FONT * getFont();
 	bool setBitmap(std::string imagePath);
 	bool setFont(std::string fontPath, int fontSize);
 	void setTypeTint(char r_, char g_, char b_, char a_);

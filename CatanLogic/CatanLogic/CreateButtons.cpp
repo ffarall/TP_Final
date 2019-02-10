@@ -684,23 +684,23 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	}
 	);
 
-	buttonList[2]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+	buttonList[2]->addUpdate( //settlement
+		[locEnab,mainFSM, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources() && buttonList[2]->isEnabled())
+		if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION,SubType::PLA_SETTLEMENT)) )
 		{
 			if (!buttonList[2]->isPressed())
 			{
-				buttonList[2]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				buttonList[2]->setTypeTint(TINT_CORR(1, 0.5, 0, 1));
 			}
 			else
 			{
-				buttonList[2]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[2]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkSettlementResources() || !buttonList[2]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S ) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
-			buttonList[2]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+			buttonList[2]->setTypeTint(TINT_CORR(0.5, 0, 0, 0.5));
 		}
 		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
 		{
@@ -719,11 +719,11 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if (!buttonList[3]->isPressed())
 			{
-				buttonList[3]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				buttonList[3]->setTypeTint(TINT_CORR(1, 0.5, 0, 1));
 			}
 			else
 			{
-				buttonList[3]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[3]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 		}
 		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkCityResources() || !buttonList[3]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
@@ -751,16 +751,16 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if (!buttonList[4]->isPressed())
 			{
-				buttonList[4]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				buttonList[4]->setTypeTint(TINT_CORR(1, 0.5, 0, 1));
 			}
 			else
 			{
-				buttonList[4]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[4]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 		}
 		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkRoadResources() || !buttonList[4]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
-			buttonList[4]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+			buttonList[4]->setTypeTint(TINT_CORR(0.5, 0, 0, 0.5));
 		}
 		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
 		{
@@ -1275,10 +1275,26 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	}
 
 	);
+	/*
+			ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = cartas[a].second->getBitmap();
+		al_set_target_bitmap(temp);
+		al_clear_to_color(al_map_rgb(255, 255, 255));
+		al_draw_bitmap(cartasfotos[a], 0, 0, 0);
+		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
+		al_set_target_backbuffer(tempDisplay);
+	*/
 
 	buttonList[21]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[20]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[20]->getBitmap(), 0, 0, 0);
+		al_draw_text(buttonList[20]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.9, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
+		al_set_target_backbuffer(tempDisplay);
+
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(COLINAS))
 		{
 			if (!buttonList[21]->isPressed())

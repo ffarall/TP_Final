@@ -212,52 +212,52 @@ void LocalObserver::update()
 			anyChange = true;
 		}//listo los roads
 
-		list<ResourceType> util = { CAMPOS,MONTAÑAS,PASTOS,COLINAS,BOSQUE };
-		int i = 0;
-		for (auto a : util)
-		{
-			if (localPlayer->getResourceAmount(a) == 0)
-			{
-				if (cartas[a].second != NULL) // si no tiene cartas de este tipo saco el sello que le corresponde
-				{
-					impresora->delType(cartas[a].second);
-					delete cartas[a].second;
-					cartas[a].second = NULL;
-					cartas[a].first = 0;
-					anyChange = true;
-				}
-			}
-			else if (localPlayer->getResourceAmount(a) != cartas[a].first) // si cambio la cantidad de cartas tengo que hacer un nuevo bitmap
-			{
-				if (cartas[a].second != NULL) // si ya existe el sello sobreescribo el birtmap
-				{
-					ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-					ALLEGRO_BITMAP* temp = cartas[a].second->getBitmap();
-					al_set_target_bitmap(temp);
-					al_clear_to_color(al_map_rgb(255, 255, 255));
-					al_draw_bitmap(cartasfotos[a], 0, 0, 0);
-					al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
-					al_set_target_backbuffer(tempDisplay);
-					anyChange = true;
-				}
-				else // si no existe lo tengo que crear
-				{
-					ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-					ALLEGRO_BITMAP* temp = al_create_bitmap(35, 65);// numeros magicos
-					al_set_target_bitmap(temp);
-					al_clear_to_color(al_map_rgb(255, 255, 255));
-					al_draw_bitmap(cartasfotos[a], 0, 0, 0);
-					al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
-					al_set_target_backbuffer(tempDisplay);
+		//list<ResourceType> util = { CAMPOS,MONTAÑAS,PASTOS,COLINAS,BOSQUE };
+		//int i = 0;
+		//for (auto a : util)
+		//{
+		//	if (localPlayer->getResourceAmount(a) == 0)
+		//	{
+		//		if (cartas[a].second != NULL) // si no tiene cartas de este tipo saco el sello que le corresponde
+		//		{
+		//			impresora->delType(cartas[a].second);
+		//			delete cartas[a].second;
+		//			cartas[a].second = NULL;
+		//			cartas[a].first = 0;
+		//			anyChange = true;
+		//		}
+		//	}
+		//	else if (localPlayer->getResourceAmount(a) != cartas[a].first) // si cambio la cantidad de cartas tengo que hacer un nuevo bitmap
+		//	{
+		//		if (cartas[a].second != NULL) // si ya existe el sello sobreescribo el birtmap
+		//		{
+		//			ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		//			ALLEGRO_BITMAP * temp = cartas[a].second->getBitmap();
+		//			al_set_target_bitmap(temp);
+		//			al_clear_to_color(al_map_rgb(255, 255, 255));
+		//			al_draw_bitmap(cartasfotos[a], 0, 0, 0);
+		//			al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
+		//			al_set_target_backbuffer(tempDisplay);
+		//			anyChange = true;
+		//		}
+		//		else // si no existe lo tengo que crear
+		//		{
+		//			ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		//			ALLEGRO_BITMAP* temp = al_create_bitmap(35, 65);// numeros magicos
+		//			al_set_target_bitmap(temp);
+		//			al_clear_to_color(al_map_rgb(255, 255, 255));
+		//			al_draw_bitmap(cartasfotos[a], 0, 0, 0);
+		//			al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
+		//			al_set_target_backbuffer(tempDisplay);
 
-					cartas[a].second = impresora->createType(temp,
-						al_map_rgb(255, 255, 255), D_ANCHO * 0.05 + al_get_bitmap_width(temp) * 1.05 * i, D_ALTO * 0.3
-					);
-					anyChange = true;
-				}
-			}
-			//si son iguales no hago nada, ya se va a imprimir bien 
-		}
+		//			cartas[a].second = impresora->createType(temp,
+		//				al_map_rgb(255, 255, 255), D_ANCHO * 0.05 + al_get_bitmap_width(temp) * 1.05 * i, D_ALTO * 0.3
+		//			);
+		//			anyChange = true;
+		//		}
+		//	}
+		//	//si son iguales no hago nada, ya se va a imprimir bien 
+		//}
 
 		if (localPlayer->hasLargestArmy())
 		{
