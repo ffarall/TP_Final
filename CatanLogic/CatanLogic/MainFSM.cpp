@@ -24,10 +24,7 @@ void MainFSM::defaultStartMenuS(GenericEvent * ev)
 void MainFSM::handShakingFSMRun(GenericEvent * ev)
 {
 	handShaking->cycle(ev);
-	if (timerCount == 0)
-	{
-		timerCount = MAX_TICK_TIME;
-	}
+	timerCount = MAX_TICK_TIME;
 }
 
 void MainFSM::decAndRun(GenericEvent * ev)
