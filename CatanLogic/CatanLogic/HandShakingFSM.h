@@ -34,6 +34,7 @@ private:
 				{SubType::NET_CIRCULAR_TOKENS,{Client_S,TX(saveCircularTokens)}},
 				{SubType::NET_DEV_CARDS,{Client_S,TX(saveDevCards)}},
 				{SubType::TICK,{Client_S,TX(nonActRoutine)}},
+				{SubType::NET_PLAY_WITH_DEV,{Client_S,TX(answerPlayWithDev)}}
 				
 			},
 			{Client_S,TX(defaultClientS)}}},
@@ -89,6 +90,8 @@ private:
 	};
 	
 	void saveDevCards(GenericEvent *ev);
+
+	void answerPlayWithDev(GenericEvent *ev);
 	
 	void saveCircularTokens(GenericEvent *ev);
 	

@@ -9,6 +9,12 @@ void HandShakingFSM::saveDevCards(GenericEvent * ev)
 	network->pushPackage(new package(headers::ACK));
 }
 
+void HandShakingFSM::answerPlayWithDev(GenericEvent * ev)
+{
+	devCardsOn = true;
+	network->pushPackage(new package(headers::YES));
+}
+
 void HandShakingFSM::saveCircularTokens(GenericEvent * ev)
 {
 	for (int i = 0; i < 19; i++)
