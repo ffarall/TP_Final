@@ -198,64 +198,64 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[4]->addUtility(
-		[localPlayer, mainFSM]()
-	{
-		if (localPlayer->checkRoadResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab]()
 		{
-			return GUIEnablerEvent::NEW_ROAD;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD)))
+			{
+				return GUIEnablerEvent::NEW_ROAD;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[5]->addUtility(
-		[localPlayer, mainFSM, tablero, handler]()
-	{
-		if (localPlayer->checkResourcesForDevCard() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab, handler]()
 		{
-			handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DEV_CARD, new package(headers::DEV_CARD)));
-			return GUIEnablerEvent::BUY_DEV_CARD;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DEV_CARD)))
+			{
+				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DEV_CARD, new package(headers::DEV_CARD)));
+				return GUIEnablerEvent::BUY_DEV_CARD;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 	buttonList[6]->addUtility(
-		[localPlayer, mainFSM, handler]()
-	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+		[locEnab, handler]()
 		{
-			//ver si esta bien el mainType ?
-			handler->enqueueEvent(new SubEvents(MainTypes::TURN_FINISHED, SubType::PLA_PASS, new package(headers::PASS)));
-			return GUIEnablerEvent::PASS;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS)))
+			{
+				//ver si esta bien el mainType ?
+				handler->enqueueEvent(new SubEvents(MainTypes::TURN_FINISHED, SubType::PLA_PASS, new package(headers::PASS)));
+				return GUIEnablerEvent::PASS;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	Button * bankbutton = buttonList[7];
 	buttonList[7]->addUtility(
-		[localPlayer, mainFSM, bankbutton]()
-	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+		[locEnab, handler, bankbutton]()
 		{
-			bankbutton->setPackage(new BankTradePkg()); // creo el paquete vacio
-			return GUIEnablerEvent::BANK_TRADE;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_BANK_TRADE)))
+			{
+				bankbutton->setPackage(new BankTradePkg()); // creo el paquete vacio
+				return GUIEnablerEvent::BANK_TRADE;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	Button * offerbutton = buttonList[7];
 	buttonList[8]->addUtility(
-		[localPlayer, mainFSM, offerbutton]()
-	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+		[locEnab, handler, offerbutton]()
 		{
-			offerbutton->setPackage(new OfferTradePkg()); // crep el paquete vacio para empezar a completarlo
-			return GUIEnablerEvent::OFFER_TRADE;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_OFFER_TRADE)))
+			{
+				offerbutton->setPackage(new OfferTradePkg()); // crep el paquete vacio para empezar a completarlo
+				return GUIEnablerEvent::OFFER_TRADE;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[9]->addUtility(
