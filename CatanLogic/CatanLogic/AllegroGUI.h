@@ -12,6 +12,8 @@ public:
 
 	// To be called after attaching all controllers.
 	void initGUIEnabler();
+	
+	/*bool error();*/
 
 private:
 	bool allegroInit();

@@ -20,7 +20,8 @@ Networking::Networking(EventsHandler* handler_, const char * ip, unsigned short 
 	ipOtherSide = string(ip);
 
 	input.clear();
-	
+	while (!paraEnviar.empty()) // libero la cola de mensajes
+		paraEnviar.pop();
 	estado = _estado;
 	port = _port ;
 	
@@ -160,7 +161,7 @@ void Networking::workPlease()
 		if (!(paraEnviar.empty()))
 		{
 			const char * msg = paraEnviar.front()->getPackage().c_str();
-			cout << "Envio: " << msg << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
+			cout << "Envio: " << msg << '.' << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
 			send(msg);
 			paraEnviar.pop(); // lo saco de la cola
 		}
@@ -458,7 +459,15 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 
 void Networking::pushPackage(package * mensaje)
 {
-	paraEnviar.push(mensaje);
+	if (mensaje->getPacket() == headers::ERROR_)
+	{
+		std::cout << "Me llego un paquete de error para enviar\n";
+	}
+	else
+	{
+		std::cout << "Me llego un paquete de NO error para enviar\n";
+		paraEnviar.push(mensaje);
+	}
 }
 
 bool Networking::hayMensaje() // para ver que funcione!!!
