@@ -2,6 +2,11 @@
 #include<cstdlib>
 #include<ctime>
 
+void HandShakingFSM::finish(GenericEvent * ev)
+{
+	handler->enqueueEvent(new SubEvents(MainTypes::LOCAL_STARTS, SubType::NET_ACK));
+}
+
 void HandShakingFSM::saveDevCards(GenericEvent * ev)
 {
 	devCardsOn = true;
@@ -150,7 +155,12 @@ void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
 	{
 		devCardsOn = true;
 	}
-	network->pushPackage(new package(rand()%2 ?  headers::I_START: headers::YOU_START));
+	headers label = rand() % 2 ? headers::I_START : headers::YOU_START;
+	if (label == headers::YOU_START)
+	{
+		handler->enqueueEvent(new SubEvents(MainTypes::REMOTE_START, SubType::PLA_YOU_START));
+	}
+	network->pushPackage(new package(label));
 }
 
 void HandShakingFSM::defaultPlayWithDevCardsS(GenericEvent * ev)

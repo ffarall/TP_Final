@@ -4,7 +4,7 @@
 #include"Networking.h"
 #include<iostream>
 
-enum handShakingStates : StateTypes { WaitingConnection_S,Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S };
+enum handShakingStates : StateTypes { WaitingConnection_S,Client_S, SendingClientName_S, Server_S, WaitingForName_S, SendingServerName_S, SendingMap_S, SendingCircTokens_S, PlayWithDevCards_S, SendingDevCards_S, WaitingEnd_S};
 
 class HandShakingFSM : public GenericFsm
 {
@@ -83,12 +83,19 @@ private:
 			},
 			{Client_S,TX(defaultPlayWithDevCardsS)}}},
 		{SendingDevCards_S,{{
-				{SubType::NET_ACK,{SendingDevCards_S,TX(emitWhoStarts)}},
+				{SubType::NET_ACK,{WaitingEnd_S,TX(emitWhoStarts)}},
 				{SubType::TICK,{SendingDevCards_S,TX(nonActRoutine)}},
+			},
+			{Client_S,TX(defaultSendingDevCardsS)}} },
+		{WaitingEnd_S,{{
+				{SubType::NET_ACK,{WaitingEnd_S,TX(finish)}},
+				{SubType::TICK,{WaitingEnd_S,TX(nonActRoutine)}},
 			},
 			{Client_S,TX(defaultSendingDevCardsS)}} }
 	};
 	
+	void finish(GenericEvent *ev);
+
 	void saveDevCards(GenericEvent *ev);
 
 	void answerPlayWithDev(GenericEvent *ev);
