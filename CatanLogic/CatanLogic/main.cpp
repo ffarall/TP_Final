@@ -1340,7 +1340,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 			{
-				if (buttonList[26]->isEnabled() && localPlayer->getResourceAmount(ResourceType::GRAIN))
+				if (buttonList[26]->isEnabled() && localPlayer->getResourceAmount(ResourceType::CAMPOS))
 				{
 					if (!buttonList[26]->isPressed())
 					{
