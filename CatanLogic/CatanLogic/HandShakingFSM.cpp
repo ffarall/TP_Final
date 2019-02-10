@@ -50,7 +50,7 @@ void HandShakingFSM::saveName(GenericEvent * ev)
 
 void HandShakingFSM::askName(GenericEvent * ev)
 {
-	network->pushPackage(new package(headers::NAME));
+		network->pushPackage(new package(headers::NAME));
 }
 
 void HandShakingFSM::changeToServer(GenericEvent * ev)

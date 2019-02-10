@@ -564,6 +564,7 @@ void Networking::send(const char* msg) {
 	/* Verifico el error */
 	if (error)
 	{ // deberia generar evento de error a la fsm gral
+		
 		SubEvents * ev = new SubEvents;
 		ev->setEvent(MainTypes::ERR_IN_COM);
 		handler->enqueueEvent(ev);
