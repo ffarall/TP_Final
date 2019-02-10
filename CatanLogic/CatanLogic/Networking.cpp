@@ -160,10 +160,16 @@ void Networking::workPlease()
 	{
 		if (!(paraEnviar.empty()))
 		{
-			const char * msg = paraEnviar.front()->getPackage().c_str();
+			string paquete = paraEnviar.front()->getPackage();
+			char * msg = new char[paquete.length()+1];
+			int i = 0;
+			for (char a : paquete)
+				msg[i++] = a;
+			msg[i] = '\0';
 			cout << "Envio: " << msg << '.' << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
 			send(msg);
 			paraEnviar.pop(); // lo saco de la cola
+			delete[]msg; // elimmino la memoria que reserve
 		}
 
 		size_t len = 0, dataLength = socket->available();
@@ -459,15 +465,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 
 void Networking::pushPackage(package * mensaje)
 {
-	if (mensaje->getPacket() == headers::ERROR_)
-	{
-		std::cout << "Me llego un paquete de error para enviar\n";
-	}
-	else
-	{
-		std::cout << "Me llego un paquete de NO error para enviar\n";
-		paraEnviar.push(mensaje);
-	}
+	paraEnviar.push(mensaje);
 }
 
 bool Networking::hayMensaje() // para ver que funcione!!!
@@ -558,13 +556,13 @@ void Networking::send(const char* msg) {
 
 	do { /* Mando la informacion de a partes */
 		/* Mando la data */
-		dataCount = socket->write_some(boost::asio::buffer(msg, strlen(msg)-1), error); //el -1 por el '\0'
+		dataCount = socket->write_some(boost::asio::buffer(msg, strlen(msg)), error); 
 	} while (error.value() == WSAEWOULDBLOCK && dataCount < strlen(msg));
 
 	/* Verifico el error */
 	if (error)
 	{ // deberia generar evento de error a la fsm gral
-		cout << error.message();
+		cout << error.message() << endl; // mesaje de error de boost
 		SubEvents * ev = new SubEvents;
 		ev->setEvent(MainTypes::ERR_IN_COM);
 		handler->enqueueEvent(ev);
