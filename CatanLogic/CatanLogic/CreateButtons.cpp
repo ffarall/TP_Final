@@ -177,24 +177,24 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	}
 	);
 	buttonList[2]->addUtility(
-		[localPlayer, mainFSM]()
-	{
-		if (localPlayer->checkCityResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab]()
 		{
-			return GUIEnablerEvent::NEW_CITY;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_SETTLEMENT)))
+			{
+				return GUIEnablerEvent::NEW_SETTLEMENT;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 	buttonList[3]->addUtility(
-		[localPlayer, mainFSM]()
-	{
-		if (localPlayer->checkSettlementResources() && (mainFSM->getCurrState() == mainStates::LocalPlayer_S))
+		[locEnab]()
 		{
-			return GUIEnablerEvent::NEW_SETTLEMENT;
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_CITY)))
+			{
+				return GUIEnablerEvent::NEW_CITY;
+			}
+			return GUIEnablerEvent::NO_EV;
 		}
-		return GUIEnablerEvent::NO_EV;
-	}
 	);
 
 	buttonList[4]->addUtility(
