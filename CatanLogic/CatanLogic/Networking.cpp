@@ -15,7 +15,7 @@
 using namespace std;
 
 
-Networking::Networking(const char * ip, unsigned short _port, Status _estado):EventGenerator()
+Networking::Networking(EventsHandler* handler_, const char * ip, unsigned short _port, Status _estado):EventGenerator(handler_)
 {
 	ipOtherSide = string(ip);
 

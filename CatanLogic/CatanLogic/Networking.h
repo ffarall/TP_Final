@@ -17,7 +17,7 @@ class Networking :
 	public EventGenerator
 {
 public:
-	Networking(const char * _ip = "" , unsigned short _port=PORT , Status _estado = CLIENT); // por defecto arranca como client
+	Networking(EventsHandler* handler_, const char * _ip = "" , unsigned short _port=PORT , Status _estado = CLIENT); // por defecto arranca como client
 	~Networking();
 
 	void setIpToConect(const char * _ip);
