@@ -17,7 +17,7 @@ class BoardController :
 {
 public:
 	BoardController();
-	BoardController(EventsHandler* handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_);
+	BoardController(EventsHandler* handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_, Board* board_);
 	virtual ~BoardController();
 
 	virtual void update();

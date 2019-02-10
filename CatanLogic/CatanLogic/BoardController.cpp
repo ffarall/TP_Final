@@ -38,10 +38,11 @@ BoardController::BoardController()
 {
 }
 
-BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_) : BasicController(handler_)
+BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_, Board* board_) : BasicController(handler_)
 {
 	printer = prnter_;
 	mainFSM = mainFSM_;
+	board = board_;
 	init();
 }
 
