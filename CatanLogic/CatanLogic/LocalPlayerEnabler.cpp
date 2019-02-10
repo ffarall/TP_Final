@@ -762,6 +762,7 @@ void LocalPlayerEnabler::checkIfLocalWon()
 	if (localPlayer->hasWon(playingWithDev))
 	{
 		emitEvent(I_WON);
+		disableAll();
 	}
 }
 

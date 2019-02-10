@@ -17,6 +17,7 @@ public:
 	string getErrMessage();
 	string getWaitingMessage();
 
+	// Returns true when the given event is among the enabled events. Deletes the event given.
 	bool waitingForThisSubtype(SubtypeEvent * ev);
 	// Allows other PlayerEnabler to create common new Player objects for localPlayer.
 	void setLocalPlayer(Player* localPlayer_);
