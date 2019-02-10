@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "LocalPlayerEnabler.h"
 #include "Button.h"
+#include "MainFSM.h"
 
 #include "MapDecoder.h"
 #include "CatanDefs.h"
@@ -23,7 +24,7 @@ class LocalObserver :
 	public Observer
 {
 public:
-	LocalObserver(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn);
+	LocalObserver(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn, MainFSM* mainFSM_);
 	virtual ~LocalObserver();
 	virtual void update();
 	bool isOK();
@@ -34,7 +35,8 @@ private:
 	Player * localPlayer;
 	LocalPlayerEnabler * localEnabler;
 	GutenbergsPressAllegro * impresora;
-	
+	MainFSM* mainFSM;
+
 	MapDecoder toDraw;
 
 	map< string, MovableType * > roads;
