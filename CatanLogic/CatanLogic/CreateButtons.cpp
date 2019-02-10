@@ -686,31 +686,31 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 
 	buttonList[2]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
-	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources() && buttonList[2]->isEnabled())
 		{
-			if (!buttonList[2]->isPressed())
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources() && buttonList[2]->isEnabled())
 			{
-				buttonList[2]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				if (!buttonList[2]->isPressed())
+				{
+					buttonList[2]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				}
+				else
+				{
+					buttonList[2]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				}
+			}
+			else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkSettlementResources() || !buttonList[2]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+			{
+				buttonList[2]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+			}
+			else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+			{
+				buttonList[2]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
 			}
 			else
 			{
-				buttonList[2]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[2]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkSettlementResources() || !buttonList[2]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
-		{
-			buttonList[2]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[2]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[2]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-	}
 	);
 	buttonList[3]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
