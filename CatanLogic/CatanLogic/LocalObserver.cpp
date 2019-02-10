@@ -8,7 +8,7 @@
 #define LANA "lana.png"
 #define ROAD "road.png"
 #define CITY "city.png"
-#define SETTLE "setllement.png"
+#define SETTLE "setlement.png"
 #define ICONO "LocalPla.png"
 #define FONT "catanFont.otf"
 #define LROAD "LongestRoad.png"
@@ -60,6 +60,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro * printer, Player * local,Lo
 			if (each.second != NULL)
 			{
 				al_destroy_bitmap(each.second);
+				each.second = NULL;
 			}
 		}
 	}
