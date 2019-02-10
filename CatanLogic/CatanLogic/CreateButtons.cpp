@@ -618,6 +618,17 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		return GUIEnablerEvent::NO_EV;
 	}
 	);
+
+	buttonList[30]->addUtility(
+		[mainFSM, handler]()
+	{
+		if ((mainFSM->getCurrState() == mainStates::LocalPlayAgain_S) || (mainFSM->getCurrState() == mainStates::RemoteGameOver_S))
+		{
+			//algo de victory point o nada 
+		}
+		return GUIEnablerEvent::NO_EV;
+	}
+	);
 	// all the action routines added 
 
 	// Specifying how every button should update its movable type.
@@ -1532,6 +1543,34 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		else
 		{
 			buttonList[29]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+		}
+	}
+	);
+
+	buttonList[30]->addUpdate(
+		[mainFSM, buttonList]()
+	{
+		if (mainFSM->getCurrState() == mainStates::LocalPlayAgain_S || mainFSM->getCurrState() == mainStates::RemoteGameOver_S)
+		{
+			if (buttonList[30]->isEnabled())
+			{
+				if (!buttonList[30]->isPressed())
+				{
+					buttonList[30]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				}
+				else
+				{
+					buttonList[30]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				}
+			}
+			else
+			{
+				buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+			}
+		}
+		else
+		{
+			buttonList[30]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 		}
 	}
 	);
