@@ -13,7 +13,7 @@ void MainFSM::initHandShakingFSM(GenericEvent * ev)
 	uniform_int_distribution<> dist{ 2000, 5000 };	
 	timerCount = dist(generator)/TICK_TIME;; //cambiar este valor por el random
 	handShaking->setBoard(board);
-	handShaking->setState(handShakingStates::Client_S);//la fsm de handshaking siempre comienza como client
+	handShaking->setState(handShakingStates::WaitingConnection_S);//la fsm de handshaking siempre comienza como client
 }
 
 void MainFSM::defaultStartMenuS(GenericEvent * ev)

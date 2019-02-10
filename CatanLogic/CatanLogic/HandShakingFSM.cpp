@@ -167,3 +167,11 @@ bool HandShakingFSM::playingWithDev()
 {
 	return devCardsOn;
 }
+
+void HandShakingFSM::cycle(GenericEvent* ev)
+{
+	SubEvents* auxEvP = static_cast<SubEvents*>(ev);
+	auxEvP->setEvent(auxEvP->getSubtype());
+
+	GenericFsm::cycle(auxEvP);
+}
