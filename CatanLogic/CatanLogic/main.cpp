@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 	GUI.attachController("BoardController", &boardCont);
 	GUI.initGUIEnabler();
 
-	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler);
+	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler, &mainFSM);
 	localPlayer.attach(&localObs);
 	localPlayer.attach(&boardCont);													// localObs and boardCont are observers of localPlayer.
 	remotePlayer.attach(&localObs);
