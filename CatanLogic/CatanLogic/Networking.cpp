@@ -167,7 +167,7 @@ void Networking::workPlease()
 				msg[i++] = a;
 			msg[i] = '\0';
 			cout << "Envio: " << msgDecoder(msg) << '.' << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
-			send(msg);
+			send(msg,i-1);
 			paraEnviar.pop(); // lo saco de la cola
 			delete[]msg; // elimmino la memoria que reserve
 		}
@@ -590,15 +590,15 @@ void Networking::toggleStatus(void)
 	}
 }
 
-void Networking::send(const char* msg) {
+void Networking::send(const char* msg, int largo) {
 
 	boost::system::error_code error; /* Creo receptor de errores */
 	size_t dataCount;
 
 	do { /* Mando la informacion de a partes */
 		/* Mando la data */
-		dataCount = socket->write_some(boost::asio::buffer(msg, strlen(msg)), error); 
-	} while (error.value() == WSAEWOULDBLOCK && dataCount < strlen(msg));
+		dataCount = socket->write_some(boost::asio::buffer(msg, largo), error); 
+	} while (error.value() == WSAEWOULDBLOCK && dataCount < largo);
 
 	/* Verifico el error */
 	if (error)
