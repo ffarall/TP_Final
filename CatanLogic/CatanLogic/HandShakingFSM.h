@@ -22,39 +22,42 @@ private:
 	const FsmMap fsmMap = {
 		{WaitingConnection_S,{{
 				{SubType::TICK,{WaitingConnection_S,TX(tryToConnect)}},
-				{SubType::TIME_OUT,{Client_S,TX(changeToServer)}},
+				{SubType::TIME_OUT,{Server_S,TX(changeToServer)}},
 				{SubType::NET_CONNECTED,{Client_S,TX(nonActRoutine)}},
 				
 			},
 			{Client_S,TX(defaultClientS)}}},
 		{Client_S,{{
-				{SubType::NET_DEV_CARDS,{Client_S,TX(saveDevCards)}},
-				{SubType::NET_CIRCULAR_TOKENS,{Client_S,TX(saveCircularTokens)}},
-				{SubType::NET_MAP_IS,{Client_S,TX(saveMap)}},
-				{SubType::TICK,{Client_S,TX(nonActRoutine)}},
 				{SubType::NET_NAME,{SendingClientName_S,TX(sendName)}},
+				{SubType::NET_NAME_IS,{Client_S,TX(saveName)}},
+				{SubType::NET_MAP_IS,{Client_S,TX(saveMap)}},
+				{SubType::NET_CIRCULAR_TOKENS,{Client_S,TX(saveCircularTokens)}},
+				{SubType::NET_DEV_CARDS,{Client_S,TX(saveDevCards)}},
+				{SubType::TICK,{Client_S,TX(nonActRoutine)}},
+				
 			},
 			{Client_S,TX(defaultClientS)}}},
 
 		{SendingClientName_S,{{
-				{SubType::NET_ACK,{Client_S,TX(nonActRoutine)}},
+				{SubType::NET_ACK,{Client_S,TX(askName)}},
 				{SubType::TICK,{SendingClientName_S,TX(nonActRoutine)}},
 			},
 			{Client_S,TX(defaultSendingClientNameS)}}},
 
 		{Server_S,{{
-				{SubType::NET_CONNECTED,{WaitingForName_S,TX(nonActRoutine)}},
-				{SubType::TICK,{Server_S,TX(nonActRoutine)}},
+				{SubType::NET_CONNECTED,{WaitingForName_S,TX(askName)}},
+				{SubType::TICK,{Server_S,TX(tryToConnect)}},
 			},
 			{Client_S,TX(defaultServerS)}}},
 
 		{WaitingForName_S,{{
-				{SubType::NET_NAME,{SendingServerName_S,TX(sendName)}},
+				{SubType::NET_NAME_IS,{SendingServerName_S,TX(saveName)}},
 				{SubType::TICK,{WaitingForName_S,TX(nonActRoutine)}},
 			},
 			{Client_S,TX(defaultWaitingForNameS)}} },
 
 		{SendingServerName_S,{{
+				{SubType::NET_NAME,{SendingServerName_S,TX(sendName)}},
 				{SubType::NET_ACK,{SendingMap_S,TX(sendMap)}},
 				{SubType::TICK,{SendingServerName_S,TX(nonActRoutine)}},
 			},
@@ -94,6 +97,10 @@ private:
 	void tryToConnect(GenericEvent *ev);
 	
 	void sendName(GenericEvent *ev);
+
+	void saveName(GenericEvent *ev);
+	
+	void askName(GenericEvent *ev);
 	
 	void changeToServer(GenericEvent *ev);
 	

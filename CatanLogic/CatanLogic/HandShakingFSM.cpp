@@ -6,6 +6,7 @@ void HandShakingFSM::saveDevCards(GenericEvent * ev)
 {
 	devCardsOn = true;
 	board->setDevCards(((DevCardsPkg*)((SubEvents*)ev)->getPackage())->getDeck());
+	network->pushPackage(new package(headers::ACK));
 }
 
 void HandShakingFSM::saveCircularTokens(GenericEvent * ev)
@@ -15,12 +16,13 @@ void HandShakingFSM::saveCircularTokens(GenericEvent * ev)
 		char circ = (((CircularTokensPkg*)((SubEvents*)ev)->getPackage())->getTokenList())[i];
 		board->setCircularToken('A' + i, circ);
 	}
-	
+	network->pushPackage(new package(headers::ACK));
 }
 
 void HandShakingFSM::saveMap(GenericEvent * ev)
 {
 	board->copyBoard(((MapIsPkg*)((SubEvents*)ev)->getPackage())->getBoard());
+	network->pushPackage(new package(headers::ACK));
 }
 
 void HandShakingFSM::tryToConnect(GenericEvent * ev)
@@ -30,11 +32,25 @@ void HandShakingFSM::tryToConnect(GenericEvent * ev)
 
 void HandShakingFSM::sendName(GenericEvent * ev)
 {
+	/*if (((SubEvents*)ev)->getType() == SubType::NET_NAME)
+	{
+		remoteName = ((NameIsPkg*)((SubEvents*)ev)->getPackage())->getName();
+	}*/
+	network->pushPackage(new NameIsPkg(localName));
+}
+
+void HandShakingFSM::saveName(GenericEvent * ev)
+{
 	if (((SubEvents*)ev)->getType() == SubType::NET_NAME)
 	{
 		remoteName = ((NameIsPkg*)((SubEvents*)ev)->getPackage())->getName();
 	}
-	network->pushPackage(new NameIsPkg(localName));
+	network->pushPackage(new package(headers::ACK));
+}
+
+void HandShakingFSM::askName(GenericEvent * ev)
+{
+	network->pushPackage(new package(headers::NAME));
 }
 
 void HandShakingFSM::changeToServer(GenericEvent * ev)
