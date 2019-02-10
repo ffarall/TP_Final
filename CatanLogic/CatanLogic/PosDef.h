@@ -3,14 +3,16 @@
 #define D_ALTO 700
 #define D_ANCHO 1200
 
-#define START_PLAYING_X (D_ANCHO*0.5)
-#define START_PLAYING_Y (D_ALTO*0.65)
+
 #define START_PLAYING_W 144
 #define START_PLAYING_H 35
-#define QUIT_X (D_ANCHO*0.5)
-#define QUIT_Y (D_ALTO*0.8)
+#define START_PLAYING_X (D_ANCHO*0.5)-START_PLAYING_W
+#define START_PLAYING_Y (D_ALTO*0.65)
 #define QUIT_W 144
 #define QUIT_H 35
+#define QUIT_X (D_ANCHO*0.5)-QUIT_W
+#define QUIT_Y (D_ALTO*0.8)
+
 
 #define THROW_DICE_X (D_ANCHO*0.23)
 #define THROW_DICE_Y (D_ALTO*0.85)
