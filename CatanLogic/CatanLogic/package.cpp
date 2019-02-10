@@ -227,7 +227,8 @@ std::string CircularTokensPkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
-	ret += myTokens;
+	for (int i = 0; i < 19; i++)
+		ret.push_back(myTokens[i]);
 	return ret;
 }
 

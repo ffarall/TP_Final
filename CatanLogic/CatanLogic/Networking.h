@@ -36,7 +36,7 @@ public:
 
 private:
 
-	void send(const char * msg_);
+	void send(const char * msg_, int largo);
 
 	void parseInput(const char * mensaje, size_t length_);
 	std::string msgDecoder(char* msg);
