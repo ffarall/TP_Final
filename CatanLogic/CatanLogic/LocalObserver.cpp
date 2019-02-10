@@ -118,7 +118,7 @@ void LocalObserver::update()
 
 	if (sellos[ICONO] == NULL)
 	{
-		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgb(255, 255, 255),
+		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
 			D_ANCHO * 0.05, D_ALTO * 0.05
 		);
 		anyChange = true;
