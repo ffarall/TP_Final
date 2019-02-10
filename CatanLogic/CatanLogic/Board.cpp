@@ -175,7 +175,7 @@ void Board::copyBoard(Board * original)
 	for (int i = 0; i < 6; i++)
 	{
 		aux2 = new Sea;
-		aux2->setPortType(original->getPortType(i));
+		aux2->setPortType(original->getPortType(i+'0'));
 		board[i + '0'] = aux;
 	}
 

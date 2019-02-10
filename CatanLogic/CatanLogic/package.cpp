@@ -78,7 +78,7 @@ MapIsPkg::MapIsPkg(const char * mapa) :package(headers::MAP_IS)
 	{
 		Sea * boo = new Sea();
 		boo->setPortType(static_cast<PortType>(all[i]));
-		table.insert(pair<char, Token*>(i, static_cast<Token *>(boo)));
+		table.insert(pair<char, Token*>(i+'0', static_cast<Token *>(boo)));
 	}
 	for (int i = 0; i < 19; i++)
 	{
@@ -121,7 +121,7 @@ MapIsPkg::MapIsPkg(std::vector<PortType>& agua_, std::vector<ResourceType>& piez
 		{
 			agua[i] = agua_[i];
 			Sea * boo = new Sea();
-			boo->setPortType(agua_.at(i));
+			boo->setPortType(agua_.at(i+'0'));
 			table.insert(pair<char, Token*>(i, static_cast<Token *>(boo) ));
 		}
 		for (int i = 0; i < 19; i++)
