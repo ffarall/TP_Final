@@ -232,7 +232,7 @@ std::string CircularTokensPkg::getPackage()
 	return ret;
 }
 
-DevCardsPkg::DevCardsPkg(stack<DevCards> pilaDeCartas)
+DevCardsPkg::DevCardsPkg(stack<DevCards> pilaDeCartas) :package(headers::DEV_CARDS)
 {
 	for (int i = 0; i < 25; i++)
 	{
