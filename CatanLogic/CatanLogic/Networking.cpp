@@ -166,7 +166,7 @@ void Networking::workPlease()
 			for (char a : paquete)
 				msg[i++] = a;
 			msg[i] = '\0';
-			cout << "Envio: " << msg << '.' << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
+			cout << "Envio: " << msgDecoder(msg) << '.' << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
 			send(msg);
 			paraEnviar.pop(); // lo saco de la cola
 			delete[]msg; // elimmino la memoria que reserve
@@ -461,6 +461,47 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		handler->enqueueEvent(evento);
 	else
 		delete evento;
+}
+
+std::string Networking::msgDecoder(char* msg)
+{
+	switch (*msg)
+	{
+	case 0x01: return "ACK"; break;
+	case 0x10: return "NAME"; break;
+	case 0x11: return "NAME_IS"; break;
+	case 0x12: return "MAP_IS"; break;
+	case 0x13: return "CIRCULAR_TOKENS"; break;
+	case 0x15: return "PLAY_WITH_DEV"; break;
+	case 0x16: return "DEV_CARDS"; break;
+	case 0x17: return "YOU_START"; break;
+	case 0x18: return "I_START"; break;
+	case 0x20: return "DICES_ARE"; break;
+	case 0x21: return "ROBBER_CARDS"; break;
+	case 0x22: return "CARD_IS"; break;
+	case 0x23: return "ROBBER_MOVE"; break;
+	case 0x24: return "SETTLEMENT"; break;
+	case 0x25: return "ROAD"; break;
+	case 0x26: return "CITY"; break;
+	case 0x27: return "BANK_TRADE"; break;
+	case 0x28: return "OFFER_TRADE"; break;
+	case 0x29: return "PASS"; break;
+	case 0x30: return "DEV_CARD"; break;
+	case 0x31: return "MONOPOLY"; break;
+	case 0x32: return "YEARS_OF_PLENTY"; break;
+	case 0x33: return "ROAD_BUILDING"; break;
+	case 0x34: return "KNIGHT"; break;
+	case 0x40: return "YES"; break;
+	case 0x41: return "NO "; break;
+	case 0x50: return "I_WON"; break;
+	case 0x51: return "PLAY_AGAIN"; break;
+	case 0x52: return "GAME_OVER"; break;
+	case 0xFE: return "ERROR"; break;
+	case 0xFF: return "QUIT"; break;
+
+	default:
+		break;
+	}
 }
 
 void Networking::pushPackage(package * mensaje)

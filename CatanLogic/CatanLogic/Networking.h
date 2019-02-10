@@ -39,6 +39,7 @@ private:
 	void send(const char * msg_);
 
 	void parseInput(const char * mensaje, size_t length_);
+	std::string msgDecoder(char* msg);
 	
 	Status estado; //Si funciona como server o como client
 	Activity current;
