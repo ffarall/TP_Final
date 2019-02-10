@@ -465,7 +465,8 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 
 std::string Networking::msgDecoder(char* msg)
 {
-	switch (*msg)
+	std::string message(msg);
+	switch (message[0])
 	{
 	case 0x01: return "ACK"; break;
 	case 0x10: return "NAME"; break;
@@ -499,8 +500,7 @@ std::string Networking::msgDecoder(char* msg)
 	case 0xFE: return "ERROR"; break;
 	case 0xFF: return "QUIT"; break;
 
-	default:
-		break;
+	default: return message; break;
 	}
 }
 
