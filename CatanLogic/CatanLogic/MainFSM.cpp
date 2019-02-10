@@ -173,7 +173,7 @@ MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandle
 
 MainFSM::~MainFSM()
 {
-	delete board;
+	//delete board;
 }
 
 mainStates MainFSM::getCurrState()
