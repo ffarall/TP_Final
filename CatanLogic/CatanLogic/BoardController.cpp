@@ -107,7 +107,7 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 			if (temp == VERTEX || temp == EDGE || temp == TOKEN)
 			{
 				enableMouseUp();
-				return POSITION_SELECTED;
+				return NO_EV;
 			}
 		}
 	}
@@ -158,7 +158,7 @@ GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 		}
 	}
 
-	return NO_EV;
+	return POSITION_SELECTED;
 }
 
 GUIEnablerEvent BoardController::parseTimerEvent()
