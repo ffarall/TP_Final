@@ -201,7 +201,7 @@ CircularTokensPkg::CircularTokensPkg(Board * tablero) :package(headers::CIRCULAR
 
 CircularTokensPkg::CircularTokensPkg(const char * _tokenList) :package(headers::CIRCULAR_TOKENS)
 {
-	std::string tokenList(_tokenList);
+	std::string tokenList(_tokenList,19);
 	if (tokenList.size() == 19)
 	{
 		for (int i = 0; i < 19; i++)
