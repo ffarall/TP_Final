@@ -179,9 +179,9 @@ void Board::copyBoard(Board * original)
 		board[i + '0'] = aux;
 	}
 
-	for (int i = '0'; i < ('0'+6); i++) // me armo la lista de puertos
+	for (int i = 0; i < 6; i++) // me armo la lista de puertos
 	{
-		PortType water = static_cast<Sea *>(board[i])->getPortType();
+		PortType water = static_cast<Sea *>(board[i + '0'])->getPortType();
 		switch (water)
 		{
 		case PortType::_2Tx1: case PortType::_2Ox1: case PortType::_2Lx1:
