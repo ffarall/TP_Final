@@ -1415,6 +1415,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler,Play
 
 
 		}
+		);
 
 
 	buttonList[24]->addUpdate(
