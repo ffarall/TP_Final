@@ -167,7 +167,7 @@ void Networking::workPlease()
 				msg[i++] = a;
 			msg[i] = '\0';
 			cout << "Envio: " << msgDecoder(msg) << '.' << endl; //  en lugar de tener algo bloqueante podria tener algo con write_some para ver si pasa mucho tiempo y eso
-			send(msg,i-1);
+			send(msg,i);
 			paraEnviar.pop(); // lo saco de la cola
 			delete[]msg; // elimmino la memoria que reserve
 		}
