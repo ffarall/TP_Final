@@ -12,7 +12,7 @@ void MainFSM::initHandShakingFSM(GenericEvent * ev)
 	mt19937_64 generator{ rd() };
 	uniform_int_distribution<> dist{ 2000, 5000 };	
 	timerCount = dist(generator)/TICK_TIME;; //cambiar este valor por el random
-
+	handShaking->setBoard(board);
 	handShaking->setState(handShakingStates::WaitingConnection_S);//la fsm de handshaking siempre comienza como client
 }
 
@@ -159,7 +159,7 @@ void MainFSM::error(GenericEvent * ev)
 
 }
 
-MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote, Board *board_):GenericFsm(&mainFsmMap,StartMenu_S)
+MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote):GenericFsm(&mainFsmMap,StartMenu_S)
 {
 	handShaking = handshaking;
 	network = network_;
@@ -168,7 +168,7 @@ MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandle
 	remoteEnabler = enablerRemote;
 	receivedQuit = false;
 	timerCount = MAX_TICK_TIME;
-	board = board_;
+	board = new Board;
 }
 
 MainFSM::~MainFSM()

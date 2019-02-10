@@ -135,7 +135,7 @@ private:
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);
 	void error(GenericEvent *ev);
 public:
-	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote, Board *board_);
+	MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_ , LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote);
 	virtual ~MainFSM();
 	mainStates getCurrState();
 	bool isQuit();

@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
 	HandShakingFSM hsFSM(&network, localPlayerName, &globalBoard, &handler);
-	MainFSM mainFSM(&hsFSM, &network, &handler, &localPlayerEnabler, &remotePlayerEnabler,&globalBoard);
+	MainFSM mainFSM(&hsFSM, &network, &handler, &localPlayerEnabler, &remotePlayerEnabler);
 	AllegroGUI GUI;
 	GutenbergsPressAllegro printer(NULL);		// HARCODEAR EL BACKGROUND PARA QUE EL CONSTRUCTOR NO RECIBA NADA.
 	BoardController boardCont(&handler, &printer, &mainFSM, &globalBoard);
