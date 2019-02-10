@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	Player remotePlayer;
 	Board globalBoard;
 	EventsHandler handler;
-	Networking network(argv[2]);
+	Networking network(&handler, argv[2]);
 	RemotePlayerEnabler remotePlayerEnabler(&network, &handler);
 	LocalPlayerEnabler localPlayerEnabler(&network, &remotePlayerEnabler, &handler, &localPlayer, &remotePlayer);
 	HandShakingFSM hsFSM(&network, localPlayerName, &globalBoard);
