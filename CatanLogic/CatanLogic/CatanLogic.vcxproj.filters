@@ -37,6 +37,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LocalObserver.cpp" />
     <ClCompile Include="TimerController.cpp" />
+    <ClCompile Include="CreateButtons.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />

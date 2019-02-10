@@ -134,6 +134,7 @@
     <ClCompile Include="BoardController.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="CreateButtons.cpp" />
     <ClCompile Include="GUIEnabler.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
