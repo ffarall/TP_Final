@@ -131,7 +131,6 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 	if (localPlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROAD);
 		enable(NET_ROAD, { TX(road2) });
 	}
@@ -155,7 +154,6 @@ void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 	if (localPlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROAD);
 		enableRemoteActions();
 	}
@@ -203,7 +201,6 @@ void RemotePlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	if (localPlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_SETTLEMENT);
 		enable(NET_ROAD, { TX(firstRoad) });
 	}
@@ -227,7 +224,6 @@ void RemotePlayerEnabler::firstRoad(SubtypeEvent * ev)
 	if (localPlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROAD);
 		enable(NET_SETTLEMENT, { TX(secondSettlement) });				// Leaving everything ready for next turn.
 	}
@@ -250,7 +246,6 @@ void RemotePlayerEnabler::secondSettlement(SubtypeEvent * ev)
 
 	if (localPlayer->checkSettlementAvailability(position))
 	{
-		pkgSender->pushPackage(new package(headers::ACK));
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
@@ -276,7 +271,6 @@ void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
 	if (localPlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROAD);
 		setUpForTurn();
 		emitEvent(TURN_FINISHED);
@@ -322,10 +316,9 @@ void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
 	string position = pkg->getPos();
 
 	
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROAD);
 		enable(NET_SETTLEMENT, { TX(secondSettlement_) });				// Leaving everything ready for next turn.
 		emitEvent(TURN_FINISHED);
@@ -350,7 +343,6 @@ void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
 
 	if (localPlayer->checkSettlementAvailability(position))
 	{
-		pkgSender->pushPackage(new package(headers::ACK));
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
@@ -376,7 +368,6 @@ void RemotePlayerEnabler::secondRoad_(SubtypeEvent * ev)
 	if(localPlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROAD);
 		setUpForTurn();
 	}
