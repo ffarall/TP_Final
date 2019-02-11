@@ -63,13 +63,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	GUI->attachController("Port2Px1", buttonList[20]);
 	buttonList.push_back(new Button(printer, handler, SELECT_BRICK_X, SELECT_BRICK_Y, SELECT_BRICK_H, SELECT_BRICK_W, "", "ladrillo.png", "catanFont.otf", 14));//brickButton
 	GUI->attachController("Brick", buttonList[21]);
-	buttonList.push_back(new Button(printer, handler, SELECT_LUMBER_X, SELECT_LUMBER_Y, SELECT_LUMBER_H, SELECT_LUMBER_W, "", "tronco.png", "", 14));//lumberButton
+	buttonList.push_back(new Button(printer, handler, SELECT_LUMBER_X, SELECT_LUMBER_Y, SELECT_LUMBER_H, SELECT_LUMBER_W, "", "tronco.png", "catanFont.otf", 14));//lumberButton
 	GUI->attachController("Lumber", buttonList[22]);
-	buttonList.push_back(new Button(printer, handler, SELECT_ORE_X, SELECT_ORE_Y, SELECT_ORE_H, SELECT_ORE_W, "", "piedra.png", "", 14));//oreButton
+	buttonList.push_back(new Button(printer, handler, SELECT_ORE_X, SELECT_ORE_Y, SELECT_ORE_H, SELECT_ORE_W, "", "piedra.png", "catanFont.otf", 14));//oreButton
 	GUI->attachController("Ore", buttonList[23]);
-	buttonList.push_back(new Button(printer, handler, SELECT_GRAIN_X, SELECT_GRAIN_Y, SELECT_GRAIN_H, SELECT_GRAIN_W, "", "pasto.png", "", 14));//grainButton
+	buttonList.push_back(new Button(printer, handler, SELECT_GRAIN_X, SELECT_GRAIN_Y, SELECT_GRAIN_H, SELECT_GRAIN_W, "", "pasto.png", "catanFont.otf", 14));//grainButton
 	GUI->attachController("Grain", buttonList[24]);
-	buttonList.push_back(new Button(printer, handler, SELECT_WOOL_X, SELECT_WOOL_Y, SELECT_WOOL_H, SELECT_WOOL_W, "", "lana.png", "", 14));//woolButtton
+	buttonList.push_back(new Button(printer, handler, SELECT_WOOL_X, SELECT_WOOL_Y, SELECT_WOOL_H, SELECT_WOOL_W, "", "lana.png", "catanFont.otf", 14));//woolButtton
 	GUI->attachController("Wool", buttonList[25]);
 	buttonList.push_back(new Button(printer, handler, ACCEPT_X, ACCEPT_Y, ACCEPT_H, ACCEPT_W, "", "tick.png", "", 0));//confirmButton
 	GUI->attachController("Confirm", buttonList[26]);

@@ -28,14 +28,17 @@ private:
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(SubtypeEvent* ev);
-	void firstSettlement(SubtypeEvent* ev);
-	void firstRoad(SubtypeEvent* ev);
-	void secondSettlement(SubtypeEvent* ev);
-	void secondRoad(SubtypeEvent* ev);
-	void firstSettlement_(SubtypeEvent* ev);
+	void firstSettlementLocalStarts(SubtypeEvent* ev); // estos 4 van todos juntos
+	void firstRoadLocalStarts(SubtypeEvent* ev);
+	void secondSettlementLocalStart(SubtypeEvent* ev);
+	void secondRoadLocalStart(SubtypeEvent* ev);
+	void firstSettlement_(SubtypeEvent* ev); // estos van uno con uno
 	void firstRoad_(SubtypeEvent* ev);
+	void primeraParte(SubtypeEvent* ev);
 	void secondSettlement_(SubtypeEvent* ev);
 	void secondRoad_(SubtypeEvent* ev);
+	void firstTurn(SubtypeEvent * ev);
+
 	void checkDices(SubtypeEvent* ev);
 	void SendsRobberCards(SubtypeEvent* ev);
 	void remoteLoseCards(SubtypeEvent* ev);
@@ -63,7 +66,7 @@ private:
 	void road2(SubtypeEvent * ev);
 
 	void finDelJuego(SubtypeEvent * ev);
-	void firstTurn(SubtypeEvent * ev);
+
 	
 
 	/* DEFAULT ROUTINES */
