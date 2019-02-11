@@ -8,7 +8,7 @@
 #define LANA "lana.png"
 #define ROAD "road.png"
 #define CITY "city.png"
-#define SETTLE "setlement.png"
+#define SETTLE "settlement.png"
 #define ICONO "LocalPla.png"
 #define FONT "catanFont.otf"
 #define LROAD "LongestRoad.png"
@@ -124,7 +124,7 @@ void LocalObserver::update()
 		bool anyChange = false;
 		map<string, bool> buildings;
 
-		if (sellos[ICONO] != NULL)
+		if (sellos[ICONO] == NULL)
 		{
 			sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
 				D_ANCHO * 0.05, D_ALTO * 0.05

@@ -530,7 +530,8 @@ void Player::updateAvailability()
 	//ahora saco los ocupados o los de la regla de dos espacios
 
 	list<string>::iterator vertex;
-	for (vertex = availableForSettlement.begin(); vertex != availableForSettlement.end();vertex++)
+	list<string> copyToIterate = availableForSettlement;
+	for (vertex = copyToIterate.begin(); vertex != copyToIterate.end(); vertex++)
 	{
 		int row=0, colum=0;
 		while (boardInStrings[row][colum] != *vertex) // encueltro el vertice en la super matriz
