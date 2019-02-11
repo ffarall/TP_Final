@@ -100,4 +100,3 @@ private:
 	// Enables events for beginning of turn.
 	void setUpForTurn();
 };
-
