@@ -326,7 +326,6 @@ void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
 		addRoadToRemote(position);
 		disable(NET_ROAD);
 		enable(NET_PASS, { TX(primeraParte) });
-		emitEvent(TURN_FINISHED);
 	}
 	else
 	{
@@ -341,6 +340,7 @@ void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
 void RemotePlayerEnabler::primeraParte(SubtypeEvent * ev)
 {
 	disable(NET_PASS);
+	emitEvent(TURN_FINISHED);
 	enable(NET_SETTLEMENT, { TX(secondSettlement_) });				// Leaving everything ready for next turn.
 }
 
