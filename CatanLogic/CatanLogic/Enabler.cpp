@@ -23,7 +23,8 @@ void Enabler::cycle(SubtypeEvent * ev)
 	{
 		if (enabledActions.enablerMap.count(ev->getSubtype()))
 		{
-			for (auto action : enabledActions.enablerMap[ev->getSubtype()])
+			list< EnablerRoutine > copyList = enabledActions.enablerMap[ev->getSubtype()];
+			for (auto action : copyList)
 			{
 				auto f = bind(action, this, ev);
 				f();
