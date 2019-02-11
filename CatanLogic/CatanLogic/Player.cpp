@@ -529,7 +529,8 @@ void Player::updateAvailability()
 	}
 	//ahora saco los ocupados o los de la regla de dos espacios
 
-	for (auto vertex : availableForSettlement)
+	list<string> copyToIterate = availableForSettlement;
+	for (auto vertex : copyToIterate)
 	{
 		int row=0, colum=0;
 		while (boardInStrings[row][colum] != vertex) // encueltro el vertice en la super matriz
@@ -557,7 +558,7 @@ void Player::updateAvailability()
 		{
 			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()) )
 			{
-				availableForSettlement.remove(vertex); // esto hay que ver si funciona pq se corre el itertor y me puede cagar el for
+				availableForSettlement.remove(vertex); 
 				fin = false;
 			}
 		}
