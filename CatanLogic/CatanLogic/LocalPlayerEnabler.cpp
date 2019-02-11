@@ -182,7 +182,7 @@ void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 void LocalPlayerEnabler::endLocalStarts(SubtypeEvent* ev)
 {
 	disable(NET_ACK);
-	setUpForTurn()
+	setUpForTurn();
 }
 
 void LocalPlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
