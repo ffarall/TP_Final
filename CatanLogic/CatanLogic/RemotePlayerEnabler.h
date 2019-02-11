@@ -32,8 +32,6 @@ private:
 	void firstRoadLocalStarts(SubtypeEvent* ev);
 	//void secondSettlementLocalStart(SubtypeEvent* ev);
 	//void secondRoadLocalStart(SubtypeEvent* ev);
-	void firstSettlementLocalStarts(SubtypeEvent* ev); // estos van uno con uno
-	void firstRoadLocalStarts(SubtypeEvent* ev);
 	void primeraParte(SubtypeEvent* ev);
 	void secondSettlementLocalStarts(SubtypeEvent* ev);
 	void secondRoadLocalStarts(SubtypeEvent* ev);
