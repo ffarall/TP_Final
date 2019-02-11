@@ -38,11 +38,12 @@ BoardController::BoardController()
 {
 }
 
-BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_, Board* board_) : BasicController(handler_)
+BoardController::BoardController(EventsHandler * handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_, Board* board_, PlayerEnabler* locEnab_) : BasicController(handler_)
 {
 	printer = prnter_;
 	mainFSM = mainFSM_;
 	board = board_;
+	locEnab = locEnab_;
 	init();
 }
 
@@ -103,14 +104,11 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
 	if (isMouseDownActive())
 	{
-		if (getPuttingSettlement() || getPuttingRoad() || getPuttingCity() || getMovingRobber())
+		unsigned char temp = decoder->getPixelType(x - BOARD_POS_X, y - BOARD_POS_Y);
+		if (temp == VERTEX || temp == EDGE || temp == TOKEN)
 		{
-			unsigned char temp = decoder->getPixelType(x-BOARD_POS_X, y-BOARD_POS_Y);
-			if (temp == VERTEX || temp == EDGE || temp == TOKEN)
-			{
-				enableMouseUp();
-				return NO_EV;
-			}
+			enableMouseUp();
+			return NO_EV;
 		}
 	}
 
@@ -151,7 +149,7 @@ GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 				emitSubEvent(PLAYER_ACTION, PLA_CITY, cityPkg);
 			}
 		}
-		else if (getMovingRobber())
+		else if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROBBER_MOVE)) || getMovingRobber())
 		{
 			if (decoder->getPixelType(x, y) == TOKEN)
 			{

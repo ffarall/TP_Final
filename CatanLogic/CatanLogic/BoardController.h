@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "GutenbergsPressAllegro.h"
 #include "MainFSM.h"
+#include "PlayerEnabler.h"
 
 #include <string>
 #include <map>
@@ -17,7 +18,7 @@ class BoardController :
 {
 public:
 	BoardController();
-	BoardController(EventsHandler* handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_, Board* board_);
+	BoardController(EventsHandler* handler_, GutenbergsPressAllegro * prnter_, MainFSM* mainFSM_, Board* board_, PlayerEnabler* locEnab);
 	virtual ~BoardController();
 
 	virtual void update();
@@ -63,6 +64,8 @@ private:
 	Player* localPlayer;
 	// remotePlayer to observe.
 	Player* remotePlayer;
+	// localPlayerEnabler to observe.
+	PlayerEnabler* locEnab;
 
 	// Reads the MapCode to determine what the player is touching in the board and also it specifies where to put the bitmaps of Roads and Settlements or Cities.
 	MapDecoder* decoder;
