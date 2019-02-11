@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
 		{
 			GenericEvent* ev = handler.getNextEvent();
 			mainFSM.cycle(ev);
+			delete ev;
 		}
 	}
 }

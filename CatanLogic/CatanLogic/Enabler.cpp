@@ -37,7 +37,6 @@ void Enabler::cycle(SubtypeEvent * ev)
 		}
 
 		notifyAllObservers();
-		delete ev;
 	}
 }
 
