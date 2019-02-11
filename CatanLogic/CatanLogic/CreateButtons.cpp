@@ -246,7 +246,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		}
 	);
 
-	Button * offerbutton = buttonList[7];
+	Button * offerbutton = buttonList[8];
 	buttonList[8]->addUtility(
 		[locEnab, handler, offerbutton]()
 		{
@@ -1613,7 +1613,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 {
 	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 	{
-		if (localPlayer->getResourceAmount(recurso) && bankbutton->getPackage() != nullptr)
+		if (localPlayer->getResourceAmount(recurso) && bankbutton->getPackage())
 		{
 			BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
 			if (!paquete->offerclosed())
@@ -1636,9 +1636,9 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (localPlayer->getResourceAmount(recurso) && offerbutton->getPackage() != nullptr)
+		else if (localPlayer->getResourceAmount(recurso) && offerbutton->getPackage())
 		{
-			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
+			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(offerbutton->getPackage());
 			if (!paquete->offerclosed())
 			{
 				int amount = 0;

@@ -4,6 +4,9 @@
 
 Sea::Sea()
 {
+	settlementOwners.fill(nullptr);
+	cityOwners.fill(nullptr);
+	roadOwners.fill(nullptr);
 }
 
 

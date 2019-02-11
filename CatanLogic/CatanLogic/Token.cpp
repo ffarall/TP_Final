@@ -78,7 +78,7 @@ bool Token::addRoad(EDASubject * owner_)
 {
 	Player* owner = static_cast<Player*>(owner_);
 	int i = 0;
-	while ((i != roadOwners.size()) && (roadOwners[i] != nullptr))
+	while ((i != roadOwners.size()) && (roadOwners[i]))
 	{
 		i++;
 	}
