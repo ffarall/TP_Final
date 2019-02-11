@@ -811,11 +811,11 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[6]->addUpdate(
-		[mainFSM, buttonList]()
+		[mainFSM, buttonList,locEnab]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S &&  locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS)))
 		{
-			if (!buttonList[6]->isPressed() && buttonList[6]->isEnabled())
+			if (!buttonList[6]->isPressed() )
 			{
 				buttonList[6]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -824,7 +824,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				buttonList[6]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !buttonList[6]->isEnabled()) //si no tengo recursos, botón semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS))) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
 			buttonList[6]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
 		}
