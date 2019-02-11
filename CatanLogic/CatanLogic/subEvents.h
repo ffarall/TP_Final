@@ -33,7 +33,7 @@ public:
 	SubEvents(EventTypes mainEvent_, EventSubtypes subTipo_, package * paquete_=nullptr) { setEvent(mainEvent_); setSubtype(subTipo_); paquete = paquete_; }
 	virtual ~SubEvents() 
 	{ 
-		if(paquete != nullptr)
+		if(paquete)
 			delete paquete; 
 	}
 	
@@ -45,7 +45,7 @@ public:
 	
 	void addPackage(package * newPacket) 
 	{
-		if (paquete != nullptr) { delete paquete; }
+		if (paquete) { delete paquete; }
 		paquete = newPacket;
 	};
 	package * getPackage() { return paquete; };
