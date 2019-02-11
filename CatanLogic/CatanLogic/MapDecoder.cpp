@@ -113,18 +113,7 @@ string MapDecoder::getCoordinateFromPixel(unsigned int i, unsigned int j)
 			ret += B;
 		}
 
-		if (ret.compare("EFJ"))
-		{
-			return "FJK";
-		}
-		else if (ret.compare("FJK"))
-		{
-			return "EFJ";
-		}
-		else
-		{
-			return ret;
-		}
+		return ret;
 	}
 	return string(); // error
 }
