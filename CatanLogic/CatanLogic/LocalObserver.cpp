@@ -106,7 +106,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		sellos[LARMY] = impresora->createType(dibujo[LARMY], al_map_rgba(0,0,0,0), D_ANCHO * 0.2, D_ALTO * 0.15);
 		sellos[LROAD] = impresora->createType(dibujo[LROAD], al_map_rgba(0, 0, 0, 0), D_ANCHO * 0.25, D_ALTO * 0.15);
 
-		sellos[ROBBER] = printer->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
+		sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
 			0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 			1, 1, 0, 0);
 	}
