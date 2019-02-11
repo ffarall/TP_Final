@@ -529,12 +529,10 @@ void Player::updateAvailability()
 	}
 	//ahora saco los ocupados o los de la regla de dos espacios
 
-	list<string>::iterator vertex;
-	list<string> copyToIterate = availableForSettlement;
-	for (vertex = copyToIterate.begin(); vertex != copyToIterate.end(); vertex++)
+	for (auto vertex : availableForSettlement)
 	{
 		int row=0, colum=0;
-		while (boardInStrings[row][colum] != *vertex) // encueltro el vertice en la super matriz
+		while (boardInStrings[row][colum] != vertex) // encueltro el vertice en la super matriz
 		{
 			row++;
 			if (row == 14)
@@ -559,7 +557,7 @@ void Player::updateAvailability()
 		{
 			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()) )
 			{
-				availableForSettlement.erase(vertex); // esto hay que ver si funciona pq se corre el itertor y me puede cagar el for
+				availableForSettlement.remove(vertex); // esto hay que ver si funciona pq se corre el itertor y me puede cagar el for
 				fin = false;
 			}
 		}
@@ -579,11 +577,11 @@ void Player::updateAvailability()
 	}
 	availableForRoad.unique(); // filtro los que puedan estar repetidos
 	//ahora que ya tengo todas las disponibles, tengo que sacar las ocupadas
-	for (vertex = availableForRoad.begin(); vertex != availableForRoad.end(); vertex++)
+	for (auto vertex : availableForSettlement)
 	{
-		if (myRoads.find(*vertex) != myRoads.end() || rivalsRoads.find(*vertex) != rivalsRoads.end())
+		if (myRoads.find(vertex) != myRoads.end() || rivalsRoads.find(vertex) != rivalsRoads.end())
 		{
-			availableForRoad.erase(vertex); // creo que se rompe el for con esto
+			availableForRoad.remove(vertex); // creo que se rompe el for con esto
 		}
 	}
 	
