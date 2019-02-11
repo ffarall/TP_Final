@@ -4,6 +4,18 @@
 
 Token::Token()
 {
+	for (auto set : settlementOwners)
+	{
+		set = nullptr;
+	}
+	for (auto city : cityOwners)
+	{
+		city = nullptr;
+	}
+	for (auto road : roadOwners)
+	{
+		road = nullptr;
+	}
 }
 
 
