@@ -298,7 +298,7 @@ list<string> Player::getMyRoads()
 
 bool Player::checkSettlementAvailability(string position)
 {
-	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());	// Check if position is available.
+	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) != availableForSettlement.end());	// Check if position is available.
 	if (mySettlements.size() >= 2)
 	{
 		ret &= checkSettlementResources();																							// Check if player has resources.
@@ -310,7 +310,7 @@ bool Player::checkSettlementAvailability(string position)
 
 bool Player::checkRoadAvailability(string position)
 {
-	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());					// Check if position is available.
+	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) != availableForRoad.end());					// Check if position is available.
 	if (myRoads.size() >= 2)
 	{
 		ret &= checkRoadResources();																								// Check if player has resources.
