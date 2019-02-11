@@ -1329,6 +1329,12 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[22]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[22]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[22]->getBitmap(), 0, 0, 0);
+		al_draw_text(buttonList[22]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(BOSQUE)).c_str());
+		al_set_target_backbuffer(tempDisplay);
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(BOSQUE))
 		{
 			if (!buttonList[22]->isPressed())
@@ -1361,6 +1367,12 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[23]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[23]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[23]->getBitmap(), 0, 0, 0);
+		al_draw_text(buttonList[23]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(MONTAÑAS)).c_str());
+		al_set_target_backbuffer(tempDisplay);
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(MONTAÑAS))
 		{
 			if (!buttonList[23]->isPressed())
@@ -1392,6 +1404,12 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[24]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[24]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[24]->getBitmap(), 0, 0, 0);
+		al_draw_text(buttonList[24]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(CAMPOS)).c_str());
+		al_set_target_backbuffer(tempDisplay);
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(CAMPOS))
 		{
 			if (!buttonList[24]->isPressed())
@@ -1423,6 +1441,12 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[25]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[25]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[25]->getBitmap(), 0, 0, 0);
+		al_draw_text(buttonList[25]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(PASTOS)).c_str());
+		al_set_target_backbuffer(tempDisplay);
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(PASTOS))
 		{
 			if (!buttonList[25]->isPressed())
