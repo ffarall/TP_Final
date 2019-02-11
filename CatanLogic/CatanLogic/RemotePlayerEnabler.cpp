@@ -322,7 +322,7 @@ void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
 	string position = pkg->getPos();
 
 	
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
 		pkgSender->pushPackage(new package(headers::ACK));
