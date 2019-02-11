@@ -107,6 +107,12 @@ void LocalPlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
+	enable(NET_ACK, { TX(waitingConfFstSetLocStarts) });
+}
+
+void LocalPlayerEnabler::waitingConfFstSetLocStarts(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(firstRoadLocalStarts) });
 }
 
@@ -147,6 +153,12 @@ void LocalPlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
+	enable(NET_ACK, { TX(waitingConfSndSetLocStarts) });
+}
+
+void LocalPlayerEnabler::waitingConfSndSetLocStarts(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(secondRoadLocalStarts) });
 }
 

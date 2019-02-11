@@ -36,9 +36,11 @@ private:
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct(SubtypeEvent* ev);
 	void firstSettlementLocalStarts(SubtypeEvent* ev);
+	void waitingConfFstSetLocStarts(SubtypeEvent* ev);
 	void firstRoadLocalStarts(SubtypeEvent* ev);
 	void firstTurnFinish(SubtypeEvent* ev);
 	void secondSettlementLocalStarts(SubtypeEvent* ev);
+	void waitingConfSndSetLocStarts(SubtypeEvent* ev);
 	void secondRoadLocalStarts(SubtypeEvent* ev);
 	void firstSettlementRemoteStarts(SubtypeEvent* ev);
 	void waitingConfFstSetRemStarts(SubtypeEvent* ev);
