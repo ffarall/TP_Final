@@ -77,7 +77,21 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		working = false;
 		al_destroy_font(fuente);
 	}
+	if (working)
+	{
+		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(0, 0, 0, 0),
+			D_ANCHO * 0.05, D_ALTO * 0.05
+		);
+		sellos[ICONOR] = impresora->createType(dibujo[ICONOR], al_map_rgba(0, 0, 0, 0),
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
+		);
+		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(0, 0, 0, 0),
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.65
+		);
+		sellos[LARMY] = impresora->createType(dibujo[LARMY], al_map_rgba(0,0,0,0), D_ANCHO * 0.2, D_ALTO * 0.15);
+		sellos[LROAD] = impresora->createType(dibujo[LROAD], al_map_rgba(0, 0, 0, 0), D_ANCHO * 0.25, D_ALTO * 0.15);
 
+	}
 }
 
 
@@ -99,36 +113,24 @@ LocalObserver::~LocalObserver()
 
 void LocalObserver::update()
 {
-	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 	{
 		bool anyChange = false;
 		map<string, bool> buildings;
 
 		
-		if (sellos[ICONO] == NULL)
-		{
-
-			sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
-				D_ANCHO * 0.05, D_ALTO * 0.05
-			);
-			anyChange = true;
-		}
-		if (sellos[ICONOR] == NULL)
-		{
-			sellos[ICONOR] = impresora->createType(dibujo[ICONOR], al_map_rgba(255, 255, 255, 255),
-				D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
-			);
-			anyChange = true;
-		}
+		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
+			D_ANCHO * 0.05, D_ALTO * 0.05
+		);
 		
-		if (sellos[COSTOS] == NULL)
-		{
-			sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(255, 255, 255, 255),
-				D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.65
-			);
-			anyChange = true;
-		}
-
+		sellos[ICONOR] = impresora->createType(dibujo[ICONOR], al_map_rgba(120, 120, 120, 120),
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
+		);
+		
+		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(255, 255, 255, 255),
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.35
+		);
+		
 		if (drawBuildings(true))
 		{
 			anyChange = true;
@@ -138,37 +140,43 @@ void LocalObserver::update()
 			anyChange = true;
 		}
 		
-		
 		if (localPlayer->hasLargestArmy())
 		{
-			if (sellos[LARMY] == NULL)
-			{
-				sellos[LARMY] = impresora->createType(dibujo[LARMY], al_map_rgb(255, 255, 255), D_ANCHO * 0.2, D_ALTO * 0.15);
-			}
+			sellos[LARMY]->setDX(D_ANCHO * 0.2);
+			sellos[LARMY]->setDY(D_ALTO * 0.15);
+			sellos[LARMY]->setTint(al_map_rgba(255, 255, 255, 255));
 		}
-		else if (sellos[LARMY] != NULL)
+		else
 		{
-			impresora->delType(sellos[LARMY]);
-			delete sellos[LARMY];
+			sellos[LARMY]->setTint(al_map_rgba(0, 0, 0, 0));
 		}
-
+		
 		if (localPlayer->hasLongestRoad())
 		{
-			if (sellos[LROAD] == NULL)
-			{
-				sellos[LROAD] = impresora->createType(dibujo[LROAD], al_map_rgb(255, 255, 255), D_ANCHO * 0.25, D_ALTO * 0.15);
-			}
+			sellos[LROAD]->setDX(D_ANCHO * 0.25);
+			sellos[LROAD]->setDY(D_ALTO * 0.15);
+			sellos[LROAD]->setTint(al_map_rgba(255, 255, 255, 255));
 		}
-		else if (sellos[LROAD] != NULL)
+		else
 		{
-			impresora->delType(sellos[LROAD]);
-			delete sellos[LROAD];
+			sellos[LROAD]->setTint(al_map_rgba(0, 0, 0, 0));
 		}
-
+		
 		if (anyChange)
 		{
 			sellos.begin()->second->redraw();
 		}
+	}
+	else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+	{
+		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(120, 120, 120, 120),
+			D_ANCHO * 0.05, D_ALTO * 0.05
+		);
+
+		sellos[ICONOR] = impresora->createType(dibujo[ICONOR], al_map_rgba(255, 255, 255, 255),
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
+		);
+
 	}
 	else
 	{
