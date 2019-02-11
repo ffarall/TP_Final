@@ -132,8 +132,8 @@ void LocalObserver::update()
 	{
 		if (sellos[ROBBER] == NULL)
 		{
-			sellos[ROBBER] = impresora->createType(dibujo[LARMY], al_map_rgba(0, 0, 0, 0),
-				0, 0, al_get_bitmap_width(dibujo[LARMY]) / 2, al_get_bitmap_height(dibujo[LARMY]) / 2,
+			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
+				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 				1, 1, 0, 0);
 		}
 		bool anyChange = false;
@@ -203,8 +203,8 @@ void LocalObserver::update()
 	{
 		if (sellos[ROBBER] == NULL)
 		{
-			sellos[ROBBER] = impresora->createType(dibujo[LARMY], al_map_rgba(0, 0, 0, 0),
-				0, 0, al_get_bitmap_width(dibujo[LARMY]) / 2, al_get_bitmap_height(dibujo[LARMY]) / 2,
+			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
+				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 				1, 1, 0, 0);
 		}
 		string foo;
@@ -213,8 +213,8 @@ void LocalObserver::update()
 		pos.first += ROBBER_POS + BOARD_POS_X;
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
-		sellos[ROBBER]->setDX(pos.first);
-		sellos[ROBBER]->setDY(pos.second);
+		sellos[ROBBER]->setDX(100);
+		sellos[ROBBER]->setDY(100);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 		string temp = localEnabler->getWaitingMessage();
