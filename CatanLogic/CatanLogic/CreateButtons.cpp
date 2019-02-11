@@ -225,7 +225,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS)))
 			{
 				//ver si esta bien el mainType ?
-				handler->enqueueEvent(new SubEvents(MainTypes::TURN_FINISHED, SubType::PLA_PASS, new package(headers::PASS)));
+				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS, new package(headers::PASS)));
 				return GUIEnablerEvent::PASS;
 			}
 			return GUIEnablerEvent::NO_EV;
