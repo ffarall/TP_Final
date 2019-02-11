@@ -123,8 +123,14 @@ void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	addRoadToLocal(position);
 
 	disable(PLA_ROAD);
-	enable(PLA_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
+	enable(NET_ACK, { TX(firstTurnFinish) });
+}
 
+void LocalPlayerEnabler::firstTurnFinish(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
+	enable(PLA_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
+	pkgSender->pushPackage(new package(headers::PASS));
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 

@@ -37,6 +37,7 @@ private:
 	void noAct(SubtypeEvent* ev);
 	void firstSettlementLocalStarts(SubtypeEvent* ev);
 	void firstRoadLocalStarts(SubtypeEvent* ev);
+	void firstTurnFinish(SubtypeEvent* ev);
 	void secondSettlementLocalStarts(SubtypeEvent* ev);
 	void secondRoadLocalStarts(SubtypeEvent* ev);
 	void firstSettlementRemoteStarts(SubtypeEvent* ev);
