@@ -84,6 +84,8 @@ void BoardController::update()
 			sellos[ROBBER_FILE]->setDY(pos.first);
 		}
 
+		sellos[ROBBER_FILE]->redraw();
+
 	/*	if (sellos[DEV_FILE] == NULL)
 		{
 			al_draw_text(font, al_map_rgb(0, 0, 0), D_ANCHO * 0.65, D_ALTO * 0.82, 0, "Pile of DevCards");
