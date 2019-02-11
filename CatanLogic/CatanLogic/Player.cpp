@@ -806,44 +806,62 @@ vector<string> Player::getAdjacentEdges(string vertex)
 	adyacentes.clear();
 	if (vertex[0] >= '0' && vertex[0] <= '9')
 	{
-		if (vertex.length() == 3) // si es la de 2 num + 1 letra
+		if (vertex[1] >= '0' && vertex[1] <= '9')
 		{
-			if (!vertex.compare("05A")) // el unico de los 6 que es distinto
+			if (vertex.length() == 3) // si es la de 2 num + 1 letra
 			{
-				adyacentes.push_back("5A");
-				adyacentes.push_back("0A5");
+				if (!vertex.compare("05A")) // el unico de los 6 que es distinto
+				{
+					adyacentes.push_back("5A");
+					adyacentes.push_back("0A5");
+				}
+				else
+				{   //3qr
+					string aux_ = vertex;
+					aux_.erase(aux_.begin() + 1);
+					adyacentes.push_back(aux_);
+					aux_ = vertex;
+					aux_.erase(aux_.begin());
+					aux_.push_back(vertex[0]);
+					adyacentes.push_back(aux_);
+				}
 			}
 			else
 			{
-				string aux_ = vertex;
-				aux_.erase(aux_.begin() + 1);
-				adyacentes.push_back(aux_);
-				aux_ = vertex;
-				aux_.erase(aux_.begin());
-				aux_.push_back(vertex[0]);
-				adyacentes.push_back(aux_);
+				for (string str : allEdges)
+				{
+					if (str.find(vertex[0]) != str.npos && str.find(vertex[1]) != str.npos) // las aristas que contengan ambos caracteres
+					{
+						adyacentes.push_back(str);
+					}
+				}
 			}
 		}
 		else
 		{
-			for (string str : allEdges)
-			{
-				if (str.find(vertex[0]) != str.npos && str.find(vertex[1]) != str.npos) // las aristas que contengan ambos caracteres
-				{
-					adyacentes.push_back(str);
-				}
-			}
+			string temp; // 3qr
+			temp.push_back(vertex[1]);
+			temp.push_back(vertex[2]);
+			adyacentes.push_back(temp); //qr
+			temp.clear();
+			temp = vertex ; //3r
+			availableForRoad.push_back(temp.substr(0,2));
+			temp.clear();
+			temp[0] = vertex[0];  //qr
+			temp[1] = vertex[2];  //qr
+			temp[2] = vertex[1];  //qr
+			adyacentes.push_back(temp);
 		}
 	}
 	else // los edge aledaños son combinaciones de las letras, easy to solve(?
 	{
-		string temp;
-		temp.push_back(vertex[0]);
+		string temp; // 3qr
+		temp.push_back(vertex[0]); 
 		temp.push_back(vertex[1]);
-		adyacentes.push_back(temp);
-		temp[1] = vertex[2];
+		adyacentes.push_back(temp); //3q
+		temp[1] = vertex[2]; //3r
 		availableForRoad.push_back(temp);
-		temp[0] = vertex[1];
+		temp[0] = vertex[1];  //qr
 		adyacentes.push_back(temp);
 	}
 	return adyacentes;
