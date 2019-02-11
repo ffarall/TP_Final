@@ -295,7 +295,7 @@ void RemotePlayerEnabler::primeraParte(SubtypeEvent * ev)
 {
 	disable(NET_PASS);
 	emitEvent(TURN_FINISHED);
-	enable(NET_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
+	enable(NET_SETTLEMENT, { TX(secondSettlementRemoteStarts) });				// Leaving everything ready for next turn.
 }
 
 void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
