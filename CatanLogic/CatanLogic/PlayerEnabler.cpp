@@ -67,6 +67,19 @@ bool PlayerEnabler::areWePlayingWithDev()
 	return playingWithDev;
 }
 
+void PlayerEnabler::getResourceFromSettlement(string position, Player* who)
+{
+	for (char c : position)
+	{
+		if (isalpha(c))												// If it's a Hex.
+		{
+			ResourceType resType = board->getResourceFromHex(c);
+			who->addResource(resType);							// Adds 1 resource because it's a Settlement.
+		}
+	}
+
+}
+
 void PlayerEnabler::setErrMessage(string message)
 {
 	errMessageForUser = message;

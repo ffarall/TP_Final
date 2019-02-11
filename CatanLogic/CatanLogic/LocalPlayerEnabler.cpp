@@ -178,7 +178,7 @@ void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 	pkgSender->pushPackage(new RoadPkg(*pkg));
 
 	addRoadToLocal(position);
-	getResourceFromSettlement(position, localPlayer);
+	getResourceFromSettlement(localPlayer->getLastSettlement(), localPlayer);
 
 	disable(PLA_ROAD);
 	enable(NET_ACK, { TX(endLocalStarts) });
@@ -267,8 +267,7 @@ void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 	pkgSender->pushPackage(new RoadPkg(*pkg));
 
 	addRoadToLocal(position);
-	
-	getResourceFromSettlement(position, localPlayer);
+	getResourceFromSettlement(localPlayer->getLastSettlement(), localPlayer);
 
 	disable(PLA_ROAD);
 	enable(NET_ACK, { TX(firstTurn) });
@@ -796,18 +795,6 @@ void LocalPlayerEnabler::emitSubEvent(EventTypes type, EventSubtypes subtype, pa
 {
 	GenericEvent* ev = new SubEvents(type, subtype, pkg);
 	handler->enqueueEvent(ev);
-}
-
-void LocalPlayerEnabler::getResourceFromSettlement(string position, Player* who)
-{
-	for (char c : position)
-	{
-		if (isalpha(c))												// If it's a Hex.
-		{
-			ResourceType resType = board->getResourceFromHex(c);
-			who->addResource(resType);							// Adds 1 resource because it's a Settlement.
-		}
-	}
 }
 
 void LocalPlayerEnabler::checkIfLocalWon()

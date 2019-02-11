@@ -162,6 +162,7 @@ size_t Player::getResourceAmount(ResourceType resource)
 
 void Player::addToMySettlements(string position)
 {
+	lastSettlement = position;
 	Settlement* newSettlement = new Settlement(position);
 	mySettlements.insert(pair< string, Settlement* >(position, newSettlement));
 
@@ -501,6 +502,11 @@ void Player::setLargestArmyCard(bool doesItHaveTheCard)
 size_t Player::getArmySize()
 {
 	return army;
+}
+
+string Player::getLastSettlement()
+{
+	return lastSettlement;
 }
 
 void Player::allVertexesAvailable()

@@ -124,6 +124,9 @@ public:
 	// Returns size of this player's army (times this player used KNIGHT DevCard).
 	size_t getArmySize();
 
+	// Returns last Settlement added.
+	string getLastSettlement();
+
 private:
 
 	// True when player has won.
@@ -182,6 +185,9 @@ private:
 	vector< string > getAdjacentEdges(string vertex);
 	// Recursive function used to visit all the adjacent edges which have a Road (used for calculating longestRoad).
 	void followRoad(string vertex);
+
+	// Position of last settlement added.
+	string lastSettlement;
 
 	// Functions for using DevCards.
 	void useKnight();
