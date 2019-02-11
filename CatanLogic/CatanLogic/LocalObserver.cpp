@@ -1,6 +1,7 @@
 #include "LocalObserver.h"
 #include "PosDef.h"
 
+#define ROBBER "robber.png"
 #define LADRILLO "ladrillo.png"
 #define PASTO "pasto.png"
 #define PIEDRA "piedra.png"
@@ -28,6 +29,7 @@
 #define FONT_SIZE 10 // ver 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
+#define ROBBER_POS 20
 
 #define D_ALTO 700
 #define D_ANCHO 1200
@@ -56,6 +58,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 	dibujo[KNIGHT] = al_load_bitmap(KNIGHT);
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
+	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 
 	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
 	if (!working)
@@ -91,6 +94,15 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		sellos[LARMY] = impresora->createType(dibujo[LARMY], al_map_rgba(0,0,0,0), D_ANCHO * 0.2, D_ALTO * 0.15);
 		sellos[LROAD] = impresora->createType(dibujo[LROAD], al_map_rgba(0, 0, 0, 0), D_ANCHO * 0.25, D_ALTO * 0.15);
 
+		string foo;
+		foo += localEnabler->getRobberPos();
+		pair<unsigned int, unsigned int > pos = toDraw.getPositioningForToken(foo);
+		pos.first += ROBBER_POS + BOARD_POS_X;
+		pos.second += BOARD_POS_Y;
+		sellos[ROBBER] = printer->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
+			pos.first, pos.second, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
+			1, 1, 0, 0);
+		}
 	}
 }
 
@@ -118,7 +130,15 @@ void LocalObserver::update()
 		bool anyChange = false;
 		map<string, bool> buildings;
 
-		
+		string foo;
+		foo += localEnabler->getRobberPos();
+		pair<unsigned int, unsigned int > pos = toDraw.getPositioningForToken(foo);
+		pos.first += ROBBER_POS + BOARD_POS_X;
+		pos.second += BOARD_POS_Y;
+		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
+		sellos[ROBBER]->setDX(pos.first);
+		sellos[ROBBER]->setDy(pos.second);
+
 		sellos[ICONO]->setTint(al_map_rgba(255, 255, 255, 255));
 		
 		sellos[ICONOR]->setTint(al_map_rgba(120, 120, 120, 120));
@@ -163,7 +183,16 @@ void LocalObserver::update()
 	}
 	else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 	{
-		
+
+		string foo;
+		foo += localEnabler->getRobberPos();
+		pair<unsigned int, unsigned int > pos = toDraw.getPositioningForToken(foo);
+		pos.first += ROBBER_POS + BOARD_POS_X;
+		pos.second += BOARD_POS_Y;
+		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
+		sellos[ROBBER]->setDX(pos.first);
+		sellos[ROBBER]->setDy(pos.second);
+
 		sellos[ICONO]->setTint(al_map_rgba(120, 120, 120, 120));
 
 		sellos[ICONOR]->setTint(al_map_rgba(255, 255, 255, 255));
