@@ -548,7 +548,7 @@ void Player::updateAvailability()
 					aux.insert((a == 5 ? aux.begin() : aux.begin() + 1), (a == 5 ? '0' : '0' + a + 1)); //rancio pero funcional
 					availableForSettlement.push_back(aux);
 					aux = edge;
-					aux.insert(aux.begin() + (a < 3 ? 1 : 2), edge[1] + (a < 3 ? -1 : 1) * ((a % 3) % 2 ? a % 3 + 1 : a % 3 + 4));
+					aux.insert(aux.begin() + (a < 3 ? 1 : 2), edge[1] + (a < 3 ? -1 : 1) * ((a % 3) / 2 ? a % 3 + 1 : a % 3 + 4));
 					availableForSettlement.push_back(aux);
 				}
 			}
