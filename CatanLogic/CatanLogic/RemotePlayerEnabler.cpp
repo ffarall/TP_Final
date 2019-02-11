@@ -301,7 +301,6 @@ void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
 	if (localPlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
-		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_SETTLEMENT);
 		enable(NET_ROAD, { TX(firstRoad_) });
 	}
