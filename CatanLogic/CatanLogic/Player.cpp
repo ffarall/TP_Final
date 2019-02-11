@@ -806,9 +806,9 @@ vector<string> Player::getAdjacentEdges(string vertex)
 	adyacentes.clear();
 	if (vertex[0] >= '0' && vertex[0] <= '9')
 	{
-		if (vertex[1] >= '0' && vertex[1] <= '9')
+		if (vertex.length() == 3)
 		{
-			if (vertex.length() == 3) // si es la de 2 num + 1 letra
+			if (vertex[1] >= '0' && vertex[1] <= '9') // si es la de 2 num + 1 letra
 			{
 				if (!vertex.compare("05A")) // el unico de los 6 que es distinto
 				{
@@ -828,29 +828,29 @@ vector<string> Player::getAdjacentEdges(string vertex)
 			}
 			else
 			{
-				for (string str : allEdges)
-				{
-					if (str.find(vertex[0]) != str.npos && str.find(vertex[1]) != str.npos) // las aristas que contengan ambos caracteres
-					{
-						adyacentes.push_back(str);
-					}
-				}
+				string temp; // 3qr
+				temp.push_back(vertex[1]);
+				temp.push_back(vertex[2]);
+				adyacentes.push_back(temp); //qr
+				temp.clear();
+				temp = vertex; //3r
+				availableForRoad.push_back(temp.substr(0, 2));
+				temp.clear();
+				temp += vertex[0];  //qr
+				temp += vertex[2];  //qr
+				temp += vertex[1];  //qr
+				adyacentes.push_back(temp);
 			}
 		}
 		else
 		{
-			string temp; // 3qr
-			temp.push_back(vertex[1]);
-			temp.push_back(vertex[2]);
-			adyacentes.push_back(temp); //qr
-			temp.clear();
-			temp = vertex ; //3r
-			availableForRoad.push_back(temp.substr(0,2));
-			temp.clear();
-			temp[0] = vertex[0];  //qr
-			temp[1] = vertex[2];  //qr
-			temp[2] = vertex[1];  //qr
-			adyacentes.push_back(temp);
+			for (string str : allEdges)
+			{
+				if (str.find(vertex[0]) != str.npos && str.find(vertex[1]) != str.npos) // las aristas que contengan ambos caracteres
+				{
+					adyacentes.push_back(str);
+				}
+			}
 		}
 	}
 	else // los edge aledaños son combinaciones de las letras, easy to solve(?
