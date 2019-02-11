@@ -144,11 +144,11 @@ void LocalObserver::update()
 
 		for (auto a : buildings) // primero me fijo que esten bien todos los MovabeType de city o settlements
 		{
-			ALLEGRO_BITMAP* temp = a.second ? dibujo[CITY] : dibujo[SETTLE];
+			ALLEGRO_BITMAP* temp = a.second ?  dibujo[SETTLE]: dibujo[CITY] ;
 			auto itr = sellos.find(a.first);
 			if (itr == sellos.end())
 			{
-				ALLEGRO_BITMAP* temp = a.second ? dibujo[CITY] : dibujo[SETTLE];
+				ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
 				pair<unsigned int, unsigned int> pos = toDraw.getPositioningForVertex(a.first);
 				sellos[a.first] = impresora->createType(temp,
 					al_map_rgba_f(1.0, 0.0, 0.0, 1.0), pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
