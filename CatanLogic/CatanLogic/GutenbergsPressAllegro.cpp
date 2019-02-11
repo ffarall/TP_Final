@@ -42,7 +42,7 @@ MovableType * GutenbergsPressAllegro::createType(ALLEGRO_BITMAP * bitmap_, ALLEG
 
 void GutenbergsPressAllegro::setBackgorund(ALLEGRO_BITMAP * background_)
 {
-	if (background != nullptr)
+	if (background)
 	{
 		al_destroy_bitmap(background);
 	}

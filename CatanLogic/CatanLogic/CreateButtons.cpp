@@ -326,7 +326,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(4);
 					return GUIEnablerEvent::_4X1;
@@ -341,7 +341,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero, PortType::_3x1)))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(3);
 					return GUIEnablerEvent::_3X1;
@@ -356,7 +356,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
 					std::vector<ResourceType> mandar;
@@ -376,7 +376,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
 					std::vector<ResourceType> mandar;
@@ -396,7 +396,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
 					std::vector<ResourceType> mandar;
@@ -416,7 +416,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
 					std::vector<ResourceType> mandar;
@@ -436,7 +436,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo que este creado el paquete
+				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(2);
 					std::vector<ResourceType> mandar;
@@ -491,7 +491,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
-				if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
+				if (bankbutton->getPackage()) // me fijo si hay BankTrade
 				{
 					BankTradePkg* paquete = static_cast<BankTradePkg*>(bankbutton->getPackage());
 					if (!paquete->offerclosed())
@@ -507,9 +507,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 						return GUIEnablerEvent::ACCEPT;
 					}
 				}
-				else if (offerbutton->getPackage() != nullptr) // Me fijo el OfferTrade
+				else if (offerbutton->getPackage()) // Me fijo el OfferTrade
 				{
-					OfferTradePkg* paquete = static_cast<OfferTradePkg*>(bankbutton->getPackage());
+					OfferTradePkg* paquete = static_cast<OfferTradePkg*>(offerbutton->getPackage());
 					if (!paquete->offerclosed())
 					{
 						paquete->closeOffer();
@@ -523,7 +523,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 						return GUIEnablerEvent::ACCEPT;
 					}
 				}
-				else if (Yop->getPackage() != nullptr)
+				else if (Yop->getPackage())
 				{
 					YearsOfPlentyPkg* paquete = static_cast<YearsOfPlentyPkg*>(Yop->getPackage());
 					if (paquete->getResource(false) != ResourceType::DESIERTO) // si ya se eligieron los dos, confirmo el paquete 
@@ -534,7 +534,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 						return GUIEnablerEvent::ACCEPT;
 					}
 				}
-				else if (monopoly->getPackage() != nullptr)
+				else if (monopoly->getPackage())
 				{
 					MonopolyPkg* paquete = static_cast<MonopolyPkg*>(monopoly->getPackage());
 					if (paquete->getResource() != ResourceType::DESIERTO)
@@ -559,28 +559,28 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	{
 		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 		{
-			if (bankbutton->getPackage() != nullptr) // me fijo si hay BankTrade
+			if (bankbutton->getPackage()) // me fijo si hay BankTrade
 			{
 				BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
 				delete paquete;
 				bankbutton->setPackage(nullptr);
 				return GUIEnablerEvent::CANCEL;
 			}
-			else if (offerbutton->getPackage() != nullptr) // Me fijo el OfferTrade
+			else if (offerbutton->getPackage()) // Me fijo el OfferTrade
 			{
 				OfferTradePkg * paquete = static_cast<OfferTradePkg *>(bankbutton->getPackage());
 				delete paquete;
 				offerbutton->setPackage(nullptr);
 				return GUIEnablerEvent::CANCEL;
 			}
-			else if (Yop->getPackage() != nullptr)
+			else if (Yop->getPackage())
 			{
 				YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(Yop->getPackage());
 				delete paquete;
 				offerbutton->setPackage(nullptr);
 				return GUIEnablerEvent::CANCEL;
 			}
-			else if (monopoly->getPackage() != nullptr)
+			else if (monopoly->getPackage())
 			{
 				MonopolyPkg * paquete = static_cast<MonopolyPkg *>(monopoly->getPackage());
 				delete paquete;
@@ -1636,10 +1636,10 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (localPlayer->getResourceAmount(recurso) && offerbutton->getPackage())
+		else if (offerbutton->getPackage())
 		{
 			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(offerbutton->getPackage());
-			if (!paquete->offerclosed())
+			if (localPlayer->getResourceAmount(recurso) && !paquete->offerclosed())
 			{
 				int amount = 0;
 				for (auto rec : paquete->getMyOnes())
@@ -1658,7 +1658,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (Yop->getPackage() != nullptr)
+		else if (Yop->getPackage())
 		{
 			YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(bankbutton->getPackage());
 			if (paquete->getResource(true) == ResourceType::DESIERTO) // me fijo si esta completo el primer recurso
@@ -1678,7 +1678,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (monopoly->getPackage() != nullptr)
+		else if (monopoly->getPackage())
 		{
 			MonopolyPkg * paquete = static_cast<MonopolyPkg *>(bankbutton->getPackage());
 			paquete->setResource(recurso);

@@ -19,7 +19,7 @@ Enabler::~Enabler()
 
 void Enabler::cycle(SubtypeEvent * ev)
 {
-	if (ev != nullptr)
+	if (ev)
 	{
 		if (enabledActions.enablerMap.count(ev->getSubtype()))
 		{

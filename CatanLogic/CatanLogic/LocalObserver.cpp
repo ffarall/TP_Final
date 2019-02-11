@@ -106,7 +106,6 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		sellos[LARMY] = impresora->createType(dibujo[LARMY], al_map_rgba(0,0,0,0), D_ANCHO * 0.2, D_ALTO * 0.15);
 		sellos[LROAD] = impresora->createType(dibujo[LROAD], al_map_rgba(0, 0, 0, 0), D_ANCHO * 0.25, D_ALTO * 0.15);
 
-
 	}
 }
 
@@ -131,15 +130,15 @@ void LocalObserver::update()
 {
 	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 	{
-		bool anyChange = false;
-		map<string, bool> buildings;
-
 		if (sellos[ROBBER] == NULL)
 		{
 			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
 				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 				1, 1, 0, 0);
 		}
+		bool anyChange = false;
+		map<string, bool> buildings;
+
 		string foo;
 		foo += localEnabler->getRobberPos();
 		pair<unsigned int, unsigned int > pos = toDraw.getPositioningForToken(foo);
@@ -208,15 +207,14 @@ void LocalObserver::update()
 				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 				1, 1, 0, 0);
 		}
-
 		string foo;
 		foo += localEnabler->getRobberPos();
 		pair<unsigned int, unsigned int > pos = toDraw.getPositioningForToken(foo);
 		pos.first += ROBBER_POS + BOARD_POS_X;
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
-		sellos[ROBBER]->setDX(pos.first);
-		sellos[ROBBER]->setDY(pos.second);
+		sellos[ROBBER]->setDX(100);
+		sellos[ROBBER]->setDY(100);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 		string temp = localEnabler->getWaitingMessage();

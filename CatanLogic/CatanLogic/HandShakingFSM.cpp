@@ -212,7 +212,7 @@ std::string HandShakingFSM::getRemoteName()
 
 void HandShakingFSM::setBoard(Board * board_)
 {
-	if (board_ != nullptr)
+	if (board_)
 	{
 		board = board_;
 	}

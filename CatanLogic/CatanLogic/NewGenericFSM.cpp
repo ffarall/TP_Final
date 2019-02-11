@@ -11,7 +11,7 @@ using namespace std::placeholders;
 
 void GenericFsm::cycle(GenericEvent * ev)
 {
-	if (ev != nullptr)
+	if (ev)
 	{
 		FsmCell temp;
 		if ( (*fsmMap_).at(state).acceptedEventsMap.count(ev->getType()) )

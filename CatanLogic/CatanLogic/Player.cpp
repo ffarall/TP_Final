@@ -516,6 +516,7 @@ void Player::allVertexesAvailable()
 
 void Player::updateAvailability()
 {
+
 	list< string > tempSettlements;
 	for (auto settle : mySettlements)
 	{
@@ -523,7 +524,7 @@ void Player::updateAvailability()
 	}
 	/* Primero veo los settlements */
 	availableForSettlement.clear();
-	
+
 	if (mySettlements.size() >= 2)
 	{
 		map<string, Road*>::iterator itr;
@@ -553,7 +554,7 @@ void Player::updateAvailability()
 					aux.insert((a == 5 ? aux.begin() : aux.begin() + 1), (a == 5 ? '0' : '0' + a + 1)); //rancio pero funcional
 					availableForSettlement.push_back(aux);
 					aux = edge;
-					aux.insert(aux.begin() + (a < 3 ? 1 : 2), edge[1] + (a < 3 ? -1 : 1) * ((a % 3)? (((a%3)%2) ? 5: 3):1));
+					aux.insert(aux.begin() + (a < 3 ? 1 : 2), edge[1] + (a < 3 ? -1 : 1) * ((a % 3) ? (((a % 3) % 2) ? 5 : 3) : 1));
 					availableForSettlement.push_back(aux);
 				}
 			}
@@ -583,7 +584,7 @@ void Player::updateAvailability()
 	list<string> copyToIterate = availableForSettlement;
 	for (auto vertex : copyToIterate)
 	{
-		int row=0, colum=0;
+		int row = 0, colum = 0;
 		while (boardInStrings[row][colum] != vertex) // encueltro el vertice en la super matriz
 		{
 			row++;
@@ -593,6 +594,7 @@ void Player::updateAvailability()
 				colum++;
 			}
 		}
+
 
 		vector<string> tempVert;
 		tempVert.push_back(boardInStrings[row - 1][colum - 1]);
@@ -607,9 +609,9 @@ void Player::updateAvailability()
 		bool fin = false;
 		for (int i = 0; i < 8 && !fin; i++)
 		{
-			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()) )
+			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()))
 			{
-				availableForSettlement.remove(vertex); 
+				availableForSettlement.remove(vertex);
 				fin = false;
 			}
 		}
@@ -637,7 +639,7 @@ void Player::updateAvailability()
 			availableForRoad.remove(vertex); // creo que se rompe el for con esto
 		}
 	}
-	
+
 	notifyAllObservers();
 }
 
