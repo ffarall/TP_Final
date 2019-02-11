@@ -42,6 +42,7 @@ private:
 	void secondSettlementLocalStarts(SubtypeEvent* ev);
 	void waitingConfSndSetLocStarts(SubtypeEvent* ev);
 	void secondRoadLocalStarts(SubtypeEvent* ev);
+	void endLocalStarts(SubtypeEvent* ev);
 	void firstSettlementRemoteStarts(SubtypeEvent* ev);
 	void waitingConfFstSetRemStarts(SubtypeEvent* ev);
 	void firstRoadRemoteStarts(SubtypeEvent* ev);
