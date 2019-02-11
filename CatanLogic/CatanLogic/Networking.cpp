@@ -281,7 +281,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		evento->setSubtype(SubType::NET_DICES_ARE);
 		if (input.length() >= 3)
 		{
-			evento->addPackage(new DicePkg(input[1],input[2]));
+			evento->addPackage(new DicePkg(input[1]-'0',input[2]-'0'));
 			input.erase(0, 3);
 		}
 		else
