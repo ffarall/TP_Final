@@ -351,7 +351,7 @@ bool Player::checkRoadAvailability(string position)
 	{
 		ret &= (checkRoadResources() != 0);																								// Check if player has resources.
 	}
-	ret &= (getRemainingSettlements() != 0);																									// Check if player has remaining Roads to put.
+	ret &= (getRemainingRoads() != 0);																									// Check if player has remaining Roads to put.
 
 	return ret;
 }

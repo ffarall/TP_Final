@@ -181,6 +181,12 @@ void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 	getResourceFromSettlement(position, localPlayer);
 
 	disable(PLA_ROAD);
+	enable(NET_ACK, { TX(endLocalStarts) });
+}
+
+void LocalPlayerEnabler::endLocalStarts(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
 	setUpForTurn();
 }
 
