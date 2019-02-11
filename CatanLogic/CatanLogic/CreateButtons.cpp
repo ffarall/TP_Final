@@ -813,9 +813,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[6]->addUpdate(
 		[mainFSM, buttonList,locEnab]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS)))
 		{
-			if (!buttonList[6]->isPressed() && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_PASS)))
+			if (!buttonList[6]->isPressed() )
 			{
 				buttonList[6]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
