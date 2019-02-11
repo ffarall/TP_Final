@@ -1,5 +1,6 @@
 #include "LocalObserver.h"
 #include "PosDef.h"
+#include "allegro5/allegro_primitives.h"
 
 #define ROBBER "robber.png"
 #define LADRILLO "ladrillo.png"
@@ -25,7 +26,7 @@
 #define MONOPOLY "Monopoly.png"
 #define KNIGHT "Knight.png"
 #define ROBBER "robber.png"
-
+#define CARTEL "calrtel"
 #define FONT_SIZE 10 // ver 
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
@@ -59,6 +60,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
+	dibujo[CARTEL] = al_create_bitmap(300, 50);
 
 	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
 	if (!working)
@@ -82,6 +84,16 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 	}
 	if (working)
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		al_set_target_bitmap(dibujo[CARTEL]);
+		al_clear_to_color(al_map_rgb(255, 255, 255));
+		al_draw_rectangle(0, 0, 300, 50, al_map_rgb(0, 0, 0), 1);
+		al_draw_text(fuente, al_map_rgb(0,0,0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.6, ALLEGRO_ALIGN_CENTRE, "");
+		al_set_target_backbuffer(tempDisplay);
+		sellos[CARTEL] = impresora->createType(dibujo[CARTEL], al_map_rgba(0, 0, 0, 0),
+			D_ANCHO * 0.3, D_ALTO * 0.05
+		);
+
 		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(0, 0, 0, 0),
 			D_ANCHO * 0.05, D_ALTO * 0.05
 		);
@@ -132,6 +144,15 @@ void LocalObserver::update()
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
 		sellos[ROBBER]->setDX(pos.first);
 		sellos[ROBBER]->setDY(pos.second);
+
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		string temp = localEnabler->getWaitingMessage();
+		al_set_target_bitmap(dibujo[CARTEL]);
+		al_clear_to_color(al_map_rgb(255, 255, 255));
+		al_draw_rectangle(0, 0, 300, 50, al_map_rgb(0, 0, 0), 1);
+		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.6, ALLEGRO_ALIGN_CENTRE, temp.c_str());
+		al_set_target_backbuffer(tempDisplay);
+		sellos[CARTEL]->setTint(al_map_rgba(255, 255, 255, 255));
 
 		sellos[ICONO]->setTint(al_map_rgba(255, 255, 255, 255));
 		
@@ -186,6 +207,15 @@ void LocalObserver::update()
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
 		sellos[ROBBER]->setDX(pos.first);
 		sellos[ROBBER]->setDY(pos.second);
+
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		string temp = localEnabler->getWaitingMessage();
+		al_set_target_bitmap(dibujo[CARTEL]);
+		al_clear_to_color(al_map_rgb(255, 255, 255));
+		al_draw_rectangle(0, 0, 300, 50, al_map_rgb(0, 0, 0), 1);
+		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.6, ALLEGRO_ALIGN_CENTRE, temp.c_str());
+		al_set_target_backbuffer(tempDisplay);
+		sellos[CARTEL]->setTint(al_map_rgba(255, 255, 255, 255));
 
 		sellos[ICONO]->setTint(al_map_rgba(120, 120, 120, 120));
 
