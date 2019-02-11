@@ -102,7 +102,6 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		sellos[ROBBER] = printer->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
 			pos.first, pos.second, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 			1, 1, 0, 0);
-		}
 	}
 }
 
@@ -137,7 +136,7 @@ void LocalObserver::update()
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
 		sellos[ROBBER]->setDX(pos.first);
-		sellos[ROBBER]->setDy(pos.second);
+		sellos[ROBBER]->setDY(pos.second);
 
 		sellos[ICONO]->setTint(al_map_rgba(255, 255, 255, 255));
 		
@@ -191,7 +190,7 @@ void LocalObserver::update()
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
 		sellos[ROBBER]->setDX(pos.first);
-		sellos[ROBBER]->setDy(pos.second);
+		sellos[ROBBER]->setDY(pos.second);
 
 		sellos[ICONO]->setTint(al_map_rgba(120, 120, 120, 120));
 
