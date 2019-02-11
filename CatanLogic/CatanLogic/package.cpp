@@ -298,8 +298,8 @@ std::string DicePkg::getPackage()
 {
 	std::string ret;
 	ret.push_back(static_cast<char>(nombre));
-	ret.push_back(dice1);
-	ret.push_back(dice2);
+	ret.push_back(dice1+'0');
+	ret.push_back(dice2+'0');
 	return ret;
 }
 
