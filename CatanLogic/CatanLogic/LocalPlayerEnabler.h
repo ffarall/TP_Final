@@ -68,6 +68,7 @@ private:
 	void enableSndRoad(SubtypeEvent* ev);
 	void checkSndRoad(SubtypeEvent* ev);
 	void endTurn(SubtypeEvent* ev);
+	void firstTurn(SubtypeEvent * ev);
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);

@@ -229,9 +229,7 @@ void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 	getResourceFromSettlement(position, localPlayer);
 
 	disable(PLA_ROAD);
-	setUpForTurn();
-
-	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
+	enable(NET_ACK, { TX(firstTurn) });
 }
 
 void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
@@ -730,6 +728,13 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 
 	checkIfLocalWon();
+}
+
+void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
+{
+	setUpForTurn();
+	emitEvent(TURN_FINISHED);
+	pkgSender->pushPackage(new package(headers::PASS));
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
