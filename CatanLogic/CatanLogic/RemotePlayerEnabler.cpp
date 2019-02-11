@@ -128,7 +128,7 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
@@ -151,7 +151,7 @@ void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
@@ -198,7 +198,7 @@ void RemotePlayerEnabler::firstSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkSettlementAvailability(position))
+	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
 		disable(NET_SETTLEMENT);
@@ -221,7 +221,7 @@ void RemotePlayerEnabler::firstRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
@@ -244,7 +244,7 @@ void RemotePlayerEnabler::secondSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkSettlementAvailability(position))
+	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
@@ -268,7 +268,7 @@ void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
@@ -292,7 +292,7 @@ void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkSettlementAvailability(position))
+	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
 		disable(NET_SETTLEMENT);
@@ -341,7 +341,7 @@ void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkSettlementAvailability(position))
+	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
@@ -365,7 +365,7 @@ void RemotePlayerEnabler::secondRoad_(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if(localPlayer->checkRoadAvailability(position))
+	if(remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
@@ -564,7 +564,7 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkSettlementAvailability(position))
+	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		remotePlayer->addToMySettlements(position);
 		localPlayer->addToRivalsSettlements(position);
@@ -588,7 +588,7 @@ void RemotePlayerEnabler::checkRemoteRoad(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkRoadAvailability(position))
+	if (remotePlayer->checkRoadAvailability(position))
 	{
 		remotePlayer->addToMyRoads(position);
 		localPlayer->addToRivalsRoads(position);
@@ -610,7 +610,7 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 	CityPkg* pkg = static_cast<CityPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	if (localPlayer->checkPromotionOfCity(position))
+	if (remotePlayer->checkPromotionOfCity(position))
 	{
 		remotePlayer->promoteToMyCity(position);
 		localPlayer->promoteToRivalsCity(position);
