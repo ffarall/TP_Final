@@ -63,29 +63,29 @@ void BoardController::update()
 			drawMap();
 		}
 
-		if (sellos[ROBBER_FILE] == NULL)
-		{
-			string foo;
-			foo += board->getRobberPos();
-			pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
-			pos.first += ROBBER_POS + BOARD_POS_X;
-			pos.second += BOARD_POS_Y;
-			sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgb(255, 255, 255),
-				pos.first, pos.second, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
-				1, 1, 0, 0);
-		}
-		else
-		{
-			string foo;
-			foo += board->getRobberPos();
-			pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
-			pos.first += ROBBER_POS + BOARD_POS_X;
-			pos.second += BOARD_POS_Y;
-			sellos[ROBBER_FILE]->setDX(pos.first);
-			sellos[ROBBER_FILE]->setDY(pos.first);
-		}
+		//if (sellos[ROBBER_FILE] == NULL)
+		//{
+		//	string foo;
+		//	foo += board->getRobberPos();
+		//	pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
+		//	pos.first += ROBBER_POS + BOARD_POS_X;
+		//	pos.second += BOARD_POS_Y;
+		//	sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgb(255, 255, 255),
+		//		pos.first, pos.second, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
+		//		1, 1, 0, 0);
+		//}
+		//else
+		//{
+		//	string foo;
+		//	foo += board->getRobberPos();
+		//	pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
+		//	pos.first += ROBBER_POS + BOARD_POS_X;
+		//	pos.second += BOARD_POS_Y;
+		//	sellos[ROBBER_FILE]->setDX(pos.first);
+		//	sellos[ROBBER_FILE]->setDY(pos.first);
+		//}
 
-		sellos[ROBBER_FILE]->redraw();
+		//sellos[ROBBER_FILE]->redraw();
 
 	/*	if (sellos[DEV_FILE] == NULL)
 		{
