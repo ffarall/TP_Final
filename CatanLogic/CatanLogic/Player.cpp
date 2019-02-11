@@ -516,6 +516,12 @@ void Player::allVertexesAvailable()
 
 void Player::updateAvailability()
 {
+
+	list< string > tempSettlements;
+	for (auto settle : mySettlements)
+	{
+		tempSettlements.emplace_back(settle.first); // pongo todos mis settlmnets
+	}
 	/* Primero veo los settlements */
 	availableForSettlement.clear();
 
@@ -564,6 +570,10 @@ void Player::updateAvailability()
 				}
 			}
 		} // aca tengo las posibles todas, ahora tengo que sacar por la regla de 2 vertices
+		for (auto sttle : availableForSettlement)
+		{
+			tempSettlements.emplace_back(sttle);
+		}
 	}
 	else // estoy en el principio
 	{
@@ -574,7 +584,7 @@ void Player::updateAvailability()
 	list<string> copyToIterate = availableForSettlement;
 	for (auto vertex : copyToIterate)
 	{
-		int row=0, colum=0;
+		int row = 0, colum = 0;
 		while (boardInStrings[row][colum] != vertex) // encueltro el vertice en la super matriz
 		{
 			row++;
@@ -584,6 +594,7 @@ void Player::updateAvailability()
 				colum++;
 			}
 		}
+
 
 		vector<string> tempVert;
 		tempVert.push_back(boardInStrings[row - 1][colum - 1]);
@@ -598,9 +609,9 @@ void Player::updateAvailability()
 		bool fin = false;
 		for (int i = 0; i < 8 && !fin; i++)
 		{
-			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()) )
+			if ((mySettlements.find(tempVert[i]) != mySettlements.end()) || (rivalsSettlements.find(tempVert[i]) != rivalsSettlements.end()))
 			{
-				availableForSettlement.remove(vertex); 
+				availableForSettlement.remove(vertex);
 				fin = false;
 			}
 		}
@@ -609,10 +620,11 @@ void Player::updateAvailability()
 
 	/* Turno de los vertices disponibles */
 	availableForRoad.clear();
+	tempSettlements.unique();
 
-	for (pair<string,Settlement*> vertx : mySettlements)
+	for (string vertx : tempSettlements)
 	{
-		vector<string> posibles = getAdjacentEdges(vertx.first);
+		vector<string> posibles = getAdjacentEdges(vertx);
 		for (string a : posibles)
 		{
 			availableForRoad.push_back(a);
@@ -627,7 +639,7 @@ void Player::updateAvailability()
 			availableForRoad.remove(vertex); // creo que se rompe el for con esto
 		}
 	}
-	
+
 	notifyAllObservers();
 }
 
