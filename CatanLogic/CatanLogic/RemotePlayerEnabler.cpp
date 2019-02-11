@@ -334,7 +334,7 @@ void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
-		enable(NET_PASS, { TX(setUpForTurn) });
+		enable(NET_PASS, { TX(firstTurn) });
 	}
 	else
 	{
