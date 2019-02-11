@@ -36,12 +36,12 @@ void RemotePlayerEnabler::remoteStarts()
 	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
 
 	disableAll();
-	enable(NET_SETTLEMENT, { TX(firstSettlement_) });
+	enable(NET_SETTLEMENT, { TX(firstSettlementLocalStarts) });
 	setDefaultRoutine(TX(genericDefault));
 
 }
 
-void RemotePlayerEnabler::setUpForTurn()
+void RemotePlayerEnabler::setUpForTurn(SubtypeEvent* ev)
 {
 	disableAll();
 	enable(NET_DICES_ARE, { TX(checkDices) });
@@ -231,7 +231,7 @@ void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
-		enable(NET_SETTLEMENT, { TX(secondSettlementLocalStart) });				// Leaving everything ready for next turn.
+		enable(NET_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
 	}
 	else
 	{
@@ -242,7 +242,7 @@ void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	}
 }
 
-void RemotePlayerEnabler::secondSettlementLocalStart(SubtypeEvent * ev)
+/*void RemotePlayerEnabler::secondSettlementLocalStart(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -255,7 +255,7 @@ void RemotePlayerEnabler::secondSettlementLocalStart(SubtypeEvent * ev)
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
-		enable(NET_ROAD, { TX(secondRoad_) });
+		enable(NET_ROAD, { TX(secondRoadLocalStarts) });
 	}
 	else
 	{
@@ -264,9 +264,9 @@ void RemotePlayerEnabler::secondSettlementLocalStart(SubtypeEvent * ev)
 		emitEvent(ERR_IN_COM);
 		setErrMessage("El rival intenteto poner su segundo Settlement en una posicion incorrecta");
 	}
-}
+}*/
 
-void RemotePlayerEnabler::secondRoadLocalStart(SubtypeEvent * ev)
+/*void RemotePlayerEnabler::secondRoadLocalStart(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -287,9 +287,9 @@ void RemotePlayerEnabler::secondRoadLocalStart(SubtypeEvent * ev)
 		emitEvent(ERR_IN_COM);
 		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
 	}
-}
+}*/
 
-void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
+void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -301,7 +301,7 @@ void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
 	{
 		addSettlementToRemote(position);
 		disable(NET_SETTLEMENT);
-		enable(NET_ROAD, { TX(firstRoad_) });
+		enable(NET_ROAD, { TX(firstRoadLocalStarts) });
 	}
 	else
 	{
@@ -312,7 +312,7 @@ void RemotePlayerEnabler::firstSettlement_(SubtypeEvent * ev)
 	}
 }
 
-void RemotePlayerEnabler::firstRoad_(SubtypeEvent * ev)
+void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -341,10 +341,10 @@ void RemotePlayerEnabler::primeraParte(SubtypeEvent * ev)
 {
 	disable(NET_PASS);
 	emitEvent(TURN_FINISHED);
-	enable(NET_SETTLEMENT, { TX(secondSettlement_) });				// Leaving everything ready for next turn.
+	enable(NET_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
 }
 
-void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
+void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -357,7 +357,7 @@ void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
-		enable(NET_ROAD, { TX(secondRoad_) });
+		enable(NET_ROAD, { TX(secondRoadLocalStarts) });
 	}
 	else
 	{
@@ -368,7 +368,7 @@ void RemotePlayerEnabler::secondSettlement_(SubtypeEvent * ev)
 	}
 }
 
-void RemotePlayerEnabler::secondRoad_(SubtypeEvent * ev)
+void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -380,7 +380,7 @@ void RemotePlayerEnabler::secondRoad_(SubtypeEvent * ev)
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
-		enable(NET_DICES_ARE, { TX(checkDices) });
+		enable(NET_PASS, { TX(setUpForTurn) });
 	}
 	else
 	{

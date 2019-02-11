@@ -30,13 +30,13 @@ private:
 	void noAct(SubtypeEvent* ev);
 	void firstSettlementLocalStarts(SubtypeEvent* ev); // estos 4 van todos juntos
 	void firstRoadLocalStarts(SubtypeEvent* ev);
-	void secondSettlementLocalStart(SubtypeEvent* ev);
-	void secondRoadLocalStart(SubtypeEvent* ev);
-	void firstSettlement_(SubtypeEvent* ev); // estos van uno con uno
-	void firstRoad_(SubtypeEvent* ev);
+	//void secondSettlementLocalStart(SubtypeEvent* ev);
+	//void secondRoadLocalStart(SubtypeEvent* ev);
+	void firstSettlementLocalStarts(SubtypeEvent* ev); // estos van uno con uno
+	void firstRoadLocalStarts(SubtypeEvent* ev);
 	void primeraParte(SubtypeEvent* ev);
-	void secondSettlement_(SubtypeEvent* ev);
-	void secondRoad_(SubtypeEvent* ev);
+	void secondSettlementLocalStarts(SubtypeEvent* ev);
+	void secondRoadLocalStarts(SubtypeEvent* ev);
 	void firstTurn(SubtypeEvent * ev);
 
 	void checkDices(SubtypeEvent* ev);
@@ -67,6 +67,8 @@ private:
 
 	void finDelJuego(SubtypeEvent * ev);
 
+	// Enables events for beginning of turn.
+	void setUpForTurn(SubtypeEvent* ev = NULL);
 	
 
 	/* DEFAULT ROUTINES */
@@ -79,9 +81,7 @@ private:
 	// Adds settlement to remotePlayer and board from both Enablers
 	void addSettlementToRemote(string position);
 	// Adds road to localPlayer and board from both Enablers
-	void addRoadToRemote(string position);
-	// Enables events for beginning of turn.
-	void setUpForTurn();
+	void addRoadToRemote(string position);;
 	// Eliminates Robbers cards
 	bool deleteCards(vector<ResourceType> descarte, Player * player_);
 	// Enables All posible actions in a turn
