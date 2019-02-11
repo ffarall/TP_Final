@@ -504,6 +504,11 @@ size_t Player::getArmySize()
 	return army;
 }
 
+string Player::getLastSettlement()
+{
+	return lastSettlement;
+}
+
 void Player::allVertexesAvailable()
 {
 	availableForSettlement = allVertexes;
