@@ -477,7 +477,13 @@ std::string Networking::msgDecoder(char* msg)
 	case 0x16: return "DEV_CARDS"; break;
 	case 0x17: return "YOU_START"; break;
 	case 0x18: return "I_START"; break;
-	case 0x20: return "DICES_ARE"; break;
+	case 0x20:
+	{
+		string ret = "DICES_ARE ";
+		char total = message[1] + (message[2] - '0');
+		ret += total;
+		return ret;
+	} break;
 	case 0x21: return "ROBBER_CARDS"; break;
 	case 0x22: return "CARD_IS"; break;
 	case 0x23: return "ROBBER_MOVE"; break;
