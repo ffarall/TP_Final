@@ -452,7 +452,7 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 	if (validateOffer(pkg))
 	{
 		pendingOffer = *pkg;													// Saving offer for response.
-
+		pkgSender->pushPackage(pkg);
 		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
 		enable(NET_NO, { TX(enablePlayerActions) });
 	}
