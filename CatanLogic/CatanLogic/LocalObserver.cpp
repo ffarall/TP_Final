@@ -60,7 +60,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
-	dibujo[CARTEL] = al_create_bitmap(300, 50);
+	dibujo[CARTEL] = al_create_bitmap(600, 35);
 
 	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
 	if (!working)
@@ -91,7 +91,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		al_draw_text(fuente, al_map_rgb(0,0,0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.6, ALLEGRO_ALIGN_CENTRE, "");
 		al_set_target_backbuffer(tempDisplay);
 		sellos[CARTEL] = impresora->createType(dibujo[CARTEL], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.3, D_ALTO * 0.05
+			D_ANCHO * 0.31, D_ALTO * 0.075
 		);
 
 		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(0, 0, 0, 0),
