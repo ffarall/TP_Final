@@ -123,7 +123,7 @@ void LocalObserver::update()
 		
 		sellos[ICONOR]->setTint(al_map_rgba(120, 120, 120, 120));
 
-		sellos[COSTOS]->setTint(al_map_rgba(120, 120, 120, 120));
+		sellos[COSTOS]->setTint(al_map_rgba(255, 255, 255, 255));
 		
 		if (drawBuildings(true))
 		{
