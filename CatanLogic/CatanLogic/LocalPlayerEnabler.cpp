@@ -48,6 +48,11 @@ string LocalPlayerEnabler::whoWon()
 	}
 }
 
+string LocalPlayerEnabler::getRemoteName()
+{
+	return remotePlayer->getName();
+}
+
 void LocalPlayerEnabler::init()
 {
 	setDefaultRoutine(TX(noAct));
