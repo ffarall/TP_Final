@@ -30,11 +30,13 @@ private:
 	void noAct(SubtypeEvent* ev);
 	void firstSettlementLocalStarts(SubtypeEvent* ev); // estos 4 van todos juntos
 	void firstRoadLocalStarts(SubtypeEvent* ev);
-	//void secondSettlementLocalStart(SubtypeEvent* ev);
-	//void secondRoadLocalStart(SubtypeEvent* ev);
+	void firstSettlementRemoteStarts(SubtypeEvent* ev);
+	void firstRoadRemoteStarts(SubtypeEvent* ev);
 	void primeraParte(SubtypeEvent* ev);
 	void secondSettlementLocalStarts(SubtypeEvent* ev);
 	void secondRoadLocalStarts(SubtypeEvent* ev);
+	void secondSettlementRemoteStarts(SubtypeEvent* ev);
+	void secondRoadRemoteStarts(SubtypeEvent* ev);
 	void firstTurn(SubtypeEvent * ev);
 
 	void checkDices(SubtypeEvent* ev);

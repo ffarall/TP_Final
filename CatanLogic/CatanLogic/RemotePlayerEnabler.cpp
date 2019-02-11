@@ -36,7 +36,7 @@ void RemotePlayerEnabler::remoteStarts()
 	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
 
 	disableAll();
-	enable(NET_SETTLEMENT, { TX(firstSettlementLocalStarts) });
+	enable(NET_SETTLEMENT, { TX(firstSettlementRemoteStarts) });
 	setDefaultRoutine(TX(genericDefault));
 
 }
@@ -219,7 +219,7 @@ void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 	}
 }
 
-/*void RemotePlayerEnabler::secondSettlementLocalStart(SubtypeEvent * ev)
+void RemotePlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -232,7 +232,7 @@ void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 		addSettlementToRemote(position);
 		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
-		enable(NET_ROAD, { TX(secondRoadLocalStarts) });
+		enable(NET_ROAD, { TX(firstRoadRemoteStarts) });
 	}
 	else
 	{
@@ -241,9 +241,9 @@ void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 		emitEvent(ERR_IN_COM);
 		setErrMessage("El rival intenteto poner su segundo Settlement en una posicion incorrecta");
 	}
-}*/
+}
 
-/*void RemotePlayerEnabler::secondRoadLocalStart(SubtypeEvent * ev)
+void RemotePlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
@@ -255,7 +255,7 @@ void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
-		enable(NET_ACK, { TX(firstTurn) });
+		enable(NET_PASS, { TX(primeraParte) });
 	}
 	else
 	{
@@ -264,7 +264,7 @@ void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 		emitEvent(ERR_IN_COM);
 		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
 	}
-}*/
+}
 
 void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
@@ -344,6 +344,53 @@ void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
 	}
 	
+}
+
+void RemotePlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent* ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (remotePlayer->checkSettlementAvailability(position))
+	{
+		addSettlementToRemote(position);
+		board->addSettlementToTokens(position, remotePlayer);
+		disable(NET_SETTLEMENT);
+		enable(NET_ROAD, { TX(secondRoadRemoteStarts) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su segundo Settlement en una posicion incorrecta");
+	}
+}
+
+void RemotePlayerEnabler::secondRoadRemoteStarts(SubtypeEvent* ev)
+{
+	setErrMessage("");
+	setWaitingMessage("");
+	SubEvents* auxEv = static_cast<SubEvents*>(ev);
+	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
+	string position = pkg->getPos();
+
+	if (remotePlayer->checkRoadAvailability(position))
+	{
+		addRoadToRemote(position);
+		disable(NET_ROAD);
+		enable(NET_DICES_ARE, { TX(checkDices) });
+	}
+	else
+	{
+		disableAll();
+		pkgSender->pushPackage(new package(headers::ERROR_));
+		emitEvent(ERR_IN_COM);
+		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
+	}
 }
 
 void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
