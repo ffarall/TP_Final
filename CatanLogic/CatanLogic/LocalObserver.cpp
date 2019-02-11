@@ -132,8 +132,8 @@ void LocalObserver::update()
 	{
 		if (sellos[ROBBER] == NULL)
 		{
-			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
-				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
+			sellos[ROBBER] = impresora->createType(dibujo[LARMY], al_map_rgba(0, 0, 0, 0),
+				0, 0, al_get_bitmap_width(dibujo[LARMY]) / 2, al_get_bitmap_height(dibujo[LARMY]) / 2,
 				1, 1, 0, 0);
 		}
 		bool anyChange = false;
@@ -203,8 +203,8 @@ void LocalObserver::update()
 	{
 		if (sellos[ROBBER] == NULL)
 		{
-			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
-				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
+			sellos[ROBBER] = impresora->createType(dibujo[LARMY], al_map_rgba(0, 0, 0, 0),
+				0, 0, al_get_bitmap_width(dibujo[LARMY]) / 2, al_get_bitmap_height(dibujo[LARMY]) / 2,
 				1, 1, 0, 0);
 		}
 		string foo;
