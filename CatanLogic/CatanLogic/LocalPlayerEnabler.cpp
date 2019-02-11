@@ -180,6 +180,12 @@ void LocalPlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
+	enable(NET_ACK, { TX(waitingConfFstSetRemStarts) });
+}
+
+void LocalPlayerEnabler::waitingConfFstSetRemStarts(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(firstRoadRemoteStarts) });
 }
 
@@ -196,6 +202,12 @@ void LocalPlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 	addRoadToLocal(position);
 
 	disable(PLA_ROAD);
+	enable(NET_ACK, { TX(waitingConfFstRoadRemStarts) });
+}
+
+void LocalPlayerEnabler::waitingConfFstRoadRemStarts(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
 	enable(PLA_SETTLEMENT, { TX(secondSettlementRemoteStarts) });
 }
 
@@ -212,6 +224,12 @@ void LocalPlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent * ev)
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
+	enable(NET_ACK, { TX(waitingConfSndSetRemStarts) });
+}
+
+void LocalPlayerEnabler::waitingConfSndSetRemStarts(SubtypeEvent* ev)
+{
+	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(secondRoadRemoteStarts) });
 }
 

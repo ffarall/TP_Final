@@ -41,8 +41,11 @@ private:
 	void secondSettlementLocalStarts(SubtypeEvent* ev);
 	void secondRoadLocalStarts(SubtypeEvent* ev);
 	void firstSettlementRemoteStarts(SubtypeEvent* ev);
+	void waitingConfFstSetRemStarts(SubtypeEvent* ev);
 	void firstRoadRemoteStarts(SubtypeEvent* ev);
+	void waitingConfFstRoadRemStarts(SubtypeEvent* ev);
 	void secondSettlementRemoteStarts(SubtypeEvent* ev);
+	void waitingConfSndSetRemStarts(SubtypeEvent* ev);
 	void secondRoadRemoteStarts(SubtypeEvent* ev);
 	void checkDices(SubtypeEvent* ev);
 	void remoteSendsRobberCards(SubtypeEvent* ev);
