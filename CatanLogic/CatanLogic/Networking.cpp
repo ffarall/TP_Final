@@ -322,7 +322,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		if ((input.length() >= 2) && (input.length() >= input[1]-'0'+2 ))
 		{
 			evento->addPackage(new SettlementPkg(input.substr(2,input[1]-'0').c_str()));
-			input.erase(0, input[1]-'0');
+			input.erase(0, input[1]-'0'+2);
 		}
 		else
 			complete = false;
@@ -332,7 +332,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		if ((input.length() >= 2) && (input.length() >= input[1] - '0' + 2))
 		{
 			evento->addPackage(new RoadPkg(input.substr(2, input[1] - '0').c_str()));
-			input.erase(0, input[1] - '0');
+			input.erase(0, input[1] - '0'+2);
 		}
 		else
 			complete = false;
@@ -342,7 +342,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		if ((input.length() >= 2) && (input.length() >= input[1] - '0' + 2))
 		{
 			evento->addPackage(new CityPkg(input.substr(2, input[1] - '0').c_str()));
-			input.erase(0, input[1] - '0');
+			input.erase(0, input[1] - '0'+2);
 		}
 		else
 			complete = false;
