@@ -516,9 +516,14 @@ void Player::allVertexesAvailable()
 
 void Player::updateAvailability()
 {
+	list< string > tempSettlements;
+	for (auto settle : mySettlements)
+	{
+		tempSettlements.emplace_back(settle.first); // pongo todos mis settlmnets
+	}
 	/* Primero veo los settlements */
 	availableForSettlement.clear();
-
+	
 	if (mySettlements.size() >= 2)
 	{
 		map<string, Road*>::iterator itr;
@@ -548,7 +553,7 @@ void Player::updateAvailability()
 					aux.insert((a == 5 ? aux.begin() : aux.begin() + 1), (a == 5 ? '0' : '0' + a + 1)); //rancio pero funcional
 					availableForSettlement.push_back(aux);
 					aux = edge;
-					aux.insert(aux.begin() + (a < 3 ? 1 : 2), edge[1] + (a < 3 ? -1 : 1) * ((a % 3) % 2 ? a % 3 + 1 : a % 3 + 4));
+					aux.insert(aux.begin() + (a < 3 ? 1 : 2), edge[1] + (a < 3 ? -1 : 1) * ((a % 3)? (((a%3)%2) ? 5: 3):1));
 					availableForSettlement.push_back(aux);
 				}
 			}
@@ -564,6 +569,10 @@ void Player::updateAvailability()
 				}
 			}
 		} // aca tengo las posibles todas, ahora tengo que sacar por la regla de 2 vertices
+		for (auto sttle : availableForSettlement)
+		{
+			tempSettlements.emplace_back(sttle);
+		}
 	}
 	else // estoy en el principio
 	{
@@ -609,10 +618,11 @@ void Player::updateAvailability()
 
 	/* Turno de los vertices disponibles */
 	availableForRoad.clear();
+	tempSettlements.unique();
 
-	for (pair<string,Settlement*> vertx : mySettlements)
+	for (string vertx : tempSettlements)
 	{
-		vector<string> posibles = getAdjacentEdges(vertx.first);
+		vector<string> posibles = getAdjacentEdges(vertx);
 		for (string a : posibles)
 		{
 			availableForRoad.push_back(a);
