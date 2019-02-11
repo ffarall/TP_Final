@@ -172,6 +172,12 @@ void RemotePlayerEnabler::finDelJuego(SubtypeEvent * ev)
 	emitEvent(I_WON);
 }
 
+void RemotePlayerEnabler::firstTurn(SubtypeEvent * ev)
+{
+	setUpForTurn();
+	emitEvent(TURN_FINISHED);
+}
+
 void RemotePlayerEnabler::init()
 {
 	setDefaultRoutine(TX(noAct));
@@ -272,8 +278,7 @@ void RemotePlayerEnabler::secondRoad(SubtypeEvent * ev)
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
-		setUpForTurn();
-		emitEvent(TURN_FINISHED);
+		enable(NET_ACK, { TX(firstTurn) });
 	}
 	else
 	{

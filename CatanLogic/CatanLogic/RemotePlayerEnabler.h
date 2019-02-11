@@ -63,6 +63,8 @@ private:
 	void road2(SubtypeEvent * ev);
 
 	void finDelJuego(SubtypeEvent * ev);
+	void firstTurn(SubtypeEvent * ev);
+	
 
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
