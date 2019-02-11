@@ -119,17 +119,11 @@ void LocalObserver::update()
 		map<string, bool> buildings;
 
 		
-		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
-			D_ANCHO * 0.05, D_ALTO * 0.05
-		);
+		sellos[ICONO]->setTint(al_map_rgba(255, 255, 255, 255));
 		
-		sellos[ICONOR] = impresora->createType(dibujo[ICONOR], al_map_rgba(120, 120, 120, 120),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
-		);
-		
-		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(255, 255, 255, 255),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.35
-		);
+		sellos[ICONOR]->setTint(al_map_rgba(120, 120, 120, 120));
+
+		sellos[COSTOS]->setTint(al_map_rgba(120, 120, 120, 120));
 		
 		if (drawBuildings(true))
 		{
@@ -169,13 +163,9 @@ void LocalObserver::update()
 	}
 	else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 	{
-		sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(120, 120, 120, 120),
-			D_ANCHO * 0.05, D_ALTO * 0.05
-		);
+		sellos[ICONO]->setTint(al_map_rgba(120, 120, 120, 120));
 
-		sellos[ICONOR] = impresora->createType(dibujo[ICONOR], al_map_rgba(255, 255, 255, 255),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
-		);
+		sellos[ICONOR]->setTint(al_map_rgba(255, 255, 255, 255));
 
 	}
 	else

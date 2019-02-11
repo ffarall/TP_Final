@@ -267,6 +267,7 @@ void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 	pkgSender->pushPackage(new RoadPkg(*pkg));
 
 	addRoadToLocal(position);
+	
 	getResourceFromSettlement(position, localPlayer);
 
 	disable(PLA_ROAD);
