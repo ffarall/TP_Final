@@ -578,7 +578,7 @@ void Player::updateAvailability()
 	}
 	availableForRoad.unique(); // filtro los que puedan estar repetidos
 	//ahora que ya tengo todas las disponibles, tengo que sacar las ocupadas
-	for (auto vertex : availableForSettlement)
+	for (auto vertex : copyToIterate)
 	{
 		if (myRoads.find(vertex) != myRoads.end() || rivalsRoads.find(vertex) != rivalsRoads.end())
 		{
