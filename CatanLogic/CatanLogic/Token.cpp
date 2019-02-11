@@ -15,7 +15,7 @@ bool Token::addSettlement(EDASubject * owner_)
 {
 	Player* owner = static_cast<Player*>(owner_);
 	int i = 0;
-	while ((settlementOwners[i] != nullptr) && (i != settlementOwners.size()))
+	while ((i != settlementOwners.size()) && (settlementOwners[i] != nullptr))
 	{
 		i++;
 	}
@@ -36,7 +36,7 @@ bool Token::addCity(EDASubject * owner_)
 	int i = 0;
 	bool ret = false;
 
-	while ((cityOwners[i] != nullptr) && (i != cityOwners.size()))
+	while ((i != cityOwners.size()) && (cityOwners[i] != nullptr))
 	{
 		i++;
 	}
@@ -47,7 +47,7 @@ bool Token::addCity(EDASubject * owner_)
 	}
 
 	i = 0;
-	while ((settlementOwners[i] != owner) && (i != settlementOwners.size()))
+	while ((i != settlementOwners.size()) && (settlementOwners[i] != owner))
 	{
 		i++;
 	}
@@ -66,7 +66,7 @@ bool Token::addRoad(EDASubject * owner_)
 {
 	Player* owner = static_cast<Player*>(owner_);
 	int i = 0;
-	while ((roadOwners[i] != nullptr) && (i != roadOwners.size()))
+	while ((i != roadOwners.size()) && (roadOwners[i] != nullptr))
 	{
 		i++;
 	}

@@ -132,7 +132,7 @@ void Player::addResource(ResourceType resource, int amount)
 
 bool Player::useResource(ResourceType resource, int amount)
 {
-	if (resources[resource] > amount)
+	if (resources[resource] >= amount)
 	{
 		resources[resource] -= amount;
 		return true;
