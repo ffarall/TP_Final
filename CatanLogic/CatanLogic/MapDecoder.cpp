@@ -113,7 +113,18 @@ string MapDecoder::getCoordinateFromPixel(unsigned int i, unsigned int j)
 			ret += B;
 		}
 
-		return ret;
+		if (!ret.compare("EFJ"))
+		{
+			return "FJK";
+		}
+		else if (!ret.compare("FJK"))
+		{
+			return "EFJ";
+		}
+		else
+		{
+			return ret;
+		}
 	}
 	return string(); // error
 }
@@ -125,11 +136,11 @@ pair<unsigned int, unsigned int> MapDecoder::getPositioningForEdge(string edge)
 
 pair<unsigned int, unsigned int> MapDecoder::getPositioningForVertex(string vertex)
 {
-	if (vertex.compare("EFJ"))
+	if (!vertex.compare("EFJ"))
 	{
 		return vertexPositioners["FJK"];
 	}
-	else if (vertex.compare("FJK"))
+	else if (!vertex.compare("FJK"))
 	{
 		return vertexPositioners["EFJ"];
 	}
