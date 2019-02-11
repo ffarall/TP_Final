@@ -1580,32 +1580,32 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[30]->addUpdate(
-		[mainFSM, buttonList]()
+		[mainFSM, localPlayer, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayAgain_S || mainFSM->getCurrState() == mainStates::RemoteGameOver_S)
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(VICTORY_POINTS))
 		{
-			if (buttonList[30]->isEnabled())
+			if (!buttonList[30]->isPressed())
 			{
-				if (!buttonList[30]->isPressed())
-				{
-					buttonList[30]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-				}
-				else
-				{
-					buttonList[30]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-				}
+				buttonList[30]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
 			else
 			{
-				buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				buttonList[30]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
 			}
+		}
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(VICTORY_POINTS))
+		{
+			buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+		}
+		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+		{
+			buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
 		}
 		else
 		{
 			buttonList[30]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 		}
-	}
-	);
+	});
 }
 
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso)

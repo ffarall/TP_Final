@@ -86,7 +86,7 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
 		);
 		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.65
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.45
 		);
 		sellos[LARMY] = impresora->createType(dibujo[LARMY], al_map_rgba(0,0,0,0), D_ANCHO * 0.2, D_ALTO * 0.15);
 		sellos[LROAD] = impresora->createType(dibujo[LROAD], al_map_rgba(0, 0, 0, 0), D_ANCHO * 0.25, D_ALTO * 0.15);
@@ -163,9 +163,17 @@ void LocalObserver::update()
 	}
 	else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S)
 	{
+		
 		sellos[ICONO]->setTint(al_map_rgba(120, 120, 120, 120));
 
 		sellos[ICONOR]->setTint(al_map_rgba(255, 255, 255, 255));
+
+		sellos[COSTOS]->setTint(al_map_rgba(255, 255, 255, 255));
+
+		drawBuildings(true);
+		drawBuildings(false);
+	
+		sellos.begin()->second->redraw();
 
 	}
 	else
