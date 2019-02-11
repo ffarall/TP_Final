@@ -1275,15 +1275,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	}
 
 	);
-	/*
-			ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = cartas[a].second->getBitmap();
-		al_set_target_bitmap(temp);
-		al_clear_to_color(al_map_rgb(255, 255, 255));
-		al_draw_bitmap(cartasfotos[a], 0, 0, 0);
-		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, 57, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(a)).c_str());
-		al_set_target_backbuffer(tempDisplay);
-	*/
+	
 
 	buttonList[21]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
