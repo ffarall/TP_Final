@@ -43,11 +43,17 @@ void Hex::assignResources()
 {
 	for (auto owner : settlementOwners)
 	{
-		(static_cast<Player*>(owner))->addResource(resource);		// 1 resource per Settlement.
+		if (owner != NULL)
+		{
+			(static_cast<Player*>(owner))->addResource(resource);		// 1 resource per Settlement.
+		}
 	}
 	for (auto owner : cityOwners)
 	{
-		(static_cast<Player*>(owner))->addResource(resource, 2);		// 2 per City.
+		if (owner != NULL)
+		{
+			(static_cast<Player*>(owner))->addResource(resource, 2);		// 2 per City.
+		}
 	}
 }
 
