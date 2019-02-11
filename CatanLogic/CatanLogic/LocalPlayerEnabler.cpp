@@ -763,6 +763,7 @@ void LocalPlayerEnabler::checkSndRoad(SubtypeEvent * ev)
 void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 {
 	emitEvent(TURN_FINISHED);
+	pkgSender->pushPackage(new package(headers::PASS));
 	disableAll();
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 
