@@ -296,6 +296,42 @@ list<string> Player::getMyRoads()
 	return ret;
 }
 
+list<string> Player::getRivalSettlements()
+{
+	list<string> ret;
+	for (auto building : rivalsSettlements)
+	{
+		if (building.second->whatAmI().compare("Settlement"))
+		{
+			ret.push_back(building.first);
+		}
+	}
+	return ret;
+}
+
+list<string> Player::getRivalCities()
+{
+	list<string> ret;
+	for (auto building : rivalsSettlements)
+	{
+		if (building.second->whatAmI().compare("City"))
+		{
+			ret.push_back(building.first);
+		}
+	}
+	return ret;
+}
+
+list<string> Player::getRivalRoads()
+{
+	list<string> ret;
+	for (auto building : rivalsRoads)
+	{
+		ret.push_back(building.first);
+	}
+	return ret;
+}
+
 bool Player::checkSettlementAvailability(string position)
 {
 	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) != availableForSettlement.end());	// Check if position is available.

@@ -131,27 +131,117 @@ void LocalObserver::update()
 			);
 			anyChange = true;
 		}
+		if (drawBuildings(true))
+		{
+			anyChange = true;
+		}
+		if (drawBuildings(false))
+		{
+			anyChange = true;
+		}
+		///************ Para el local player ************/
+		//for (auto ciudad : localPlayer->getMyCities())
+		//{
+		//	buildings[ciudad] = true;
+		//}
 
-		for (auto ciudad : localPlayer->getMyCities())
+		//for (auto settlement : localPlayer->getMySettlements())
+		//{
+		//	buildings[settlement] = false;
+		//}
+
+		//for (auto a : buildings) // primero me fijo que esten bien todos los MovabeType de city o settlements
+		//{
+		//	ALLEGRO_BITMAP* temp = a.second ?  dibujo[SETTLE]: dibujo[CITY] ;
+		//	auto itr = sellos.find(a.first);
+		//	if (itr == sellos.end())
+		//	{
+		//		ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
+		//		pair<unsigned int, unsigned int> pos = toDraw.getPositioningForVertex(a.first);
+		//		sellos[a.first] = impresora->createType(temp,
+		//			al_map_rgba_f(1.0, 0.0, 0.0, 1.0), pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+		//			al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2
+		//		);
+		//		anyChange = true;
+		//	}
+		//	else if (itr->second->getBitmap() != temp)
+		//	{
+		//		itr->second->setBitmap(temp); // el caso de que haya cambiado un settlement a city
+		//		anyChange = true;
+		//	}
+		//}
+
+		//for (auto edge : localPlayer->getMyRoads())
+		//{
+		//	auto itr = roads.find(edge);
+		//	if (itr == roads.end()) // si no esta lo tengo que crear
+		//	{
+		//		float angle_rot;
+		//		if (edge.length() == 2)
+		//		{
+		//			if ((edge[1] - edge[0]) == 1)
+		//			{
+		//				angle_rot = 0;
+		//			}
+		//			else if (edge[0] <= '9' && edge[0] >= '0')
+		//			{
+		//				angle_rot = ALLEGRO_PI * (((float)(1 - 2 * (edge[0] - '0'))) / 3);
+		//			}
+		//			else
+		//			{
+		//				float sing = ((edge[1] - edge[0]) % 2 ? -1 : 1); // si la diferencia es par va inclinado para un lado
+		//				if (edge[0] >= 'D' && edge[0] <= 'L') { sing = (sing * -1); }
+		//				angle_rot = sing * ALLEGRO_PI / 3;
+		//			}
+		//		}
+		//		else // aristas de 3 letras
+		//		{
+		//			float desv = 0;
+		//			switch (edge[0] - '0')
+		//			{
+		//			case 0:desv = ((edge[1] - edge[2]) > 0 ? 1.0 / 3.0 : -1.0 / 3.0); break;
+		//			case 1:desv = ((edge[1] - edge[2]) > 0 ? -1.0 / 3.0 : 0); break;
+		//			case 2:desv = ((edge[1] - edge[2]) > 0 ? 0 : 1.0 / 3.0); break;
+		//			case 3:desv = ((edge[1] - edge[2]) == 1 ? -1.0 / 3.0 : 1.0 / 3.0); break;
+		//			case 4:desv = ((edge[1] - edge[2]) & 0xF0 ? -1.0 / 3.0 : 0); break;
+		//			case 5:desv = ((edge[1] - edge[2]) & 0xF0 ? 0 : 1.0 / 3.0); break;
+		//			}
+		//			angle_rot = ALLEGRO_PI * desv;
+		//		}
+
+		//		pair<unsigned int, unsigned int> pos = toDraw.getPositioningForEdge(edge);
+
+		//		roads[edge] = impresora->createType(dibujo[ROAD], al_map_rgba_f(1.0, 0, 0, 1.0),
+		//			pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+		//			al_get_bitmap_width(dibujo[ROAD]) / 2, al_get_bitmap_height(dibujo[ROAD]) / 2,
+		//			1, 1, angle_rot
+		//		);
+		//	}
+		//	anyChange = true;
+		//}//listo los roads
+		///****** Termino local **********/
+
+		/************ idem para el remote player ************/
+		for (auto ciudad : localPlayer->getRivalCities())
 		{
 			buildings[ciudad] = true;
 		}
 
-		for (auto settlement : localPlayer->getMySettlements())
+		for (auto settlement : localPlayer->getRivalSettlements())
 		{
 			buildings[settlement] = false;
 		}
 
 		for (auto a : buildings) // primero me fijo que esten bien todos los MovabeType de city o settlements
 		{
-			ALLEGRO_BITMAP* temp = a.second ?  dibujo[SETTLE]: dibujo[CITY] ;
+			ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
 			auto itr = sellos.find(a.first);
 			if (itr == sellos.end())
 			{
 				ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
 				pair<unsigned int, unsigned int> pos = toDraw.getPositioningForVertex(a.first);
 				sellos[a.first] = impresora->createType(temp,
-					al_map_rgba_f(1.0, 0.0, 0.0, 1.0), pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+					al_map_rgba_f(0.0, 0.0, 1.0, 1.0), pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
 					al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2
 				);
 				anyChange = true;
@@ -163,7 +253,7 @@ void LocalObserver::update()
 			}
 		}
 
-		for (auto edge : localPlayer->getMyRoads())
+		for (auto edge : localPlayer->getRivalRoads())
 		{
 			auto itr = roads.find(edge);
 			if (itr == roads.end()) // si no esta lo tengo que crear
@@ -203,14 +293,15 @@ void LocalObserver::update()
 
 				pair<unsigned int, unsigned int> pos = toDraw.getPositioningForEdge(edge);
 
-				roads[edge] = impresora->createType(dibujo[ROAD], al_map_rgba_f(1.0, 0, 0, 1.0),
+				roads[edge] = impresora->createType(dibujo[ROAD], al_map_rgba_f(0, 0, 1.0, 1.0),
 					pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
 					al_get_bitmap_width(dibujo[ROAD]) / 2, al_get_bitmap_height(dibujo[ROAD]) / 2,
 					1, 1, angle_rot
 				);
 			}
 			anyChange = true;
-		}//listo los roads
+		}
+		/****** Termino remote **********/
 
 		//list<ResourceType> util = { CAMPOS,MONTAÑAS,PASTOS,COLINAS,BOSQUE };
 		//int i = 0;
@@ -295,4 +386,94 @@ void LocalObserver::update()
 bool LocalObserver::isOK()
 {
 	return working;
+}
+
+bool LocalObserver::drawBuildings(bool locOrRemote) // true es local, false es remote
+{
+	bool anyChange = false;
+	map<string, bool> buildings;
+
+	for (auto ciudad : (locOrRemote ? localPlayer->getMyCities(): localPlayer->getRivalCities()) )
+	{
+		buildings[ciudad] = true;
+	}
+
+	for (auto settlement :(locOrRemote? localPlayer->getMySettlements(): localPlayer->getRivalSettlements() ) )
+	{
+		buildings[settlement] = false;
+	}
+
+	for (auto a : buildings) // primero me fijo que esten bien todos los MovabeType de city o settlements
+	{
+		ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
+		auto itr = sellos.find(a.first);
+		if (itr == sellos.end())
+		{
+			ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
+			pair<unsigned int, unsigned int> pos = toDraw.getPositioningForVertex(a.first);
+			sellos[a.first] = impresora->createType(temp,
+				locOrRemote?al_map_rgba_f(1.0, 0.0, 0.0, 1.0) : al_map_rgba_f(0, 0, 1.0, 1.0),
+				pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+				al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2
+			);
+			anyChange = true;
+		}
+		else if (itr->second->getBitmap() != temp)
+		{
+			itr->second->setBitmap(temp); // el caso de que haya cambiado un settlement a city
+			anyChange = true;
+		}
+	}
+
+	for (auto edge : (locOrRemote ? localPlayer->getMyRoads() : localPlayer->getRivalRoads() ) )
+	{
+		auto itr = roads.find(edge);
+		if (itr == roads.end()) // si no esta lo tengo que crear
+		{
+			float angle_rot;
+			if (edge.length() == 2)
+			{
+				if ((edge[1] - edge[0]) == 1)
+				{
+					angle_rot = 0;
+				}
+				else if (edge[0] <= '9' && edge[0] >= '0')
+				{
+					angle_rot = ALLEGRO_PI * (((float)(1 - 2 * (edge[0] - '0'))) / 3);
+				}
+				else
+				{
+					float sing = ((edge[1] - edge[0]) % 2 ? -1 : 1); // si la diferencia es par va inclinado para un lado
+					if (edge[0] >= 'D' && edge[0] <= 'L') { sing = (sing * -1); }
+					angle_rot = sing * ALLEGRO_PI / 3;
+				}
+			}
+			else // aristas de 3 letras
+			{
+				float desv = 0;
+				switch (edge[0] - '0')
+				{
+				case 0:desv = ((edge[1] - edge[2]) > 0 ? 1.0 / 3.0 : -1.0 / 3.0); break;
+				case 1:desv = ((edge[1] - edge[2]) > 0 ? -1.0 / 3.0 : 0); break;
+				case 2:desv = ((edge[1] - edge[2]) > 0 ? 0 : 1.0 / 3.0); break;
+				case 3:desv = ((edge[1] - edge[2]) == 1 ? -1.0 / 3.0 : 1.0 / 3.0); break;
+				case 4:desv = ((edge[1] - edge[2]) & 0xF0 ? -1.0 / 3.0 : 0); break;
+				case 5:desv = ((edge[1] - edge[2]) & 0xF0 ? 0 : 1.0 / 3.0); break;
+				}
+				angle_rot = ALLEGRO_PI * desv;
+			}
+
+			pair<unsigned int, unsigned int> pos = toDraw.getPositioningForEdge(edge);
+
+			roads[edge] = impresora->createType(dibujo[ROAD], 
+				locOrRemote? al_map_rgba_f(1.0, 0, 0, 1.0) : al_map_rgba_f(0, 0, 1.0, 1.0),
+				pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
+				al_get_bitmap_width(dibujo[ROAD]) / 2, al_get_bitmap_height(dibujo[ROAD]) / 2,
+				1, 1, angle_rot
+			);
+		}
+		anyChange = true;
+	}//listo los roads
+
+	return anyChange;
 }

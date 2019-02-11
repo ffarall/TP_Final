@@ -32,6 +32,8 @@ public:
 private:
 	bool working;
 
+	bool drawBuildings(bool locOrRemote);
+
 	Player * localPlayer;
 	LocalPlayerEnabler * localEnabler;
 	GutenbergsPressAllegro * impresora;

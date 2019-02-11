@@ -69,6 +69,10 @@ public:
 	list<string> getMyCities();
 	list<string> getMyRoads();
 
+	list<string> getRivalSettlements();
+	list<string> getRivalCities();
+	list<string> getRivalRoads();
+
 	// Checks if position is available for settlement and if player has enough resources. Uses resources.
 	bool checkSettlementAvailability(string position);
 	// Checks if position is available for road and if player has enough resources.
