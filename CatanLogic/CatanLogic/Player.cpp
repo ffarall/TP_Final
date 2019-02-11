@@ -339,7 +339,7 @@ bool Player::checkSettlementAvailability(string position)
 	{
 		ret &= checkSettlementResources();																							// Check if player has resources.
 	}
-	ret &= getRemainingSettlements();																							// Check if player has Settlements left to put.
+	ret &= (getRemainingSettlements() != 0);																							// Check if player has Settlements left to put.
 
 	return ret;
 }
