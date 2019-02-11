@@ -50,6 +50,8 @@ protected:
 	OfferTradePkg pendingOffer;
 	// True when playing with DevCards.
 	bool playingWithDev;
+	// Adds resources to player using board.
+	void getResourceFromSettlement(string position, Player* who);
 
 	void setErrMessage(string message);
 	void setWaitingMessage(string message);

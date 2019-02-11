@@ -86,8 +86,6 @@ private:
 	void emitEvent(EventTypes type);
 	// Puts new event in queue, but in this case is a SubEvent that can have a package.
 	void emitSubEvent(EventTypes type, EventSubtypes subtype, package* pkg=nullptr);
-	// Adds resources to player using board.
-	void getResourceFromSettlement(string position, Player* who);
 	// If local won, emits event I_WON.
 	void checkIfLocalWon();
 	// Checks if localPlayer should own longestRoadCard, comparing with remotePlayer. If the local is the rightful owner of the card, this gives local de card ant takes it away from remote.

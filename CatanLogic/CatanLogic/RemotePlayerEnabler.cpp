@@ -333,6 +333,7 @@ void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 	if(remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
+		getResourceFromSettlement(remotePlayer->getLastSettlement(), remotePlayer);
 		disable(NET_ROAD);
 		enable(NET_PASS, { TX(firstTurn) });
 	}
@@ -381,6 +382,7 @@ void RemotePlayerEnabler::secondRoadRemoteStarts(SubtypeEvent* ev)
 	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
+		getResourceFromSettlement(remotePlayer->getLastSettlement(), remotePlayer);
 		disable(NET_ROAD);
 		enable(NET_DICES_ARE, { TX(checkDices) });
 	}
