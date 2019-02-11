@@ -1636,10 +1636,10 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
-		else if (localPlayer->getResourceAmount(recurso) && offerbutton->getPackage())
+		else if (offerbutton->getPackage())
 		{
 			OfferTradePkg * paquete = static_cast<OfferTradePkg *>(offerbutton->getPackage());
-			if (!paquete->offerclosed())
+			if (localPlayer->getResourceAmount(recurso) && !paquete->offerclosed())
 			{
 				int amount = 0;
 				for (auto rec : paquete->getMyOnes())
