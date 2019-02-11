@@ -30,7 +30,7 @@
 #define CANCEL_Y (D_ALTO*0.9)
 #define CANCEL_W 50
 #define CANCEL_H 50
-#define NEW_ROAD_X (D_ANCHO*0.148)
+#define NEW_ROAD_X (D_ANCHO*0.15)
 #define NEW_ROAD_Y (D_ALTO*0.438)
 #define NEW_ROAD_W 40
 #define NEW_ROAD_H 30

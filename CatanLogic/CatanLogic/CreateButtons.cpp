@@ -82,6 +82,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList.push_back(new Button(printer, handler, VICTORY_POINT_X, VICTORY_POINT_Y, VICTORY_POINT_H, VICTORY_POINT_W, "", "VictoryPoint.png", "", 14));//stopPlayinButton
 	GUI->attachController("VictoryPoint", buttonList[30]);
 
+	
 	// attach de los botónes a los modelos de los que son observers
 	mainFSM->attach(buttonList[0]);
 	mainFSM->attach(buttonList[1]);
