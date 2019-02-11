@@ -273,6 +273,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		input.erase(0, 1); //saco el primer caracter 
 		break;
 	case headers::I_START:
+		pushPackage(new package(headers::ACK));
 		evento->setEvent(MainTypes::REMOTE_START);
 		evento->addPackage(new package(name));
 		input.erase(0, 1); //saco el primer caracter 
