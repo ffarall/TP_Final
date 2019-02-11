@@ -78,30 +78,6 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 		al_destroy_font(fuente);
 	}
 
-	cartasfotos[COLINAS] = al_load_bitmap(LADRILLO);
-	cartasfotos[PASTOS] = al_load_bitmap(PASTO);
-	cartasfotos[CAMPOS] = al_load_bitmap(LANA);
-	cartasfotos[BOSQUE] = al_load_bitmap(TRONCO);
-	cartasfotos[MONTAÑAS] = al_load_bitmap(PIEDRA);
-	for (auto a : cartasfotos) { if (a.second == NULL) { working = false; } }
-	if (!working)
-	{
-		for (auto a : cartasfotos)
-		{
-			if (a.second != NULL)
-			{
-				al_destroy_bitmap(a.second);
-				a.second = NULL;
-			}
-		}
-	}
-
-	pair<int, MovableType*> temp(0, NULL);
-	cartas[MONTAÑAS] = temp;
-	cartas[PASTOS] = temp;
-	cartas[COLINAS] = temp;
-	cartas[BOSQUE] = temp;
-	cartas[CAMPOS] = temp;
 }
 
 
@@ -131,6 +107,7 @@ void LocalObserver::update()
 		
 		if (sellos[ICONO] == NULL)
 		{
+
 			sellos[ICONO] = impresora->createType(dibujo[ICONO], al_map_rgba(255, 255, 255, 255),
 				D_ANCHO * 0.05, D_ALTO * 0.05
 			);
@@ -147,7 +124,7 @@ void LocalObserver::update()
 		if (sellos[COSTOS] == NULL)
 		{
 			sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(255, 255, 255, 255),
-				D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
+				D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.65
 			);
 			anyChange = true;
 		}
@@ -196,6 +173,13 @@ void LocalObserver::update()
 	else
 	{
 		for (auto cada : sellos)
+		{
+			if (cada.second != NULL)
+			{
+				cada.second->setTint(al_map_rgba(0, 0, 0, 0));// los hago trasparentes
+			}
+		}
+		for (auto cada : roads)
 		{
 			if (cada.second != NULL)
 			{

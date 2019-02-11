@@ -44,11 +44,8 @@ private:
 	map< string, MovableType * > roads;
 	map< string, MovableType * > sellos; // aca voy guardando los 
 	
-	
-	map<ResourceType, pair<int, MovableType*>> cartas;
-
 	ALLEGRO_FONT * fuente;
 	map<string,ALLEGRO_BITMAP *> dibujo;
-	map<ResourceType, ALLEGRO_BITMAP * > cartasfotos;
+	
 };
 
