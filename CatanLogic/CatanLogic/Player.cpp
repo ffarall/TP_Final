@@ -51,7 +51,7 @@ void Player::reset()
 	rivalsSettlements.clear();
 	rivalsRoads.clear();
 	availableForRoad.clear();
-	availableForSettlement.clear();
+	allVertexesAvailable();
 	devCards.clear();
 	roadsVisited.clear();
 }
@@ -299,7 +299,10 @@ list<string> Player::getMyRoads()
 bool Player::checkSettlementAvailability(string position)
 {
 	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) == availableForSettlement.end());	// Check if position is available.
-	ret &= checkSettlementResources();																							// Check if player has resources.
+	if (mySettlements.size() >= 2)
+	{
+		ret &= checkSettlementResources();																							// Check if player has resources.
+	}
 	ret &= getRemainingSettlements();																							// Check if player has Settlements left to put.
 
 	return ret;
@@ -308,7 +311,10 @@ bool Player::checkSettlementAvailability(string position)
 bool Player::checkRoadAvailability(string position)
 {
 	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) == availableForRoad.end());					// Check if position is available.
-	ret &= checkRoadResources();																								// Check if player has resources.
+	if (myRoads.size() >= 2)
+	{
+		ret &= checkRoadResources();																								// Check if player has resources.
+	}
 	ret &= getRemainingRoads();																									// Check if player has remaining Roads to put.
 
 	return ret;
