@@ -337,9 +337,9 @@ bool Player::checkSettlementAvailability(string position)
 	bool ret = (find(availableForSettlement.begin(), availableForSettlement.end(), position) != availableForSettlement.end());	// Check if position is available.
 	if (mySettlements.size() >= 2)
 	{
-		ret &= checkSettlementResources();																							// Check if player has resources.
+		ret &= (checkSettlementResources() != 0);																							// Check if player has resources.
 	}
-	ret &= getRemainingSettlements();																							// Check if player has Settlements left to put.
+	ret &= (getRemainingSettlements() != 0);																							// Check if player has Settlements left to put.
 
 	return ret;
 }
@@ -349,9 +349,9 @@ bool Player::checkRoadAvailability(string position)
 	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) != availableForRoad.end());					// Check if position is available.
 	if (myRoads.size() >= 2)
 	{
-		ret &= checkRoadResources();																								// Check if player has resources.
+		ret &= (checkRoadResources() != 0);																								// Check if player has resources.
 	}
-	ret &= getRemainingRoads();																									// Check if player has remaining Roads to put.
+	ret &= (getRemainingSettlements() != 0);																									// Check if player has remaining Roads to put.
 
 	return ret;
 }
@@ -359,8 +359,8 @@ bool Player::checkRoadAvailability(string position)
 bool Player::checkPromotionOfCity(string position)
 {
 	bool ret = (mySettlements.find(position) != mySettlements.end());		// Check if there's a Settlement in that position.
-	ret &= checkCityResources();											// Check if player has resources.
-	ret &= getRemainingCities();											// Check if player has Cities left to put.
+	ret &= (checkCityResources() != 0);											// Check if player has resources.
+	ret &= (getRemainingCities() != 0);											// Check if player has Cities left to put.
 
 	return ret;
 }
