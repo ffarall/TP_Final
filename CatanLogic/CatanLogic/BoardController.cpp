@@ -341,6 +341,6 @@ void BoardController::drawMap()
 	al_destroy_bitmap(tempFondo);
 	al_destroy_bitmap(fondo); // el bitmap del display hay que destruirlo despues
 	al_set_target_backbuffer(tempDisplay);
-}
+	}
 
 
