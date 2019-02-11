@@ -16,7 +16,8 @@ void GUIEnabler::cycle(GUIEnablerEvent ev)
 {
 		if (enabledActions.enablerMap.count(ev))						// Checking there is an action enabled for ev.
 		{
-			for (auto action : enabledActions.enablerMap[ev])
+			list< GUIEnablerRoutine > auxToIterate = enabledActions.enablerMap[ev];
+			for (auto action : auxToIterate)
 			{
 				auto f = bind(action, this);
 				f();
