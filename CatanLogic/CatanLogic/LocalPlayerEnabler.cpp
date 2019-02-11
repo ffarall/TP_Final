@@ -327,8 +327,6 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 	}
 	else
 	{
-		pkgSender->pushPackage(new package(headers::ACK));
-
 		disableAll();
 		enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
 	}
