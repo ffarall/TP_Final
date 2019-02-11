@@ -390,6 +390,7 @@ void AllegroGUI::initGUIEnabler()
 {
 	enableAll();
 	controllers["BoardController"]->disable();
+	controllers["BoardController"]->enableMouseDown();
 	controllers["Port4x1"]->disable();
 	controllers["Port3x1"]->disable();
 	controllers["Port2Mx1"]->disable();
