@@ -48,6 +48,11 @@ string LocalPlayerEnabler::whoWon()
 	}
 }
 
+char LocalPlayerEnabler::getRobberPos()
+{
+	return board->getRobberPos();
+}
+
 string LocalPlayerEnabler::getRemoteName()
 {
 	return remotePlayer->getName();
