@@ -259,7 +259,7 @@ void RemotePlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 	}
 	else
 	{
-		disableAll();
+  		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
 		setErrMessage("El rival intenteto poner su segundo Road en una posicion incorrecta");
