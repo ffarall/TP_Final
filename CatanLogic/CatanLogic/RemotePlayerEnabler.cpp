@@ -279,7 +279,7 @@ void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	{
 		addRoadToRemote(position);
 		disable(NET_ROAD);
-		enable(NET_PASS, { TX(primeraParte) });
+		enable(NET_SETTLEMENT, { TX(secondSettlementLocalStarts) });
 	}
 	else
 	{
