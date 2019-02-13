@@ -35,7 +35,7 @@ void RemotePlayerEnabler::remoteStarts()
 {
 	string mensaje = "Listo para empezar, el jugador ";
 	mensaje += remotePlayer->getName();
-	mensaje += " debe colocar su primer SETTLEMENT."
+	mensaje += " debe colocar su primer SETTLEMENT.";
 	setWaitingMessage( mensaje );
 
 	disableAll();

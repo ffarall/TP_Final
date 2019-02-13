@@ -79,8 +79,11 @@ void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote, Board*
 	end();																				// Clears possible previous Players and Board from previous games.
 
 	remoteEnabler->setBoard(board = board_);											// Same board for both.
+	remotePlayer->setName(nameRemote);
 
-	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
+	string mensaje = "Listo para empezar, el jugador ";
+	mensaje += localPlayer->getName();
+	mensaje += " seleccione donde colocar su primer SETTLEMENT.";
 
 	disableAll();
 	enable(PLA_SETTLEMENT, { TX(firstSettlementLocalStarts) });
@@ -93,7 +96,11 @@ void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote, Board
 
 	remoteEnabler->setBoard(board = board_);											// Same board for both.
 
-	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
+	string mensaje = "Listo para empezar, el jugador ";
+	mensaje += remotePlayer->getName();
+	mensaje += " debe colocar su primer SETTLEMENT.";
+
+	setWaitingMessage(mensaje);
 
 	disableAll();
 	enable(PLA_SETTLEMENT, { TX(firstSettlementRemoteStarts) });

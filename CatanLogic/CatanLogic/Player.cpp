@@ -100,6 +100,11 @@ string Player::getName()
 	return name;
 }
 
+void Player::setName(string nombre_)
+{
+	name = nombre_;
+}
+
 bool Player::hasWon(bool playingWithDevs)
 {
 	size_t totalVictoryPoints = victoryPoints + cardVictoryPoints;
