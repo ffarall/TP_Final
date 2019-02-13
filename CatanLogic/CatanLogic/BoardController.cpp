@@ -155,7 +155,7 @@ GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 			{
 				string token = decoder->getCoordinateFromPixel(x, y);
 				string robberpos;
-				robberpos.push_back[board->getRobberPos()];
+				robberpos.push_back(board->getRobberPos());
 				if (token.compare(robberpos))
 				{
 					RobberMovePkg* robberPkg = new RobberMovePkg(token[0]);
