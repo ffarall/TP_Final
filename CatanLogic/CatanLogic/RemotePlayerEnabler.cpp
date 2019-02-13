@@ -833,6 +833,8 @@ void RemotePlayerEnabler::endTurn(SubtypeEvent * ev)
 {
 	disableAll();
 	enable(NET_DICES_ARE, { TX(checkDices) });
+	setWaitingMessage("");
+	setErrMessage("");
 	emitEvent(TURN_FINISHED);
 }
 

@@ -79,7 +79,7 @@ void LocalPlayerEnabler::localStarts(string nameLocal, string nameRemote, Board*
 	end();																				// Clears possible previous Players and Board from previous games.
 
 	remoteEnabler->setBoard(board = board_);											// Same board for both.
-
+	
 	setWaitingMessage(string("Listo para empezar, jugador ") + localPlayer->getName() + " seleccione donde colocar su primer SETTLEMENT.");
 
 	disableAll();
@@ -107,7 +107,7 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 void LocalPlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage(string("Coloque su primer road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -129,7 +129,7 @@ void LocalPlayerEnabler::waitingConfFstSetLocStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Ahora es turno de su oponente");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -153,7 +153,7 @@ void LocalPlayerEnabler::firstTurnFinish(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Debe colocar su segundo road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -175,7 +175,7 @@ void LocalPlayerEnabler::waitingConfSndSetLocStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Listo!, ahora tire los dados");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -198,7 +198,7 @@ void LocalPlayerEnabler::endLocalStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Coloque su primer road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -220,7 +220,7 @@ void LocalPlayerEnabler::waitingConfFstSetRemStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Coloque su segundo settlement");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -242,7 +242,7 @@ void LocalPlayerEnabler::waitingConfFstRoadRemStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Coloque su segundo road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -264,7 +264,7 @@ void LocalPlayerEnabler::waitingConfSndSetRemStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Ahora es turno de su oponente");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -295,25 +295,29 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 	disable(PLA_DICES_ARE);
 	if (rolled == 7)
 	{
+		
 		if (remotePlayer->totalResourcesAmount() >= 7)
 		{
 			enable(NET_ROBBER_CARDS, { TX(remoteSendsRobberCards), TX(checkLocalResources) });
+			setWaitingMessage("Se tiro 7, su oponente debe tirar cartas");
 		}
 		else
 		{
 			enable(NET_ACK, { TX(checkLocalResources) });
+			setWaitingMessage("Se tiro 7");
 		}
 	}
 	else
 	{
 		enable(NET_ACK, { TX(enablePlayerActions), TX(checkDevCards) });
+		setWaitingMessage("Se tiro " + to_string(rolled));
 	}
 }
 
 void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El rival tiro sus cartas");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
 
@@ -415,7 +419,7 @@ void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Ya de descarto de sus cartas, mueva el robber");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
 
@@ -433,7 +437,7 @@ void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Listo! puede seguir jugando");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
 	pkgSender->pushPackage(new RobberMovePkg(pkg->getPos()));
@@ -455,6 +459,64 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 		pkgSender->pushPackage(new OfferTradePkg(pkg));
 		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
 		enable(NET_NO, { TX(enablePlayerActions) });
+											
+		map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
+		for (auto recurso : pendingOffer.getMyOnes())
+		{
+			oferta[recurso] += 1; // armo una lista con los recursos y cantidades
+		}
+		for (auto recurso : pendingOffer.getOpponentOnes())
+		{
+			pedido[recurso] += 1; // armo una lista con los recursos y cantidades
+		}
+		string mensaje("Usted ofrecio: ");
+		for (auto par : oferta)
+		{
+			mensaje += to_string(par.second);
+			switch (par.first)
+			{
+			case BOSQUE:
+				mensaje += " de madera - ";
+				break;
+			case COLINAS:
+				mensaje += " de ladrillo - ";
+				break;
+			case MONTAÑAS:
+				mensaje += " de piedra - ";
+				break;
+			case CAMPOS:
+				mensaje += " de trigo - ";
+				break;
+			case PASTOS:
+				mensaje += " de oveja - ";
+				break;
+			default:break;
+			}
+		}
+		mensaje += " Por: ";
+		for (auto par : pedido)
+		{
+			mensaje += to_string(par.second);
+			switch (par.first)
+			{
+			case BOSQUE:
+				mensaje += " de madera - ";
+				break;
+			case COLINAS:
+				mensaje += " de ladrillo - ";
+				break;
+			case MONTAÑAS:
+				mensaje += " de piedra - ";
+				break;
+			case CAMPOS:
+				mensaje += " de trigo - ";
+				break;
+			case PASTOS:
+				mensaje += " de oveja - ";
+				break;
+			default:break;
+			}
+		}
 	}
 	else
 	{
@@ -477,6 +539,7 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 		board->addSettlementToTokens(position, localPlayer);
 		pkgSender->pushPackage(new SettlementPkg(*pkg));
 		enable(NET_ACK, { TX(enablePlayerActions) });
+		setWaitingMessage("Felicidades! ha colocado un nuevo settlement. Suma 1 VP");
 	}
 	else
 	{
@@ -501,6 +564,7 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 		board->addRoadToTokens(position, localPlayer);
 		pkgSender->pushPackage(new RoadPkg(*pkg));
 		enable(NET_ACK, { TX(enablePlayerActions) });
+		setWaitingMessage("Ha colocado un nuevo road");
 	}
 	else
 	{
@@ -526,6 +590,7 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 		board->addCityToTokens(position, localPlayer);
 		pkgSender->pushPackage(new CityPkg(*pkg));
 		enable(NET_ACK, { TX(enablePlayerActions) });
+		setWaitingMessage("Felicidades! Ha colocado una nueva city. Suma un VP y duplica recursos");
 	}
 	else
 	{
@@ -594,7 +659,7 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 			}
 			else
 			{
-				setErrMessage("El usuario no cuenta con un puerto capaz de hacer un tarde de este tipo.");
+				setErrMessage("El usuario no cuenta con un puerto capaz de hacer un trade de este tipo.");
 			}
 		}
 	}
@@ -771,7 +836,8 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	pkgSender->pushPackage(new package(headers::PASS));
 	disableAll();
 	enable(PLA_DICES_ARE, { TX(checkDices) });
-
+	setWaitingMessage("");
+	setErrMessage("");
 	checkIfLocalWon();
 }
 
