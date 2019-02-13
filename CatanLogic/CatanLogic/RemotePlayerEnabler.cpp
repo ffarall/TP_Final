@@ -71,6 +71,84 @@ void RemotePlayerEnabler::enableRemoteActions()
 	enable(NET_PASS, {TX(endTurn)});
 }
 
+bool RemotePlayerEnabler::checkResourcesToGiveBackAndRespond(OfferTradePkg* pkg)
+{
+	vector< ResourceType > resourcesToGiveBack = pkg->getOpponentOnes();
+	size_t lumberAmount = localPlayer->getResourceAmount(BOSQUE);
+	size_t brickAmount = localPlayer->getResourceAmount(COLINAS);
+	size_t oreAmount = localPlayer->getResourceAmount(MONTAÑAS);
+	size_t grainAmount = localPlayer->getResourceAmount(CAMPOS);
+	size_t woolAmount = localPlayer->getResourceAmount(PASTOS);
+
+	for (ResourceType resource : resourcesToGiveBack)
+	{
+		switch (resource)
+		{
+		case BOSQUE:
+		{
+			if (!lumberAmount)
+			{
+				respondImposibleOfferTrade();
+				return false;
+			}
+			lumberAmount--;
+		}
+			break;
+		case COLINAS:
+		{
+			if (!brickAmount)
+			{
+				respondImposibleOfferTrade();
+				return false;
+			}
+			brickAmount--;
+		}
+			break;
+		case MONTAÑAS:
+		{
+			if (!oreAmount)
+			{
+				respondImposibleOfferTrade();
+				return false;
+			}
+			oreAmount--;
+		}
+			break;
+		case CAMPOS:
+		{
+			if (!grainAmount)
+			{
+				respondImposibleOfferTrade();
+				return false;
+			}
+			grainAmount--;
+		}
+			break;
+		case PASTOS:
+		{
+			if (!woolAmount)
+			{
+				respondImposibleOfferTrade();
+				return false;
+			}
+			woolAmount--;
+		}
+			break;
+		case DESIERTO:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void RemotePlayerEnabler::respondImposibleOfferTrade()
+{
+	setWaitingMessage(getWaitingMessage() + " No se cuenta con tales recursos, seleccione Cancelar.");
+	disableAll();
+	enable(PLA_NO, { TX(rejectOffer) });
+}
+
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 {
 	if (playingWithDev)
@@ -512,57 +590,60 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 
 	if (validateOffer(pkg))
 	{
-		pendingOffer = *pkg;													// Saving offer for response.
-		map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
-		for (auto recurso : pendingOffer.getMyOnes())
+		if (checkResourcesToGiveBackAndRespond(pkg))
 		{
-			oferta[recurso] += 1; // armo una lista con los recursos y cantidades
-		}
-		for (auto recurso : pendingOffer.getOpponentOnes())
-		{
-			pedido[recurso] += 1; // armo una lista con los recursos y cantidades
-		}
-		string mensaje("Acepta la oferta de: ");
-		for (auto par : oferta)
-		{
-			mensaje += to_string(par.second);
-			switch (par.first)
+			pendingOffer = *pkg;													// Saving offer for response.
+			map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
+			for (auto recurso : pendingOffer.getMyOnes())
 			{
-			case BOSQUE : 
-				mensaje += " de madera - ";
-			case COLINAS :
-				mensaje += " de ladrillo - ";
-			case MONTAÑAS :
-				mensaje += " de piedra - ";
-			case CAMPOS :
-				mensaje += " de trigo - ";
-			case PASTOS :
-				mensaje += " de oveja - ";
-			default:break;
+				oferta[recurso] += 1; // armo una lista con los recursos y cantidades
 			}
-		}
-		mensaje += " Por: ";
-		for (auto par : pedido)
-		{
-			mensaje += to_string(par.second);
-			switch (par.first)
+			for (auto recurso : pendingOffer.getOpponentOnes())
 			{
-			case BOSQUE:
-				mensaje += " de madera - ";
-			case COLINAS:
-				mensaje += " de ladrillo - ";
-			case MONTAÑAS:
-				mensaje += " de piedra - ";
-			case CAMPOS:
-				mensaje += " de trigo - ";
-			case PASTOS:
-				mensaje += " de oveja - ";
-			default:break;
+				pedido[recurso] += 1; // armo una lista con los recursos y cantidades
 			}
+			string mensaje("Acepta la oferta de: ");
+			for (auto par : oferta)
+			{
+				mensaje += to_string(par.second);
+				switch (par.first)
+				{
+				case BOSQUE:
+					mensaje += " de madera - ";
+				case COLINAS:
+					mensaje += " de ladrillo - ";
+				case MONTAÑAS:
+					mensaje += " de piedra - ";
+				case CAMPOS:
+					mensaje += " de trigo - ";
+				case PASTOS:
+					mensaje += " de oveja - ";
+				default:break;
+				}
+			}
+			mensaje += " Por: ";
+			for (auto par : pedido)
+			{
+				mensaje += to_string(par.second);
+				switch (par.first)
+				{
+				case BOSQUE:
+					mensaje += " de madera - ";
+				case COLINAS:
+					mensaje += " de ladrillo - ";
+				case MONTAÑAS:
+					mensaje += " de piedra - ";
+				case CAMPOS:
+					mensaje += " de trigo - ";
+				case PASTOS:
+					mensaje += " de oveja - ";
+				default:break;
+				}
+			}
+			setWaitingMessage(mensaje); // cargo el mensaje con la oferta
+			enable(PLA_YES, { TX(exchangeResources), TX(enableRemoteActions) });
+			enable(PLA_NO, { TX(rejectOffer),TX(enableRemoteActions) });
 		}
-		setWaitingMessage(mensaje); // cargo el mensaje con la oferta
-		enable(PLA_YES, { TX(exchangeResources), TX(enableRemoteActions) });
-		enable(PLA_NO, { TX(rejectOffer),TX(enableRemoteActions) });
 	}
 	else
 	{
