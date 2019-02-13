@@ -900,7 +900,7 @@ void Player::followRoad(string vertex)
 					visited = true; // lo visito
 				}
 			}
-			if (visited)
+			if (visited || roadsVisited.empty())
 			{
 				roadsVisited.push_back(edge);																							// Visiting this Road.
 				for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
