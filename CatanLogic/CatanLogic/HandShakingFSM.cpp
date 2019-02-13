@@ -52,7 +52,7 @@ void HandShakingFSM::sendName(GenericEvent * ev)
 
 void HandShakingFSM::saveName(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::NET_NAME)
+	if (((SubEvents*)ev)->getType() == SubType::NET_NAME_IS)
 	{
 		remoteName = ((NameIsPkg*)((SubEvents*)ev)->getPackage())->getName();
 	}
