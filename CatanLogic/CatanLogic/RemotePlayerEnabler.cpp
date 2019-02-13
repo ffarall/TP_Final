@@ -147,7 +147,7 @@ void RemotePlayerEnabler::respondImposibleOfferTrade()
 {
 	setWaitingMessage(getWaitingMessage() + " No se cuenta con tales recursos, seleccione Cancelar.");
 	disableAll();
-	enable(PLA_NO, { TX(rejectOffer) });
+	enable(PLA_NO, { TX(rejectOffer), TX(enableRemoteActions) });
 }
 
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
