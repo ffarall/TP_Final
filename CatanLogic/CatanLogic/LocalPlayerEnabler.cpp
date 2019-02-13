@@ -436,9 +436,9 @@ void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
-
+	pkgSender->pushPackage(new RobberMovePkg(pkg->getPos()));
 	board->moveRobber(pkg->getPos());
-
+	disable(PLA_ROBBER_MOVE);
 	enable(NET_ACK, { TX(enablePlayerActions), TX(checkDevCards) });
 }
 
