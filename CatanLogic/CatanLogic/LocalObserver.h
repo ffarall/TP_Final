@@ -2,6 +2,7 @@
 #include "EDAObserver.h"
 #include "Player.h"
 #include "LocalPlayerEnabler.h"
+#include "RemotePlayerEnabler.h"
 #include "Button.h"
 #include "MainFSM.h"
 
@@ -24,7 +25,7 @@ class LocalObserver :
 	public Observer
 {
 public:
-	LocalObserver(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn, MainFSM* mainFSM_);
+	LocalObserver(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn, RemotePlayerEnabler * remoteEnab, MainFSM* mainFSM_);
 	virtual ~LocalObserver();
 	virtual void update();
 	bool isOK();
@@ -36,6 +37,7 @@ private:
 
 	Player * localPlayer;
 	LocalPlayerEnabler * localEnabler;
+	RemotePlayerEnabler * remoteEnabler;
 	GutenbergsPressAllegro * impresora;
 	MainFSM* mainFSM;
 

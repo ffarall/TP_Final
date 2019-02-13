@@ -35,11 +35,12 @@
 #define D_ALTO 700
 #define D_ANCHO 1200
 
-LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, LocalPlayerEnabler* playerEn, MainFSM* mainFSM_) : toDraw("mapaFinal.png")
+LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, LocalPlayerEnabler* playerEn, RemotePlayerEnabler * remoteEnab, MainFSM* mainFSM_) : toDraw("mapaFinal.png")
 {
 	working = true;
 	localPlayer = local;
 	localEnabler = playerEn;
+	remoteEnabler = remoteEnab;
 	impresora = printer;
 	mainFSM = mainFSM_;
 
@@ -152,7 +153,19 @@ void LocalObserver::update()
 		sellos[ROBBER]->setDY(pos.second);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		string temp = localEnabler->getWaitingMessage();
+		string temp = localEnabler->getErrMessage();
+		if (temp.compare("") == 0)
+		{
+			temp = remoteEnabler->getErrMessage();
+			if (temp.compare("") == 0)
+			{
+				temp = localEnabler->getWaitingMessage();
+				if (temp.compare("") == 0)
+				{
+					temp = remoteEnabler->getWaitingMessage();
+				}
+			}
+		}
 		al_set_target_bitmap(dibujo[CARTEL]);
 		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_draw_rectangle(1, 1, 449, 34, al_map_rgb(0, 0, 0), 1);
