@@ -686,9 +686,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[2]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, locEnab, buttonList]()
 		{
-			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkSettlementResources() && buttonList[2]->isEnabled())
+			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_SETTLEMENT)) && buttonList[2]->isEnabled())
 			{
 				if (!buttonList[2]->isPressed())
 				{
@@ -699,7 +699,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					buttonList[2]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 				}
 			}
-			else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkSettlementResources() || !buttonList[2]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+			else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_SETTLEMENT)) || !buttonList[2]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
 			{
 				buttonList[2]->setTypeTint(TINT_CORR(0.5, 0, 0, 0.5));
 			}
@@ -714,9 +714,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		}
 	);
 	buttonList[3]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, locEnab, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkCityResources() && buttonList[3]->isEnabled())
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_CITY)) && buttonList[3]->isEnabled())
 		{
 			if (!buttonList[3]->isPressed())
 			{
@@ -727,7 +727,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				buttonList[3]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkCityResources() || !buttonList[3]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_CITY)) || !buttonList[3]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
 			buttonList[3]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
 		}
@@ -746,9 +746,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[4]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, locEnab, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkRoadResources() && buttonList[4]->isEnabled())
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD)) && buttonList[4]->isEnabled())
 		{
 			if (!buttonList[4]->isPressed())
 			{
@@ -759,7 +759,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				buttonList[4]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkRoadResources() || !buttonList[4]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD))) || !buttonList[4]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
 			buttonList[4]->setTypeTint(TINT_CORR(0.5, 0, 0, 0.5));
 		}
@@ -1469,58 +1469,65 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[26]->addUpdate(
-		[mainFSM, buttonList]()
+		[mainFSM, locEnab, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
 		{
-			if (buttonList[26]->isEnabled())
+			if (!buttonList[26]->isPressed())
 			{
-				if (!buttonList[26]->isPressed())
-				{
-					buttonList[26]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-				}
-				else
-				{
-					buttonList[26]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-				}
+				buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 1));
 			}
 			else
 			{
-				buttonList[26]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				buttonList[26]->setTypeTint(TINT_CORR(0.5, 1, 0.5, 1));
 			}
+		}
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
+		{
+			buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 0.5));
+		}
+		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+		{
+			buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 0.5));
 		}
 		else
 		{
 			buttonList[26]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 		}
+
+
 	}
+
 	);
 
 	buttonList[27]->addUpdate(
-		[mainFSM, buttonList]()
+		[mainFSM, locEnab, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S || mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
 		{
-			if (buttonList[27]->isEnabled())
+			if (!buttonList[27]->isPressed())
 			{
-				if (!buttonList[27]->isPressed())
-				{
-					buttonList[27]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-				}
-				else
-				{
-					buttonList[27]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-				}
+				buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 			else
 			{
-				buttonList[27]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				buttonList[27]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
 			}
+		}
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
+		{
+			buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 0.5));
+		}
+		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+		{
+			buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 0.5));
 		}
 		else
 		{
 			buttonList[27]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 		}
+
+
 	}
 	);
 
