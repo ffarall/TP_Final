@@ -229,7 +229,19 @@ void LocalObserver::update()
 		sellos[ROBBER]->setCY(pos.second);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		string temp = localEnabler->getWaitingMessage();
+		string temp = localEnabler->getErrMessage();
+		if (temp.compare("") == 0)
+		{
+			temp = remoteEnabler->getErrMessage();
+			if (temp.compare("") == 0)
+			{
+				temp = localEnabler->getWaitingMessage();
+				if (temp.compare("") == 0)
+				{
+					temp = remoteEnabler->getWaitingMessage();
+				}
+			}
+		}
 		al_set_target_bitmap(dibujo[CARTEL]);
 		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_draw_rectangle(1, 1, 449, 34, al_map_rgb(0, 0, 0), 1);

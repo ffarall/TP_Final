@@ -140,6 +140,7 @@ bool RemotePlayerEnabler::checkResourcesToGiveBackAndRespond(OfferTradePkg* pkg)
 			break;
 		}
 	}
+	return true;
 }
 
 void RemotePlayerEnabler::respondImposibleOfferTrade()
@@ -201,10 +202,11 @@ void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
+	setWaitingMessage("El jugador coloco su primer road");
 
 	if (remotePlayer->checkRoadAvailability(position))
 	{
@@ -224,7 +226,7 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El jugador coloco su segundo road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -277,7 +279,7 @@ void RemotePlayerEnabler::noAct(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su primer Settlement");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -324,7 +326,7 @@ void RemotePlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su primer Settlement");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -347,7 +349,7 @@ void RemotePlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su primer Road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -379,7 +381,7 @@ void RemotePlayerEnabler::primeraParte(SubtypeEvent * ev)
 void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su segundo Settlement");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -403,7 +405,7 @@ void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su segundo road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -428,7 +430,7 @@ void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent* ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su segundo Settlement");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -452,7 +454,7 @@ void RemotePlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent* ev)
 void RemotePlayerEnabler::secondRoadRemoteStarts(SubtypeEvent* ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su segundo Road");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -489,25 +491,31 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 	
 	if (rolled == 7)
 	{
+
 		if (localPlayer->totalResourcesAmount() >= 7)
 		{
+			setWaitingMessage("El oponente tiro 7, hay que eliminar cartas");
 			enable(PLA_ROBBER_CARDS, { TX(SendsRobberCards) });
 		}
 		else
 		{
+
 			pkgSender->pushPackage(new package(headers::ACK));
 			if (remotePlayer->totalResourcesAmount() >= 7)
 			{
+				setWaitingMessage("El oponente tiro 7, debe descartar cartas");
 				enable(NET_ROBBER_CARDS, {TX(remoteLoseCards)});
 			}
 			else
 			{
+				setWaitingMessage("El oponente tiro 7 y essta moviendo el robber");
 				enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) , TX(checkRemoteDevCards) });
 			}
 		}
 	}
 	else
 	{
+		setWaitingMessage("El oponente tiro" + to_string(rolled));
 		pkgSender->pushPackage(new package(headers::ACK));
 		checkRemoteDevCards(ev);
 		enableRemoteActions();
@@ -517,7 +525,7 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Descartando cartas");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = new RobberCardsPkg(*static_cast<RobberCardsPkg*>(auxEv->getPackage()));
 
@@ -534,10 +542,12 @@ void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
 
 		if (remotePlayer->totalResourcesAmount() >= 7) // si el otro tiene mas de 7 habilito la espera de esas cartas
 		{
+			setWaitingMessage("El oponente tiro 7, debe descartar cartas");
 			enable(NET_ROBBER_CARDS, { TX(remoteLoseCards) });
 		}
 		else
 		{
+			setWaitingMessage("El oponente tiro 7 y essta moviendo el robber");
 			enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) });
 		}
 	}
@@ -558,6 +568,7 @@ void RemotePlayerEnabler::remoteLoseCards(SubtypeEvent * ev)
 	}
 	else
 	{
+		setWaitingMessage("El oponente tiro 7 y esta moviendo el robber");
 		pkgSender->pushPackage(new package(headers::ACK));
 		disable(NET_ROBBER_CARDS);
 		enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) });
@@ -575,6 +586,9 @@ void RemotePlayerEnabler::remoteMoveRobber(SubtypeEvent * ev)
 	pkgSender->pushPackage(new package(headers::ACK));
 
 	disable(NET_ROBBER_MOVE);
+
+	setWaitingMessage("El oponente pensando la jugada maestra...");
+
 	enableRemoteActions();
 
 }
@@ -583,63 +597,65 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 {
 	disableAllBut({ NET_KNIGHT,NET_YEARS_OF_PLENTY,NET_MONOPOLY,NET_ROAD_BUILDING });
 	setErrMessage("");
-	setWaitingMessage(""); // falta aclarar cual es la oferta ver como amarla para mostrarla!!! Acepta la oferta de: 
+	setWaitingMessage(""); 
 
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	OfferTradePkg* pkg = static_cast<OfferTradePkg*>(auxEv->getPackage());
+
+	pendingOffer = *pkg;													// Saving offer for response.
+	map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
+	for (auto recurso : pendingOffer.getMyOnes())
+	{
+		oferta[recurso] += 1; // armo una lista con los recursos y cantidades
+	}
+	for (auto recurso : pendingOffer.getOpponentOnes())
+	{
+		pedido[recurso] += 1; // armo una lista con los recursos y cantidades
+	}
+	string mensaje("Acepta la oferta de: ");
+	for (auto par : oferta)
+	{
+		mensaje += to_string(par.second);
+		switch (par.first)
+		{
+		case BOSQUE:
+			mensaje += " de madera - ";
+		case COLINAS:
+			mensaje += " de ladrillo - ";
+		case MONTAÑAS:
+			mensaje += " de piedra - ";
+		case CAMPOS:
+			mensaje += " de trigo - ";
+		case PASTOS:
+			mensaje += " de oveja - ";
+		default:break;
+		}
+	}
+	mensaje += " Por: ";
+	for (auto par : pedido)
+	{
+		mensaje += to_string(par.second);
+		switch (par.first)
+		{
+		case BOSQUE:
+			mensaje += " de madera - ";
+		case COLINAS:
+			mensaje += " de ladrillo - ";
+		case MONTAÑAS:
+			mensaje += " de piedra - ";
+		case CAMPOS:
+			mensaje += " de trigo - ";
+		case PASTOS:
+			mensaje += " de oveja - ";
+		default:break;
+		}
+	}
 
 	if (validateOffer(pkg))
 	{
 		if (checkResourcesToGiveBackAndRespond(pkg))
 		{
-			pendingOffer = *pkg;													// Saving offer for response.
-			map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
-			for (auto recurso : pendingOffer.getMyOnes())
-			{
-				oferta[recurso] += 1; // armo una lista con los recursos y cantidades
-			}
-			for (auto recurso : pendingOffer.getOpponentOnes())
-			{
-				pedido[recurso] += 1; // armo una lista con los recursos y cantidades
-			}
-			string mensaje("Acepta la oferta de: ");
-			for (auto par : oferta)
-			{
-				mensaje += to_string(par.second);
-				switch (par.first)
-				{
-				case BOSQUE:
-					mensaje += " de madera - ";
-				case COLINAS:
-					mensaje += " de ladrillo - ";
-				case MONTAÑAS:
-					mensaje += " de piedra - ";
-				case CAMPOS:
-					mensaje += " de trigo - ";
-				case PASTOS:
-					mensaje += " de oveja - ";
-				default:break;
-				}
-			}
-			mensaje += " Por: ";
-			for (auto par : pedido)
-			{
-				mensaje += to_string(par.second);
-				switch (par.first)
-				{
-				case BOSQUE:
-					mensaje += " de madera - ";
-				case COLINAS:
-					mensaje += " de ladrillo - ";
-				case MONTAÑAS:
-					mensaje += " de piedra - ";
-				case CAMPOS:
-					mensaje += " de trigo - ";
-				case PASTOS:
-					mensaje += " de oveja - ";
-				default:break;
-				}
-			}
+			
 			setWaitingMessage(mensaje); // cargo el mensaje con la oferta
 			enable(PLA_YES, { TX(exchangeResources), TX(enableRemoteActions) });
 			enable(PLA_NO, { TX(rejectOffer),TX(enableRemoteActions) });
@@ -661,6 +677,8 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 
 	if (remotePlayer->checkSettlementAvailability(position))
 	{
+		setWaitingMessage("El oponente coloco un nuevo SETTLEMENT !!!");
+
 		remotePlayer->addToMySettlements(position);
 		localPlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, remotePlayer);
@@ -685,6 +703,8 @@ void RemotePlayerEnabler::checkRemoteRoad(SubtypeEvent * ev)
 
 	if (remotePlayer->checkRoadAvailability(position))
 	{
+		setWaitingMessage("El oponente coloco un nuevo ROAD !!!");
+
 		remotePlayer->addToMyRoads(position);
 		localPlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, remotePlayer);
@@ -700,6 +720,7 @@ void RemotePlayerEnabler::checkRemoteRoad(SubtypeEvent * ev)
 
 void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 {
+	setErrMessage("");
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	CityPkg* pkg = static_cast<CityPkg*>(auxEv->getPackage());
@@ -707,6 +728,8 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 
 	if (remotePlayer->checkPromotionOfCity(position))
 	{
+		setWaitingMessage("El oponente coloco una nueva CITY !!!");
+
 		remotePlayer->promoteToMyCity(position);
 		localPlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, remotePlayer);
