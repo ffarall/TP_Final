@@ -202,7 +202,7 @@ void Networking::workPlease()
 			delete[]buffer;
 		}
 
-		/* Ahora me fijo que no se haya pasado el timenout 
+		//Ahora me fijo que no se haya pasado el timenout 
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
 		std::chrono::duration<double> difftime = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - timeout); //tengo la diferencia de tiempo en segundos 
@@ -210,7 +210,7 @@ void Networking::workPlease()
 		{
 			emitEvent(new SubEvents(MainTypes::TIME_OUT_MT, SubType::TIME_OUT));// emito timeout
 			closeConection();
-		}*/
+		}
 
 
 	}

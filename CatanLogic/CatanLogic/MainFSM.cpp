@@ -138,7 +138,7 @@ void MainFSM::decTimeCounter(GenericEvent * ev)
 	timerCount--;
 	if (timerCount == 0)
 	{
-		emitSubEvent(MainTypes::TIME_OUT_MT, SubType::TIME_OUT);
+		//emitSubEvent(MainTypes::TIME_OUT_MT, SubType::TIME_OUT);
 	}
 }
 
