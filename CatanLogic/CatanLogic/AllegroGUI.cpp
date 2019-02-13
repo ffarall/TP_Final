@@ -16,6 +16,7 @@ AllegroGUI::AllegroGUI():BasicGUI()
 	allegroError = false;
 	
 	eventQueue = nullptr;
+	timerQueue = nullptr;
 	display = nullptr;
 
 	if (allegroInit())
@@ -52,6 +53,8 @@ AllegroGUI::AllegroGUI():BasicGUI()
 
 bool AllegroGUI::checkForEvents()
 {
+	bool ret = true;
+
 	if (al_event_queue_is_empty(eventQueue))
 	{
 		return false;
@@ -73,15 +76,27 @@ bool AllegroGUI::checkForEvents()
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
 			GUIEv = GUI_CLOSE_DISPLAY;
 			break;
-		case ALLEGRO_EVENT_TIMER:
-			GUIEv = GUI_TIMER;
-			break;
 		default:
-			return false;//error?
+			ret = false;//posibles eventos de mouse que no interesan
 			break;
 		}
 	}
-	return true;
+	
+	if (!ret)
+	{
+		if (!al_event_queue_is_empty(timerQueue))
+		{
+			ALLEGRO_EVENT ev;
+			al_get_next_event(timerQueue, &ev);
+			if (ev.type == ALLEGRO_EVENT_TIMER)
+			{
+				GUIEv = GUI_TIMER;
+				ret = true;
+			}
+		}
+	}
+
+	return ret;
 }
 
 bool AllegroGUI::allegroInit()
@@ -136,10 +151,15 @@ bool AllegroGUI::initEventQueue() // necesita , display, addons, menu
 	{
 		al_register_event_source(eventQueue, al_get_display_event_source(display));
 		al_register_event_source(eventQueue, al_get_mouse_event_source());
-		al_register_event_source(eventQueue, al_get_timer_event_source(timer));
-		al_start_timer(timer);
-	
-		return true;
+		timerQueue = al_create_event_queue();
+		if (timerQueue != NULL)
+		{
+			al_register_event_source(timerQueue, al_get_timer_event_source(timer));
+			al_start_timer(timer);
+
+			return true;
+		}
+		al_destroy_event_queue(eventQueue);
 	}	
 	allegroError = true;
 	return false;
