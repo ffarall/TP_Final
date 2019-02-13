@@ -36,6 +36,8 @@ public:
 	size_t getVictoryPoints();
 	string getName();
 
+	void setName(string nombre_);
+
 	// Asks if player has won.
 	bool hasWon(bool playingWithDevs);
 

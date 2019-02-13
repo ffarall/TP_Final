@@ -33,7 +33,10 @@ void RemotePlayerEnabler::localStarts()
 
 void RemotePlayerEnabler::remoteStarts()
 {
-	setWaitingMessage(string("Listo para empezar, el jugador ") + remotePlayer->getName() + " debe colocar su primer SETTLEMENT.");
+	string mensaje = "Listo para empezar, el jugador ";
+	mensaje += remotePlayer->getName();
+	mensaje += " debe colocar su primer SETTLEMENT.";
+	setWaitingMessage( mensaje );
 
 	disableAll();
 	enable(NET_SETTLEMENT, { TX(firstSettlementRemoteStarts) });
@@ -515,7 +518,7 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 	}
 	else
 	{
-		setWaitingMessage("El oponente tiro" + to_string(rolled));
+		setWaitingMessage("El oponente tiro " + to_string(rolled));
 		pkgSender->pushPackage(new package(headers::ACK));
 		checkRemoteDevCards(ev);
 		enableRemoteActions();
@@ -620,14 +623,19 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 		{
 		case BOSQUE:
 			mensaje += " de madera - ";
+			break;
 		case COLINAS:
 			mensaje += " de ladrillo - ";
+			break;
 		case MONTAÑAS:
 			mensaje += " de piedra - ";
+			break;
 		case CAMPOS:
 			mensaje += " de trigo - ";
+			break;
 		case PASTOS:
 			mensaje += " de oveja - ";
+			break;
 		default:break;
 		}
 	}
@@ -639,24 +647,28 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 		{
 		case BOSQUE:
 			mensaje += " de madera - ";
+			break;
 		case COLINAS:
 			mensaje += " de ladrillo - ";
+			break;
 		case MONTAÑAS:
 			mensaje += " de piedra - ";
+			break;
 		case CAMPOS:
 			mensaje += " de trigo - ";
+			break;
 		case PASTOS:
 			mensaje += " de oveja - ";
+			break;
 		default:break;
 		}
 	}
+	setWaitingMessage(mensaje); // cargo el mensaje con la oferta
 
 	if (validateOffer(pkg))
 	{
 		if (checkResourcesToGiveBackAndRespond(pkg))
 		{
-			
-			setWaitingMessage(mensaje); // cargo el mensaje con la oferta
 			enable(PLA_YES, { TX(exchangeResources), TX(enableRemoteActions) });
 			enable(PLA_NO, { TX(rejectOffer),TX(enableRemoteActions) });
 		}
