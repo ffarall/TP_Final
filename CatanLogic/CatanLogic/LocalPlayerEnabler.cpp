@@ -154,6 +154,8 @@ void LocalPlayerEnabler::firstTurnFinish(SubtypeEvent* ev)
 	disable(NET_ACK);
 	enable(PLA_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
 	pkgSender->pushPackage(new package(headers::PASS));
+	setErrMessage("");
+	setWaitingMessage("");
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 
@@ -524,6 +526,7 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 			default:break;
 			}
 		}
+		setWaitingMessage(mensaje);
 	}
 	else
 	{
@@ -852,6 +855,8 @@ void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
 {
 	setUpForTurn();
 	emitEvent(TURN_FINISHED);
+	setErrMessage("");
+	setWaitingMessage("");
 	pkgSender->pushPackage(new package(headers::PASS));
 }
 
