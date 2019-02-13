@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
 	mainFSM.attach(&boardCont);														// localObs and boardCont are observers of mainFSM.
 
 	mainFSM.notifyAllObservers();
+
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())
 	{
 		GUI.cycle();
