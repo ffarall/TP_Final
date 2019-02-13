@@ -759,7 +759,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				buttonList[4]->setTypeTint(TINT_CORR(1, 0, 0, 1));
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD))) || !buttonList[4]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD)) || !buttonList[4]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
 			buttonList[4]->setTypeTint(TINT_CORR(0.5, 0, 0, 0.5));
 		}
