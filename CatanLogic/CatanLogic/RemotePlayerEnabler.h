@@ -86,5 +86,10 @@ private:
 	bool deleteCards(vector<ResourceType> descarte, Player * player_);
 	// Enables All posible actions in a turn
 	void enableRemoteActions();
+
+	// When receiving an OfferTrade, if local player doesn't have enough resources, it automatically rejects the offer and returns false.
+	bool checkResourcesToGiveBackAndRespond(OfferTradePkg* pkg);
+	// When local player doesn't have enough resources, calls rejectOffer and writes message to user informing of the situation.
+	void respondImposibleOfferTrade();
 };
 
