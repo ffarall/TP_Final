@@ -88,6 +88,7 @@ void Networking::startConection()
 				connected = true;
 				cout << "[SERVER] connected\n";
 				current = WORKING; //formalidad nomas
+				timeout = std::chrono::high_resolution_clock::now(); // inicio para ver que el tiempo de respuesta no supere los dos minutos y medio
 				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
 				handler->enqueueEvent(ev);
 			}
@@ -106,6 +107,7 @@ void Networking::startConection()
 							cout << "[CLIENT] connected\n";
 							current = WORKING;
 							connected = true;
+							timeout = std::chrono::high_resolution_clock::now(); // inicio para ver que el tiempo de respuesta no supere los dos minutos y medio
 							socket->non_blocking(true);
 							SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
 							handler->enqueueEvent(ev);
@@ -191,12 +193,26 @@ void Networking::workPlease()
 			}
 			else
 			{
+				timeout = std::chrono::high_resolution_clock::now(); // actualizo el tiempo de timeout
+
 				buffer[dataLength] = '\0';
 				cout << "Recibi: " << msgDecoder(buffer) << endl;
 				parseInput(buffer,dataLength);
 			}
 			delete[]buffer;
 		}
+
+		/* Ahora me fijo que no se haya pasado el timenout 
+		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+
+		std::chrono::duration<double> difftime = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - timeout); //tengo la diferencia de tiempo en segundos 
+		if (difftime.count() > 150.0) // si tengo mas de 2 minutos y medio emito timeOut
+		{
+			emitEvent(new SubEvents(MainTypes::TIME_OUT_MT, SubType::TIME_OUT));// emito timeout
+			closeConection();
+		}*/
+
+
 	}
 }
 

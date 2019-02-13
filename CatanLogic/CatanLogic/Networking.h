@@ -7,6 +7,8 @@
 #include "package.h"
 #include "NewEventHandling.h"
 
+#include <chrono>
+
 enum Status { SERVER, CLIENT };
 enum Activity { NOTHING, CONNECTING, WORKING };
 #define PORT 13225
@@ -55,6 +57,7 @@ private:
 	
 	std::string input;
 
+	std::chrono::high_resolution_clock::time_point timeout;
 
 	std::queue<package *> paraEnviar; // lista de colas de mensajes para enviar
 	
