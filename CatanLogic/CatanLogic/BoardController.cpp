@@ -154,8 +154,13 @@ GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 			if (decoder->getPixelType(x, y) == TOKEN)
 			{
 				string token = decoder->getCoordinateFromPixel(x, y);
-				RobberMovePkg* robberPkg = new RobberMovePkg(token[0]);
-				emitSubEvent(PLAYER_ACTION, PLA_ROBBER_MOVE, robberPkg);
+				string robberpos;
+				robberpos.push_back[board->getRobberPos()];
+				if (token.compare(robberpos))
+				{
+					RobberMovePkg* robberPkg = new RobberMovePkg(token[0]);
+					emitSubEvent(PLAYER_ACTION, PLA_ROBBER_MOVE, robberPkg);
+				}
 			}
 		}
 	}
