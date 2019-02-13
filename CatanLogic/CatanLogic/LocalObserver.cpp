@@ -128,12 +128,15 @@ LocalObserver::~LocalObserver()
 
 void LocalObserver::update()
 {
-	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+	if (mainFSM->getCurrState() == mainStates::StartMenu_S)
 	{
 		if (sellos[ROBBER] == NULL)
 		{
-			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(0, 0, 0, 0),
+			/*sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(255, 255, 255, 255),
 				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
+				1, 1, 0, 0);*/
+			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(255, 255, 255, 255),
+				0, 0, 0, 0,
 				1, 1, 0, 0);
 		}
 		bool anyChange = false;
@@ -142,8 +145,8 @@ void LocalObserver::update()
 		string foo;
 		foo += localEnabler->getRobberPos();
 		pair<unsigned int, unsigned int > pos = toDraw.getPositioningForToken(foo);
-		//pos.first += ROBBER_POS + BOARD_POS_X;
-		//pos.second += BOARD_POS_Y;
+		pos.first += ROBBER_POS + BOARD_POS_X;
+		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
 		sellos[ROBBER]->setDX(pos.first);
 		sellos[ROBBER]->setDY(pos.second);
@@ -213,8 +216,8 @@ void LocalObserver::update()
 		pos.first += ROBBER_POS + BOARD_POS_X;
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
-		sellos[ROBBER]->setDX(100);
-		sellos[ROBBER]->setDY(100);
+		sellos[ROBBER]->setDX(pos.first);
+		sellos[ROBBER]->setDY(pos.second);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 		string temp = localEnabler->getWaitingMessage();
