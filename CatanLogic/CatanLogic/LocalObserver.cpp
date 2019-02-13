@@ -60,7 +60,6 @@ LocalObserver::LocalObserver(GutenbergsPressAllegro* printer, Player* local, Loc
 	dibujo[KNIGHT] = al_load_bitmap(KNIGHT);
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
-	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[CARTEL] = al_create_bitmap(475, 35);
 
 	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
@@ -133,11 +132,8 @@ void LocalObserver::update()
 	{
 		if (sellos[ROBBER] == NULL)
 		{
-			/*sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(255, 255, 255, 255),
-				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
-				1, 1, 0, 0);*/
 			sellos[ROBBER] = impresora->createType(dibujo[ROBBER], al_map_rgba(255, 255, 255, 255),
-				0, 0, 0, 0,
+				0, 0, al_get_bitmap_width(dibujo[ROBBER]) / 2, al_get_bitmap_height(dibujo[ROBBER]) / 2,
 				1, 1, 0, 0);
 		}
 		bool anyChange = false;
@@ -149,8 +145,8 @@ void LocalObserver::update()
 		pos.first += ROBBER_POS + BOARD_POS_X;
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
-		sellos[ROBBER]->setDX(pos.first);
-		sellos[ROBBER]->setDY(pos.second);
+		sellos[ROBBER]->setCX(pos.first);
+		sellos[ROBBER]->setCY(pos.second);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 		string temp = localEnabler->getErrMessage();
@@ -190,8 +186,8 @@ void LocalObserver::update()
 		
 		if (localPlayer->hasLargestArmy())
 		{
-			sellos[LARMY]->setDX(D_ANCHO * 0.2);
-			sellos[LARMY]->setDY(D_ALTO * 0.15);
+			sellos[LARMY]->setCX(D_ANCHO * 0.2);
+			sellos[LARMY]->setCY(D_ALTO * 0.15);
 			sellos[LARMY]->setTint(al_map_rgba(255, 255, 255, 255));
 		}
 		else
@@ -201,8 +197,8 @@ void LocalObserver::update()
 		
 		if (localPlayer->hasLongestRoad())
 		{
-			sellos[LROAD]->setDX(D_ANCHO * 0.25);
-			sellos[LROAD]->setDY(D_ALTO * 0.15);
+			sellos[LROAD]->setCX(D_ANCHO * 0.25);
+			sellos[LROAD]->setCY(D_ALTO * 0.15);
 			sellos[LROAD]->setTint(al_map_rgba(255, 255, 255, 255));
 		}
 		else
@@ -229,8 +225,8 @@ void LocalObserver::update()
 		pos.first += ROBBER_POS + BOARD_POS_X;
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER]->setTint(al_map_rgba(255, 255, 255, 255));
-		sellos[ROBBER]->setDX(pos.first);
-		sellos[ROBBER]->setDY(pos.second);
+		sellos[ROBBER]->setCX(pos.first);
+		sellos[ROBBER]->setCY(pos.second);
 
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 		string temp = localEnabler->getWaitingMessage();
