@@ -265,7 +265,7 @@ stack< DevCards > DevCardsPkg::getDeck()
 	stack< DevCards > auxiliar;
 	for (int i = 0; i < 25; i++)
 	{
-		auxiliar.push(pilon[25-1]);
+		auxiliar.push(pilon[24-i]);
 	}
 	return auxiliar;
 }
