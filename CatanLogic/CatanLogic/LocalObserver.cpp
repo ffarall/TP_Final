@@ -128,7 +128,7 @@ LocalObserver::~LocalObserver()
 
 void LocalObserver::update()
 {
-	if (mainFSM->getCurrState() == mainStates::StartMenu_S)
+	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 	{
 		if (sellos[ROBBER] == NULL)
 		{
