@@ -114,7 +114,7 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 void LocalPlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage(string("Coloque su primer road");
+	setWaitingMessage(string("Coloque su primer road"));
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
