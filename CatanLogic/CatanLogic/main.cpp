@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	GUI.attachController("TimerController", &timerCont);
 	GUI.initGUIEnabler();
 
-	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler, &mainFSM);
+	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler, &remotePlayerEnabler, &mainFSM);
 
 	localPlayer.attach(&localObs);
 	localPlayer.attach(&boardCont);													// localObs and boardCont are observers of localPlayer.

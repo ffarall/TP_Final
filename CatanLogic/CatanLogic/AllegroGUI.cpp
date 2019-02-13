@@ -57,7 +57,7 @@ bool AllegroGUI::checkForEvents()
 
 	if (al_event_queue_is_empty(eventQueue))
 	{
-		return false;
+		ret = false;
 	}
 	else
 	{
