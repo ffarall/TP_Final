@@ -33,6 +33,7 @@ private:
 
 	ALLEGRO_DISPLAY* display;
 	ALLEGRO_EVENT_QUEUE* eventQueue;
+	ALLEGRO_EVENT_QUEUE* timerQueue;
 	ALLEGRO_TIMER* timer;
 	bool allegroError;
 
