@@ -851,7 +851,7 @@ vector<string> Player::getAdjacentEdges(string vertex)
 				adyacentes.push_back(temp); //qr
 				temp.clear();
 				temp = vertex; //3r
-				availableForRoad.push_back(temp.substr(0, 2));
+				adyacentes.push_back(temp.substr(0, 2));
 				temp.clear();
 				temp += vertex[0];  //qr
 				temp += vertex[2];  //qr
@@ -877,7 +877,7 @@ vector<string> Player::getAdjacentEdges(string vertex)
 		temp.push_back(vertex[1]);
 		adyacentes.push_back(temp); //3q
 		temp[1] = vertex[2]; //3r
-		availableForRoad.push_back(temp);
+		adyacentes.push_back(temp);
 		temp[0] = vertex[1];  //qr
 		adyacentes.push_back(temp);
 	}
