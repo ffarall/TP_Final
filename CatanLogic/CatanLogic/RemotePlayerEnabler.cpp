@@ -162,6 +162,7 @@ void RemotePlayerEnabler::checkLongestRoad()
 			if (remotePlayer->getLongestRoad() > localPlayer->getLongestRoad())		// Must check who has it longer.
 			{
 				remotePlayer->setLongestRoadCard(true);
+				localPlayer->setLongestRoadCard(false);
 			}
 		}
 		else
