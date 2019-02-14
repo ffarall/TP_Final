@@ -112,7 +112,7 @@ bool Player::hasWon(bool playingWithDevs)
 	{
 		totalVictoryPoints++;
 	}
-	if (hasLargestArmy())
+	if (hasLargestArmy() && playingWithDevs)
 	{
 		totalVictoryPoints++;
 	}
