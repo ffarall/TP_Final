@@ -91,5 +91,7 @@ private:
 	bool checkResourcesToGiveBackAndRespond(OfferTradePkg* pkg);
 	// When local player doesn't have enough resources, calls rejectOffer and writes message to user informing of the situation.
 	void respondImposibleOfferTrade();
+	// Checks if remotePlayer should own longestRoadCard, comparing with localPlayer. If the remote is the rightful owner of the card, this gives remote de card ant takes it away from local.
+	void checkLongestRoad();
 };
 

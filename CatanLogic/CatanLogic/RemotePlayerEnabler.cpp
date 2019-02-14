@@ -153,6 +153,24 @@ void RemotePlayerEnabler::respondImposibleOfferTrade()
 	enable(PLA_NO, { TX(rejectOffer), TX(enableRemoteActions) });
 }
 
+void RemotePlayerEnabler::checkLongestRoad()
+{
+	if (remotePlayer->getLongestRoad() >= 5)											// Minimum requisite for having the longestRoadCard
+	{
+		if (localPlayer->hasLongestRoad())											// If remote has it...
+		{
+			if (remotePlayer->getLongestRoad() > localPlayer->getLongestRoad())		// Must check who has it longer.
+			{
+				remotePlayer->setLongestRoadCard(true);
+			}
+		}
+		else
+		{
+			remotePlayer->setLongestRoadCard(true);
+		}
+	}
+}
+
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 {
 	if (playingWithDev)
@@ -721,6 +739,9 @@ void RemotePlayerEnabler::checkRemoteRoad(SubtypeEvent * ev)
 		localPlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
+		checkLongestRoad();
+		if (remotePlayer->hasWon(playingWithDev))
+			enable(NET_I_WON, { TX(finDelJuego) });
 	}
 	else
 	{
