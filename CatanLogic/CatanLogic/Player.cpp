@@ -479,6 +479,7 @@ void Player::updateLongestRoad(string startingEdge)
 {
 	roadsVisited.clear();															// Clears any residue from previous calculations.
 	vector< string > startingVertexes = getAdjacentVertexes(startingEdge);
+	roadsVisited.push_back(startingEdge);
 
 	for (auto vertex : startingVertexes)
 	{
@@ -890,25 +891,14 @@ void Player::followRoad(string vertex)
 
 	for (auto edge : adjacentEdges)
 	{
-		if (myRoads.find(edge) != myRoads.end() )		// If the edge has a Road and it's not yet visited...
+		if (myRoads.find(edge) != myRoads.end() && find(roadsVisited.begin(), roadsVisited.end(), edge) == roadsVisited.end())		// If the edge has a Road and it's not yet visited...
 		{
-			bool visited = false;
-			for (auto arista : roadsVisited)
+			roadsVisited.push_back(edge);																							// Visiting this Road.
+			for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
 			{
-				if(arista.compare(edge) != 0) // si no esta entre los visitados
+				if (newVertex != vertex)																							// Ignores the vertex that was the parameter of this function.
 				{
-					visited = true; // lo visito
-				}
-			}
-			if (visited || roadsVisited.empty())
-			{
-				roadsVisited.push_back(edge);																							// Visiting this Road.
-				for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
-				{
-					if (newVertex != vertex)																							// Ignores the vertex that was the parameter of this function.
-					{
-						followRoad(newVertex);
-					}
+					followRoad(newVertex);
 				}
 			}
 		}
