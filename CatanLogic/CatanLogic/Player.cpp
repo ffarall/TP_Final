@@ -628,16 +628,28 @@ void Player::updateAvailability()
 	availableForRoad.clear();
 	tempSettlements.unique();
 
-	for (string vertx : tempSettlements)
+	if (mySettlements.size() == 2 && myRoads.size()==1) // caso del segundo road al principio
 	{
-		vector<string> posibles = getAdjacentEdges(vertx);
-		for (string a : posibles)
+		for (string aristas : getAdjacentEdges(lastSettlement))
 		{
-			availableForRoad.push_back(a);
+			availableForRoad.push_back(aristas);
+		}
+	}
+	else // caso general
+	{
+		for (string vertx : tempSettlements)
+		{
+			vector<string> posibles = getAdjacentEdges(vertx);
+			for (string a : posibles)
+			{
+				availableForRoad.push_back(a);
+			}
 		}
 	}
 	availableForRoad.unique(); // filtro los que puedan estar repetidos
 	//ahora que ya tengo todas las disponibles, tengo que sacar las ocupadas
+	copyToIterate.clear();
+	copyToIterate = availableForRoad;
 	for (auto vertex : copyToIterate)
 	{
 		if (myRoads.find(vertex) != myRoads.end() || rivalsRoads.find(vertex) != rivalsRoads.end())
@@ -847,17 +859,35 @@ vector<string> Player::getAdjacentEdges(string vertex)
 			else
 			{
 				string temp; // 3qr
-				temp.push_back(vertex[1]);
+				temp.push_back(vertex[1]); // la arista que no tiene numero
 				temp.push_back(vertex[2]);
-				adyacentes.push_back(temp); //qr
+				adyacentes.push_back(temp); 
 				temp.clear();
-				temp = vertex; //3r
-				adyacentes.push_back(temp.substr(0, 2));
+
+				/**************/
+				temp += vertex[0];
+				temp += (vertex[0] >= '3' ? vertex[1] : vertex[2]);
+				adyacentes.push_back(temp);
+
+				/*************/
+				adyacentes.push_back(vertex);
+				/*************/
 				temp.clear();
+
 				temp += vertex[0];  //qr
 				temp += vertex[2];  //qr
 				temp += vertex[1];  //qr
 				adyacentes.push_back(temp);
+
+				auto auxList = adyacentes;
+				adyacentes.clear();
+				for(auto edges: auxList)
+				{
+					if (find(allEdges.begin(), allEdges.end(), edges) != allEdges.end()) // si es una arista que existe la agrego
+					{
+						adyacentes.push_back(edges);
+					}
+				} // ahora me deberian quedar bien las cosas
 			}
 		}
 		else
