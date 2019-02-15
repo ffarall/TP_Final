@@ -7,9 +7,13 @@
 
 bool QuadTree::insert(string child, string father)
 {
-	if (!father.empty() && find(father)->childrenCount() < 4)
+	if (!father.empty())
 	{
 		(find(father)->children).push_back(child);
+	}
+
+	if (find(father)->childrenCount() < 4)
+	{
 		tree.push_back(child);
 		return true;
 	}
