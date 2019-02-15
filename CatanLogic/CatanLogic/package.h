@@ -97,11 +97,15 @@ class RobberCardsPkg :
 	public package
 {
 public:
+	RobberCardsPkg(char length);
 	RobberCardsPkg(const char * devList);
 	RobberCardsPkg(std::vector<ResourceType>& descarte);
 	std::vector<ResourceType> getCards();
 	char getLength();
 	virtual std::string getPackage();
+
+	bool isComplete();
+	void pushCard(ResourceType recurso);
 private:
 	char length;
 	std::vector<ResourceType> cartas;

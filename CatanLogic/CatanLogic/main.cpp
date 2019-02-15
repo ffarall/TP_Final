@@ -18,7 +18,7 @@
 #include "SubEvents.h"
 #include "TimerController.h"
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb, LocalPlayerEnabler * locEneb);
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb, LocalPlayerEnabler * locEneb, Networking * networ);
 
 
 int main(int argc, char* argv[])
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 	TimerController timerCont(&handler);
 	
 	std::vector<Button*> buttonList;
-	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler, &localPlayerEnabler);	// Also adds them to the GUI.
+	createButtons(&printer, &handler, &localPlayer, &mainFSM, &GUI,&globalBoard, buttonList, &remotePlayerEnabler, &localPlayerEnabler, &network);	// Also adds them to the GUI.
 	GUI.attachController("BoardController", &boardCont);
 	GUI.attachController("TimerController", &timerCont);
 	GUI.initGUIEnabler();

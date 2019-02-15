@@ -16,7 +16,7 @@
 #define TINT_CORR(r, g, b, a) (r*255), (g*255), (b*255), (a*255)
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
 
-void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab)
+void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab, Networking * network)
 {
 	srand(time(NULL));
 	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "", "start.png", "", 14)); //startPlayingButton()
@@ -81,7 +81,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	GUI->attachController("StopPlaying", buttonList[29]);
 	buttonList.push_back(new Button(printer, handler, VICTORY_POINT_X, VICTORY_POINT_Y, VICTORY_POINT_H, VICTORY_POINT_W, "", "VictoryPoint.png", "", 14));//stopPlayinButton
 	GUI->attachController("VictoryPoint", buttonList[30]);
-
+	GUI->attachController("Network", network);
 	
 	// attach de los botónes a los modelos de los que son observers
 	mainFSM->attach(buttonList[0]);
@@ -258,9 +258,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
-
+	Button * robber = buttonList[9];
 	buttonList[9]->addUtility(
-		[localPlayer, mainFSM, handler, locEnab]()
+		[localPlayer, mainFSM, handler, locEnab, robber]()
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 			{
@@ -269,12 +269,33 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				dado1 = rand() % 6 + 1;
 				dado2 = rand() % 6 + 1;
 				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE, new DicePkg(dado1, dado2)));
+				if ((dado1 + dado2) == 7 )
+				{
+					if (localPlayer->totalResourcesAmount() >= 7)
+					{
+						char amount = localPlayer->totalResourcesAmount() / 2;
+						robber->setPackage(new RobberCardsPkg(amount));
+						return GUIEnablerEvent::ROBBER_CARDS;
+					}
+				}
 				return GUIEnablerEvent::TRHOW_DICE;
 			}
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
-
+	network->setControllerRoutine(
+		[localPlayer,robber]()
+		{
+			if (localPlayer->totalResourcesAmount() >= 7)
+			{
+				char amount = localPlayer->totalResourcesAmount() / 2;
+				robber->setPackage(new RobberCardsPkg(amount));
+				return GUIEnablerEvent::ROBBER_CARDS;
+			}
+			return NO_EV;
+		}
+	);
+	
 	buttonList[10]->addUtility(
 		[locEnab]()
 		{
@@ -487,7 +508,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[26]->addUtility(
-		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab]()
+		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab, robber]()
 		{
 			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 			{
@@ -549,13 +570,25 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				{
 					handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES, new package(headers::YES)));
 				}
+				else if (robber->getPackage()) // si existe el paquete de robber me fijo en que estado esta
+				{
+					RobberCardsPkg * cartas = static_cast<RobberCardsPkg *>(robber->getPackage());
+					if (cartas->isComplete())
+					{
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_MONOPOLY, new RobberCardsPkg(cartas->getCards())));
+						delete cartas;
+						robber->setPackage(nullptr);
+						return GUIEnablerEvent::ACCEPT;
+					}
+				}
 			}
+
 			return GUIEnablerEvent::NO_EV;
 		}
 	);
 
 	buttonList[27]->addUtility(
-		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab]()
+		[localPlayer, mainFSM, handler, bankbutton, offerbutton, Yop, monopoly, remEnab, robber]()
 	{
 		if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) || (mainFSM->getCurrState() == mainStates::RemotePlayer_S))
 		{
@@ -590,6 +623,15 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 			else if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO))) // contesto la oferta que me manda el otro player
 			{
 				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO, new package(headers::NO)));
+			}
+			else if (robber->getPackage()) // si existe el paquete de robber lo borro y reseteo
+			{
+				RobberCardsPkg * cartas = static_cast<RobberCardsPkg *>(robber->getPackage());
+				delete cartas;
+				robber->setPackage(nullptr);
+
+				char amount = localPlayer->totalResourcesAmount() / 2;
+				robber->setPackage(new RobberCardsPkg(amount));
 			}
 		}
 		return GUIEnablerEvent::NO_EV;

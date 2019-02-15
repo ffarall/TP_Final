@@ -68,4 +68,8 @@ private:
 	void nowSelectSecondResource();
 	// Goes back to the way initGUIEnabler leaves everything.
 	void backToNormal();
+	// Start sellecting cards to eliminate when robber is activated
+	void selectRobberCards();
+	// confirm resources to discard
+	void nowConfirmRobberResources()
 };

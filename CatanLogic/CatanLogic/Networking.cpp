@@ -16,7 +16,7 @@
 using namespace std;
 
 
-Networking::Networking(EventsHandler* handler_, const char * ip, unsigned short _port, Status _estado):EventGenerator(handler_)
+Networking::Networking(EventsHandler* handler_, const char * ip, unsigned short _port, Status _estado):BasicController(handler_)
 {
 	ipOtherSide = string(ip);
 
@@ -32,6 +32,8 @@ Networking::Networking(EventsHandler* handler_, const char * ip, unsigned short 
 	ioHandler = new boost::asio::io_service();
 	socket = new boost::asio::ip::tcp::socket(*ioHandler);
 	
+	robber = GUIEnablerEvent::NO_EV;
+
 	if (estado == SERVER)
 	{
 		boost::asio::ip::tcp::endpoint ep(boost::asio::ip::tcp::v4(), port); // que tipo de ip uso con ese puerto (IPv4)
@@ -91,7 +93,7 @@ void Networking::startConection()
 				current = WORKING; //formalidad nomas
 				timeout = std::chrono::high_resolution_clock::now(); // inicio para ver que el tiempo de respuesta no supere los dos minutos y medio
 				SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
-				handler->enqueueEvent(ev);
+				evGen->emitEvent(ev);
 			}
 		}
 		else
@@ -111,7 +113,7 @@ void Networking::startConection()
 							timeout = std::chrono::high_resolution_clock::now(); // inicio para ver que el tiempo de respuesta no supere los dos minutos y medio
 							socket->non_blocking(true);
 							SubEvents * ev = new SubEvents(MainTypes::NETWORK, SubType::NET_CONNECTED);
-							handler->enqueueEvent(ev);
+							evGen->emitEvent(ev);
 						}
 					}
 				);
@@ -190,7 +192,7 @@ void Networking::workPlease()
 			{
 				SubEvents * errEvent = new SubEvents;
 				errEvent->setEvent(MainTypes::ERR_IN_COM);
-				handler->enqueueEvent(errEvent);
+				evGen->emitEvent(errEvent);
 			}
 			else
 			{
@@ -209,7 +211,7 @@ void Networking::workPlease()
 		std::chrono::duration<double> difftime = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - timeout); //tengo la diferencia de tiempo en segundos 
 		if (difftime.count() > MAX_TIME) // si tengo mas de 2 minutos y medio emito timeOut
 		{
-			emitEvent(new SubEvents(MainTypes::TIME_OUT_MT, SubType::TIME_OUT));// emito timeout
+			evGen->emitEvent(new SubEvents(MainTypes::TIME_OUT_MT, SubType::TIME_OUT));
 			closeConection();
 		}
 
@@ -299,7 +301,12 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 		evento->setSubtype(SubType::NET_DICES_ARE);
 		if (input.length() >= 3)
 		{
-			evento->addPackage(new DicePkg(input[1]-'0',input[2]-'0'));
+			char dado = input[1] - '0', dados = input[2] - '0';
+			evento->addPackage(new DicePkg(dado, dados));
+			if ((dado + dados) == 7)
+			{
+				robber = GUIEnablerEvent::ROBBER_CARDS;
+			}
 			input.erase(0, 3);
 		}
 		else
@@ -476,7 +483,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 	}
 
 	if (complete)
-		handler->enqueueEvent(evento);
+		evGen->emitEvent(evento);
 	else
 		delete evento;
 }
@@ -614,6 +621,11 @@ void Networking::toggleStatus(void)
 	}
 }
 
+void Networking::setControllerRoutine(const TimeAction & callback_)
+{
+	callback = callback_;
+}
+
 void Networking::send(const char* msg, int largo) {
 
 	boost::system::error_code error; /* Creo receptor de errores */
@@ -630,6 +642,31 @@ void Networking::send(const char* msg, int largo) {
 		cout << error.message() << endl; // mesaje de error de boost
 		SubEvents * ev = new SubEvents;
 		ev->setEvent(MainTypes::ERR_IN_COM);
-		handler->enqueueEvent(ev);
+		evGen->emitEvent(ev);
 	}
-} 
+}
+
+GUIEnablerEvent Networking::parseMouseDownEvent(uint32_t x, uint32_t y)
+{
+	return NO_EV;
+}
+
+GUIEnablerEvent Networking::parseMouseUpEvent(uint32_t x, uint32_t y)
+{
+	return NO_EV;
+}
+
+GUIEnablerEvent Networking::parseTimerEvent()
+{
+	if (robber == GUIEnablerEvent::ROBBER_CARDS)
+	{
+		robber = GUIEnablerEvent::NO_EV;
+		return callback(); // aca hago las acciones de crear el pacquete y demas cosas que necesiten de otros botones
+	}
+	return GUIEnablerEvent::NO_EV;
+}
+
+void Networking::update()
+{
+}
+

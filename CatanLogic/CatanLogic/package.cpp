@@ -303,6 +303,11 @@ std::string DicePkg::getPackage()
 	return ret;
 }
 
+RobberCardsPkg::RobberCardsPkg(char length_):package(headers::ROBBER_CARDS)
+{
+	length = length_;
+}
+
 RobberCardsPkg::RobberCardsPkg(const char * devList) :package(headers::ROBBER_CARDS)
 {
 	std::string _cartas(devList);
@@ -336,6 +341,26 @@ std::string RobberCardsPkg::getPackage()
 	ret += length;
 	for (ResourceType a : cartas) { ret.push_back(static_cast<char>(a)); }
 	return ret;
+}
+
+bool RobberCardsPkg::isComplete()
+{
+	if (length == cartas.size())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void RobberCardsPkg::pushCard(ResourceType recurso)
+{
+	if (cartas.size() < length)
+	{
+		cartas.push_back(recurso);
+	}
 }
 
 RobberMovePkg::RobberMovePkg(char newPos):package(headers::ROBBER_MOVE)

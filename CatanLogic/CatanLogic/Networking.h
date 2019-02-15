@@ -6,6 +6,8 @@
 
 #include "package.h"
 #include "NewEventHandling.h"
+#include "BasicGUI.h"
+#include "GUIEnabler.h"
 
 #include <chrono>
 
@@ -15,12 +17,20 @@ enum Activity { NOTHING, CONNECTING, WORKING };
 
 #include "boost/asio.hpp"
 
+typedef std::function<GUIEnablerEvent(void)> TimeAction;
+
 class Networking : 
-	public EventGenerator
+	public BasicController
 {
 public:
 	Networking(EventsHandler* handler_, const char * _ip = "" , unsigned short _port=PORT , Status _estado = CLIENT); // por defecto arranca como client
 	~Networking();
+	
+	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
+	virtual GUIEnablerEvent parseTimerEvent();
+	virtual void update();
+
 
 	void setIpToConect(const char * _ip);
 	void startConection(); // intenta conectarse,cuando se conecta genera evento de connected
@@ -36,7 +46,10 @@ public:
 	void setStatus(Status newSt);
 	void toggleStatus(void);
 
+	void setControllerRoutine(const TimeAction & callback_);
 private:
+
+	TimeAction callback;
 
 	void send(const char * msg_, int largo);
 
@@ -62,5 +75,6 @@ private:
 	std::queue<package *> paraEnviar; // lista de colas de mensajes para enviar
 	
 	unsigned short port;
+	GUIEnablerEvent robber;
 };
 
