@@ -140,13 +140,14 @@ void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
-
-	pkgSender->pushPackage(new RoadPkg(*pkg));
 	
-	addRoadToLocal(position);
+	if (addRoadToLocal(position))
+	{
+		pkgSender->pushPackage(new RoadPkg(*pkg));
 
-	disable(PLA_ROAD);
-	enable(NET_ACK, { TX(firstTurnFinish) });
+		disable(PLA_ROAD);
+		enable(NET_ACK, { TX(firstTurnFinish) });
+	}
 }
 
 void LocalPlayerEnabler::firstTurnFinish(SubtypeEvent* ev)
@@ -189,13 +190,15 @@ void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(new RoadPkg(*pkg));
 
-	addRoadToLocal(position);
-	getResourceFromSettlement(localPlayer->getLastSettlement(), localPlayer);
+	if (addRoadToLocal(position))
+	{
+		pkgSender->pushPackage(new RoadPkg(*pkg));
+		getResourceFromSettlement(localPlayer->getLastSettlement(), localPlayer);
 
-	disable(PLA_ROAD);
-	enable(NET_ACK, { TX(endLocalStarts) });
+		disable(PLA_ROAD);
+		enable(NET_ACK, { TX(endLocalStarts) });
+	}
 }
 
 void LocalPlayerEnabler::endLocalStarts(SubtypeEvent* ev)
@@ -234,12 +237,14 @@ void LocalPlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(new RoadPkg(*pkg));
 
-	addRoadToLocal(position);
+	if (addRoadToLocal(position))
+	{
+		pkgSender->pushPackage(new RoadPkg(*pkg));
 
-	disable(PLA_ROAD);
-	enable(NET_ACK, { TX(waitingConfFstRoadRemStarts) });
+		disable(PLA_ROAD);
+		enable(NET_ACK, { TX(waitingConfFstRoadRemStarts) });
+	}
 }
 
 void LocalPlayerEnabler::waitingConfFstRoadRemStarts(SubtypeEvent* ev)
@@ -278,13 +283,14 @@ void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
-	pkgSender->pushPackage(new RoadPkg(*pkg));
+	if (addRoadToLocal(position))
+	{
+		pkgSender->pushPackage(new RoadPkg(*pkg));
+		getResourceFromSettlement(localPlayer->getLastSettlement(), localPlayer);
 
-	addRoadToLocal(position);
-	getResourceFromSettlement(localPlayer->getLastSettlement(), localPlayer);
-
-	disable(PLA_ROAD);
-	enable(NET_ACK, { TX(firstTurn) });
+		disable(PLA_ROAD);
+		enable(NET_ACK, { TX(firstTurn) });
+	}
 }
 
 void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
@@ -945,23 +951,22 @@ void LocalPlayerEnabler::addSettlementToLocal(string position)
 	}
 }
 
-void LocalPlayerEnabler::addRoadToLocal(string position)
+bool LocalPlayerEnabler::addRoadToLocal(string position)
 {
 	if (localPlayer->checkRoadAvailability(position))
 	{
 		localPlayer->addToMyRoads(position);
 		remotePlayer->addToRivalsRoads(position);
+		return true;
 	}
 	else
 	{
 		setErrMessage("La posición donde se quiere colocar el Road es inválida.");
-		return;
-	}
-
-	if (!board->addRoadToTokens(position, localPlayer))
-	{
-		setErrMessage("El casillero del tablero donde se quiere agregar el Road está lleno.");
-		return;
+		if (!board->addRoadToTokens(position, localPlayer))
+		{
+			setErrMessage("El casillero del tablero donde se quiere agregar el Road está lleno.");
+		}
+		return false;
 	}
 }
 

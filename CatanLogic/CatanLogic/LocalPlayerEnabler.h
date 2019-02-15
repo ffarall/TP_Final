@@ -96,7 +96,7 @@ private:
 	// Adds settlement to localPlayer and board from both Enablers
 	void addSettlementToLocal(string position);
 	// Adds road to localPlayer and board from both Enablers
-	void addRoadToLocal(string position);
+	bool addRoadToLocal(string position);
 	// Enables events for beginning of turn.
 	void setUpForTurn();
 };
