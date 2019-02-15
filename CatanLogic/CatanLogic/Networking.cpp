@@ -11,6 +11,7 @@
 #include "Networking.h"
 
 #define MAX_SIZE 100
+#define MAX_TIME 1000.0
 
 using namespace std;
 
@@ -206,7 +207,7 @@ void Networking::workPlease()
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
 		std::chrono::duration<double> difftime = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - timeout); //tengo la diferencia de tiempo en segundos 
-		if (difftime.count() > 150.0) // si tengo mas de 2 minutos y medio emito timeOut
+		if (difftime.count() > MAX_TIME) // si tengo mas de 2 minutos y medio emito timeOut
 		{
 			emitEvent(new SubEvents(MainTypes::TIME_OUT_MT, SubType::TIME_OUT));// emito timeout
 			closeConection();
