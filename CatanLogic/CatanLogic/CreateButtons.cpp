@@ -18,7 +18,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab)
 {
-
+	srand(time(NULL));
 	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "", "start.png", "", 14)); //startPlayingButton()
 	GUI->attachController("StartPlaying", buttonList[0]);
 	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "", "quit.png", "", 14));//quitButton()
@@ -264,7 +264,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_DICES_ARE)))
 			{
-				srand(time(NULL));
+				//srand(time(NULL));
 				char dado1, dado2;
 				dado1 = rand() % 6 + 1;
 				dado2 = rand() % 6 + 1;
