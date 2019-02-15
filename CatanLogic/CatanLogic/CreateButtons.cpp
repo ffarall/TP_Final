@@ -729,7 +729,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		}
 		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_CITY)) || !buttonList[3]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
 		{
-			buttonList[3]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+			buttonList[3]->setTypeTint(TINT_CORR(0.5, 0, 0, 0.5));
 		}
 		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
 		{
@@ -942,6 +942,16 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[10]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[10]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[10]->getBitmap(), 0, 0, 0);
+		if (localPlayer->isThereDevCard(KNIGHT))
+		{
+			al_draw_text(buttonList[10]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(KNIGHT)).c_str());
+		}
+		al_set_target_backbuffer(tempDisplay);
+
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(KNIGHT))
 		{
 			if (!buttonList[10]->isPressed())
@@ -973,6 +983,16 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[11]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[11]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[11]->getBitmap(), 0, 0, 0);
+		if (localPlayer->isThereDevCard(ROAD_BUILDING))
+		{
+			al_draw_text(buttonList[11]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(ROAD_BUILDING)).c_str());
+		}
+		al_set_target_backbuffer(tempDisplay);
+
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(ROAD_BUILDING))
 		{
 			if (!buttonList[11]->isPressed())
@@ -996,8 +1016,6 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			buttonList[11]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 		}
-
-
 	}
 
 	);
@@ -1005,6 +1023,16 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[12]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[12]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[12]->getBitmap(), 0, 0, 0);
+		if (localPlayer->isThereDevCard(KNIGHT))
+		{
+			al_draw_text(buttonList[12]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(MONOPOLY)).c_str());
+		}
+		al_set_target_backbuffer(tempDisplay);
+
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(MONOPOLY))
 		{
 			if (!buttonList[12]->isPressed())
@@ -1038,6 +1066,16 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[13]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+		ALLEGRO_BITMAP * temp = buttonList[13]->getType()->getBitmap();
+		al_set_target_bitmap(temp);
+		al_draw_bitmap(buttonList[13]->getBitmap(), 0, 0, 0);
+		if (localPlayer->isThereDevCard(KNIGHT))
+		{
+			al_draw_text(buttonList[13]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(YEARS_OF_PLENTY)).c_str());
+		}
+		al_set_target_backbuffer(tempDisplay);
+
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(YEARS_OF_PLENTY))
 		{
 			if (!buttonList[13]->isPressed())
@@ -1364,7 +1402,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		ALLEGRO_BITMAP * temp = buttonList[23]->getType()->getBitmap();
 		al_set_target_bitmap(temp);
 		al_draw_bitmap(buttonList[23]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[23]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(MONTAÑAS)).c_str());
+		al_draw_text(buttonList[23]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(MONTAÑAS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(MONTAÑAS))
 		{
@@ -1469,26 +1507,36 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[26]->addUpdate(
-		[mainFSM, locEnab, buttonList]()
+		[mainFSM, locEnab, buttonList, remEnab]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S )
 		{
-			if (!buttonList[26]->isPressed())
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
 			{
-				buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 1));
+				if (!buttonList[26]->isPressed())
+				{
+					buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 1)); // si lo estoy apretadno
+				}
+				else
+				{
+					buttonList[26]->setTypeTint(TINT_CORR(0.5, 1, 0.5, 1)); // si esta acrtivado
+				}
 			}
 			else
 			{
-				buttonList[26]->setTypeTint(TINT_CORR(0.5, 1, 0.5, 1));
+				buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 0.5)); // si esta desactivdo
 			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
-		{
-			buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 0.5));
 		}
 		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
 		{
-			buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 0.5));
+			if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
+			{
+				buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 1)); // si estoy esperando algun okey
+			}
+			else
+			{
+				buttonList[26]->setTypeTint(TINT_CORR(0, 1, 0, 0.5)); // si esta desactivdo
+			}
 		}
 		else
 		{
@@ -1501,26 +1549,36 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[27]->addUpdate(
-		[mainFSM, locEnab, buttonList]()
+		[mainFSM, locEnab, buttonList, remEnab]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
+		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 		{
-			if (!buttonList[27]->isPressed())
+			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
 			{
-				buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 1));
+				if (!buttonList[27]->isPressed())
+				{
+					buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 1)); // si lo estoy apretadno
+				}
+				else
+				{
+					buttonList[27]->setTypeTint(TINT_CORR(1,0.5, 0.5, 1)); // si esta acrtivado
+				}
 			}
 			else
 			{
-				buttonList[27]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 0.5)); // si esta desactivdo
 			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
-		{
-			buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 0.5));
 		}
 		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
 		{
-			buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 0.5));
+			if (remEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
+			{
+				buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 1)); // si estoy esperando algun okey
+			}
+			else
+			{
+				buttonList[27]->setTypeTint(TINT_CORR(1, 0, 0, 0.5)); // si esta desactivdo
+			}
 		}
 		else
 		{
@@ -1590,6 +1648,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[30]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
 	{
+
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(VICTORY_POINTS))
 		{
 			if (!buttonList[30]->isPressed())
@@ -1659,7 +1718,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 					return GUIEnablerEvent::RESOURCE;
 				}
 			}
-			else if (!paquete->isComplete())
+			else if (!paquete->offerclosed())
 			{
 				paquete->addToMyRequest(recurso);
 				return GUIEnablerEvent::RESOURCE;
