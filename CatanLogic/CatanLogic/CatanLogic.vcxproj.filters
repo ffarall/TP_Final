@@ -38,6 +38,7 @@
     <ClCompile Include="LocalObserver.cpp" />
     <ClCompile Include="TimerController.cpp" />
     <ClCompile Include="CreateButtons.cpp" />
+    <ClCompile Include="TerTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="PosDef.h" />
     <ClInclude Include="LocalObserver.h" />
     <ClInclude Include="TimerController.h" />
+    <ClInclude Include="TerTree.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

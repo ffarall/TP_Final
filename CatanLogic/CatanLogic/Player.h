@@ -10,6 +10,7 @@
 #include "Hex.h"
 #include "Sea.h"
 #include "EDASubject.h"
+#include "TerTree.h"
 
 class Player;
 
@@ -171,7 +172,7 @@ private:
 	size_t longestRoad;
 
 	// List used when calculating the longestRoad. Stores all the edges that have roads and have already been visited.
-	list< string > roadsVisited;
+	TerTree spanningTree;
 
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
@@ -186,7 +187,7 @@ private:
 	// Returns a list with the adjacent edges to a vertex of the board. Can be 2 or 3.
 	vector< string > getAdjacentEdges(string vertex);
 	// Recursive function used to visit all the adjacent edges which have a Road (used for calculating longestRoad).
-	void followRoad(string vertex);
+	void followRoad(string vertex, string previousEdge);
 
 	// Position of last settlement added.
 	string lastSettlement;

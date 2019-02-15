@@ -95,7 +95,7 @@ void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote, Board
 	end();																				// Clears possible previous Players and Board from previous games.
 
 	remoteEnabler->setBoard(board = board_);											// Same board for both.
-
+	remotePlayer->setName(nameRemote);
 	string mensaje = "Listo para empezar, el jugador ";
 	mensaje += remotePlayer->getName();
 	mensaje += " debe colocar su primer SETTLEMENT.";
