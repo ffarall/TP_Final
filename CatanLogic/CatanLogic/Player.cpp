@@ -53,7 +53,7 @@ void Player::reset()
 	availableForRoad.clear();
 	allVertexesAvailable();
 	devCards.clear();
-	roadsVisited.clear();
+	spanningTree.clear();
 }
 
 void Player::init()
@@ -477,16 +477,16 @@ size_t Player::getLongestRoad()
 
 void Player::updateLongestRoad(string startingEdge)
 {
-	roadsVisited.clear();															// Clears any residue from previous calculations.
+	spanningTree.clear();															// Clears any residue from previous calculations.
 	vector< string > startingVertexes = getAdjacentVertexes(startingEdge);
-	roadsVisited.push_back(startingEdge);
+	spanningTree.insert(startingEdge);
 
 	for (auto vertex : startingVertexes)
 	{
-		followRoad(vertex);															// Follows Road to both sides, filling roadsVisited.
+		followRoad(vertex, startingEdge);															// Follows Road to both sides, filling roadsVisited.
 	}
 
-	size_t roadLength = roadsVisited.size();										// Length of road calculated.
+	size_t roadLength = spanningTree.getDepth(startingEdge);										// Length of road calculated.
 	if (roadLength > longestRoad)
 	{
 		longestRoad = roadLength;													// Updates if there's a new longestRoad.
@@ -915,20 +915,20 @@ vector<string> Player::getAdjacentEdges(string vertex)
 	return adyacentes;
 }
 
-void Player::followRoad(string vertex)
+void Player::followRoad(string vertex, string previousEdge)
 {
 	vector< string > adjacentEdges = getAdjacentEdges(vertex);
 
 	for (auto edge : adjacentEdges)
 	{
-		if (myRoads.find(edge) != myRoads.end() && find(roadsVisited.begin(), roadsVisited.end(), edge) == roadsVisited.end())		// If the edge has a Road and it's not yet visited...
+		if (myRoads.find(edge) != myRoads.end() && spanningTree.find(edge))		// If the edge has a Road and it's not yet visited...
 		{
-			roadsVisited.push_back(edge);																							// Visiting this Road.
+			spanningTree.insert(edge, previousEdge);																							// Visiting this Road.
 			for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
 			{
 				if (newVertex != vertex)																							// Ignores the vertex that was the parameter of this function.
 				{
-					followRoad(newVertex);
+					followRoad(newVertex, edge);
 				}
 			}
 		}
