@@ -332,7 +332,6 @@ void RemotePlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
-		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
 		enable(NET_ROAD, { TX(firstRoadRemoteStarts) });
 	}
@@ -411,7 +410,6 @@ void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
-		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
 		enable(NET_ROAD, { TX(secondRoadLocalStarts) });
 	}
@@ -460,7 +458,6 @@ void RemotePlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent* ev)
 	if (remotePlayer->checkSettlementAvailability(position))
 	{
 		addSettlementToRemote(position);
-		board->addSettlementToTokens(position, remotePlayer);
 		disable(NET_SETTLEMENT);
 		enable(NET_ROAD, { TX(secondRoadRemoteStarts) });
 	}
@@ -712,7 +709,6 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 
 		remotePlayer->addToMySettlements(position);
 		localPlayer->addToRivalsSettlements(position);
-		board->addSettlementToTokens(position, remotePlayer);
 		pkgSender->pushPackage(new package(headers::ACK));
 		if (remotePlayer->hasWon(playingWithDev))
 			enable(NET_I_WON, {TX(finDelJuego)});
