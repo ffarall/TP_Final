@@ -94,42 +94,17 @@ void QuadTree::recursiveDepthCalculator(QuadTreeNode* startingNode)
 	size_t depthUntilNow = depth;
 	size_t deepestBranch = depth;
 	
-	if (!(startingNode->children)[0].empty())
+	for (auto child : startingNode->children)
 	{
-		depth = depthUntilNow;
-		depth++;
-		recursiveDepthCalculator(find((startingNode->children)[0]));
-		if (depth > deepestBranch)
+		if (!child.empty())
 		{
-			deepestBranch = depth;
-		}
-	}
-	if (!(startingNode->children)[1].empty())
-	{
-		depth = depthUntilNow;
-		depth++;
-		recursiveDepthCalculator(find((startingNode->children)[1]));
-		if (depth > deepestBranch)
-		{
-			deepestBranch = depth;
-		}
-	}
-	if (!(startingNode->children)[2].empty())
-	{
-		depth++;
-		recursiveDepthCalculator(find((startingNode->children)[2]));
-		if (depth > deepestBranch)
-		{
-			deepestBranch = depth;
-		}
-	}
-	if (!(startingNode->children)[3].empty())
-	{
-		depth++;
-		recursiveDepthCalculator(find((startingNode->children)[3]));
-		if (depth > deepestBranch)
-		{
-			deepestBranch = depth;
+			depth = depthUntilNow;
+			depth++;
+			recursiveDepthCalculator(find(child));
+			if (depth > deepestBranch)
+			{
+				deepestBranch = depth;
+			}
 		}
 	}
 	
