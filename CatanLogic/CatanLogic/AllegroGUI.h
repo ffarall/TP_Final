@@ -71,5 +71,5 @@ private:
 	// Start sellecting cards to eliminate when robber is activated
 	void selectRobberCards();
 	// confirm resources to discard
-	void nowConfirmRobberResources()
+	void nowConfirmRobberResources();
 };

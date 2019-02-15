@@ -318,7 +318,7 @@ RobberCardsPkg::RobberCardsPkg(const char * devList) :package(headers::ROBBER_CA
 	}
 }
 
-RobberCardsPkg::RobberCardsPkg(std::vector<ResourceType>& descarte):package(headers::ROBBER_CARDS)
+RobberCardsPkg::RobberCardsPkg(std::vector<ResourceType> descarte):package(headers::ROBBER_CARDS)
 {
 	length = descarte.size();
 	cartas = descarte;
@@ -360,6 +360,7 @@ void RobberCardsPkg::pushCard(ResourceType recurso)
 	if (cartas.size() < length)
 	{
 		cartas.push_back(recurso);
+		length++;
 	}
 }
 

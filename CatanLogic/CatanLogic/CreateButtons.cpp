@@ -14,7 +14,7 @@
 
 
 #define TINT_CORR(r, g, b, a) (r*255), (g*255), (b*255), (a*255)
-GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
+GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, Button * robber, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
 
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab, Networking * network)
 {
@@ -473,37 +473,37 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[21]->addUtility(
-		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, robber, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::COLINAS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly,robber, mainFSM, localPlayer, ResourceType::COLINAS);
 		}
 	);
 
 	buttonList[22]->addUtility(
-		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, robber, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::BOSQUE);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, robber, mainFSM, localPlayer, ResourceType::BOSQUE);
 		}
 	);
 
 	buttonList[23]->addUtility(
-		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, robber, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::MONTAÑAS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, robber, mainFSM, localPlayer, ResourceType::MONTAÑAS);
 		}
 	);
 
 	buttonList[24]->addUtility(
-		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, robber, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::CAMPOS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, robber, mainFSM, localPlayer, ResourceType::CAMPOS);
 		}
 	);
 
 	buttonList[25]->addUtility(
-		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, monopoly]()
+		[localPlayer, mainFSM, bankbutton, offerbutton, Yop, robber, monopoly]()
 		{
-			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, mainFSM, localPlayer, ResourceType::PASTOS);
+			return ResourceButton(bankbutton, offerbutton, Yop, monopoly, robber, mainFSM, localPlayer, ResourceType::PASTOS);
 		}
 	);
 
@@ -1717,9 +1717,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	});
 }
 
-GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso)
+GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, Button * robber, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso)
 {
-	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
+	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S )
 	{
 		if (localPlayer->getResourceAmount(recurso) && bankbutton->getPackage())
 		{
@@ -1790,6 +1790,21 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 		{
 			MonopolyPkg * paquete = static_cast<MonopolyPkg *>(bankbutton->getPackage());
 			paquete->setResource(recurso);
+			return GUIEnablerEvent::RESOURCE;
+		}
+		else if (robber->getPackage())
+		{
+			RobberCardsPkg * cartas = static_cast<RobberCardsPkg *>(robber->getPackage());
+			cartas->pushCard(recurso);
+			return GUIEnablerEvent::RESOURCE;
+		}
+	}
+	else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S)
+	{
+		if (robber->getPackage())
+		{
+			RobberCardsPkg * cartas = static_cast<RobberCardsPkg *>(robber->getPackage());
+			cartas->pushCard(recurso);
 			return GUIEnablerEvent::RESOURCE;
 		}
 	}
