@@ -38,7 +38,7 @@
     <ClCompile Include="LocalObserver.cpp" />
     <ClCompile Include="TimerController.cpp" />
     <ClCompile Include="CreateButtons.cpp" />
-    <ClCompile Include="TerTree.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -81,7 +81,7 @@
     <ClInclude Include="PosDef.h" />
     <ClInclude Include="LocalObserver.h" />
     <ClInclude Include="TimerController.h" />
-    <ClInclude Include="TerTree.h" />
+    <ClInclude Include="QuadTree.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

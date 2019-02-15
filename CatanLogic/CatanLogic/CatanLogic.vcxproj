@@ -156,7 +156,7 @@
     <ClCompile Include="RemoteObs.cpp" />
     <ClCompile Include="RemotePlayerEnabler.cpp" />
     <ClCompile Include="Sea.cpp" />
-    <ClCompile Include="TerTree.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="TimerController.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="LocalPlayerEnabler.cpp" />
@@ -197,7 +197,7 @@
     <ClInclude Include="RemoteObs.h" />
     <ClInclude Include="RemotePlayerEnabler.h" />
     <ClInclude Include="Sea.h" />
-    <ClInclude Include="TerTree.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="TimerController.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="LocalPlayerEnabler.h" />

@@ -921,7 +921,7 @@ void Player::followRoad(string vertex, string previousEdge)
 
 	for (auto edge : adjacentEdges)
 	{
-		if (myRoads.find(edge) != myRoads.end() && spanningTree.find(edge))		// If the edge has a Road and it's not yet visited...
+		if (myRoads.find(edge) != myRoads.end() && !spanningTree.isInTree(edge))		// If the edge has a Road and it's not yet visited...
 		{
 			spanningTree.insert(edge, previousEdge);																							// Visiting this Road.
 			for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
