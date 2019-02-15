@@ -10,7 +10,7 @@
 #include "Hex.h"
 #include "Sea.h"
 #include "EDASubject.h"
-#include "TerTree.h"
+#include "QuadTree.h"
 
 class Player;
 
@@ -172,7 +172,7 @@ private:
 	size_t longestRoad;
 
 	// List used when calculating the longestRoad. Stores all the edges that have roads and have already been visited.
-	TerTree spanningTree;
+	QuadTree spanningTree;
 
 	// Sets all corners of board available for building Settlements.
 	void allVertexesAvailable();
