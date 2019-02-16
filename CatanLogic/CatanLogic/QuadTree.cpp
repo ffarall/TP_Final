@@ -77,7 +77,7 @@ size_t QuadTree::getDepth(string startingNode)
 			else if (branchDepth > secondDeepestBranch.depth)
 			{
 				secondDeepestBranch.depth = branchDepth;
-				deepestBranch.startingNode = child;
+				secondDeepestBranch.startingNode = child;
 			}
 		}
 
