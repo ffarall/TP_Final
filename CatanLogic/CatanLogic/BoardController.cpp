@@ -155,9 +155,11 @@ GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 				}
 			}
 		}
+
+		return POSITION_SELECTED;
 	}
 
-	return POSITION_SELECTED;
+	return NO_EV;
 }
 
 GUIEnablerEvent BoardController::parseTimerEvent()
