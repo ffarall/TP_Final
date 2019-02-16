@@ -483,7 +483,7 @@ void Player::updateLongestRoad(string startingEdge)
 
 	for (auto vertex : startingVertexes)
 	{
-		followRoad(vertex, startingEdge);															// Follows Road to both sides, filling roadsVisited.
+		followRoad(startingEdge);															// Follows Road to both sides, filling roadsVisited.
 	}
 
 	size_t roadLength = spanningTree.getDepth(startingEdge);										// Length of road calculated.
@@ -915,22 +915,24 @@ vector<string> Player::getAdjacentEdges(string vertex)
 	return adyacentes;
 }
 
-void Player::followRoad(string vertex, string previousEdge)
+void Player::followRoad(string edge)
 {
-	vector< string > adjacentEdges = getAdjacentEdges(vertex);
+	vector< string > adjacentVertexes = getAdjacentVertexes(edge);
 
-	for (auto edge : adjacentEdges)
+	for (auto vertex : adjacentVertexes)
 	{
-		if (myRoads.find(edge) != myRoads.end() && !spanningTree.isInTree(edge))		// If the edge has a Road and it's not yet visited...
+		for (auto newEdge : getAdjacentEdges(vertex))
 		{
-			spanningTree.insert(edge, previousEdge);																							// Visiting this Road.
-			for (auto newVertex : getAdjacentVertexes(edge))																		// This new Road has two vertexes.
+			if (myRoads.find(newEdge) != myRoads.end() && !spanningTree.isInTree(newEdge))
 			{
-				if (newVertex != vertex)																							// Ignores the vertex that was the parameter of this function.
-				{
-					followRoad(newVertex, edge);
-				}
+				spanningTree.insert(newEdge, edge);
 			}
 		}
+	}
+
+	vector< string > copyToIterate = (spanningTree.find(edge))->children;
+	for (auto childEdge : copyToIterate)
+	{
+		followRoad(childEdge);
 	}
 }
