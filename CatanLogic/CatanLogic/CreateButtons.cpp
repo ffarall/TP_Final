@@ -1781,7 +1781,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 			}
 			else if (!paquete->isComplete())
 			{
-				paquete->setBougth(ResourceType::COLINAS);
+				paquete->setBougth(recurso);
 				return GUIEnablerEvent::RESOURCE;
 			}
 		}
