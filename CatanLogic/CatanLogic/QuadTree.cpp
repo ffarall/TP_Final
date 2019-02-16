@@ -87,7 +87,7 @@ size_t QuadTree::getDepth(string startingNode)
 		}
 		else
 		{
-			return deepestBranch.depth + secondDeepestBranch.depth;
+			return deepestBranch.depth + secondDeepestBranch.depth + 1;
 		}
 	}
 	else
