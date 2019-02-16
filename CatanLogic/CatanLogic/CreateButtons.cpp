@@ -1760,7 +1760,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 					return GUIEnablerEvent::RESOURCE;
 				}
 			}
-			else if (!paquete->offerclosed())
+			else if (paquete->offerclosed())
 			{
 				paquete->addToMyRequest(recurso);
 				return GUIEnablerEvent::RESOURCE;
