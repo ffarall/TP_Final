@@ -187,7 +187,7 @@ private:
 	// Returns a list with the adjacent edges to a vertex of the board. Can be 2 or 3.
 	vector< string > getAdjacentEdges(string vertex);
 	// Recursive function used to visit all the adjacent edges which have a Road (used for calculating longestRoad).
-	void followRoad(string vertex, string previousEdge);
+	void followRoad(string edge);
 
 	// Position of last settlement added.
 	string lastSettlement;
