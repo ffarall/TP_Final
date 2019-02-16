@@ -350,8 +350,8 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				bool posible = false;
 				list<ResourceType> tipos = { COLINAS,MONTAÑAS,CAMPOS,PASTOS,BOSQUE };
 				for (auto recurso : tipos)
-				{
-					if ((localPlayer->getResourceAmount(recurso) > 3))
+				{ 
+					if ((localPlayer->getResourceAmount(recurso) > 3)) // reviso la disponibilidad de cartas para realizar el intercambio
 					{
 						posible = true;
 					}
@@ -376,7 +376,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				list<ResourceType> tipos = { COLINAS,MONTAÑAS,CAMPOS,PASTOS,BOSQUE };
 				for (auto recurso : tipos)
 				{
-					if ((localPlayer->getResourceAmount(recurso) >= 3))
+					if ((localPlayer->getResourceAmount(recurso) >= 3)) // me fijo si tiene 3 cartas iguales para hacer el intercambio
 					{
 						posible = true;
 					}
