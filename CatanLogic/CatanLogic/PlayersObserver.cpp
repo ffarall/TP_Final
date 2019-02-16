@@ -63,8 +63,8 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
 	dibujo[CARTEL] = al_create_bitmap(475, 35);
-	dibujo["pla1"] = al_create_bitmap(512, 550);
-	dibujo["pla2"] = al_create_bitmap(512, 550);
+	dibujo["pla1"] = al_create_bitmap(150, 175);
+	dibujo["pla2"] = al_create_bitmap(150, 175);
 
 	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
 	if (!working)
@@ -106,10 +106,10 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 		);
 
 		sellos[ICONO] = impresora->createType(dibujo["pla1"], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.05, D_ALTO * 0.05-38
+			D_ANCHO * 0.05, D_ALTO * 0.05-25
 		);
 		sellos[ICONOR] = impresora->createType(dibujo["pla2"], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo["pla2"]), D_ALTO*0.05-38
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo["pla2"]), D_ALTO*0.05-25
 		);
 
 		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(0, 0, 0, 0),
@@ -207,7 +207,7 @@ void PlayersObserver::update()
 		{
 			al_set_target_bitmap(sellos[ICONO]->getBitmap());
 			al_clear_to_color(al_map_rgb(255, 255, 255));
-			al_draw_bitmap(dibujo[ICONO], 0, 38, 0);
+			al_draw_bitmap(dibujo[ICONO], 0, 25, 0);
 			string name = localPlayer->getName();
 			if (name.size() > 10)
 			{
@@ -219,7 +219,7 @@ void PlayersObserver::update()
 			name.clear();
 			al_set_target_bitmap(sellos[ICONOR]->getBitmap());
 			al_clear_to_color(al_map_rgb(255, 255, 255));
-			al_draw_bitmap(dibujo[ICONOR], 0, 38, 0);
+			al_draw_bitmap(dibujo[ICONOR], 0, 25, 0);
 			name = remotePlayer->getName();
 			if (name.size() > 10)
 			{
