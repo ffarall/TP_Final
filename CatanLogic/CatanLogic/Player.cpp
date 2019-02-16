@@ -930,7 +930,8 @@ void Player::followRoad(string edge)
 		}
 	}
 
-	for (auto childEdge : (spanningTree.find(edge))->children)
+	vector< string > copyToIterate = (spanningTree.find(edge))->children;
+	for (auto childEdge : copyToIterate)
 	{
 		followRoad(childEdge);
 	}
