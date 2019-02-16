@@ -92,7 +92,7 @@ size_t QuadTree::getDepth(string startingNode)
 	}
 	else
 	{
-		return auxGetDepth(startingNode);
+		return auxGetDepth(startingNode) + 1;
 	}
 }
 
