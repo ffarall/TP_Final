@@ -71,6 +71,11 @@ size_t QuadTree::getDepth(string startingNode)
 			size_t branchDepth = auxGetDepth(child);
 			if (branchDepth > deepestBranch.depth)
 			{
+				if (deepestBranch.depth > secondDeepestBranch.depth)
+				{
+					secondDeepestBranch.depth = deepestBranch.depth;
+					secondDeepestBranch.startingNode = deepestBranch.startingNode;
+				}
 				deepestBranch.depth = branchDepth;
 				deepestBranch.startingNode = child;
 			}
