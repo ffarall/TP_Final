@@ -48,6 +48,7 @@ private:
 	map< string, MovableType * > sellos; // aca voy guardando los 
 	
 	ALLEGRO_FONT * fuente;
+	ALLEGRO_FONT * playerName;
 	map<string,ALLEGRO_BITMAP *> dibujo;
 	
 };

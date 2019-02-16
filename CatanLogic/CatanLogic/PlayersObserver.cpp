@@ -27,7 +27,8 @@
 #define KNIGHT "Knight.png"
 #define ROBBER "robber.png"
 #define CARTEL "calrtel"
-#define FONT_SIZE 10 // ver 
+#define FONT_SIZE 10 // ver
+#define NAME_SIZE 17
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
 #define ROBBER_POS 20
@@ -77,11 +78,18 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 	}
 
 	fuente = al_load_font(FONT, FONT_SIZE, 0);
-
-	if (fuente == NULL)
+	playerName = al_load_font(FONT, NAME_SIZE, 0);
+	if (fuente == NULL || playerName == NULL)
 	{
 		working = false;
-		al_destroy_font(fuente);
+		if (fuente != NULL)
+		{
+			al_destroy_font(fuente);
+		}
+		else
+		{
+			al_destroy_font(playerName);
+		}
 	}
 	if (working)
 	{
@@ -193,6 +201,7 @@ void PlayersObserver::update()
 		sellos[COSTOS]->setTint(al_map_rgba(255, 255, 255, 255));
 
 		al_set_target_bitmap(sellos[ICONO]->getBitmap());
+		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_draw_bitmap(dibujo[ICONO], 0, 0, 0);
 		string name = localPlayer->getName();
 		if (name.size() > 10)
@@ -200,10 +209,11 @@ void PlayersObserver::update()
 			name = name.substr(0, 10);
 			name += "...";
 		}
-		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[ICONO]) / 2, al_get_bitmap_height(dibujo[ICONO])*0.1, ALLEGRO_ALIGN_CENTRE, name.c_str());
+		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[ICONO]) / 2, al_get_bitmap_height(dibujo[ICONO])*0.1, ALLEGRO_ALIGN_CENTRE, name.c_str());
 
 		name.clear();
 		al_set_target_bitmap(sellos[ICONOR]->getBitmap());
+		al_clear_to_color(al_map_rgb(255, 255, 255));
 		al_draw_bitmap(dibujo[ICONOR], 0, 0, 0);
 		name = remotePlayer->getName();
 		if (name.size() > 10)
@@ -211,7 +221,7 @@ void PlayersObserver::update()
 			name = name.substr(0, 10);
 			name += "...";
 		}
-		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[ICONOR]) / 2, al_get_bitmap_height(dibujo[ICONOR])*0.1, ALLEGRO_ALIGN_CENTRE, name.c_str());
+		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[ICONOR]) / 2, al_get_bitmap_height(dibujo[ICONOR])*0.1, ALLEGRO_ALIGN_CENTRE, name.c_str());
 
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 		{

@@ -75,7 +75,7 @@ void BoardController::update()
 		pos.first += ROBBER_POS + BOARD_POS_X;
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER_FILE]->setCX(pos.first);
-		sellos[ROBBER_FILE]->setCY(pos.first);
+		sellos[ROBBER_FILE]->setCY(pos.second);
 		
 		sellos[ROBBER_FILE]->redraw();
 
