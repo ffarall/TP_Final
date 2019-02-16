@@ -35,10 +35,10 @@
     <ClCompile Include="RemoteObs.cpp" />
     <ClCompile Include="AllegroGUI.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="LocalObserver.cpp" />
     <ClCompile Include="TimerController.cpp" />
     <ClCompile Include="CreateButtons.cpp" />
     <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="PlayersObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -79,9 +79,9 @@
     <ClInclude Include="RemoteObs.h" />
     <ClInclude Include="AllegroGUI.h" />
     <ClInclude Include="PosDef.h" />
-    <ClInclude Include="LocalObserver.h" />
     <ClInclude Include="TimerController.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="PlayersObserver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

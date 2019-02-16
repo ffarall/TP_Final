@@ -12,7 +12,7 @@
 #include"NewEventHandling.h"
 #include"AllegroGUI.h"
 #include "PosDef.h"
-#include "LocalObserver.h"
+#include "PlayersObserver.h"
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 #include "SubEvents.h"
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	GUI.attachController("TimerController", &timerCont);
 	GUI.initGUIEnabler();
 
-	LocalObserver localObs(&printer, &localPlayer, &localPlayerEnabler, &remotePlayerEnabler, &mainFSM);
+	PlayersObserver localObs(&printer, &localPlayer,&remotePlayer, &localPlayerEnabler, &remotePlayerEnabler, &mainFSM);
 
 	localPlayer.attach(&localObs);
 	localPlayer.attach(&boardCont);													// localObs and boardCont are observers of localPlayer.

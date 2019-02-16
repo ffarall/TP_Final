@@ -21,12 +21,12 @@
 
 using namespace std;
 
-class LocalObserver :
+class PlayersObserver :
 	public Observer
 {
 public:
-	LocalObserver(GutenbergsPressAllegro * printer, Player * local, LocalPlayerEnabler * localEn, RemotePlayerEnabler * remoteEnab, MainFSM* mainFSM_);
-	virtual ~LocalObserver();
+	PlayersObserver(GutenbergsPressAllegro * printer, Player * local, Player * remote, LocalPlayerEnabler * localEn, RemotePlayerEnabler * remoteEnab, MainFSM* mainFSM_);
+	virtual ~PlayersObserver();
 	virtual void update();
 	bool isOK();
 
@@ -36,6 +36,7 @@ private:
 	bool drawBuildings(bool locOrRemote);
 
 	Player * localPlayer;
+	Player * remotePlayer;
 	LocalPlayerEnabler * localEnabler;
 	RemotePlayerEnabler * remoteEnabler;
 	GutenbergsPressAllegro * impresora;

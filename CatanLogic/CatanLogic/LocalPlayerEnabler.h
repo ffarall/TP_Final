@@ -25,9 +25,7 @@ public:
 
 	// Returns "local" or "remote", depending on who won, or "no one" if game ended because of an error.
 	string whoWon();
-	char getRobberPos();
-	string getRemoteName();
-
+	
 private:
 	void init();
 	void end();
