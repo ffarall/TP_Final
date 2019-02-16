@@ -106,11 +106,12 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 		);
 
 		sellos[ICONO] = impresora->createType(dibujo["pla1"], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.05, D_ALTO * 0.05
+			D_ANCHO * 0.05, D_ALTO * 0.05-38
 		);
 		sellos[ICONOR] = impresora->createType(dibujo["pla2"], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[ICONOR]), D_ALTO*0.05
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo["pla2"]), D_ALTO*0.05-38
 		);
+
 		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(0, 0, 0, 0),
 			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo[COSTOS]), D_ALTO*0.45
 		);
@@ -202,29 +203,33 @@ void PlayersObserver::update()
 
 		sellos[COSTOS]->setTint(al_map_rgba(255, 255, 255, 255));
 
-		al_set_target_bitmap(sellos[ICONO]->getBitmap());
-		al_map_rgb(255, 255, 255);
-		al_draw_bitmap(dibujo[ICONO], 0, 38, 0);
-		string name = localPlayer->getName();
-		if (name.size() > 10)
+		if (localPlayer->getRemainingRoads() == 15) // si estoy en el principio del juego, esto lo actualizo una sola vez
 		{
-			name = name.substr(0, 10);
-			name += "...";
-		}
-		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.1, ALLEGRO_ALIGN_LEFT, name.c_str());
+			al_set_target_bitmap(sellos[ICONO]->getBitmap());
+			al_clear_to_color(al_map_rgb(255, 255, 255));
+			al_draw_bitmap(dibujo[ICONO], 0, 38, 0);
+			string name = localPlayer->getName();
+			if (name.size() > 10)
+			{
+				name = name.substr(0, 10);
+				name += "...";
+			}
+			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.1, ALLEGRO_ALIGN_LEFT, name.c_str());
 
-		name.clear();
-		al_set_target_bitmap(sellos[ICONOR]->getBitmap());
-		al_map_rgb(255, 255, 255);
-		al_draw_bitmap(dibujo[ICONOR], 0, 38, 0);
-		name = remotePlayer->getName();
-		if (name.size() > 10)
-		{
-			name = name.substr(0, 10);
-			name += "...";
-		}
-		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla2"])*0.9, al_get_bitmap_height(dibujo["pla2"])*0.1, ALLEGRO_ALIGN_RIGHT, name.c_str());
+			name.clear();
+			al_set_target_bitmap(sellos[ICONOR]->getBitmap());
+			al_clear_to_color(al_map_rgb(255, 255, 255));
+			al_draw_bitmap(dibujo[ICONOR], 0, 38, 0);
+			name = remotePlayer->getName();
+			if (name.size() > 10)
+			{
+				name = name.substr(0, 10);
+				name += "...";
+			}
+			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla2"])*0.9, al_get_bitmap_height(dibujo["pla2"])*0.1, ALLEGRO_ALIGN_RIGHT, name.c_str());
 
+		}
+		
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 		{
 			sellos[ICONO]->setTint(al_map_rgba(255, 255, 255, 255));
