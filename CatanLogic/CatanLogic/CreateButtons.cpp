@@ -575,7 +575,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					RobberCardsPkg * cartas = static_cast<RobberCardsPkg *>(robber->getPackage());
 					if (cartas->isComplete())
 					{
-						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_MONOPOLY, new RobberCardsPkg(cartas->getCards())));
+						handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROBBER_CARDS, new RobberCardsPkg(cartas->getCards())));
 						delete cartas;
 						robber->setPackage(nullptr);
 						return GUIEnablerEvent::ACCEPT;

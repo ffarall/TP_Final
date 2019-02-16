@@ -360,7 +360,6 @@ void RobberCardsPkg::pushCard(ResourceType recurso)
 	if (cartas.size() < length)
 	{
 		cartas.push_back(recurso);
-		length++;
 	}
 }
 
