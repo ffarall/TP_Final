@@ -92,8 +92,8 @@ void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote, Board
 	mensaje += remotePlayer->getName();
 	mensaje += " debe colocar su primer SETTLEMENT.";
 
-	setWaitingMessage(mensaje);
-
+	//setWaitingMessage(mensaje);
+	setWaitingMessage(""); // para que se muestren los mensajes del remote
 	disableAll();
 	enable(PLA_SETTLEMENT, { TX(firstSettlementRemoteStarts) });
 	setDefaultRoutine(TX(genericDefault));
