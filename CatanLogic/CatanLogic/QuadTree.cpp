@@ -9,9 +9,10 @@ bool QuadTree::insert(string child, string father)
 {
 	if (!father.empty())
 	{
-		if (find(father)->childrenCount() < 4)
+		QuadTreeNode* parent = find(father);
+		if (parent->childrenCount() < 4)
 		{
-			(find(father)->children).push_back(child);
+			parent->addChild(child);
 			tree.push_back(child);
 			return true;
 		}
@@ -31,11 +32,11 @@ QuadTreeNode* QuadTree::find(string contentToFind)
 {
 	if (isInTree(contentToFind))
 	{
-		for (auto node : tree)
+		for (int i = 0; i < tree.size(); i++)
 		{
-			if (node.content == contentToFind)
+			if (tree[i].content == contentToFind)
 			{
-				return &node;
+				return &tree[i];
 			}
 		}
 	}
@@ -135,6 +136,11 @@ void QuadTree::recursiveDepthCalculator(QuadTreeNode* startingNode)
  size_t QuadTreeNode::childrenCount()
  {
 	 return children.size();
+ }
+
+ void QuadTreeNode::addChild(string child)
+ {
+	 children.push_back(child);
  }
 
  QuadTree::QuadTree()

@@ -14,6 +14,7 @@ public:
 	virtual ~QuadTreeNode();
 
 	size_t childrenCount();
+	void addChild(string child);
 
 	string content;
 	vector< string > children;
@@ -37,7 +38,7 @@ public:
 	void clear();
 
 private:
-	list< QuadTreeNode > tree;
+	vector< QuadTreeNode > tree;
 	size_t depth;
 
 	// For the special case when the last Road added is in uniting two other branches.
