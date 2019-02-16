@@ -345,9 +345,19 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[14]->addUtility(
 		[localPlayer, mainFSM, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() > 3))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) )
 			{
-				if (bankbutton->getPackage()) // me fijo que este creado el paquete
+				bool posible = false;
+				list<ResourceType> tipos = { COLINAS,MONTAÑAS,CAMPOS,PASTOS,BOSQUE };
+				for (auto recurso : tipos)
+				{ 
+					if ((localPlayer->getResourceAmount(recurso) > 3)) // reviso la disponibilidad de cartas para realizar el intercambio
+					{
+						posible = true;
+					}
+				}
+
+				if (bankbutton->getPackage() && posible) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(4);
 					return GUIEnablerEvent::_4X1;
@@ -360,9 +370,19 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[15]->addUtility(
 		[mainFSM, localPlayer, tablero, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 3) && (localPlayer->checkForAnyPort(tablero, PortType::_3x1)))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->checkForAnyPort(tablero, PortType::_3x1)))
 			{
-				if (bankbutton->getPackage()) // me fijo que este creado el paquete
+				bool posible = false;
+				list<ResourceType> tipos = { COLINAS,MONTAÑAS,CAMPOS,PASTOS,BOSQUE };
+				for (auto recurso : tipos)
+				{
+					if ((localPlayer->getResourceAmount(recurso) >= 3)) // me fijo si tiene 3 cartas iguales para hacer el intercambio
+					{
+						posible = true;
+					}
+				}
+
+				if (bankbutton->getPackage() && posible) // me fijo que este creado el paquete
 				{
 					static_cast<BankTradePkg*>(bankbutton->getPackage())->setType(3);
 					return GUIEnablerEvent::_3X1;
@@ -375,7 +395,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[16]->addUtility(
 		[mainFSM, localPlayer, tablero, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->getResourceAmount(BOSQUE) >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Mx1)))
 			{
 				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
@@ -395,7 +415,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[17]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->getResourceAmount(CAMPOS) >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Tx1)))
 			{
 				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
@@ -415,7 +435,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[18]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->getResourceAmount(COLINAS) >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Lx1)))
 			{
 				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
@@ -435,7 +455,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[19]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->getResourceAmount(PASTOS) >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Ox1)))
 			{
 				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
@@ -455,7 +475,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[20]->addUtility(
 		[localPlayer, mainFSM, tablero, bankbutton]()
 		{
-			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->totalResourcesAmount() >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
+			if ((mainFSM->getCurrState() == mainStates::LocalPlayer_S) && (localPlayer->getResourceAmount(MONTAÑAS) >= 2) && (localPlayer->checkForAnyPort(tablero, PortType::_2Px1)))
 			{
 				if (bankbutton->getPackage()) // me fijo que este creado el paquete
 				{
