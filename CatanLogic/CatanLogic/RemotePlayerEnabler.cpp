@@ -793,7 +793,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 		if (remotePlayer->checkForAnyPort(board, PortType::_3x1)) { isOk = true; }
 		break;
 	case 2:
-		switch (pkg->getResouceBougth())
+		switch (pkg->getResoucesPaid()[0])
 		{
 		case PortType::_2Lx1:
 			if (remotePlayer->checkForAnyPort(board, PortType::_2Lx1)) { isOk = true; }
