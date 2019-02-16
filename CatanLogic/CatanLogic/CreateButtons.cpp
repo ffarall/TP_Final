@@ -1762,7 +1762,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 {
 	if (mainFSM->getCurrState() == mainStates::LocalPlayer_S )
 	{
-		if (localPlayer->getResourceAmount(recurso) && bankbutton->getPackage())
+		if (bankbutton->getPackage())
 		{
 			BankTradePkg * paquete = static_cast<BankTradePkg *>(bankbutton->getPackage());
 			if (!paquete->offerclosed())
