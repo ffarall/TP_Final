@@ -1152,7 +1152,16 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[14]->isEnabled())
 		{
-			if (!buttonList[14]->isPressed())
+			list< ResourceType > resourceTypes = { BOSQUE, COLINAS, CAMPOS, MONTAÑAS, PASTOS };
+			bool hasFourResourcesOfTheSame = false;
+			for (auto resource : resourceTypes)
+			{
+				if (localPlayer->getResourceAmount(resource) > 3)
+				{
+					hasFourResourcesOfTheSame = true;
+				}
+			}
+			if (!buttonList[14]->isPressed() && hasFourResourcesOfTheSame)
 			{
 				buttonList[14]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -1179,11 +1188,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[15]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, tablero]()
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[15]->isEnabled())
 		{
-			if (!buttonList[15]->isPressed())
+			bool hasA3x1Port = localPlayer->checkForAnyPort(tablero, _3x1);
+
+			if (!buttonList[15]->isPressed() && hasA3x1Port)
 			{
 				buttonList[15]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -1209,11 +1220,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[16]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, tablero]()
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[16]->isEnabled())
 		{
-			if (!buttonList[16]->isPressed())
+			bool hasA2Mx1Port = localPlayer->checkForAnyPort(tablero, _2Mx1);
+
+			if (!buttonList[16]->isPressed() && hasA2Mx1Port)
 			{
 				buttonList[16]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -1239,11 +1252,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[17]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, tablero]()
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[17]->isEnabled())
 		{
-			if (!buttonList[17]->isPressed())
+			bool hasA2Tx1Port = localPlayer->checkForAnyPort(tablero, _2Tx1);
+
+			if (!buttonList[17]->isPressed() && hasA2Tx1Port)
 			{
 				buttonList[17]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -1269,11 +1284,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[18]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, tablero]()
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[18]->isEnabled())
 		{
-			if (!buttonList[18]->isPressed())
+			bool hasA2Lx1Port = localPlayer->checkForAnyPort(tablero, _2Lx1);
+
+			if (!buttonList[18]->isPressed() && hasA2Lx1Port)
 			{
 				buttonList[18]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -1299,11 +1316,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[19]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, tablero]()
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[19]->isEnabled())
 		{
-			if (!buttonList[19]->isPressed())
+			bool hasA2Ox1Port = localPlayer->checkForAnyPort(tablero, _2Ox1);
+
+			if (!buttonList[19]->isPressed() && hasA2Ox1Port)
 			{
 				buttonList[19]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
@@ -1329,11 +1348,13 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[20]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, tablero]()
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && buttonList[20]->isEnabled())
 		{
-			if (!buttonList[20]->isPressed())
+			bool hasA2Px1Port = localPlayer->checkForAnyPort(tablero, _2Px1);
+
+			if (!buttonList[20]->isPressed() && hasA2Px1Port)
 			{
 				buttonList[20]->setTypeTint(TINT_CORR(1, 1, 1, 1));
 			}
