@@ -380,13 +380,9 @@ void AllegroGUI::nowSelectFirstResource()
 	controllers["Grain"]->enable();
 	controllers["Wool"]->enable();
 
-	enable(GUIEnablerEvent::ACCEPT, { TX(nowConfirmRobberResources) });
+	//(GUIEnablerEvent::ACCEPT, { TX(nowConfirmRobberResources) });
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowSelectSecondResource) });
 	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
-}
-
-void AllegroGUI::nowConfirmRobberResources()
-{
-	enable(GUIEnablerEvent::ACCEPT, { TX(backToNormal) });
 }
 
 void AllegroGUI::nowSelectSecondResource()
@@ -400,8 +396,22 @@ void AllegroGUI::nowSelectSecondResource()
 	controllers["Grain"]->enable();
 	controllers["Wool"]->enable();
 
-	enable(GUIEnablerEvent::RESOURCE, { TX(backToNormal) });
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowConfirmRobberResources) });
 	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
+}
+
+void AllegroGUI::nowConfirmRobberResources()
+{
+	backToNormal();					// Disable previous unwanted buttons.
+	GUIEnabler::disableAll();		// Disable all GUIEnablerEvents.
+
+	controllers["Brick"]->enable();
+	controllers["Lumber"]->enable();
+	controllers["Ore"]->enable();
+	controllers["Grain"]->enable();
+	controllers["Wool"]->enable();
+
+	enable(GUIEnablerEvent::ACCEPT, { TX(backToNormal) });
 }
 
 void AllegroGUI::backToNormal()
@@ -420,7 +430,7 @@ void AllegroGUI::selectRobberCards()
 	controllers["Grain"]->enable();
 	controllers["Wool"]->enable();
 
-	enable(GUIEnablerEvent::RESOURCE, { TX(backToNormal) });
+	enable(GUIEnablerEvent::RESOURCE, { TX(nowConfirmRobberResources) });
 	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 }
 
