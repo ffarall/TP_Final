@@ -470,6 +470,9 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 
 	if (validateOffer(pkg))
 	{
+		list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+		disableAllBut(devCardsEvs);
+
 		pendingOffer = *pkg;													// Saving offer for response.
 		pkgSender->pushPackage(new OfferTradePkg(pkg));
 		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
