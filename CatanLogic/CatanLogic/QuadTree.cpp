@@ -61,23 +61,34 @@ bool QuadTree::isInTree(string contentToCheck)
 size_t QuadTree::getDepth(string startingNode)
 {
 	size_t startingNodeChildren = find(startingNode)->childrenCount();
-	if (startingNodeChildren)
+	if (startingNodeChildren > 1)
 	{
-		size_t deepestBranch = 0, secondDeepestBranch = 0;
+		BranchDepthRecorder deepestBranch, secondDeepestBranch;
+		deepestBranch.depth = 0;
+		secondDeepestBranch.depth = 0;
 		for (auto child : find(startingNode)->children)
 		{
 			size_t branchDepth = auxGetDepth(child);
-			if (branchDepth > deepestBranch)
+			if (branchDepth > deepestBranch.depth)
 			{
-				deepestBranch = branchDepth;
+				deepestBranch.depth = branchDepth;
+				deepestBranch.startingNode = child;
 			}
-			else if (branchDepth > secondDeepestBranch)
+			else if (branchDepth > secondDeepestBranch.depth)
 			{
-				secondDeepestBranch = branchDepth;
+				secondDeepestBranch.depth = branchDepth;
+				deepestBranch.startingNode = child;
 			}
 		}
 
-		return deepestBranch + secondDeepestBranch + 1;
+		if ((deepestBranch.startingNode)[0] == (secondDeepestBranch.startingNode)[0] || (deepestBranch.startingNode)[1] == (secondDeepestBranch.startingNode)[1])
+		{
+			return deepestBranch.depth + secondDeepestBranch.depth;
+		}
+		else
+		{
+			return deepestBranch.depth + secondDeepestBranch.depth + 1;
+		}
 	}
 	else
 	{
