@@ -20,6 +20,12 @@ public:
 	vector< string > children;
 };
 
+struct BranchDepthRecorder
+{
+	size_t depth;
+	string startingNode;
+};
+
 class QuadTree
 {
 public:
