@@ -413,7 +413,24 @@ bool Player::checkResourcesForBankTrade(PortType type)
 void Player::getNewDevCard(EDASubject * board_)
 {
 	Board* board = static_cast<Board*>(board_);
-	devCards[board->pickDevCard()].amount++;
+	DevCards newCard = board->pickDevCard();
+	devCards[newCard].amount++;
+
+	switch (newCard)
+	{
+	case KNIGHT: devCards[newCard].useDevCard = useKnight;
+		break;
+	case VICTORY_POINTS: devCards[newCard].useDevCard = useVictoryPoint;
+		break;
+	case ROAD_BUILDING: devCards[newCard].useDevCard = useRoadBuilding;
+		break;
+	case MONOPOLY: devCards[newCard].useDevCard = useMonopoly;
+		break;
+	case YEARS_OF_PLENTY: devCards[newCard].useDevCard = useYearsOfPlenty;
+		break;
+	default:
+		break;
+	}
 
 	useResource(CAMPOS);
 	useResource(PASTOS);
