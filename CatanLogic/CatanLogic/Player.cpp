@@ -418,15 +418,15 @@ void Player::getNewDevCard(EDASubject * board_)
 
 	switch (newCard)
 	{
-	case KNIGHT: devCards[newCard].useDevCard = useKnight;
+	case KNIGHT: devCards[newCard].useDevCard = &Player::useKnight;
 		break;
-	case VICTORY_POINTS: devCards[newCard].useDevCard = useVictoryPoint;
+	case VICTORY_POINTS: devCards[newCard].useDevCard = &Player::useVictoryPoint;
 		break;
-	case ROAD_BUILDING: devCards[newCard].useDevCard = useRoadBuilding;
+	case ROAD_BUILDING: devCards[newCard].useDevCard = &Player::useRoadBuilding;
 		break;
-	case MONOPOLY: devCards[newCard].useDevCard = useMonopoly;
+	case MONOPOLY: devCards[newCard].useDevCard = &Player::useMonopoly;
 		break;
-	case YEARS_OF_PLENTY: devCards[newCard].useDevCard = useYearsOfPlenty;
+	case YEARS_OF_PLENTY: devCards[newCard].useDevCard = &Player::useYearsOfPlenty;
 		break;
 	default:
 		break;
