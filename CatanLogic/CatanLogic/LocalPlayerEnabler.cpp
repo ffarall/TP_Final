@@ -722,6 +722,7 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	KnightPkg* pkg = static_cast<KnightPkg*>(auxEv->getPackage());
 	char movedTo = pkg->getPos();
+	board->moveRobber(movedTo);
 
 	pkgSender->pushPackage(new KnightPkg(*pkg));
 
