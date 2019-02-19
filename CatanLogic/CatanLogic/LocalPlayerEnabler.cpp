@@ -940,6 +940,7 @@ void LocalPlayerEnabler::checkLargestArmy()
 			if (localPlayer->getArmySize() > remotePlayer->getArmySize())			// Must check who has it larger.
 			{
 				localPlayer->setLargestArmyCard(true);
+				remotePlayer->setLargestArmyCard(false);
 			}
 		}
 		else
@@ -947,6 +948,9 @@ void LocalPlayerEnabler::checkLargestArmy()
 			localPlayer->setLargestArmyCard(true);
 		}
 	}
+
+	localPlayer->hasWon(playingWithDev); // para actualizar los victory points, ver que hay que hacer si es que gana
+	remotePlayer->hasWon(playingWithDev);
 }
 
 void LocalPlayerEnabler::addSettlementToLocal(string position)

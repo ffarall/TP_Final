@@ -172,6 +172,28 @@ void RemotePlayerEnabler::checkLongestRoad()
 	}
 }
 
+void RemotePlayerEnabler::chackLargestArmy()
+{
+	if (remotePlayer->getArmySize() >= 3)											// Minimum requisite for having the largestArmyCard
+	{
+		if (localPlayer->hasLargestArmy())											// If local has it...
+		{
+			if (remotePlayer->getArmySize() > localPlayer->getArmySize())			// Must check who has it larger.
+			{
+				localPlayer->setLargestArmyCard(false);
+				remotePlayer->setLargestArmyCard(true);
+			}
+		}
+		else
+		{
+			remotePlayer->setLargestArmyCard(true);
+		}
+	}
+
+	remotePlayer->hasWon(playingWithDev); // para actualizar los victory points, ver que hay que hacer si es que gana
+	localPlayer->hasWon(playingWithDev);
+}
+
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
 {
 	if (playingWithDev)
@@ -905,6 +927,9 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 	{
 		pkgSender->pushPackage(new package(headers::ACK));
 	}
+
+	
+
 	enableRemoteActions();
 }
 

@@ -93,5 +93,7 @@ private:
 	void respondImposibleOfferTrade();
 	// Checks if remotePlayer should own longestRoadCard, comparing with localPlayer. If the remote is the rightful owner of the card, this gives remote de card ant takes it away from local.
 	void checkLongestRoad();
+
+	void chackLargestArmy();
 };
 
