@@ -691,6 +691,7 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 	{
 		localPlayer->getNewDevCard(board);
 		enable(NET_ACK, { TX(enablePlayerActions) });
+		pkgSender->pushPackage(new package(headers::DEV_CARD));
 	}
 	else
 	{
