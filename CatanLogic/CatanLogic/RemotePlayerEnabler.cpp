@@ -853,7 +853,7 @@ void RemotePlayerEnabler::checkDevCards(SubtypeEvent * ev)
 	}
 	else
 	{
-		setErrMessage("Error, el rival no tinene suficientes recursos para comprar una Dev Card");
+		setErrMessage("Error, el rival no tinene suficientes recursos para comprar una Dev Card"); //ver de cambiar esto, le da al oponente info de los recursos
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
 	}
