@@ -875,11 +875,13 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
-	
+
 	random_device rd;
 	mt19937_64 generator{ rd() };
-	uniform_int_distribution<> dist{ 0,4}; // para tener un numero bien aleatorio (mejor que rand()%)
+	uniform_int_distribution<> dist{ 0,4 }; // para tener un numero bien aleatorio (mejor que rand()%)
 	ResourceType randCard;
+
+	remotePlayer->useDevCard(DevCards::KNIGHT);
 
 	board->moveRobber(pkg->getPos());
 	if (localPlayer->isThereSetOrCity(pkg->getPos()))

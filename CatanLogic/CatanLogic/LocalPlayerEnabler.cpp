@@ -387,7 +387,7 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
-	if (areWePlayingWithDev())
+		if (areWePlayingWithDev())
 	{
 		if (localPlayer->isThereDevCard(KNIGHT))
 		{
