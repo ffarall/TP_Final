@@ -18,12 +18,9 @@
 #define SEA_2LX1_FILE "sea2Lx1.png"
 #define SEA_2PX1_FILE "sea2Px1.png"
 #define SEA_2MX1_FILE "sea2Mx1.png"
-#define SETTLEMENT_FILE "settlement.png"
-#define CITY_FILE "city.png"
-#define ROAD_FILE "road.png"
 #define ROBBER_FILE "robber.png"
-#define DEV_FILE "DevBack2.png"
 #define FONDO "fondo.jpg"
+#define BACKGROUND "Backround.jpg"
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
 #define ROBBER_POS 20
@@ -60,6 +57,7 @@ void BoardController::update()
 		if (!fondoListo)
 		{
 			fondoListo = true;
+			fondoPpal = false;
 			drawMap();
 		}
 
@@ -79,11 +77,15 @@ void BoardController::update()
 		
 		sellos[ROBBER_FILE]->redraw();
 
-	/*	if (sellos[DEV_FILE] == NULL)
+	
+	}
+	else
+	{
+		if (!fondoPpal)
 		{
-			al_draw_text(font, al_map_rgb(0, 0, 0), D_ANCHO * 0.65, D_ALTO * 0.82, 0, "Pile of DevCards");
-			al_draw_tinted_bitmap(bitmaps[DEV_FILE], al_map_rgb(255, 170, 10), D_ANCHO * 0.65, D_ALTO * 0.85, 0);
-		}*/
+			printer->setBackgorund(bitmaps[BACKGROUND]);
+			fondoPpal = true;
+		}
 	}
 }
 
@@ -96,7 +98,7 @@ GUIEnablerEvent BoardController::parseMouseDownEvent(uint32_t x, uint32_t y)
 {
 	if (isMouseDownActive())
 	{
-		unsigned char temp = decoder->getPixelType(x - BOARD_POS_X, y - BOARD_POS_Y);
+		unsigned char temp = decoder->getPixelType(x - BOARD_POS_X , y - BOARD_POS_Y);
 		if (temp == VERTEX || temp == EDGE || temp == TOKEN)
 		{
 			enableMouseUp();
@@ -228,6 +230,7 @@ void BoardController::init()
 	decoder = new MapDecoder(MAP_FILE); 
 	font = NULL;
 	fondoListo = false;
+	fondoPpal = false;
 	working = true;
 
 	bitmaps[HILLS_HEX_FILE] = al_load_bitmap(HILLS_HEX_FILE);
@@ -242,11 +245,8 @@ void BoardController::init()
 	bitmaps[SEA_2LX1_FILE] = al_load_bitmap(SEA_2LX1_FILE);
 	bitmaps[SEA_2PX1_FILE] = al_load_bitmap(SEA_2PX1_FILE);
 	bitmaps[SEA_2MX1_FILE] = al_load_bitmap(SEA_2MX1_FILE);
-	bitmaps[CITY_FILE] = al_load_bitmap(CITY_FILE);
-	bitmaps[ROAD_FILE] = al_load_bitmap(ROAD_FILE);
-	bitmaps[SETTLEMENT_FILE] = al_load_bitmap(SETTLEMENT_FILE);
 	bitmaps[ROBBER_FILE] = al_load_bitmap(ROBBER_FILE);
-	bitmaps[DEV_FILE] = al_load_bitmap(DEV_FILE);
+	bitmaps[BACKGROUND] = al_load_bitmap(BACKGROUND);
 
 	for (auto imagen : bitmaps) // me fijo si esta todo inicializado
 	{
