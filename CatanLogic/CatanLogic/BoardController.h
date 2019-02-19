@@ -48,6 +48,7 @@ private:
 	void drawMap();
 
 	bool fondoListo;
+	bool fondoPpal;
 	bool working;
 
 	GutenbergsPressAllegro * printer;

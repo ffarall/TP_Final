@@ -4,19 +4,19 @@
 
 GutenbergsPressAllegro::GutenbergsPressAllegro(ALLEGRO_BITMAP * background_)
 {
-	if (background_ == NULL)
+	/*if (background_ == NULL)
 	{
 		setBackgorund(al_load_bitmap("Backround.jpg"));
 	}
 	else
 	{
 		setBackgorund(background_);
-	}
+	}*/
 }
 
 GutenbergsPressAllegro::~GutenbergsPressAllegro()
 {
-	al_destroy_bitmap(background);
+	//al_destroy_bitmap(background);
 	for (auto type : types)
 	{
 		delete type;
@@ -44,7 +44,7 @@ void GutenbergsPressAllegro::setBackgorund(ALLEGRO_BITMAP * background_)
 {
 	if (background)
 	{
-		al_destroy_bitmap(background);
+		//al_destroy_bitmap(background);
 	}
 	background = background_;
 }

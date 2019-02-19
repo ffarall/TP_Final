@@ -40,16 +40,36 @@ void MainFSM::decAndRun(GenericEvent * ev)
 	}
 }
 
-void MainFSM::localStartsRoutine(GenericEvent * ev)
+void MainFSM::localStartsRoutine(GenericEvent* ev)
 {
-	localEnabler->localStarts(handShaking->getLocalName(),handShaking->getRemoteName(),board);
+	localEnabler->localStarts(handShaking->getLocalName(), handShaking->getRemoteName(), board);
 	remoteEnabler->localStarts();
+	if (handShaking->playingWithDev())
+	{
+		localEnabler->setPlayingWithDev(true);
+		remoteEnabler->setPlayingWithDev(true);
+	}
+	else
+	{
+		localEnabler->setPlayingWithDev(false);
+		remoteEnabler->setPlayingWithDev(false);
+	}
 }
 
 void MainFSM::remoteStartsRoutine(GenericEvent * ev)
 {
 	localEnabler->remoteStarts(handShaking->getLocalName(), handShaking->getRemoteName(),board);
 	remoteEnabler->remoteStarts();
+	if (handShaking->playingWithDev())
+	{
+		localEnabler->setPlayingWithDev(true);
+		remoteEnabler->setPlayingWithDev(true);
+	}
+	else
+	{
+	localEnabler->setPlayingWithDev(false);
+	remoteEnabler->setPlayingWithDev(false);
+	}
 }
 
 void MainFSM::defaultHandShakingS(GenericEvent * ev)
