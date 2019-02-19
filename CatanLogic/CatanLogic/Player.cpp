@@ -443,7 +443,7 @@ void Player::useDevCard(DevCards card)
 	{
 		auto f = bind(devCards[card].useDevCard, this);
 		f();
-
+		devCards[card].amount--;
 		notifyAllObservers();
 	}
 }
