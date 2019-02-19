@@ -106,13 +106,13 @@ void LocalPlayerEnabler::noAct(SubtypeEvent * ev)
 void LocalPlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage(string("Coloque su primer road"));
+	setWaitingMessage(string(""));
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 
 	pkgSender->pushPackage(new SettlementPkg(*pkg));
-	
+	setWaitingMessage(string("Coloque su primer road"));
 	addSettlementToLocal(position);
 
 	disable(PLA_SETTLEMENT);
@@ -128,17 +128,22 @@ void LocalPlayerEnabler::waitingConfFstSetLocStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Ahora es turno de su oponente");
+	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
 	
 	if (addRoadToLocal(position))
 	{
+		setWaitingMessage("Ahora es turno de su oponente");
 		pkgSender->pushPackage(new RoadPkg(*pkg));
 
 		disable(PLA_ROAD);
 		enable(NET_ACK, { TX(firstTurnFinish) });
+	}
+	else
+	{
+		setWaitingMessage("Posicion no valida.");
 	}
 }
 
