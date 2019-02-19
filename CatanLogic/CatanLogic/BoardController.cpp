@@ -265,6 +265,12 @@ void BoardController::init()
 	{
 		working = false;
 	}
+
+	if (working)
+	{
+		printer->setBackgorund(bitmaps[BACKGROUND]);
+		fondoPpal = true;
+	}
 }
 
 void BoardController::drawMap()
