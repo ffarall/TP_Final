@@ -533,7 +533,7 @@ void Player::setLargestArmyCard(bool doesItHaveTheCard)
 	if (largestArmyCard != doesItHaveTheCard) // si cambia el estado actualizo los victory points
 	{
 		largestArmyCard = doesItHaveTheCard; 
-		if (longestRoadCard)
+		if (largestArmyCard)
 		{
 			victoryPoints++;
 		}
