@@ -463,6 +463,9 @@ void AllegroGUI::initGUIEnabler()
 	enable(GUIEnablerEvent::NEW_SETTLEMENT, { TX(nowSelectSettlement) });
 	enable(GUIEnablerEvent::NEW_CITY, { TX(nowSelectCity) });
 	enable(GUIEnablerEvent::USE_KNIGHT, { TX(nowSelectRobberPos) });
+	enable(GUIEnablerEvent::USE_MONOPOLY, { TX(nowSelectMonopolyResource) });
+	enable(GUIEnablerEvent::USE_ROAD_BUILDING, { TX(nowSelectFirstRoad) });
+	enable(GUIEnablerEvent::USE_YOP, { TX(nowSelectFirstResource) });
 	enable(GUIEnablerEvent::ROBBER_CARDS, { TX(selectRobberCards) });
 	
 }
