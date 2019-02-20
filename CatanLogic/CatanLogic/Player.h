@@ -130,6 +130,9 @@ public:
 	// Returns last Settlement added.
 	string getLastSettlement();
 
+	bool getUsingRoadBuilding();
+	void setUsingRoadBuilding(bool value);
+
 private:
 
 	// True when player has won.
@@ -198,6 +201,9 @@ private:
 	void useMonopoly();
 	void useYearsOfPlenty();
 	void useRoadBuilding();
+
+	// Flag to enable adding a Road with RoadBuilding when there are no resources for Road.
+	bool usingRoadBuilding;
 
 	// All combinations of edges.
 	const list< string > allEdges = {

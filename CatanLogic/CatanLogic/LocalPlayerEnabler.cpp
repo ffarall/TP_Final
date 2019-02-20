@@ -789,6 +789,7 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 	setWaitingMessage("Seleccione donde quiere colocar el primer Road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 
+	localPlayer->setUsingRoadBuilding(true);
 	pkgSender->pushPackage(new package(headers::ROAD_BUILDING));
 
 	disableAll();
@@ -862,6 +863,7 @@ void LocalPlayerEnabler::enableSndRoad(SubtypeEvent * ev)
 void LocalPlayerEnabler::checkSndRoad(SubtypeEvent * ev)
 {
 	checkRoad(ev);
+	localPlayer->setUsingRoadBuilding(false);
 }
 
 void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)

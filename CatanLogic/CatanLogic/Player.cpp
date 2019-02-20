@@ -353,7 +353,7 @@ bool Player::checkSettlementAvailability(string position)
 bool Player::checkRoadAvailability(string position)
 {
 	bool ret = (find(availableForRoad.begin(), availableForRoad.end(), position) != availableForRoad.end());					// Check if position is available.
-	if (myRoads.size() >= 2)
+	if (myRoads.size() >= 2 && !getUsingRoadBuilding())
 	{
 		ret &= (checkRoadResources() != 0);																								// Check if player has resources.
 	}
@@ -553,6 +553,16 @@ size_t Player::getArmySize()
 string Player::getLastSettlement()
 {
 	return lastSettlement;
+}
+
+bool Player::getUsingRoadBuilding()
+{
+	return usingRoadBuilding;
+}
+
+void Player::setUsingRoadBuilding(bool value)
+{
+	usingRoadBuilding = value;
 }
 
 void Player::allVertexesAvailable()
