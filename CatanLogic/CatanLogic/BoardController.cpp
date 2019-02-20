@@ -143,6 +143,21 @@ GUIEnablerEvent BoardController::parseMouseUpEvent(uint32_t x, uint32_t y)
 				emitSubEvent(PLAYER_ACTION, PLA_CITY, cityPkg);
 			}
 		}
+		else if (getMovingRobber())												// When user has to select where to move the robber using Knight card
+		{
+			if (decoder->getPixelType(x, y) == TOKEN)
+			{
+				string token = decoder->getCoordinateFromPixel(x, y);
+				string robberpos;
+				robberpos.push_back(board->getRobberPos());
+				if (token.compare(robberpos))
+				{
+					KnightPkg* robberPkg = new KnightPkg(token[0]);
+					emitSubEvent(PLAYER_ACTION, PLA_KNIGHT, robberPkg);
+					movingRobber = false;
+				}
+			}
+		}
 		else if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROBBER_MOVE)) || getMovingRobber())
 		{
 			if (decoder->getPixelType(x, y) == TOKEN)
