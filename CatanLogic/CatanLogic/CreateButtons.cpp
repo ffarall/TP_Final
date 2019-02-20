@@ -308,10 +308,11 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[11]->addUtility(
-		[locEnab]()
+		[locEnab, handler]()
 		{
 			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD_BUILDING)))
 			{
+				handler->enqueueEvent(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_ROAD_BUILDING, new package(headers::ROAD_BUILDING)));
 				return GUIEnablerEvent::USE_ROAD_BUILDING; //no hace nada mas
 			}
 			return GUIEnablerEvent::NO_EV;
