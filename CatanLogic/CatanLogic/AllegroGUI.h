@@ -72,6 +72,6 @@ private:
 	void selectRobberCards();
 	// confirm resources to discard
 	void nowConfirmRobberResources();
-	// to enabel dev cards
-	void afterPassingEnableDevs();
+
+	
 };

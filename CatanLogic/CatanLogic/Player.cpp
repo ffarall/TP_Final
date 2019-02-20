@@ -110,11 +110,11 @@ bool Player::hasWon(bool playingWithDevs)
 	size_t totalVictoryPoints = victoryPoints + cardVictoryPoints;
 	if (hasLongestRoad())
 	{
-		totalVictoryPoints++;
+		//totalVictoryPoints++;
 	}
 	if (hasLargestArmy() && playingWithDevs)
 	{
-		totalVictoryPoints++;
+		//totalVictoryPoints++;
 	}
 	if (totalVictoryPoints >= (playingWithDevs?10:8))
 	{
@@ -443,7 +443,6 @@ void Player::useDevCard(DevCards card)
 	{
 		auto f = bind(devCards[card].useDevCard, this);
 		f();
-		devCards[card].amount--;
 		notifyAllObservers();
 	}
 }
@@ -484,7 +483,19 @@ bool Player::hasLongestRoad()
 
 void Player::setLongestRoadCard(bool doesItHaveTheCard)
 {
-	longestRoadCard = doesItHaveTheCard;
+	if (longestRoadCard != doesItHaveTheCard) // si cambia el estado actualizo los victory points
+	{
+		longestRoadCard = doesItHaveTheCard;
+		if (longestRoadCard)
+		{
+			victoryPoints++;
+		}
+		else
+		{
+			victoryPoints--;
+		}
+	}
+	
 }
 
 size_t Player::getLongestRoad()
@@ -519,7 +530,19 @@ bool Player::hasLargestArmy()
 
 void Player::setLargestArmyCard(bool doesItHaveTheCard)
 {
-	largestArmyCard = doesItHaveTheCard;
+	if (largestArmyCard != doesItHaveTheCard) // si cambia el estado actualizo los victory points
+	{
+		largestArmyCard = doesItHaveTheCard; 
+		if (longestRoadCard)
+		{
+			victoryPoints++;
+		}
+		else
+		{
+			victoryPoints--;
+		}
+	}
+	
 }
 
 size_t Player::getArmySize()

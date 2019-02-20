@@ -70,7 +70,7 @@ void RemotePlayerEnabler::enableRemoteActions()
 	enable(NET_CITY, {TX(checkRemoteCity)});
 	enable(NET_ROAD, {TX(checkRemoteRoad)});
 	enable(NET_BANK_TRADE, {TX(checkRemoteBankTrade)});
-	enable(NET_DEV_CARDS, {TX(checkDevCards)});
+	enable(NET_DEV_CARD, {TX(checkDevCards)});
 	enable(NET_PASS, {TX(endTurn)});
 }
 
@@ -170,6 +170,28 @@ void RemotePlayerEnabler::checkLongestRoad()
 			remotePlayer->setLongestRoadCard(true);
 		}
 	}
+}
+
+void RemotePlayerEnabler::chackLargestArmy()
+{
+	if (remotePlayer->getArmySize() >= 3)											// Minimum requisite for having the largestArmyCard
+	{
+		if (localPlayer->hasLargestArmy())											// If local has it...
+		{
+			if (remotePlayer->getArmySize() > localPlayer->getArmySize())			// Must check who has it larger.
+			{
+				localPlayer->setLargestArmyCard(false);
+				remotePlayer->setLargestArmyCard(true);
+			}
+		}
+		else
+		{
+			remotePlayer->setLargestArmyCard(true);
+		}
+	}
+
+	remotePlayer->hasWon(playingWithDev); // para actualizar los victory points, ver que hay que hacer si es que gana
+	localPlayer->hasWon(playingWithDev);
 }
 
 void RemotePlayerEnabler::checkRemoteDevCards(SubtypeEvent * ev)
@@ -853,7 +875,7 @@ void RemotePlayerEnabler::checkDevCards(SubtypeEvent * ev)
 	}
 	else
 	{
-		setErrMessage("Error, el rival no tinene suficientes recursos para comprar una Dev Card");
+		setErrMessage("Error, el rival no tinene suficientes recursos para comprar una Dev Card"); //ver de cambiar esto, le da al oponente info de los recursos
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
 	}
@@ -875,11 +897,13 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
-	
+
 	random_device rd;
 	mt19937_64 generator{ rd() };
-	uniform_int_distribution<> dist{ 0,4}; // para tener un numero bien aleatorio (mejor que rand()%)
+	uniform_int_distribution<> dist{ 0,4 }; // para tener un numero bien aleatorio (mejor que rand()%)
 	ResourceType randCard;
+
+	remotePlayer->useDevCard(DevCards::KNIGHT);
 
 	board->moveRobber(pkg->getPos());
 	if (localPlayer->isThereSetOrCity(pkg->getPos()))
@@ -903,6 +927,10 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 	{
 		pkgSender->pushPackage(new package(headers::ACK));
 	}
+
+	chackLargestArmy();
+	
+
 	enableRemoteActions();
 }
 

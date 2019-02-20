@@ -434,18 +434,6 @@ void AllegroGUI::selectRobberCards()
 	enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 }
 
-void AllegroGUI::afterPassingEnableDevs()
-{
-	backToNormal();
-
-	/*enable(GUIEnablerEvent::USE_MONOPOLY, {});
-	enable(GUIEnablerEvent::USE_KNIGHT, {});
-	enable(GUIEnablerEvent::USE_ROAD_BUILDING, {});
-	enable(GUIEnablerEvent::USE_YOP, {});*/
-
-}
-
-
 AllegroGUI::~AllegroGUI()
 {
 }
@@ -476,5 +464,5 @@ void AllegroGUI::initGUIEnabler()
 	enable(GUIEnablerEvent::NEW_CITY, { TX(nowSelectCity) });
 	enable(GUIEnablerEvent::USE_KNIGHT, { TX(nowSelectRobberPos) });
 	enable(GUIEnablerEvent::ROBBER_CARDS, { TX(selectRobberCards) });
-	//enable(GUIEnablerEvent::BUY_DEV_CARD, { TX(afterPassingEnableDevs) });
+	
 }

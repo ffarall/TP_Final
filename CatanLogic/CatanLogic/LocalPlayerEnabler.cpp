@@ -387,7 +387,7 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
-	if (areWePlayingWithDev())
+		if (areWePlayingWithDev())
 	{
 		if (localPlayer->isThereDevCard(KNIGHT))
 		{
@@ -550,6 +550,9 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 
 	if (localPlayer->checkSettlementAvailability(position))
 	{
+		list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+		disableAllBut(devCardsEvs);
+
 		localPlayer->addToMySettlements(position);
 		remotePlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, localPlayer);
@@ -575,6 +578,9 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 
 	if (localPlayer->checkRoadAvailability(position))
 	{
+		list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+		disableAllBut(devCardsEvs);
+
 		localPlayer->addToMyRoads(position);
 		remotePlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, localPlayer);
@@ -601,6 +607,9 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 
 	if (localPlayer->checkPromotionOfCity(position))
 	{
+		list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+		disableAllBut(devCardsEvs);
+
 		localPlayer->promoteToMyCity(position);
 		remotePlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, localPlayer);
@@ -661,7 +670,11 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 
 	if (localPlayer->checkResourcesForBankTrade(tradeType))
 	{
+		list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+		disableAllBut(devCardsEvs);
+
 		pkgSender->pushPackage(new BankTradePkg(*pkg));
+		enable(NET_ACK, { TX(enablePlayerActions) });
 
 		if (tradeType == _4x1)
 		{
@@ -689,8 +702,12 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 {
 	if (localPlayer->checkResourcesForDevCard())
 	{
+		list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
+		disableAllBut(devCardsEvs);
+
 		localPlayer->getNewDevCard(board);
 		enable(NET_ACK, { TX(enablePlayerActions) });
+		pkgSender->pushPackage(new package(headers::DEV_CARD));
 	}
 	else
 	{
@@ -705,6 +722,7 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	KnightPkg* pkg = static_cast<KnightPkg*>(auxEv->getPackage());
 	char movedTo = pkg->getPos();
+	board->moveRobber(movedTo);
 
 	pkgSender->pushPackage(new KnightPkg(*pkg));
 
@@ -922,6 +940,7 @@ void LocalPlayerEnabler::checkLargestArmy()
 			if (localPlayer->getArmySize() > remotePlayer->getArmySize())			// Must check who has it larger.
 			{
 				localPlayer->setLargestArmyCard(true);
+				remotePlayer->setLargestArmyCard(false);
 			}
 		}
 		else
@@ -929,6 +948,9 @@ void LocalPlayerEnabler::checkLargestArmy()
 			localPlayer->setLargestArmyCard(true);
 		}
 	}
+
+	localPlayer->hasWon(playingWithDev); // para actualizar los victory points, ver que hay que hacer si es que gana
+	remotePlayer->hasWon(playingWithDev);
 }
 
 void LocalPlayerEnabler::addSettlementToLocal(string position)
