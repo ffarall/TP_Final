@@ -40,7 +40,7 @@ private:
 
 	/* ROUTINES TO BE EXECTUED IN CYCLE */
 	void noAct();
-	// Enables Road selection for the BoardController after NewRoad has been clicked or after the first road of RoadBuilding was selected.
+	// Enables Road selection for the BoardController after NewRoad has been clicked.
 	void nowSelectRoad();
 	// Enables Settlement selection for the BoardController after NewSettlement has been clicked.
 	void nowSelectSettlement();
@@ -60,6 +60,8 @@ private:
 	void nowUserCanConfirmResourcesToReceive();
 	// Gets called after UseRoadBuilding is pressed.
 	void nowSelectFirstRoad();
+	// Gets called after the first road of RoadBuilding was selected.
+	void nowSelectSecondRoad();
 	// Gets called after UseMonopoly is pressed.
 	void nowSelectMonopolyResource();
 	// Gets called after UseYearsOfPlenty is pressed.
@@ -68,7 +70,7 @@ private:
 	void nowSelectSecondResource();
 	// Goes back to the way initGUIEnabler leaves everything.
 	void backToNormal();
-	// Start sellecting cards to eliminate when robber is activated
+	// Start selecting cards to eliminate when robber is activated
 	void selectRobberCards();
 	// confirm resources to discard
 	void nowConfirmRobberResources();

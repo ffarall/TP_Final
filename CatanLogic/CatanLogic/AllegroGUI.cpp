@@ -345,13 +345,20 @@ void AllegroGUI::nowUserCanConfirmResourcesToReceive()
 void AllegroGUI::nowSelectFirstRoad()
 {
 	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
-	if (boardCon->getPuttingRoad())			// if puttingRoad is not set (NewRoad hasn't been clicked before)
+	if (!(boardCon->getPuttingRoad()))			// if puttingRoad is not set (NewRoad hasn't been clicked before)
 	{
 		boardCon->toggleRoad();
 		boardCon->enable();
-		enable(POSITION_SELECTED, { TX(nowSelectRoad) });
+		enable(POSITION_SELECTED, { TX(nowSelectSecondRoad) });
 		enable(GUIEnablerEvent::CANCEL, { TX(backToNormal) });
 	}
+}
+
+void AllegroGUI::nowSelectSecondRoad()
+{
+	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
+	boardCon->toggleRoad();
+	nowSelectRoad();
 }
 
 void AllegroGUI::nowSelectMonopolyResource()
