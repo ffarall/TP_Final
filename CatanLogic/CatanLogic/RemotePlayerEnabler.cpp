@@ -70,7 +70,7 @@ void RemotePlayerEnabler::enableRemoteActions()
 	enable(NET_CITY, {TX(checkRemoteCity)});
 	enable(NET_ROAD, {TX(checkRemoteRoad)});
 	enable(NET_BANK_TRADE, {TX(checkRemoteBankTrade)});
-	enable(NET_DEV_CARDS, {TX(checkDevCards)});
+	enable(NET_DEV_CARD, {TX(checkDevCards)});
 	enable(NET_PASS, {TX(endTurn)});
 }
 
