@@ -718,7 +718,7 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente uso Knight.");
+	setWaitingMessage("Usaste Knight.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	KnightPkg* pkg = static_cast<KnightPkg*>(auxEv->getPackage());
 	char movedTo = pkg->getPos();

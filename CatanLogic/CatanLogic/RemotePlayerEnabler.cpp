@@ -894,7 +894,7 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 {
 	disableAll();
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente uso Knight.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
 
