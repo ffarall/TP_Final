@@ -928,6 +928,7 @@ void RemotePlayerEnabler::remUsedKnight(SubtypeEvent * ev)
 		pkgSender->pushPackage(new package(headers::ACK));
 	}
 
+	chackLargestArmy();
 	
 
 	enableRemoteActions();
