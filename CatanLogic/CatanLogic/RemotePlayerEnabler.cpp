@@ -983,6 +983,7 @@ void RemotePlayerEnabler::remUsedRoadBuilding(SubtypeEvent * ev)
 	disableAll();
 	pkgSender->pushPackage(new package(headers::ACK));
 	remotePlayer->setUsingRoadBuilding(true);
+	remotePlayer->useDevCard(ROAD_BUILDING);
 	enable(NET_ROAD, { TX(road1) });
 }
 

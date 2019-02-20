@@ -790,6 +790,7 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 
 	localPlayer->setUsingRoadBuilding(true);
+	localPlayer->useDevCard(ROAD_BUILDING);
 	pkgSender->pushPackage(new package(headers::ROAD_BUILDING));
 
 	disableAll();
