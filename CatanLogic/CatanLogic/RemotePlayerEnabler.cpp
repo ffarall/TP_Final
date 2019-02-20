@@ -278,6 +278,7 @@ void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 	if (remotePlayer->checkRoadAvailability(position))
 	{
 		addRoadToRemote(position);
+		remotePlayer->setUsingRoadBuilding(false);
 		disable(NET_ROAD);
 		enableRemoteActions();
 	}
@@ -981,7 +982,8 @@ void RemotePlayerEnabler::remUsedRoadBuilding(SubtypeEvent * ev)
 {
 	disableAll();
 	pkgSender->pushPackage(new package(headers::ACK));
-	enable(NET_ROAD, { TX(firstRoadLocalStarts) });
+	remotePlayer->setUsingRoadBuilding(true);
+	enable(NET_ROAD, { TX(road1) });
 }
 
 void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
