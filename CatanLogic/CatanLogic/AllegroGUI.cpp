@@ -272,7 +272,7 @@ void AllegroGUI::nowSelectCity()
 void AllegroGUI::nowSelectRobberPos()
 {
 	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
-	if (!(boardCon->getMovingRobber()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	if (!(boardCon->getMovingRobber()))			// if puttingRoad is not set (NewRoad hasn't been clicked before)
 	{
 		boardCon->toggleRobber();
 		boardCon->enable();
@@ -345,7 +345,7 @@ void AllegroGUI::nowUserCanConfirmResourcesToReceive()
 void AllegroGUI::nowSelectFirstRoad()
 {
 	BoardController* boardCon = static_cast<BoardController*>(controllers["BoardController"]);
-	if (!(boardCon->getPuttingRoad()))			// if puttingRoad is not set (NewRoad hasn't been clicked before
+	if (boardCon->getPuttingRoad())			// if puttingRoad is not set (NewRoad hasn't been clicked before)
 	{
 		boardCon->toggleRoad();
 		boardCon->enable();
