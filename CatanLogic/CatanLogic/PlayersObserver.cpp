@@ -256,11 +256,18 @@ void PlayersObserver::update()
 				cada.second->setTint(al_map_rgba(0, 0, 0, 0));// los hago trasparentes
 			}
 		}
-		for (auto cada : roads)
+		for (auto cada : roads) // elimino todos los roads para la proxima partida
 		{
 			if (cada.second != NULL)
 			{
-				cada.second->setTint(al_map_rgba(0, 0, 0, 0));// los hago trasparentes
+				impresora->delType(cada.second);
+			}
+		}
+		for (auto cada : estructuras) // elimino settlement y city para la proxima partida
+		{
+			if (cada.second != NULL)
+			{
+				impresora->delType(cada.second);
 			}
 		}
 	}
@@ -289,12 +296,12 @@ bool PlayersObserver::drawBuildings(bool locOrRemote) // true es local, false es
 	for (auto a : buildings) // primero me fijo que esten bien todos los MovabeType de city o settlements
 	{
 		ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
-		auto itr = sellos.find(a.first);
-		if (itr == sellos.end())
+		auto itr = estructuras.find(a.first);
+		if (itr == estructuras.end())
 		{
 			ALLEGRO_BITMAP* temp = a.second ? dibujo[SETTLE] : dibujo[CITY];
 			pair<unsigned int, unsigned int> pos = toDraw.getPositioningForVertex(a.first);
-			sellos[a.first] = impresora->createType(temp,
+			estructuras[a.first] = impresora->createType(temp,
 				locOrRemote?al_map_rgba_f(1.0, 0.0, 0.0, 1.0) : al_map_rgba_f(0, 0, 1.0, 1.0),
 				pos.first + BOARD_POS_X, pos.second + BOARD_POS_Y,
 				al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) / 2
