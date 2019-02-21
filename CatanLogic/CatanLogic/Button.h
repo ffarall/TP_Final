@@ -15,7 +15,7 @@ using uint = unsigned int;
 class Button :public BasicController
 {
 public:
-	Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize);
+	Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath, int fontSize, int degrees = 0);
 	~Button();
 	bool clickIn(uint x_, uint y_);
 

@@ -2,7 +2,7 @@
 //#include "ButtonController.h"
 #define BUTTON_TINT 0,0,0
 
-Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize) : BasicController(handler_)
+Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize, int angle) : BasicController(handler_)
 {
 	info = nullptr;
 	press = press_;
@@ -19,7 +19,7 @@ Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPo
 		//error
 	}
 	type = press->createType(bototn, al_map_rgb(BUTTON_TINT), xPos, Ypos);
-	
+	type->setAngle(angle*ALLEGRO_PI/180);
 }
 
 Button::~Button()

@@ -214,7 +214,7 @@ void PlayersObserver::update()
 				name = name.substr(0, 10);
 				name += "...";
 			}
-			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.1, ALLEGRO_ALIGN_LEFT, name.c_str());
+			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.05, ALLEGRO_ALIGN_LEFT, name.c_str());
 
 			name.clear();
 			al_set_target_bitmap(sellos[ICONOR]->getBitmap());
@@ -226,7 +226,7 @@ void PlayersObserver::update()
 				name = name.substr(0, 10);
 				name += "...";
 			}
-			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla2"])*0.9, al_get_bitmap_height(dibujo["pla2"])*0.1, ALLEGRO_ALIGN_RIGHT, name.c_str());
+			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla2"])*0.9, al_get_bitmap_height(dibujo["pla2"])*0.05, ALLEGRO_ALIGN_RIGHT, name.c_str());
 
 		}
 		

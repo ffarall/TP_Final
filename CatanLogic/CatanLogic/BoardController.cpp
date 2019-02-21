@@ -74,7 +74,7 @@ void BoardController::update()
 		pos.second += BOARD_POS_Y;
 		sellos[ROBBER_FILE]->setCX(pos.first);
 		sellos[ROBBER_FILE]->setCY(pos.second);
-		
+		sellos[ROBBER_FILE]->setTint(al_map_rgba(255, 255, 255, 255));
 		sellos[ROBBER_FILE]->redraw();
 
 	
@@ -86,6 +86,7 @@ void BoardController::update()
 			printer->setBackgorund(bitmaps[BACKGROUND]);
 			fondoPpal = true;
 		}
+		sellos[ROBBER_FILE]->setTint(al_map_rgba(0, 0, 0, 0));
 	}
 }
 

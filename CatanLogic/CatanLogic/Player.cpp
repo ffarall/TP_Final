@@ -488,11 +488,11 @@ void Player::setLongestRoadCard(bool doesItHaveTheCard)
 		longestRoadCard = doesItHaveTheCard;
 		if (longestRoadCard)
 		{
-			victoryPoints++;
+			victoryPoints+=2;
 		}
 		else
 		{
-			victoryPoints--;
+			victoryPoints-=2;
 		}
 	}
 	
@@ -535,11 +535,11 @@ void Player::setLargestArmyCard(bool doesItHaveTheCard)
 		largestArmyCard = doesItHaveTheCard; 
 		if (largestArmyCard)
 		{
-			victoryPoints++;
+			victoryPoints+=2;
 		}
 		else
 		{
-			victoryPoints--;
+			victoryPoints-=2;
 		}
 	}
 	

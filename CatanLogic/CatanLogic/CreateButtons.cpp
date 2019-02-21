@@ -27,7 +27,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	GUI->attachController("NewSettlement", buttonList[2]);
 	buttonList.push_back(new Button(printer, handler, NEW_CITY_X, NEW_CITY_Y, NEW_CITY_H, NEW_CITY_W, "", "city.png", "", 0));//newCityButton
 	GUI->attachController("NewCity", buttonList[3]);
-	buttonList.push_back(new Button(printer, handler, NEW_ROAD_X, NEW_ROAD_Y, NEW_ROAD_H, NEW_ROAD_W, "", "road.png", "", 0));//newRoadButton
+	buttonList.push_back(new Button(printer, handler, NEW_ROAD_X, NEW_ROAD_Y, NEW_ROAD_H, NEW_ROAD_W, "", "road.png", "", 0, 30));//newRoadButton
 	GUI->attachController("NewRoad", buttonList[4]);
 	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "DevBack2.PNG", "", 0));//getDevCardButton
 	GUI->attachController("GetDevCard", buttonList[5]);
