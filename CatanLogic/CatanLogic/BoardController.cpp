@@ -79,6 +79,7 @@ void BoardController::update()
 		{
 			printer->setBackgorund(bitmaps[BACKGROUND]);
 			fondoPpal = true;
+			fondoListo = false;
 		}
 		sellos[ROBBER_FILE]->setTint(al_map_rgba(0, 0, 0, 0));
 	}
