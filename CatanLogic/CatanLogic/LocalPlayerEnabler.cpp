@@ -730,7 +730,16 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 		disableAllBut(devCardsEvs);
 
 		localPlayer->getNewDevCard(board);
-		enable(NET_ACK, { TX(enablePlayerActions) });
+		
+		if (localPlayer->hasWon(playingWithDev))
+		{
+			enable(NET_ACK, { TX(localWonRoutine) });
+		}
+		else
+		{
+			enable(NET_ACK, { TX(enablePlayerActions) });
+		}
+
 		pkgSender->pushPackage(new package(headers::DEV_CARD));
 	}
 	else
