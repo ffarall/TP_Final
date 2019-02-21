@@ -25,9 +25,9 @@ Board::~Board()
 void Board::shuffleBoard()
 {
 	vector<PortType> puertos = { PortType::_2Lx1,PortType::_2Mx1,PortType::_2Ox1,PortType::_2Px1,PortType::_2Tx1,PortType::_3x1 };
-	vector<ResourceType> resources = {BOSQUE,BOSQUE, BOSQUE, BOSQUE, CAMPOS,CAMPOS,CAMPOS,CAMPOS,COLINAS,COLINAS,COLINAS,DESIERTO,MONTAÑAS,MONTAÑAS,MONTAÑAS,PASTOS,PASTOS,PASTOS,PASTOS };
+	vector<ResourceType> resources = {/*BOSQUE,BOSQUE,*/ BOSQUE, BOSQUE, /*CAMPOS,*/CAMPOS,CAMPOS,CAMPOS,COLINAS,COLINAS,COLINAS,DESIERTO,/*MONTAÑAS,*/MONTAÑAS,MONTAÑAS,/*PASTOS,*/PASTOS,PASTOS,PASTOS };
 	vector<char> circTkns = { 2,12,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11 };
-	map<DevCards, int> devs = { {KNIGHT,14},{ROAD_BUILDING,2},{MONOPOLY,2},{YEARS_OF_PLENTY,2},{VICTORY_POINTS,5} };
+	map<DevCards, int> devs = { {KNIGHT,11},{ROAD_BUILDING,2},{MONOPOLY,2},{YEARS_OF_PLENTY,2},{VICTORY_POINTS,8} }; // cambie las cantidades
 	
 	const vector<string> utiles = // los vertices exteriores en sentido horario
 	{
@@ -67,8 +67,13 @@ void Board::shuffleBoard()
 			break;
 		}
 	}
-
-	for (int i = 0; i < 19; i++) // sorteo los recursos
+	board['B'] = new Hex(MONTAÑAS, 2);
+	board['C'] = new Hex(BOSQUE, 2);
+	board['D'] = new Hex(BOSQUE, 2);
+	board['A'] = new Hex(CAMPOS, 2);
+	board['E'] = new Hex(PASTOS, 2);
+	
+	for (int i = 5; i < 19; i++) // sorteo los recursos // poner en i = 0!!
 	{
 		size_t randPos = rand() % resources.size();
 		ResourceType randRec = resources.at(randPos);
@@ -78,7 +83,9 @@ void Board::shuffleBoard()
 		board['A'+i] = token;
 	}
 
-	for (int i = 0; i < 19; i++) // sorteo los circular tokens
+
+
+	for (int i = 5; i < 19; i++) // sorteo los circular tokens
 	{
 		if (static_cast<Hex *>(board.at('A' + i))->giveResource() != DESIERTO)
 		{
@@ -95,7 +102,33 @@ void Board::shuffleBoard()
 	}
 
 	while (!pileOfDevCards.empty()) { pileOfDevCards.pop(); } // vacio la pila de dev cards por las dudas
-	for (int i = 0; i < 25; i++) // sorteo las dev cards
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(KNIGHT);
+	pileOfDevCards.push(YEARS_OF_PLENTY);
+	pileOfDevCards.push(YEARS_OF_PLENTY);
+	pileOfDevCards.push(MONOPOLY);
+	pileOfDevCards.push(MONOPOLY);
+	pileOfDevCards.push(ROAD_BUILDING);
+	pileOfDevCards.push(ROAD_BUILDING);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+	pileOfDevCards.push(VICTORY_POINTS);
+
+/*	for (int i = 0; i < 25; i++) // sorteo las dev cards
 	{
 		switch (rand() % 5)
 		{
@@ -145,7 +178,7 @@ void Board::shuffleBoard()
 				i--;
 			break;
 		}
-	} 
+	}*/ 
 	// swich case medio feo, no abrir
 
 }
