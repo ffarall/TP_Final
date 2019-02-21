@@ -551,7 +551,7 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 			else
 			{
 				setWaitingMessage("El oponente tiro 7 y essta moviendo el robber");
-				enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) , TX(checkRemoteDevCards) });
+				enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) });
 			}
 		}
 	}
@@ -631,6 +631,7 @@ void RemotePlayerEnabler::remoteMoveRobber(SubtypeEvent * ev)
 
 	setWaitingMessage("El oponente pensando la jugada maestra...");
 
+	checkRemoteDevCards(ev);
 	enableRemoteActions();
 
 }
@@ -867,7 +868,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 void RemotePlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El rival compro una DevCards.");
 
 	if (remotePlayer->checkResourcesForDevCard())
 	{
@@ -963,16 +964,12 @@ void RemotePlayerEnabler::remUsedYoP(SubtypeEvent * ev)
 
 	pkgSender->pushPackage(new package(headers::ACK)); // respondo el pauqete
 	ResourceType recurso = pkg->getResource(true);
-	size_t amount = localPlayer->getResourceAmount(recurso); // busco la cantidad de recursos que el local tiene para agregarle al remoto
-
-	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
-	localPlayer->useResource(recurso, amount); // saco los recuros
-
+	
+	remotePlayer->addResource(recurso); // transfiero los recursos al oponenete
+	
 	recurso = pkg->getResource(false);
-	amount = localPlayer->getResourceAmount(recurso); // busco la cantidad de recursos que el local tiene para agregarle al remoto
 
-	remotePlayer->addResource(recurso, amount); // transfiero los recursos al oponenete
-	localPlayer->useResource(recurso, amount); // saco los recuros
+	remotePlayer->addResource(recurso); // transfiero los recursos al oponenete
 
 	remotePlayer->useDevCard(DevCards::YEARS_OF_PLENTY); // uso la carta
 	enableRemoteActions();
@@ -1016,6 +1013,7 @@ void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 
 void RemotePlayerEnabler::rejectOffer(SubtypeEvent * ev)
 {
+	setWaitingMessage("Usted rechazó la oferta, ahora el rival seguirá jugando.");
 	pkgSender->pushPackage(new package(headers::NO));
 }
 

@@ -1810,7 +1810,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 		}
 		else if (Yop->getPackage())
 		{
-			YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(bankbutton->getPackage());
+			YearsOfPlentyPkg * paquete = static_cast<YearsOfPlentyPkg *>(Yop->getPackage());
 			if (paquete->getResource(true) == ResourceType::DESIERTO) // me fijo si esta completo el primer recurso
 			{
 				paquete->setResource(true, recurso);
@@ -1830,7 +1830,7 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 		}
 		else if (monopoly->getPackage())
 		{
-			MonopolyPkg * paquete = static_cast<MonopolyPkg *>(bankbutton->getPackage());
+			MonopolyPkg * paquete = static_cast<MonopolyPkg *>(monopoly->getPackage());
 			paquete->setResource(recurso);
 			return GUIEnablerEvent::RESOURCE;
 		}

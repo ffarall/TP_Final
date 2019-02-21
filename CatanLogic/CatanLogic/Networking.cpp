@@ -419,7 +419,7 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 			complete = false;
 		break;
 	case headers::YEARS_OF_PLENTY:
-		evento->setSubtype(SubType::NET_DEV_CARDS);
+		evento->setSubtype(SubType::NET_YEARS_OF_PLENTY);
 		if (input.length() >= 3)
 		{
 			evento->addPackage(new YearsOfPlentyPkg(static_cast<ResourceType>(input[1]), static_cast<ResourceType>(input[2])) );
