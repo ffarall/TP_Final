@@ -891,7 +891,7 @@ void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)
 {
 	unsigned int type = ev->getType();
 	unsigned int subtype = ev->getSubtype();
-	setErrMessage(string("Se recibió un evento de tipo ") + to_string(type) + " y subtipo " + to_string(subtype) + " , el cual no está habilitado.");
+	setErrMessage(string("Se recibio un evento de tipo ") + to_string(type) + " y subtipo " + to_string(subtype) + " , el cual no está habilitado.");
 }
 
 void LocalPlayerEnabler::emitEvent(EventTypes type)
