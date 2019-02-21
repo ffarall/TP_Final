@@ -61,12 +61,6 @@ void BoardController::update()
 			drawMap();
 		}
 
-		if (sellos[ROBBER_FILE] == NULL)
-		{//creo el sello del robber
-			sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgba(255, 255, 255,255),
-				0, 0, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
-				1, 1, 0, 0);
-		}
 		string foo;
 		foo += board->getRobberPos();
 		pair<unsigned int, unsigned int > pos = getDecoder()->getPositioningForToken(foo);
@@ -287,6 +281,11 @@ void BoardController::init()
 		printer->setBackgorund(bitmaps[BACKGROUND]);
 		fondoPpal = true;
 	}
+
+	sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgba(0, 0, 0, 0),
+		0, 0, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
+		1, 1, 0, 0);
+
 }
 
 void BoardController::drawMap()
