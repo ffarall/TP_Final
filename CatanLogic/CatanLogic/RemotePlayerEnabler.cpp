@@ -873,7 +873,14 @@ void RemotePlayerEnabler::checkDevCards(SubtypeEvent * ev)
 	if (remotePlayer->checkResourcesForDevCard())
 	{
 		remotePlayer->getNewDevCard(board);
-		pkgSender->pushPackage(new package(headers::ACK));
+		if (remotePlayer->hasWon(playingWithDev))
+		{
+			enable(NET_I_WON, { TX(finDelJuego) });
+		}
+		else
+		{
+			pkgSender->pushPackage(new package(headers::ACK));
+		}
 	}
 	else
 	{
