@@ -261,6 +261,7 @@ void PlayersObserver::update()
 			if (cada.second != NULL)
 			{
 				impresora->delType(cada.second);
+				roads[cada.first] = NULL;
 			}
 		}
 		for (auto cada : estructuras) // elimino settlement y city para la proxima partida
@@ -268,6 +269,7 @@ void PlayersObserver::update()
 			if (cada.second != NULL)
 			{
 				impresora->delType(cada.second);
+				estructuras[cada.first] = NULL;
 			}
 		}
 	}
