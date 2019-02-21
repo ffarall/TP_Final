@@ -557,7 +557,15 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 		remotePlayer->addToRivalsSettlements(position);
 		board->addSettlementToTokens(position, localPlayer);
 		pkgSender->pushPackage(new SettlementPkg(*pkg));
-		enable(NET_ACK, { TX(enablePlayerActions) });
+
+		if (localPlayer->hasWon(playingWithDev))
+		{
+			enable(NET_ACK, { TX(localWonRoutine) });
+		}
+		else
+		{
+			enable(NET_ACK, { TX(enablePlayerActions) });
+		}
 		setWaitingMessage("Felicidades! ha colocado un nuevo settlement. Suma 1 VP");
 	}
 	else
@@ -565,7 +573,6 @@ void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no está disponible.");
 	}
 
-	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
@@ -585,7 +592,16 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 		remotePlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, localPlayer);
 		pkgSender->pushPackage(new RoadPkg(*pkg));
-		enable(NET_ACK, { TX(enablePlayerActions) });
+
+		if (localPlayer->hasWon(playingWithDev))
+		{
+			enable(NET_ACK, { TX(localWonRoutine) });
+		}
+		else
+		{
+			enable(NET_ACK, { TX(enablePlayerActions) });
+		}
+
 		setWaitingMessage("Ha colocado un nuevo road");
 	}
 	else
@@ -594,7 +610,6 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 	}
 	
 	checkLongestRoad();
-	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
@@ -614,7 +629,16 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 		remotePlayer->promoteToRivalsCity(position);
 		board->addCityToTokens(position, localPlayer);
 		pkgSender->pushPackage(new CityPkg(*pkg));
-		enable(NET_ACK, { TX(enablePlayerActions) });
+		
+		if (localPlayer->hasWon(playingWithDev))
+		{
+			enable(NET_ACK, { TX(localWonRoutine) });
+		}
+		else
+		{
+			enable(NET_ACK, { TX(enablePlayerActions) });
+		}
+
 		setWaitingMessage("Felicidades! Ha colocado una nueva city. Suma un VP y duplica recursos");
 	}
 	else
@@ -622,7 +646,7 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 		setErrMessage("La coordenada donde se quiso promover la nueva City no es aceptada.");
 	}
 
-	checkIfLocalWon();
+	
 }
 
 void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
@@ -727,19 +751,27 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 	pkgSender->pushPackage(new KnightPkg(*pkg));
 
 	localPlayer->useDevCard(KNIGHT);
+	checkLargestArmy();
 	if (remotePlayer->isThereSetOrCity(movedTo))
 	{
 		disableAll();
-		enable(NET_CARD_IS, { TX(takeRobberCard), TX(enablePlayerActions) });
+		enable(NET_CARD_IS, { TX(takeRobberCard)});
 	}
 	else
 	{
 		disableAll();
-		enable(NET_ACK, { TX(enablePlayerActions) });
+
+		if (localPlayer->hasWon(playingWithDev))
+		{
+			enable(NET_ACK, { TX(localWonRoutine) });
+		}
+		else
+		{
+			enable(NET_ACK, { TX(enablePlayerActions) });
+		}
+
 	}
 
-	checkLargestArmy();
-	checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
@@ -759,7 +791,7 @@ void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
 
-	checkIfLocalWon();
+	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
@@ -780,7 +812,7 @@ void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
 
-	checkIfLocalWon();
+	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
@@ -796,7 +828,7 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 	disableAll();
 	enable(NET_ACK, { TX(enableFstRoad) });
 
-	checkIfLocalWon();
+	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
@@ -823,6 +855,16 @@ void LocalPlayerEnabler::takeRobberCard(SubtypeEvent * ev)
 
 	localPlayer->addResource(res);
 	remotePlayer->useResource(res);
+
+	if (localPlayer->hasWon(playingWithDev))
+	{
+		localWonRoutine(ev);
+	}
+	else
+	{
+		enablePlayerActions(ev);
+	}
+
 }
 
 void LocalPlayerEnabler::enableFstRoad(SubtypeEvent * ev)
@@ -852,7 +894,7 @@ void LocalPlayerEnabler::checkFstRoad(SubtypeEvent * ev)
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
 	}
 
-	checkIfLocalWon();
+	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::enableSndRoad(SubtypeEvent * ev)
@@ -875,7 +917,7 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 	setWaitingMessage("");
 	setErrMessage("");
-	checkIfLocalWon();
+	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
@@ -885,6 +927,16 @@ void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
 	setErrMessage("");
 	setWaitingMessage("");
 	pkgSender->pushPackage(new package(headers::PASS));
+}
+
+void LocalPlayerEnabler::localWonRoutine(SubtypeEvent * ev)
+{
+	if (localPlayer->hasWon(playingWithDev))
+	{
+		emitEvent(I_WON);
+		pkgSender->pushPackage(new package(headers::I_WON));
+		disableAll();
+	}
 }
 
 void LocalPlayerEnabler::genericDefault(SubtypeEvent * ev)

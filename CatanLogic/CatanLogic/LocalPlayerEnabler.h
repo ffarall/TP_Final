@@ -76,6 +76,9 @@ private:
 	void endTurn(SubtypeEvent* ev);
 	void firstTurn(SubtypeEvent * ev);
 
+	void localWonRoutine(SubtypeEvent * ev);
+	
+
 	/* DEFAULT ROUTINES */
 	void genericDefault(SubtypeEvent* ev);
 
