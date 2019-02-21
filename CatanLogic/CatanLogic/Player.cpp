@@ -54,6 +54,17 @@ void Player::reset()
 	allVertexesAvailable();
 	devCards.clear();
 	spanningTree.clear();
+	victoryPoints = 0;
+	cardVictoryPoints = 0;
+	iWon = false;
+	remainingCities = 4;
+	remainingRoads = 15;
+	remainingSettlements = 5;
+	army = 0;
+	longestRoad = 0;
+	longestRoadCard = largestArmyCard = 0;
+	lastSettlement = "";
+	usingRoadBuilding = false;
 }
 
 void Player::init()
