@@ -126,8 +126,9 @@ void MainFSM::continuePlaying(GenericEvent * ev)
 	}
 	else if(localEnabler->whoWon() == "local")
 	{
+		sendPlayAgain(ev);		
 		handShaking->setState(handShakingStates::SendingServerName_S);
-		emitSubEvent(MainTypes::NETWORK, SubType::NET_ACK);
+		//emitSubEvent(MainTypes::NETWORK, SubType::NET_ACK);
 	}
 	else
 	{
