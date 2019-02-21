@@ -1013,7 +1013,7 @@ void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 
 void RemotePlayerEnabler::rejectOffer(SubtypeEvent * ev)
 {
-	setWaitingMessage("Usted rechazó la oferta, ahora el rival seguirá jugando.");
+	setWaitingMessage("Usted rechazo la oferta, ahora el rival sigue jugando.");
 	pkgSender->pushPackage(new package(headers::NO));
 }
 
