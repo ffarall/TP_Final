@@ -81,23 +81,19 @@ void HandShakingFSM::nonActRoutine(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingClientNameS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
-		error(ev);
-	}
+	
+	error(ev);
 }
 
 void HandShakingFSM::defaultServerS(GenericEvent * ev)
 {
-	//error(ev);
+	error(ev);
 }
 
 void HandShakingFSM::defaultWaitingForNameS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
-		error(ev);
-	}
+	
+	error(ev);
 }
 
 void HandShakingFSM::sendMap(GenericEvent * ev)
@@ -108,10 +104,7 @@ void HandShakingFSM::sendMap(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingServerNameS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
-		error(ev);
-	}
+	error(ev);
 }
 
 void HandShakingFSM::sendCircTokens(GenericEvent * ev)
@@ -121,10 +114,7 @@ void HandShakingFSM::sendCircTokens(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingMapS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
-		error(ev);
-	}
+	error(ev);
 }
 
 void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
@@ -134,10 +124,7 @@ void HandShakingFSM::askPlayDevCards(GenericEvent * ev)
 
 void HandShakingFSM::defaultSendingCircTokensS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
-		error(ev);
-	}
+	error(ev);
 }
 
 void HandShakingFSM::sendDevCards(GenericEvent * ev)
@@ -165,24 +152,18 @@ void HandShakingFSM::emitWhoStarts(GenericEvent * ev)
 
 void HandShakingFSM::defaultPlayWithDevCardsS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
-		error(ev);
-	}
+	error(ev);
 }
 
 void HandShakingFSM::defaultSendingDevCardsS(GenericEvent * ev)
 {
-	if (((SubEvents*)ev)->getType() == SubType::TIME_OUT)
-	{
 		error(ev);
-	}
 }
 
 void HandShakingFSM::error(GenericEvent * ev)
 { // aca esta lo de time out, para pushear denuevo
 	network->pushPackage(new package(headers::ERROR_));//do error stuff
-	network->closeConection();
+	//network->closeConection();
 	handler->enqueueEvent(new SubEvents(MainTypes::ERR_IN_COM, SubType::TIME_OUT));// revisar si esta bien, asumo error en la comunicacion
 }
 
