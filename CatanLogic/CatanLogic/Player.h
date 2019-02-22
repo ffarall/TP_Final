@@ -174,6 +174,10 @@ private:
 	// Longest road of this player.
 	size_t longestRoad;
 
+	int distanceToBifurcation(string vertex, string edge);
+	void recursion(string vertex, string edge, map<string,bool> visitedEdge, map<string, bool> visitedVertex, int distancia);
+
+
 	// List used when calculating the longestRoad. Stores all the edges that have roads and have already been visited.
 	QuadTree spanningTree;
 

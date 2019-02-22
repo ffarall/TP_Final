@@ -517,6 +517,7 @@ size_t Player::getLongestRoad()
 
 void Player::updateLongestRoad(string startingEdge)
 {
+	/*
 	spanningTree.clear();															// Clears any residue from previous calculations.
 	vector< string > startingVertexes = getAdjacentVertexes(startingEdge);
 	spanningTree.insert(startingEdge);
@@ -531,6 +532,51 @@ void Player::updateLongestRoad(string startingEdge)
 	{
 		longestRoad = roadLength;													// Updates if there's a new longestRoad.
 	}
+	*/
+
+	/*  Primero busco la arista ideal para arrancar, tiene que ser una punta lo mas alejada de una interseccion */
+	list<pair<string,string>> bordes; // aca voy guardadano los vertices de los bordes, vertex + road
+	for (auto road : myRoads)
+	{
+		vector< string > vertices = getAdjacentVertexes(road.first); // de cada camino agarro los vertices
+		for (string vecino : vertices)
+		{
+			vector<string> hijos =  getAdjacentEdges(vecino); //de los vertices busco si tienen mas de un road pegado
+			int unico = 0;
+			for (string cada : hijos)
+			{
+				if (myRoads.find(cada) != myRoads.end())
+				{
+					unico++;
+				}
+			}
+			if (unico == 1) 
+			{ 
+				bordes.push_back({ road.first,vecino }); // guardo road + vertice de la punta (revisar que pasa con los roads de 1)
+			}
+		}
+	}
+	bordes.unique();// por si tengo aristas repetidas
+	pair<pair<string, string>, int> distancia = { {"",""},0 }; // para guardar la arista ideal
+	for (auto road : bordes) // reccorro todas las puntas
+	{
+		int length = 1 + distanceToBifurcation(road.second, road.first);
+		if (distancia.second < length)
+		{
+			distancia.first = road; // gardo el mejor road
+			distancia.second = length; // guardo la distancia para seguir comparando
+		}
+	}
+	if (distancia.second == 0) // todo es un ciclo
+	{
+		distancia.first.first = myRoads.begin()->first; //agarro un road cualquiera
+		distancia.first.second = getAdjacentVertexes(distancia.first.first).at(0); // tomo un vertice aleatorio
+	}
+	/* Ya encontre la punta ideal para arrancar el algoritmo, ponele */
+	map<string, bool> auxiliar1, auxiliar2;
+	auxiliar1.clear();
+	auxiliar2.clear();
+	recursion(distancia.first.second, distancia.first.first, auxiliar1, auxiliar2, 0); // aca se actualiza el longest road
 
 	notifyAllObservers();
 }
@@ -547,14 +593,14 @@ void Player::setLargestArmyCard(bool doesItHaveTheCard)
 		largestArmyCard = doesItHaveTheCard; 
 		if (largestArmyCard)
 		{
-			victoryPoints+=2;
+		victoryPoints += 2;
 		}
 		else
 		{
-			victoryPoints-=2;
+		victoryPoints -= 2;
 		}
 	}
-	
+
 }
 
 size_t Player::getArmySize()
@@ -575,6 +621,118 @@ bool Player::getUsingRoadBuilding()
 void Player::setUsingRoadBuilding(bool value)
 {
 	usingRoadBuilding = value;
+}
+
+int Player::distanceToBifurcation(string vertex, string edge)
+{
+	vector<string> vertices = getAdjacentVertexes(edge);
+	string newVertex = vertices[0].compare(vertex) ? vertices[0] : vertices[1]; // asumo que siempre me devuelve 2 verices y funciona bien
+	vector<string> hijos = getAdjacentEdges(newVertex);
+	string newSon;
+	int unico = 0;
+	for (string cada : hijos)
+	{
+		if (myRoads.find(cada) != myRoads.end())
+		{
+			if (cada.compare(edge) != 0) // si es un road diferente
+			{
+				newSon = cada; // guardo para la posible siguiente recursion
+			}
+			unico++;
+		}
+	}
+	if (unico == 2) // si tene 2 es un vertice de paso
+	{
+		return (1 + distanceToBifurcation(newVertex, newSon));
+	}
+	else if (unico == 1) // fin del camino
+	{
+		return 0;
+	}
+	else // bifurcacion
+	{
+		return 1;
+	}
+}
+
+void Player::recursion(string vertex, string edge, map<string, bool> visitedEdge, map<string, bool> visitedVertex, int distancia)
+{
+	bool bifurcacion = false;
+	bool fin = false;
+	string newVertex = vertex;
+	string newSon = edge;
+	vector<string> vertices;
+	vector<string> hijos;
+	vector<string> usefulEdges;
+	do // recorro el camino hasta llegar a una bifurcacion o fin del camino
+	{
+		distancia++;
+		usefulEdges.clear();
+		visitedEdge[newSon] = true; // visito el par arista-vertice
+		visitedVertex[newVertex] = true;
+		vertices = getAdjacentVertexes(newSon);
+		newVertex = vertices[0].compare(newVertex) ? vertices[0] : vertices[1]; // asumo que siempre me devuelve 2 verices y funciona bien
+
+		hijos = getAdjacentEdges(newVertex);
+		for (string cada : hijos) // recorro fijandome cuales son los hijos
+		{
+			if (myRoads.find(cada) != myRoads.end())
+			{
+				if (cada.compare(newSon) != 0) // si es un road diferente
+				{
+					if (visitedEdge.find(cada) == visitedEdge.end())
+					{
+						usefulEdges.push_back(cada); // guardo para la posible siguiente recursion
+					}
+				}
+			}
+		}
+
+		switch (usefulEdges.size())
+		{
+		case 0: //es el final supongo
+			fin = true;
+			break;
+		case 1: // vertice de paso
+			newSon = usefulEdges[0]; // agarro el nuevo road
+
+			if (visitedVertex.find(newVertex) != visitedVertex.end())
+			{
+				fin = true; // estoy en un ciclo y lo recorri todo
+			}
+			break;
+		case 2: // bifurcacion
+			if (visitedEdge.find(usefulEdges[0]) == visitedEdge.end() && visitedEdge.find(usefulEdges[1]) == visitedEdge.end())
+			{
+				bifurcacion = true; // si no visite ninguno de los dos es una bifurcacion
+			}
+			else if (visitedEdge.find(usefulEdges[0]) != visitedEdge.end())
+			{ 
+				newSon = usefulEdges[1];// si ya visite uno, tengo que seguir visitando por el otro
+			}
+			else
+			{
+				newSon = usefulEdges[0];// si es el que no visite sigo mi camino por aca
+			}
+			break;
+		default:
+			break;
+		}
+
+	} while (!bifurcacion && !fin);
+
+	if (fin)
+	{
+		if (longestRoad < distancia)
+		{
+			longestRoad = distancia;
+		}
+	}
+	else // sali del do while pq es una bifurcacion
+	{
+		recursion(newVertex, usefulEdges[0], visitedEdge, visitedVertex, distancia);
+		recursion(newVertex, usefulEdges[1], visitedEdge, visitedVertex, distancia);
+	}
 }
 
 void Player::allVertexesAvailable()
