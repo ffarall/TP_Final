@@ -176,7 +176,7 @@ void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 void MainFSM::error(GenericEvent * ev)
 {
 	network->closeConection();
-	network->setStatus(CLIENT);
+	
 	//network->pushPackage(new package(headers::ERROR_));
 	//cerrame la 12 nestor
 }
