@@ -157,6 +157,7 @@ void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
 		cout << "[CLIENT] init\n";
 	}
 	connected = false;
+	estado = CLIENT;
 }
 
 void Networking::workPlease()
