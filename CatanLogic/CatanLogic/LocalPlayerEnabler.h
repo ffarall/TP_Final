@@ -75,7 +75,7 @@ private:
 	void checkSndRoad(SubtypeEvent* ev);
 	void endTurn(SubtypeEvent* ev);
 	void firstTurn(SubtypeEvent * ev);
-
+	void waitForLocalCards(SubtypeEvent * ev);
 	void localWonRoutine(SubtypeEvent * ev);
 	
 

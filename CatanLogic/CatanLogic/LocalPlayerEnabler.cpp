@@ -343,6 +343,7 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 {
 	if (localPlayer->totalResourcesAmount() >= 7)					// If local has 7 or more resources...
 	{
+		setWaitingMessage("Debe descartar " + to_string(localPlayer->totalResourcesAmount() / 2) + " recursos.");
 		disableAll();
 		enable(PLA_ROBBER_CARDS, { TX(discardLocalResources) });
 	}
@@ -431,7 +432,8 @@ void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Ya de descarto de sus cartas, mueva el robber");
+	setWaitingMessage("");
+	enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
 
@@ -443,7 +445,8 @@ void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 	pkgSender->pushPackage(new RobberCardsPkg(*pkg));
 
 	disableAll();
-	enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
+	enable(NET_ACK, { TX(waitForLocalCards) });
+	
 }
 
 void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
@@ -821,7 +824,6 @@ void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
 	disableAll();
 	enable(NET_ACK, { TX(enablePlayerActions) });
 
-	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
@@ -837,7 +839,6 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 	disableAll();
 	enable(NET_ACK, { TX(enableFstRoad) });
 
-	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
@@ -903,7 +904,6 @@ void LocalPlayerEnabler::checkFstRoad(SubtypeEvent * ev)
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
 	}
 
-	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::enableSndRoad(SubtypeEvent * ev)
@@ -926,7 +926,6 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 	setWaitingMessage("");
 	setErrMessage("");
-	//checkIfLocalWon();
 }
 
 void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
@@ -936,6 +935,14 @@ void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
 	setErrMessage("");
 	setWaitingMessage("");
 	pkgSender->pushPackage(new package(headers::PASS));
+}
+
+void LocalPlayerEnabler::waitForLocalCards(SubtypeEvent * ev)
+{
+	setErrMessage("");
+	setWaitingMessage("Ya de descarto de sus cartas, mueva el robber");
+	disable(NET_ACK);
+	enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
 }
 
 void LocalPlayerEnabler::localWonRoutine(SubtypeEvent * ev)
