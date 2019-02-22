@@ -158,6 +158,7 @@ void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
 	}
 	connected = false;
 	estado = CLIENT;
+	current = NOTHING;
 }
 
 void Networking::workPlease()
