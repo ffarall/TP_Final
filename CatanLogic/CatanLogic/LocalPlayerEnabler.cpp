@@ -911,6 +911,7 @@ void LocalPlayerEnabler::checkIfLocalWon()
 	if (localPlayer->hasWon(playingWithDev))
 	{
 		emitEvent(I_WON);
+		pkgSender->pushPackage(new package(headers::I_WON));
 		disableAll();
 	}
 }
