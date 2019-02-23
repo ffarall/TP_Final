@@ -40,7 +40,7 @@ private:
 	void firstTurn(SubtypeEvent * ev);
 
 	void checkDices(SubtypeEvent* ev);
-	void SendsRobberCards(SubtypeEvent* ev);
+	void sendsRobberCards(SubtypeEvent* ev);
 	void remoteLoseCards(SubtypeEvent* ev);
 	void remoteMoveRobber(SubtypeEvent* ev);
 

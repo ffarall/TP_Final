@@ -250,7 +250,7 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
-	setWaitingMessage("El jugador coloco su primer road");
+	setWaitingMessage("El jugador coloco su primer road. Esperando que coloque el segundo.");
 
 	if (remotePlayer->checkRoadAvailability(position))
 	{
@@ -270,7 +270,7 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El jugador coloco su segundo road");
+	setWaitingMessage("El jugador coloco su segundo road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -324,7 +324,7 @@ void RemotePlayerEnabler::noAct(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su primer Settlement");
+	setWaitingMessage("El oponente coloco su primer settlement. Esperando primer road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -347,7 +347,7 @@ void RemotePlayerEnabler::firstSettlementLocalStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente coloco su primer settlement. Esperando primer road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -370,7 +370,7 @@ void RemotePlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su primer Settlement");
+	setWaitingMessage("El oponente coloco su primer road. Ahora ponga su primer settlement.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -393,7 +393,7 @@ void RemotePlayerEnabler::firstRoadRemoteStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su primer Road");
+	setWaitingMessage("El oponente coloco su primer road. Esperando segundo settlement.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -425,7 +425,7 @@ void RemotePlayerEnabler::primeraParte(SubtypeEvent * ev)
 void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su segundo Settlement");
+	setWaitingMessage("El oponente coloco su segundo settlement. Esperando segundo road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -448,7 +448,7 @@ void RemotePlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su segundo road");
+	setWaitingMessage("El oponente coloco su segundo road. Ahora ponga su segundo settlement.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -473,7 +473,7 @@ void RemotePlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 void RemotePlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent* ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su segundo Settlement");
+	setWaitingMessage("El oponente coloco su segundo settlement. Esperando segundo road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -496,7 +496,7 @@ void RemotePlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent* ev)
 void RemotePlayerEnabler::secondRoadRemoteStarts(SubtypeEvent* ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El oponente coloco su segundo Road");
+	setWaitingMessage("El oponente coloco su segundo Road. Esperando que tire los dados.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -536,8 +536,8 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 
 		if (localPlayer->totalResourcesAmount() >= 7)
 		{
-			setWaitingMessage("El oponente tiro 7, hay que eliminar cartas");
-			enable(PLA_ROBBER_CARDS, { TX(SendsRobberCards) });
+			setWaitingMessage("El oponente tiro 7. Seleccione " + to_string(localPlayer->totalResourcesAmount() / 2) + " recursos para descartar, clickeando sobre ellos.");
+			enable(PLA_ROBBER_CARDS, { TX(sendsRobberCards) });
 		}
 		else
 		{
@@ -545,12 +545,12 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 			pkgSender->pushPackage(new package(headers::ACK));
 			if (remotePlayer->totalResourcesAmount() >= 7)
 			{
-				setWaitingMessage("El oponente tiro 7, debe descartar cartas");
+				setWaitingMessage("El oponente tiro 7, debe descartar cartas.");
 				enable(NET_ROBBER_CARDS, {TX(remoteLoseCards)});
 			}
 			else
 			{
-				setWaitingMessage("El oponente tiro 7 y essta moviendo el robber");
+				setWaitingMessage("El oponente tiro 7 y esta moviendo el robber.");
 				enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) });
 			}
 		}
@@ -564,10 +564,10 @@ void RemotePlayerEnabler::checkDices(SubtypeEvent * ev)
 	}
 }
 
-void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
+void RemotePlayerEnabler::sendsRobberCards(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Descartando cartas");
+	setWaitingMessage("Descartando las cartas seleccionadas");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = new RobberCardsPkg(*static_cast<RobberCardsPkg*>(auxEv->getPackage()));
 
@@ -584,12 +584,12 @@ void RemotePlayerEnabler::SendsRobberCards(SubtypeEvent * ev)
 
 		if (remotePlayer->totalResourcesAmount() >= 7) // si el otro tiene mas de 7 habilito la espera de esas cartas
 		{
-			setWaitingMessage("El oponente tiro 7, debe descartar cartas");
+			setWaitingMessage("El oponente tiro 7, debe descartar cartas.");
 			enable(NET_ROBBER_CARDS, { TX(remoteLoseCards) });
 		}
 		else
 		{
-			setWaitingMessage("El oponente tiro 7 y essta moviendo el robber");
+			setWaitingMessage("El oponente tiro 7 y esta moviendo el robber");
 			enable(NET_ROBBER_MOVE, { TX(remoteMoveRobber) });
 		}
 	}
@@ -729,7 +729,7 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 
 	if (remotePlayer->checkSettlementAvailability(position))
 	{
-		setWaitingMessage("El oponente coloco un nuevo SETTLEMENT !!!");
+		setWaitingMessage("El oponente coloco un nuevo settlement!!!");
 
 		remotePlayer->addToMySettlements(position);
 		localPlayer->addToRivalsSettlements(position);
@@ -754,7 +754,7 @@ void RemotePlayerEnabler::checkRemoteRoad(SubtypeEvent * ev)
 
 	if (remotePlayer->checkRoadAvailability(position))
 	{
-		setWaitingMessage("El oponente coloco un nuevo ROAD !!!");
+		setWaitingMessage("El oponente coloco un nuevo road!!!");
 
 		remotePlayer->addToMyRoads(position);
 		localPlayer->addToRivalsRoads(position);
@@ -782,7 +782,7 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 
 	if (remotePlayer->checkPromotionOfCity(position))
 	{
-		setWaitingMessage("El oponente coloco una nueva CITY !!!");
+		setWaitingMessage("El oponente coloco una nueva city!!!");
 
 		remotePlayer->promoteToMyCity(position);
 		localPlayer->promoteToRivalsCity(position);
@@ -802,7 +802,7 @@ void RemotePlayerEnabler::checkRemoteCity(SubtypeEvent * ev)
 void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente realizo un bank trade.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	BankTradePkg* pkg = static_cast<BankTradePkg*>(auxEv->getPackage());
 	int amountOfResourcesPaid = pkg->getLength();
@@ -868,7 +868,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 void RemotePlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El rival compro una DevCards.");
+	setWaitingMessage("El rival compro una develpment card.");
 
 	if (remotePlayer->checkResourcesForDevCard())
 	{
@@ -891,7 +891,7 @@ void RemotePlayerEnabler::endTurn(SubtypeEvent * ev)
 {
 	disableAll();
 	enable(NET_DICES_ARE, { TX(checkDices) });
-	setWaitingMessage("");
+	setWaitingMessage("Su turno de tirar los dados.");
 	setErrMessage("");
 	emitEvent(TURN_FINISHED);
 }
@@ -944,7 +944,7 @@ void RemotePlayerEnabler::remUsedMonopoly(SubtypeEvent * ev)
 {
 	disableAll();
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente uso Monopoly.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
 
@@ -962,7 +962,7 @@ void RemotePlayerEnabler::remUsedYoP(SubtypeEvent * ev)
 {
 	disableAll();
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("El oponente uso Years of Plenty.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	YearsOfPlentyPkg* pkg = static_cast<YearsOfPlentyPkg*>(auxEv->getPackage());
 
@@ -982,6 +982,8 @@ void RemotePlayerEnabler::remUsedYoP(SubtypeEvent * ev)
 void RemotePlayerEnabler::remUsedRoadBuilding(SubtypeEvent * ev)
 {
 	disableAll();
+	setErrMessage("");
+	setWaitingMessage("El oponente uso Road Building, ahora seleccionara donde poner el primer road.");
 	pkgSender->pushPackage(new package(headers::ACK));
 	remotePlayer->setUsingRoadBuilding(true);
 	remotePlayer->useDevCard(ROAD_BUILDING);

@@ -253,7 +253,7 @@ void LocalPlayerEnabler::waitingConfFstRoadRemStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Coloque su segundo road");
+	setWaitingMessage("Coloque su segundo road.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	SettlementPkg* pkg = static_cast<SettlementPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -329,7 +329,7 @@ void LocalPlayerEnabler::checkDices(SubtypeEvent * ev)
 void LocalPlayerEnabler::remoteSendsRobberCards(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("El rival tiro sus cartas");
+	setWaitingMessage("El rival tiro sus cartas.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
 
@@ -349,6 +349,7 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 	}
 	else
 	{
+		setWaitingMessage("Ahora debes mover el robber clickeando sobre un token.");
 		disableAll();
 		enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
 	}
@@ -432,7 +433,7 @@ void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Ahora debes mover el robber clickeando sobre un token.");
 	enable(PLA_ROBBER_MOVE, { TX(moveRobber) });
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberCardsPkg* pkg = static_cast<RobberCardsPkg*>(auxEv->getPackage());
@@ -452,7 +453,7 @@ void LocalPlayerEnabler::discardLocalResources(SubtypeEvent * ev)
 void LocalPlayerEnabler::moveRobber(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Listo! puede seguir jugando");
+	setWaitingMessage("Listo! puede seguir jugando.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RobberMovePkg* pkg = static_cast<RobberMovePkg*>(auxEv->getPackage());
 	pkgSender->pushPackage(new RobberMovePkg(pkg->getPos()));
@@ -605,7 +606,7 @@ void LocalPlayerEnabler::checkRoad(SubtypeEvent * ev)
 			enable(NET_ACK, { TX(enablePlayerActions) });
 		}
 
-		setWaitingMessage("Ha colocado un nuevo road");
+		setWaitingMessage("Ha colocado un nuevo road.");
 	}
 	else
 	{
@@ -642,7 +643,7 @@ void LocalPlayerEnabler::checkCity(SubtypeEvent * ev)
 			enable(NET_ACK, { TX(enablePlayerActions) });
 		}
 
-		setWaitingMessage("Felicidades! Ha colocado una nueva city. Suma un VP y duplica recursos");
+		setWaitingMessage("Felicidades! Ha colocado una nueva city. Suma un VP y duplica recursos a recibir.");
 	}
 	else
 	{
@@ -754,7 +755,7 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Usaste Knight.");
+	setWaitingMessage("Usó Knight.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	KnightPkg* pkg = static_cast<KnightPkg*>(auxEv->getPackage());
 	char movedTo = pkg->getPos();
@@ -789,7 +790,7 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Usó Monopoly.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
 	ResourceType res = pkg->getResource();
@@ -809,7 +810,7 @@ void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("Usó Years of Plenty.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	YearsOfPlentyPkg* pkg = static_cast<YearsOfPlentyPkg*>(auxEv->getPackage());
 	ResourceType resCard1 = pkg->getResource(true);
@@ -893,6 +894,7 @@ void LocalPlayerEnabler::checkFstRoad(SubtypeEvent * ev)
 
 	if (localPlayer->checkRoadAvailability(position))
 	{
+		setWaitingMessage("Ahora coloque su segundo road.");
 		localPlayer->addToMyRoads(position);
 		remotePlayer->addToRivalsRoads(position);
 		board->addRoadToTokens(position, localPlayer);
@@ -925,7 +927,7 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	disableAll();
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 	setWaitingMessage("");
-	setErrMessage("");
+	setErrMessage("Es turno de " + remotePlayer->getName() + " de tirar los dados.");
 }
 
 void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
