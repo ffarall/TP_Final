@@ -740,6 +740,7 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 	else
 	{
 		emitEvent(ERR_IN_COM);
+		pkgSender->pushPackage(new package(headers::ERROR_));
 		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no está disponible.");
 	}
 }
@@ -1041,6 +1042,8 @@ void RemotePlayerEnabler::exchangeResources(SubtypeEvent * ev)
 void RemotePlayerEnabler::genericDefault(SubtypeEvent * ev)
 {
 	emitEvent(ERR_IN_COM);
+	pkgSender->pushPackage(new package(headers::ERROR_));
+
 }
 
 void RemotePlayerEnabler::emitEvent(EventTypes type)

@@ -175,8 +175,10 @@ void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 
 void MainFSM::error(GenericEvent * ev)
 {
-	network->pushPackage(new package(headers::ERROR_));
-
+	network->closeConection();
+	
+	//network->pushPackage(new package(headers::ERROR_));
+	//cerrame la 12 nestor
 }
 
 MainFSM::MainFSM(HandShakingFSM* handshaking, Networking *network_, EventsHandler *handler_, LocalPlayerEnabler *enablerLocal, RemotePlayerEnabler *enablerRemote, Board *board_):GenericFsm(&mainFsmMap,StartMenu_S)

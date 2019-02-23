@@ -157,6 +157,8 @@ void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
 		cout << "[CLIENT] init\n";
 	}
 	connected = false;
+	estado = CLIENT;
+	current = NOTHING;
 }
 
 void Networking::workPlease()
@@ -492,7 +494,8 @@ void Networking::parseInput(const char * mensaje, size_t length) // aca parseo
 std::string Networking::msgDecoder(char* msg)
 {
 	std::string message(msg);
-	switch (message[0])
+	int head = message[0];
+	switch (head)
 	{
 	case 0x01: return "ACK"; break;
 	case 0x10: return "NAME"; break;
