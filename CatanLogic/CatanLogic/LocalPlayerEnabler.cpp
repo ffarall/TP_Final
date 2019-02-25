@@ -935,7 +935,7 @@ void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
 	setUpForTurn();
 	emitEvent(TURN_FINISHED);
 	setErrMessage("");
-	setWaitingMessage("");
+	setWaitingMessage("");	
 	pkgSender->pushPackage(new package(headers::PASS));
 }
 

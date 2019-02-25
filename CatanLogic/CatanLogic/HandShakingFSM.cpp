@@ -17,7 +17,8 @@ void HandShakingFSM::saveDevCards(GenericEvent * ev)
 void HandShakingFSM::answerPlayWithDev(GenericEvent * ev)
 {
 	devCardsOn = true;
-	network->pushPackage(new package(headers::YES));
+	package * toSend = new package(headers::YES);
+	network->pushPackage(toSend);
 }
 
 void HandShakingFSM::saveCircularTokens(GenericEvent * ev)

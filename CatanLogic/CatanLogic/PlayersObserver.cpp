@@ -63,8 +63,8 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
 	dibujo[CARTEL] = al_create_bitmap(475, 35);
-	dibujo["pla1"] = al_create_bitmap(150, 175);
-	dibujo["pla2"] = al_create_bitmap(150, 175);
+	dibujo["pla1"] = al_create_bitmap(150, 225);
+	dibujo["pla2"] = al_create_bitmap(150, 225);
 
 	for (auto each : dibujo) { if (each.second == NULL) { working = false; } }
 	if (!working)
@@ -106,10 +106,10 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 		);
 
 		sellos[ICONO] = impresora->createType(dibujo["pla1"], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.05, D_ALTO * 0.05-25
+			D_ANCHO * 0.05, D_ALTO * 0.05-35
 		);
 		sellos[ICONOR] = impresora->createType(dibujo["pla2"], al_map_rgba(0, 0, 0, 0),
-			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo["pla2"]), D_ALTO*0.05-25
+			D_ANCHO * 0.95 - al_get_bitmap_width(dibujo["pla2"]), D_ALTO*0.05-35
 		);
 
 		sellos[COSTOS] = impresora->createType(dibujo[COSTOS], al_map_rgba(0, 0, 0, 0),
@@ -203,31 +203,47 @@ void PlayersObserver::update()
 
 		sellos[COSTOS]->setTint(al_map_rgba(255, 255, 255, 255));
 
-		if (localPlayer->getRemainingRoads() == 15) // si estoy en el principio del juego, esto lo actualizo una sola vez
+		al_set_target_bitmap(sellos[ICONO]->getBitmap());
+		al_clear_to_color(al_map_rgb(255, 255, 255));
+		al_draw_bitmap(dibujo[ICONO], 0, 25, 0);
+		string name = localPlayer->getName();
+		if (name.size() > 10)
 		{
-			al_set_target_bitmap(sellos[ICONO]->getBitmap());
-			al_clear_to_color(al_map_rgb(255, 255, 255));
-			al_draw_bitmap(dibujo[ICONO], 0, 25, 0);
-			string name = localPlayer->getName();
-			if (name.size() > 10)
-			{
-				name = name.substr(0, 10);
-				name += "...";
-			}
-			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.05, ALLEGRO_ALIGN_LEFT, name.c_str());
-
+			name = name.substr(0, 10);
+			name += "...";
+		}
+		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.05, ALLEGRO_ALIGN_LEFT, name.c_str());
+		name.clear();
+		name = "Victory Points: " + to_string(localPlayer->getVictoryPoints());
+		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.8, ALLEGRO_ALIGN_LEFT, name.c_str());
+		
+		if (localEnabler->areWePlayingWithDev())
+		{
 			name.clear();
-			al_set_target_bitmap(sellos[ICONOR]->getBitmap());
-			al_clear_to_color(al_map_rgb(255, 255, 255));
-			al_draw_bitmap(dibujo[ICONOR], 0, 25, 0);
-			name = remotePlayer->getName();
-			if (name.size() > 10)
-			{
-				name = name.substr(0, 10);
-				name += "...";
-			}
-			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla2"])*0.9, al_get_bitmap_height(dibujo["pla2"])*0.05, ALLEGRO_ALIGN_RIGHT, name.c_str());
+			name = "Army size: " + to_string(localPlayer->getArmySize());
+			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.1, al_get_bitmap_height(dibujo["pla1"])*0.9, ALLEGRO_ALIGN_LEFT, name.c_str());
+		}
+		name.clear();
 
+		al_set_target_bitmap(sellos[ICONOR]->getBitmap());
+		al_clear_to_color(al_map_rgb(255, 255, 255));
+		al_draw_bitmap(dibujo[ICONOR], 0, 25, 0);
+		name = remotePlayer->getName();
+		if (name.size() > 10)
+		{
+			name = name.substr(0, 10);
+			name += "...";
+		}
+		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla2"])*0.9, al_get_bitmap_height(dibujo["pla2"])*0.05, ALLEGRO_ALIGN_RIGHT, name.c_str());
+		name.clear();
+		name = "Victory Points: " + to_string(remotePlayer->getVictoryPoints());
+		al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.9, al_get_bitmap_height(dibujo["pla1"])*0.8, ALLEGRO_ALIGN_RIGHT, name.c_str());
+
+		if (localEnabler->areWePlayingWithDev())
+		{
+			name.clear();
+			name = "Army size: " + to_string(remotePlayer->getArmySize());
+			al_draw_text(playerName, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo["pla1"])*0.9, al_get_bitmap_height(dibujo["pla1"])*0.9, ALLEGRO_ALIGN_RIGHT, name.c_str());
 		}
 		
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
