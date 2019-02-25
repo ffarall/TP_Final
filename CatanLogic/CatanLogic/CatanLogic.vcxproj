@@ -135,6 +135,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="CreateButtons.cpp" />
+    <ClCompile Include="DetailsObserver.cpp" />
     <ClCompile Include="GUIEnabler.cpp" />
     <ClCompile Include="GutenbergsPressAllegro.cpp" />
     <ClCompile Include="GutenbergsPress.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="CatanDefs.h" />
     <ClInclude Include="City.h" />
+    <ClInclude Include="DetailsObserver.h" />
     <ClInclude Include="GUIEnabler.h" />
     <ClInclude Include="GutenbergsPressAllegro.h" />
     <ClInclude Include="GutenbergsPress.h" />

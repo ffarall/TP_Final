@@ -16,6 +16,7 @@
 #include "BoardController.h"
 #include "GutenbergsPressAllegro.h"
 #include "SubEvents.h"
+#include "DetailsObserver.h"
 #include "TimerController.h"
 
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * evH,Player * jugador, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEneb, LocalPlayerEnabler * locEneb, Networking * networ);
@@ -44,6 +45,7 @@ int main(int argc, char* argv[])
 	GUI.attachController("TimerController", &timerCont);
 	GUI.initGUIEnabler();
 
+	DetailsObserver observerFSM(&mainFSM,&printer);
 	PlayersObserver localObs(&printer, &localPlayer,&remotePlayer, &localPlayerEnabler, &remotePlayerEnabler, &mainFSM);
 
 	localPlayer.attach(&localObs);
@@ -58,7 +60,8 @@ int main(int argc, char* argv[])
 	localPlayerEnabler.attach(&boardCont);											// localObs and boardCont are observers of localPlayerEnabler.
 	mainFSM.attach(&localObs);
 	mainFSM.attach(&boardCont);														// localObs and boardCont are observers of mainFSM.
-
+	mainFSM.attach(&observerFSM);
+	
 	mainFSM.notifyAllObservers();
 
 	while (!mainFSM.isQuit() && !GUI.displayWasClosed())

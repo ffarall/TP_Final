@@ -560,7 +560,7 @@ void Player::updateLongestRoad(string startingEdge)
 	pair<pair<string, string>, int> distancia = { {"",""},0 }; // para guardar la arista ideal
 	for (auto road : bordes) // reccorro todas las puntas
 	{
-		int length = 1 + distanceToBifurcation(road.second, road.first);
+		int length = distanceToBifurcation(road.second, road.first);
 		if (distancia.second < length)
 		{
 			distancia.first = road; // gardo el mejor road
@@ -569,8 +569,8 @@ void Player::updateLongestRoad(string startingEdge)
 	}
 	if (distancia.second == 0) // todo es un ciclo
 	{
-		distancia.first.first = myRoads.begin()->first; //agarro un road cualquiera
-		distancia.first.second = getAdjacentVertexes(distancia.first.first).at(0); // tomo un vertice aleatorio
+		distancia.first.first = startingEdge; //agarro un road cualquiera
+		distancia.first.second = getAdjacentVertexes(startingEdge).at(0); // tomo un vertice aleatorio
 	}
 	/* Ya encontre la punta ideal para arrancar el algoritmo, ponele */
 	map<string, bool> auxiliar1, auxiliar2;
