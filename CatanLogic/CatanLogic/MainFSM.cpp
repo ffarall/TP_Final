@@ -168,6 +168,16 @@ void MainFSM::resetTimer(GenericEvent * ev)
 	timerCount = MAX_TICK_TIME;
 }
 
+void MainFSM::emitQuit(GenericEvent * ev)
+{
+	network->pushPackage(new package(headers::QUIT_H));
+}
+
+void MainFSM::defaultWait(GenericEvent * ev)
+{
+	error(ev);
+}
+
 void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 {
 	handler->enqueueEvent(new SubEvents(type, subtype));

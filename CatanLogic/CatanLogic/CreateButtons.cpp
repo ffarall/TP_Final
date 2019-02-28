@@ -1410,7 +1410,34 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		al_draw_text(buttonList[21]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
 
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(COLINAS))
+		bool isActive = false; //7,8,12,13
+		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(COLINAS));
+		if (buttonList[7]->getPackage())
+		{
+			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[8]->getPackage())
+		{
+			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[12]->getPackage())
+		{
+			isActive = true;
+		}
+		if (buttonList[13]->getPackage())
+		{
+			isActive = true;
+		}
+
+		if (isActive)
 		{
 			if (!buttonList[21]->isPressed())
 			{
@@ -1450,7 +1477,34 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		al_draw_bitmap(buttonList[22]->getBitmap(), 0, 0, 0);
 		al_draw_text(buttonList[22]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(BOSQUE)).c_str());
 		al_set_target_backbuffer(tempDisplay);
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(BOSQUE))
+		bool isActive = false; //7,8,12,13
+		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(BOSQUE));
+		if (buttonList[7]->getPackage())
+		{
+			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[8]->getPackage())
+		{
+			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[12]->getPackage())
+		{
+			isActive = true;
+		}
+		if (buttonList[13]->getPackage())
+		{
+			isActive = true;
+		}
+
+		if (isActive)
 		{
 			if (!buttonList[22]->isPressed())
 			{
@@ -1488,7 +1542,34 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		al_draw_bitmap(buttonList[23]->getBitmap(), 0, 0, 0);
 		al_draw_text(buttonList[23]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(MONTAÑAS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(MONTAÑAS))
+		bool isActive = false; //7,8,12,13
+		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(MONTAÑAS));
+		if (buttonList[7]->getPackage())
+		{
+			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[8]->getPackage())
+		{
+			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[12]->getPackage())
+		{
+			isActive = true;
+		}
+		if (buttonList[13]->getPackage())
+		{
+			isActive = true;
+		}
+
+		if (isActive)
 		{
 			if (!buttonList[23]->isPressed())
 			{
@@ -1525,7 +1606,34 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		al_draw_bitmap(buttonList[24]->getBitmap(), 0, 0, 0);
 		al_draw_text(buttonList[24]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(CAMPOS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(CAMPOS))
+		bool isActive = false; //7,8,12,13
+		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(CAMPOS));
+		if (buttonList[7]->getPackage())
+		{
+			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[8]->getPackage())
+		{
+			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[12]->getPackage())
+		{
+			isActive = true;
+		}
+		if (buttonList[13]->getPackage())
+		{
+			isActive = true;
+		}
+
+		if (isActive)
 		{
 			if (!buttonList[24]->isPressed())
 			{
@@ -1562,7 +1670,35 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		al_draw_bitmap(buttonList[25]->getBitmap(), 0, 0, 0);
 		al_draw_text(buttonList[25]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(PASTOS)).c_str());
 		al_set_target_backbuffer(tempDisplay);
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(PASTOS))
+
+		bool isActive = false; //7,8,12,13
+		isActive |= ( mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(PASTOS) ) ;
+		if (buttonList[7]->getPackage())
+		{
+			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[8]->getPackage())
+		{
+			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
+			if (tempPkg->offerclosed())
+			{
+				isActive = true;
+			}
+		}
+		if (buttonList[12]->getPackage())
+		{
+			isActive = true;
+		}
+		if (buttonList[13]->getPackage())
+		{
+			isActive = true;
+		}
+
+		if (isActive)
 		{
 			if (!buttonList[25]->isPressed())
 			{
@@ -1595,7 +1731,49 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S )
 		{
-			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES)))
+			bool isActive = false; //7,8,12,13
+			isActive |= locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_YES));
+			if (buttonList[7]->getPackage())
+			{
+				BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
+				if ((tempPkg->getResouceBougth()) != ResourceType::DESIERTO)
+				{
+					isActive = true;
+				}
+				else if ((tempPkg->getResoucesPaid()).size() > 0 && !tempPkg->offerclosed())
+				{
+					isActive = true;
+				}
+			}
+			if (buttonList[8]->getPackage())
+			{
+				OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
+				if ((tempPkg->getOpponentOnes()).size() > 0)
+				{
+					isActive = true;
+				}
+				else if (((tempPkg->getMyOnes()).size() > 0) && !(tempPkg->offerclosed()))
+				{
+					isActive = true;
+				}
+			}
+			if (buttonList[12]->getPackage())
+			{
+				MonopolyPkg * tempPkg = static_cast<MonopolyPkg *>(buttonList[12]->getPackage());
+				if (tempPkg->getResource() != ResourceType::DESIERTO)
+				{
+					isActive = true;
+				}
+			}
+			if (buttonList[13]->getPackage())
+			{
+				YearsOfPlentyPkg * tempPkg = static_cast<YearsOfPlentyPkg *>(buttonList[12]->getPackage());
+				if (tempPkg->getResource(false) != ResourceType::DESIERTO)
+				{
+					isActive = true;
+				}
+			}
+			if (isActive)
 			{
 				if (!buttonList[26]->isPressed())
 				{
@@ -1637,7 +1815,25 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	{
 		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S)
 		{
-			if (locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO)))
+			bool isActive = false;
+			isActive |= locEnab->waitingForThisSubtype(new SubEvents(MainTypes::PLAYER_ACTION, SubType::PLA_NO));
+			if (buttonList[7]->getPackage())
+			{
+				isActive = true;
+			}
+			if (buttonList[8]->getPackage())
+			{
+				isActive = true;
+			}
+			if (buttonList[12]->getPackage())
+			{
+				isActive = true;
+			}
+			if (buttonList[13]->getPackage())
+			{
+				isActive = true;
+			}
+			if (isActive)
 			{
 				if (!buttonList[27]->isPressed())
 				{

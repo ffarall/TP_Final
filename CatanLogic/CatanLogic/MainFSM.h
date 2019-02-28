@@ -18,7 +18,7 @@
 
 #define MAX_TICK_TIME 15000//set to be 2 min 30 sec
 
-enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, LocalGameOver_S, LocalPlayAgain_S, RemoteGameOver_S, RemotePlayAgain_S };
+enum mainStates : StateTypes { StartMenu_S, HandShaking_S, LocalPlayer_S, RemotePlayer_S, LocalGameOver_S, LocalPlayAgain_S, RemoteGameOver_S, RemotePlayAgain_S, WaitAnswer_s};
 
 class MainFSM : public GenericFsm
 
@@ -50,7 +50,9 @@ private:
 
 		{StartMenu_S,{{
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(endProgram)}},
+				{MainTypes::CLOSE_ALL,{StartMenu_S,TX(endProgram)}}, // clossing de window
+
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(endProgram)}}, // pressing quit button
 
 				{MainTypes::START_GAME,{HandShaking_S,TX(initHandShakingFSM)}},
 
@@ -76,7 +78,9 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}} ,
+
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
 			},
 
@@ -98,8 +102,9 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
 
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 			},
 
 			{StartMenu_S,TX(defaultLocalPlayerS)}}},
@@ -120,7 +125,9 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
 			},
 
@@ -138,8 +145,9 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
 
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 			},
 
 			{StartMenu_S,TX(defaultGameOverS)}} },
@@ -156,7 +164,9 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
 			},
 
@@ -174,7 +184,9 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
 			},
 
@@ -192,12 +204,24 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(nonActRoutine)}}
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
 			},
 
-			{StartMenu_S,TX(defaultPlayAgainS)}} }
+			{StartMenu_S,TX(defaultPlayAgainS)}} },
 
+
+		{ WaitAnswer_s,{{
+
+				{MainTypes::TICKS,{WaitAnswer_s,TX(nonActRoutine)}},
+
+				{MainTypes::NETWORK,{StartMenu_S,TX(endProgram)}} // ver como identificar si ese networking es un ack
+
+			},
+
+			{StartMenu_S,TX(defaultWait)}} }
 
 
 
@@ -264,6 +288,10 @@ private:
 
 	void resetTimer(GenericEvent* ev);
 
+	
+	void emitQuit(GenericEvent* ev);
+	
+	void defaultWait(GenericEvent* ev);
 
 
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);
