@@ -31,6 +31,12 @@ GUIEnablerEvent TimerController::parseTimerEvent()
 	return NO_EV;
 }
 
+GUIEnablerEvent TimerController::parseCloseWindow()
+{
+	emitEvent(MainTypes::CLOSE_ALL);
+	return NO_EV;
+}
+
 void TimerController::update()
 {
 }

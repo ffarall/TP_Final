@@ -88,11 +88,7 @@ void LocalPlayerEnabler::remoteStarts(string nameLocal, string nameRemote, Board
 
 	remoteEnabler->setBoard(board = board_);											// Same board for both.
 	remotePlayer->setName(nameRemote);
-	string mensaje = "Listo para empezar, el jugador ";
-	mensaje += remotePlayer->getName();
-	mensaje += " debe colocar su primer SETTLEMENT.";
 
-	//setWaitingMessage(mensaje);
 	setWaitingMessage(""); // para que se muestren los mensajes del remote
 	disableAll();
 	enable(PLA_SETTLEMENT, { TX(firstSettlementRemoteStarts) });
@@ -153,7 +149,8 @@ void LocalPlayerEnabler::firstTurnFinish(SubtypeEvent* ev)
 	enable(PLA_SETTLEMENT, { TX(secondSettlementLocalStarts) });				// Leaving everything ready for next turn.
 	pkgSender->pushPackage(new package(headers::PASS));
 	setErrMessage("");
-	setWaitingMessage(remotePlayer->getName() + " debe colocar su primer Settlement.");
+	setWaitingMessage("");
+	//setWaitingMessage(remotePlayer->getName() + " debe colocar su primer Settlement.");
 	emitEvent(TURN_FINISHED);										// Emitting event that turn is finished.
 }
 
@@ -275,7 +272,8 @@ void LocalPlayerEnabler::waitingConfSndSetRemStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage(remotePlayer->getName() + " debe colocar su segundo settlement.");
+	setWaitingMessage("");
+	//setWaitingMessage(remotePlayer->getName() + " debe colocar su segundo settlement.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -927,7 +925,7 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	disableAll();
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 	setWaitingMessage("");
-	setErrMessage("Es turno de " + remotePlayer->getName() + " de tirar los dados.");
+	//setErrMessage("Es turno de " + remotePlayer->getName() + " de tirar los dados.");
 }
 
 void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)

@@ -178,6 +178,19 @@ void MainFSM::defaultWait(GenericEvent * ev)
 	error(ev);
 }
 
+void MainFSM::shutDown(GenericEvent * ev)
+{
+	SubEvents * aux = static_cast<SubEvents *>(ev);
+	if (aux->getPackage()->getPacket() == headers::ACK)
+	{
+		endProgram(ev);
+	}
+	else
+	{
+		error(ev);
+	}
+}
+
 void MainFSM::emitSubEvent(EventTypes type, EventSubtypes subtype)
 {
 	handler->enqueueEvent(new SubEvents(type, subtype));

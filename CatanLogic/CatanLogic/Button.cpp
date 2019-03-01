@@ -186,6 +186,11 @@ GUIEnablerEvent Button::parseTimerEvent()
 	return GUIEnablerEvent::NO_EV; // ver
 }
 
+GUIEnablerEvent Button::parseCloseWindow()
+{
+	return NO_EV;
+}
+
 MovableType * Button::getType()
 {
 	return type;

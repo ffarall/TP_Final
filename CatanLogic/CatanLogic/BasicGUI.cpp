@@ -67,7 +67,9 @@ void BasicGUI::parseEvent()
 		}
 	}
 	break;
-	case GUI_CLOSE_DISPLAY: needToClose = true;
+	case GUI_CLOSE_DISPLAY: 
+		//needToClose = true;
+
 	break;
 	default: break;
 	}

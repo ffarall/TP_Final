@@ -670,6 +670,11 @@ GUIEnablerEvent Networking::parseTimerEvent()
 	return GUIEnablerEvent::NO_EV;
 }
 
+GUIEnablerEvent Networking::parseCloseWindow()
+{
+	return NO_EV;
+}
+
 void Networking::update()
 {
 }

@@ -41,6 +41,7 @@ public:
 	virtual GUIEnablerEvent parseMouseDownEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseMouseUpEvent(uint32_t x, uint32_t y);
 	virtual GUIEnablerEvent parseTimerEvent();
+	virtual GUIEnablerEvent parseCloseWindow();
 
 	MovableType* getType();
 	package * getPackage();

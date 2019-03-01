@@ -217,14 +217,11 @@ private:
 
 				{MainTypes::TICKS,{WaitAnswer_s,TX(nonActRoutine)}},
 
-				{MainTypes::NETWORK,{StartMenu_S,TX(endProgram)}} // ver como identificar si ese networking es un ack
+				{MainTypes::NETWORK,{StartMenu_S,TX(shutDown)}} // ver como identificar si ese networking es un ack
 
 			},
 
 			{StartMenu_S,TX(defaultWait)}} }
-
-
-
 
 	};
 
@@ -292,6 +289,8 @@ private:
 	void emitQuit(GenericEvent* ev);
 	
 	void defaultWait(GenericEvent* ev);
+
+	void shutDown(GenericEvent* ev);
 
 
 	void emitSubEvent(EventTypes type, EventSubtypes subtype);

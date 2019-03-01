@@ -185,6 +185,11 @@ GUIEnablerEvent BoardController::parseTimerEvent()
 	return NO_EV;
 }
 
+GUIEnablerEvent BoardController::parseCloseWindow()
+{
+	return NO_EV;
+}
+
 void BoardController::disable()
 {
 	BasicController::disable();
