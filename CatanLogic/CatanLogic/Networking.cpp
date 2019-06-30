@@ -136,6 +136,11 @@ void Networking::startConection()
 void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
 {
 	/***Tengo que cerrar y abrir otro socket*****/
+	if (connected)
+	{
+		workPlease(); //por si me queda mandar algo
+	}
+
 	socket->close();
 	delete socket;
 	socket = new  boost::asio::ip::tcp::socket(*ioHandler);

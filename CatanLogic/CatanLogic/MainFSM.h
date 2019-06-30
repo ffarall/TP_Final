@@ -78,7 +78,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}} ,
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}} ,
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
@@ -102,7 +102,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 			},
@@ -125,7 +125,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
@@ -145,7 +145,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 			},
@@ -164,7 +164,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
@@ -184,7 +184,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
@@ -204,7 +204,7 @@ private:
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
-				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
 
@@ -260,6 +260,8 @@ private:
 
 
 	void sendAck(GenericEvent* ev);
+
+	void sendAckRestart(GenericEvent* ev);
 
 	void defaultGameOverS(GenericEvent* ev);
 
