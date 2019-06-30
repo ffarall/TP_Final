@@ -1011,7 +1011,7 @@ void RemotePlayerEnabler::enableRemoteActions(SubtypeEvent * ev)
 	{
 		enable(NET_ROAD, { TX(checkRemoteRoad) });
 	}
-	if (remotePlayer->checkResourcesForDevCard())
+	if (remotePlayer->checkResourcesForDevCard() && playingWithDev)
 	{
 		enable(NET_DEV_CARDS, { TX(checkDevCards) });
 	}

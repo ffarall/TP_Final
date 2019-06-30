@@ -387,7 +387,7 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 	{
 		enable(PLA_BANK_TRADE, { TX(checkBankTrade) });
 	}
-	if (localPlayer->checkResourcesForDevCard())
+	if (localPlayer->checkResourcesForDevCard() && playingWithDev)
 	{
 		enable(PLA_DEV_CARD, { TX(drawDevCard) });
 	}
@@ -396,7 +396,7 @@ void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::checkDevCards(SubtypeEvent * ev)
 {
-		if (areWePlayingWithDev())
+	if (areWePlayingWithDev())
 	{
 		if (localPlayer->isThereDevCard(KNIGHT))
 		{
