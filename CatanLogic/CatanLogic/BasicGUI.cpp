@@ -68,7 +68,12 @@ void BasicGUI::parseEvent()
 	}
 	break;
 	case GUI_CLOSE_DISPLAY: 
-		//needToClose = true;
+	{	//needToClose = true;
+		for (auto controller : controllers)
+		{
+			controller.second->parseCloseWindow();
+		}
+	}
 
 	break;
 	default: break;

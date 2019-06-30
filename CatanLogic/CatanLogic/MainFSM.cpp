@@ -103,6 +103,12 @@ void MainFSM::sendAck(GenericEvent * ev)
 		
 }
 
+void MainFSM::sendAckRestart(GenericEvent* ev)
+{
+	network->pushPackage(new package(headers::ACK));
+	network->closeConection();
+}
+
 void MainFSM::defaultGameOverS(GenericEvent * ev)
 {
 	error(ev);

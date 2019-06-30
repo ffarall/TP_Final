@@ -78,7 +78,7 @@ private:
 
 		{PlayWithDevCards_S,{{
 				{SubType::NET_YES,{SendingDevCards_S,TX(sendDevCards)}},
-				{SubType::NET_NO,{PlayWithDevCards_S,TX(emitWhoStarts)}},
+				{SubType::NET_NO,{WaitingEnd_S,TX(emitWhoStarts)}},
 				{SubType::TICK,{PlayWithDevCards_S,TX(nonActRoutine)}},
 			},
 			{Client_S,TX(defaultPlayWithDevCardsS)}}},
