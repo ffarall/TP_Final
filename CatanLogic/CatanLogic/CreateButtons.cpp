@@ -841,32 +841,40 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[5]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, locEnab, buttonList]()
 	{
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->checkResourcesForDevCard() && buttonList[5]->isEnabled())
-		{
-			if (!buttonList[5]->isPressed())
+			if (locEnab->areWePlayingWithDev())
 			{
-				buttonList[5]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S
+					&& localPlayer->checkResourcesForDevCard()
+					&& buttonList[5]->isEnabled())
+				{
+					if (!buttonList[5]->isPressed())
+					{
+						buttonList[5]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[5]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkResourcesForDevCard() || !buttonList[5]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
+				{
+					buttonList[5]->setTypeTint(TINT_CORR(1, 1, 1, 0.5));
+				}
+				else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+				{
+					buttonList[5]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else
+				{
+					buttonList[5]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+				}
 			}
 			else
 			{
-				buttonList[5]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[5]->setTypeTint(TINT_CORR(0, 0, 0, 0));
 			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && (!localPlayer->checkResourcesForDevCard() || !buttonList[5]->isEnabled())) //si no tengo recursos, botón semitransparente para mostrarlo
-		{
-			buttonList[5]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[5]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[5]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
 
 	}
 
@@ -1003,169 +1011,191 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[10]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
+		[mainFSM, localPlayer, buttonList, locEnab]()
 	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[10]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[10]->getBitmap(), 0, 0, 0);
-		if (localPlayer->isThereDevCard(KNIGHT))
-		{
-			al_draw_text(buttonList[10]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(KNIGHT)).c_str());
-		}
-		al_set_target_backbuffer(tempDisplay);
-
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(KNIGHT))
-		{
-			if (!buttonList[10]->isPressed())
+			if (locEnab->areWePlayingWithDev())
 			{
-				buttonList[10]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP* temp = buttonList[10]->getType()->getBitmap();
+				al_set_target_bitmap(temp);
+				al_draw_bitmap(buttonList[10]->getBitmap(), 0, 0, 0);
+				if (localPlayer->isThereDevCard(KNIGHT))
+				{
+					al_draw_text(buttonList[10]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(KNIGHT)).c_str());
+				}
+				al_set_target_backbuffer(tempDisplay);
+
+				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(KNIGHT))
+				{
+					if (!buttonList[10]->isPressed())
+					{
+						buttonList[10]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[10]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(KNIGHT))
+				{
+					buttonList[10]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+				{
+					buttonList[10]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else
+				{
+					buttonList[10]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+				}
 			}
 			else
 			{
-				buttonList[10]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[10]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(KNIGHT))
-		{
-			buttonList[10]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[10]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[10]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
 
 	}
 
 	);
 	buttonList[11]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[11]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[11]->getBitmap(), 0, 0, 0);
-		if (localPlayer->isThereDevCard(ROAD_BUILDING))
+		[mainFSM, localPlayer, buttonList, locEnab]()
 		{
-			al_draw_text(buttonList[11]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(ROAD_BUILDING)).c_str());
-		}
-		al_set_target_backbuffer(tempDisplay);
-
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(ROAD_BUILDING))
-		{
-			if (!buttonList[11]->isPressed())
+			if (locEnab->areWePlayingWithDev())
 			{
-				buttonList[11]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+
+				ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP* temp = buttonList[11]->getType()->getBitmap();
+				al_set_target_bitmap(temp);
+				al_draw_bitmap(buttonList[11]->getBitmap(), 0, 0, 0);
+				if (localPlayer->isThereDevCard(ROAD_BUILDING))
+				{
+					al_draw_text(buttonList[11]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(ROAD_BUILDING)).c_str());
+				}
+				al_set_target_backbuffer(tempDisplay);
+
+				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(ROAD_BUILDING))
+				{
+					if (!buttonList[11]->isPressed())
+					{
+						buttonList[11]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[11]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(ROAD_BUILDING))
+				{
+					buttonList[11]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+				{
+					buttonList[11]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else
+				{
+					buttonList[11]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+				}
 			}
 			else
 			{
-				buttonList[11]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[11]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(ROAD_BUILDING))
-		{
-			buttonList[11]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[11]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[11]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-	}
 
 	);
 
 	buttonList[12]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[12]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[12]->getBitmap(), 0, 0, 0);
-		if (localPlayer->isThereDevCard(KNIGHT))
+		[mainFSM, locEnab, localPlayer, buttonList]()
 		{
-			al_draw_text(buttonList[12]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(MONOPOLY)).c_str());
-		}
-		al_set_target_backbuffer(tempDisplay);
-
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(MONOPOLY))
-		{
-			if (!buttonList[12]->isPressed())
+			if (locEnab->areWePlayingWithDev())
 			{
-				buttonList[12]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP* temp = buttonList[12]->getType()->getBitmap();
+				al_set_target_bitmap(temp);
+				al_draw_bitmap(buttonList[12]->getBitmap(), 0, 0, 0);
+				if (localPlayer->isThereDevCard(KNIGHT))
+				{
+					al_draw_text(buttonList[12]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(MONOPOLY)).c_str());
+				}
+				al_set_target_backbuffer(tempDisplay);
+
+				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(MONOPOLY))
+				{
+					if (!buttonList[12]->isPressed())
+					{
+						buttonList[12]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[12]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(MONOPOLY))
+				{
+					buttonList[12]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+				{
+					buttonList[12]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else
+				{
+					buttonList[12]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+				}
 			}
 			else
 			{
-				buttonList[12]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[12]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(MONOPOLY))
-		{
-			buttonList[12]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[12]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[12]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
-
 
 	);
 
 	buttonList[13]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[13]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[13]->getBitmap(), 0, 0, 0);
-		if (localPlayer->isThereDevCard(KNIGHT))
+		[mainFSM, locEnab, localPlayer, buttonList]()
 		{
-			al_draw_text(buttonList[13]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(YEARS_OF_PLENTY)).c_str());
-		}
-		al_set_target_backbuffer(tempDisplay);
-
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(YEARS_OF_PLENTY))
-		{
-			if (!buttonList[13]->isPressed())
+			if (locEnab->areWePlayingWithDev())
 			{
-				buttonList[13]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP* temp = buttonList[13]->getType()->getBitmap();
+				al_set_target_bitmap(temp);
+				al_draw_bitmap(buttonList[13]->getBitmap(), 0, 0, 0);
+				if (localPlayer->isThereDevCard(KNIGHT))
+				{
+					al_draw_text(buttonList[13]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(YEARS_OF_PLENTY)).c_str());
+				}
+				al_set_target_backbuffer(tempDisplay);
+
+				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(YEARS_OF_PLENTY))
+				{
+					if (!buttonList[13]->isPressed())
+					{
+						buttonList[13]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[13]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(YEARS_OF_PLENTY))
+				{
+					buttonList[13]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+				{
+					buttonList[13]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else
+				{
+					buttonList[13]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+				}
 			}
 			else
 			{
-				buttonList[13]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[13]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(YEARS_OF_PLENTY))
-		{
-			buttonList[13]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[13]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[13]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
-
 	);
 
 	buttonList[14]->addUpdate(
@@ -1926,33 +1956,40 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	);
 
 	buttonList[30]->addUpdate(
-		[mainFSM, localPlayer, buttonList]()
-	{
-
-		if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(VICTORY_POINTS))
+		[mainFSM, locEnab, localPlayer, buttonList]()
 		{
-			if (!buttonList[30]->isPressed())
+			if (locEnab->areWePlayingWithDev())
 			{
-				buttonList[30]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(VICTORY_POINTS))
+				{
+					if (!buttonList[30]->isPressed())
+					{
+						buttonList[30]->setTypeTint(TINT_CORR(1, 1, 1, 1));
+					}
+					else
+					{
+						buttonList[30]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+					}
+				}
+				else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(VICTORY_POINTS))
+				{
+					buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
+				{
+					buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
+				}
+				else
+				{
+					buttonList[30]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
+				}
 			}
 			else
 			{
-				buttonList[30]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
+				buttonList[30]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 			}
 		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->isThereDevCard(VICTORY_POINTS))
-		{
-			buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[30]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[30]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-	});
+	);
 }
 
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, Button * robber, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso)
