@@ -131,7 +131,9 @@ void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	
 	if (addRoadToLocal(position))
 	{
-		setWaitingMessage("Ahora es turno de su oponente.");
+		//setWaitingMessage("Ahora es turno de su oponente.");
+		setWaitingMessage("");
+
 		pkgSender->pushPackage(new RoadPkg(*pkg));
 
 		disable(PLA_ROAD);
@@ -172,6 +174,8 @@ void LocalPlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::waitingConfSndSetLocStarts(SubtypeEvent* ev)
 {
+	setWaitingMessage("");
+
 	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(secondRoadLocalStarts) });
 }
@@ -179,7 +183,7 @@ void LocalPlayerEnabler::waitingConfSndSetLocStarts(SubtypeEvent* ev)
 void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Listo!, ahora tire los dados");
+	setWaitingMessage("Listo, ahora tire los dados");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
@@ -197,6 +201,8 @@ void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::endLocalStarts(SubtypeEvent* ev)
 {
+	setWaitingMessage("");
+
 	disable(NET_ACK);
 	setUpForTurn();
 }
@@ -219,6 +225,8 @@ void LocalPlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::waitingConfFstSetRemStarts(SubtypeEvent* ev)
 {
+	setWaitingMessage("");
+
 	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(firstRoadRemoteStarts) });
 }
@@ -265,6 +273,7 @@ void LocalPlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::waitingConfSndSetRemStarts(SubtypeEvent* ev)
 {
+	setWaitingMessage("");
 	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(secondRoadRemoteStarts) });
 }
@@ -688,7 +697,7 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 	break;
 	default:
 	{
-		setErrMessage("Condiciones inválidas ingresadas para BANK_TRADE.");
+		setErrMessage("Condiciones invalidas ingresadas para BANK_TRADE.");
 		return;
 	}
 		break;
@@ -753,7 +762,7 @@ void LocalPlayerEnabler::drawDevCard(SubtypeEvent * ev)
 void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Usó Knight.");
+	setWaitingMessage("Uso Knight.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	KnightPkg* pkg = static_cast<KnightPkg*>(auxEv->getPackage());
 	char movedTo = pkg->getPos();
@@ -788,7 +797,7 @@ void LocalPlayerEnabler::useKnight(SubtypeEvent * ev)
 void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Usó Monopoly.");
+	setWaitingMessage("Uso Monopoly.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	MonopolyPkg* pkg = static_cast<MonopolyPkg*>(auxEv->getPackage());
 	ResourceType res = pkg->getResource();
@@ -808,7 +817,7 @@ void LocalPlayerEnabler::useMonopoly(SubtypeEvent * ev)
 void LocalPlayerEnabler::useYearsOfPlenty(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("Usó Years of Plenty.");
+	setWaitingMessage("Uso Years of Plenty.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	YearsOfPlentyPkg* pkg = static_cast<YearsOfPlentyPkg*>(auxEv->getPackage());
 	ResourceType resCard1 = pkg->getResource(true);
@@ -1034,13 +1043,13 @@ void LocalPlayerEnabler::addSettlementToLocal(string position)
 	}
 	else
 	{
-		setErrMessage("La posición donde se quiere colocar el Settlement es inválida.");
+		setErrMessage("La posicion donde se quiere colocar el Settlement es invalida.");
 		return;
 	}
 
 	if (!board->addSettlementToTokens(position, localPlayer))
 	{
-		setErrMessage("El casillero del tablero donde se quiere agregar el Settlement está lleno.");
+		setErrMessage("El casillero del tablero donde se quiere agregar el Settlement esta lleno.");
 		return;
 	}
 }
@@ -1055,10 +1064,10 @@ bool LocalPlayerEnabler::addRoadToLocal(string position)
 	}
 	else
 	{
-		setErrMessage("La posición donde se quiere colocar el Road es inválida.");
+		setErrMessage("La posicion donde se quiere colocar el Road es invalida.");
 		if (!board->addRoadToTokens(position, localPlayer))
 		{
-			setErrMessage("El casillero del tablero donde se quiere agregar el Road está lleno.");
+			setErrMessage("El casillero del tablero donde se quiere agregar el Road esta lleno.");
 		}
 		return false;
 	}

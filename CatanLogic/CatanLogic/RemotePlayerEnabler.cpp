@@ -263,7 +263,7 @@ void RemotePlayerEnabler::road1(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
-		setErrMessage("El rivala intenteto poner un road en una posicion incorrecta");
+		setErrMessage("El rival intenteto poner un road en una posicion incorrecta");
 	}
 }
 
@@ -287,7 +287,7 @@ void RemotePlayerEnabler::road2(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
-		setErrMessage("El rivala intenteto poner un road en una posicion incorrecta");
+		setErrMessage("El rival intenteto poner un road en una posicion incorrecta");
 	}
 }
 
@@ -306,7 +306,7 @@ void RemotePlayerEnabler::firstTurn(SubtypeEvent * ev)
 void RemotePlayerEnabler::init()
 {
 	setDefaultRoutine(TX(noAct));
-	localPlayer = nullptr;
+	localPlayer = nullptr;	
 	remotePlayer = nullptr;
 	board = nullptr;
 	pkgSender = nullptr;
@@ -715,7 +715,7 @@ void RemotePlayerEnabler::evaluateOffer(SubtypeEvent * ev)
 	}
 	else
 	{
-		setErrMessage("La oferta de trade ingresada es inválida. La misma debe constar de entre 1 y 9 recursos ofrecidos, y entre 1 y 9 pedidos.");
+		setErrMessage("La oferta de trade ingresada es invalida. La misma debe constar de entre 1 y 9 recursos ofrecidos, y entre 1 y 9 pedidos.");
 	}
 }
 
@@ -741,7 +741,7 @@ void RemotePlayerEnabler::checkRemoteSettlement(SubtypeEvent * ev)
 	{
 		emitEvent(ERR_IN_COM);
 		pkgSender->pushPackage(new package(headers::ERROR_));
-		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no está disponible.");
+		setErrMessage("La coordenada donde se quiso ubicar el nuevo Settlement no esta disponible.");
 	}
 }
 
@@ -769,7 +769,7 @@ void RemotePlayerEnabler::checkRemoteRoad(SubtypeEvent * ev)
 	{
 		emitEvent(ERR_IN_COM);
 		pkgSender->pushPackage(new package(headers::ERROR_));
-		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no está disponible.");
+		setErrMessage("La coordenada donde se quiso ubicar el nuevo Road no esta disponible.");
 	}
 }
 
@@ -1070,13 +1070,13 @@ void RemotePlayerEnabler::addSettlementToRemote(string position)
 	{
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
-		setErrMessage("La posición donde se quiere colocar el Settlement es inválida.");
+		setErrMessage("La posicion donde se quiere colocar el Settlement es invalida.");
 		return;
 	}
 
 	if (!board->addSettlementToTokens(position, remotePlayer))
 	{
-		setErrMessage("El casillero del tablero donde se quiere agregar el Settlement está lleno.");
+		setErrMessage("El casillero del tablero donde se quiere agregar el Settlement esta lleno.");
 		return;
 	}
 }
@@ -1093,13 +1093,13 @@ void RemotePlayerEnabler::addRoadToRemote(string position)
 	{
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
-		setErrMessage("La posición donde se quiere colocar el Road es inválida.");
+		setErrMessage("La posicion donde se quiere colocar el Road es invalida.");
 		return;
 	}
 
 	if (!board->addRoadToTokens(position, remotePlayer))
 	{
-		setErrMessage("El casillero del tablero donde se quiere agregar el Road está lleno.");
+		setErrMessage("El casillero del tablero donde se quiere agregar el Road esta lleno.");
 		return;
 	}
 }
