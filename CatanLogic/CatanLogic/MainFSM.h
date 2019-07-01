@@ -196,7 +196,7 @@ private:
 
 		{RemotePlayAgain_S,{{
 
-				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::TICKS,{RemotePlayAgain_S,TX(decTimeCounter)}},
 
