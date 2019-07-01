@@ -217,7 +217,7 @@ private:
 		"5DH", "DE", "EF", "FG", "1GL",
 		"5HD", "DH", "DI", "EI", "EJ", "FJ", "FK", "GK", "GL", "1L",
 		"5H4", "HI", "IJ", "JK", "KL", "2L1",
-		"H4", "HM", "IM", "IN", "JN", "JO", "KO", "KP", "LP", "2LP",
+		"4H", "HM", "IM", "IN", "JN", "JO", "KO", "KP", "LP", "2LP",
 		"4MH", "MN", "NO", "OP", "2PL",
 		"4MQ", "MQ", "NQ", "NR", "OR", "OS", "PS", "2PS",
 		"4QM", "QR", "RS", "2S",
