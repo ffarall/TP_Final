@@ -20,6 +20,8 @@
 #define SEA_2MX1_FILE "sea2Mx1.png"
 #define ROBBER_FILE "robber.png"
 #define FONDO "fondo.jpg"
+#define WIN "win.png"
+#define LOSE "lose.png"
 #define BACKGROUND "Backround.jpg"
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
@@ -56,6 +58,8 @@ void BoardController::update()
 	{
 		if (!fondoListo)
 		{
+			sellos[WIN]->setTint(al_map_rgba(0, 0, 0, 0));
+			sellos[LOSE]->setTint(al_map_rgba(0, 0, 0, 0));
 			fondoListo = true;
 			fondoPpal = false;
 			drawMap();
@@ -80,6 +84,20 @@ void BoardController::update()
 			printer->setBackgorund(bitmaps[BACKGROUND]);
 			fondoPpal = true;
 			fondoListo = false;
+		}
+		
+		if (mainFSM->getCurrState() == mainStates::LocalPlayAgain_S || mainFSM->getCurrState() == mainStates::LocalGameOver_S)
+		{
+			sellos[WIN]->setTint(al_map_rgba(255, 255, 255, 255));
+		}
+		else if (mainFSM->getCurrState() == mainStates::RemotePlayAgain_S || mainFSM->getCurrState() == mainStates::RemoteGameOver_S)
+		{
+			sellos[LOSE]->setTint(al_map_rgba(255, 255, 255, 255));
+		}
+		else
+		{
+			sellos[LOSE]->setTint(al_map_rgba(0, 0, 0, 0));
+			sellos[WIN]->setTint(al_map_rgba(0, 0, 0, 0));
 		}
 		sellos[ROBBER_FILE]->setTint(al_map_rgba(0, 0, 0, 0));
 	}
@@ -263,6 +281,8 @@ void BoardController::init()
 	bitmaps[SEA_2MX1_FILE] = al_load_bitmap(SEA_2MX1_FILE);
 	bitmaps[ROBBER_FILE] = al_load_bitmap(ROBBER_FILE);
 	bitmaps[BACKGROUND] = al_load_bitmap(BACKGROUND);
+	bitmaps[WIN] = al_load_bitmap(WIN);
+	bitmaps[LOSE] = al_load_bitmap(LOSE);
 
 	for (auto imagen : bitmaps) // me fijo si esta todo inicializado
 	{
@@ -290,6 +310,12 @@ void BoardController::init()
 
 	sellos[ROBBER_FILE] = printer->createType(bitmaps[ROBBER_FILE], al_map_rgba(0, 0, 0, 0),
 		0, 0, al_get_bitmap_width(bitmaps[ROBBER_FILE]) / 2, al_get_bitmap_height(bitmaps[ROBBER_FILE]) / 2,
+		1, 1, 0, 0);
+	sellos[LOSE] = printer->createType(bitmaps[LOSE], al_map_rgba(0, 0, 0, 0),
+		100, 100, 0, 0,
+		1, 1, 0, 0);
+	sellos[WIN] = printer->createType(bitmaps[WIN], al_map_rgba(0, 0, 0, 0),
+		100, 100, 0, 0,
 		1, 1, 0, 0);
 
 }
