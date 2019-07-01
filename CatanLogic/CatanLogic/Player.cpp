@@ -119,14 +119,7 @@ void Player::setName(string nombre_)
 bool Player::hasWon(bool playingWithDevs)
 {
 	size_t totalVictoryPoints = victoryPoints + cardVictoryPoints;
-	if (hasLongestRoad())
-	{
-		//totalVictoryPoints++;
-	}
-	if (hasLargestArmy() && playingWithDevs)
-	{
-		//totalVictoryPoints++;
-	}
+	
 	if (totalVictoryPoints >= (playingWithDevs?10:8))
 	{
 		iWon = true;
