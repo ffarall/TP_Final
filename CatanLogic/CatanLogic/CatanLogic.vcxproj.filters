@@ -40,6 +40,7 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="PlayersObserver.cpp" />
     <ClCompile Include="DetailsObserver.cpp" />
+    <ClCompile Include="parseCmdLine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicGUI.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="PlayersObserver.h" />
     <ClInclude Include="DetailsObserver.h" />
+    <ClInclude Include="parseCmd.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
