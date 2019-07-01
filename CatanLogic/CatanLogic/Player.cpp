@@ -235,7 +235,6 @@ void Player::promoteToMyCity(string position)
 		useResource(MONTAÑAS, 3);
 
 		incVictoryPoints();
-		incVictoryPoints();
 		remainingCities--;
 		remainingSettlements++;
 
