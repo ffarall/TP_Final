@@ -857,6 +857,7 @@ void RemotePlayerEnabler::checkRemoteBankTrade(SubtypeEvent * ev)
 	{
 		remotePlayer->addResource(pkg->getResouceBougth(),1);
 		pkgSender->pushPackage(new package(headers::ACK));
+		enableRemoteActions();
 	}
 	else
 	{
