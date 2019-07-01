@@ -141,7 +141,7 @@ private:
 
 				{MainTypes::PLAY_AGAIN_MT,{LocalPlayAgain_S,TX(nonActRoutine)}},
 
-				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::ERR_IN_COM,{StartMenu_S,TX(error)}},
 
@@ -196,7 +196,7 @@ private:
 
 		{RemotePlayAgain_S,{{
 
-				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAck)}},
+				{MainTypes::GAME_OVER,{StartMenu_S,TX(sendAckRestart)}},
 
 				{MainTypes::TICKS,{RemotePlayAgain_S,TX(decTimeCounter)}},
 
