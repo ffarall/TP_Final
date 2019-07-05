@@ -363,7 +363,7 @@ void RemotePlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
-		setErrMessage("El rival intenteto poner su segundo Settlement en una posicion incorrecta");
+		setErrMessage("El rival intento poner su segundo Settlement en una posicion incorrecta");
 	}
 }
 
@@ -410,7 +410,7 @@ void RemotePlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 		disableAll();
 		pkgSender->pushPackage(new package(headers::ERROR_));
 		emitEvent(ERR_IN_COM);
-		setErrMessage("El rival intenteto poner su primer road en una posicion incorrecta");
+		setErrMessage("El rival intento poner su primer road en una posicion incorrecta");
 	}
 
 }
