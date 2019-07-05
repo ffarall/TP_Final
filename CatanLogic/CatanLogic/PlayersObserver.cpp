@@ -13,7 +13,7 @@
 #define SETTLE "Imagenes/settlement.png"
 #define ICONO "Imagenes/LocalPla.png"
 #define ICONOR "Imagenes/RemotePla.png"
-#define FONT "Imagenes/catanFont.otf"
+#define FONT "catanFont.otf"
 #define LROAD "Imagenes/LongestRoad.png"
 #define LARMY "Imagenes/LargestArmy.png"
 #define COSTOS "Imagenes/BuildingCost.png"
@@ -36,7 +36,7 @@
 #define D_ALTO 700
 #define D_ANCHO 1200
 
-PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local, Player * remote, LocalPlayerEnabler* playerEn, RemotePlayerEnabler * remoteEnab, MainFSM* mainFSM_) : toDraw("mapaFinal.png")
+PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local, Player * remote, LocalPlayerEnabler* playerEn, RemotePlayerEnabler * remoteEnab, MainFSM* mainFSM_) : toDraw("Imagenes/mapaFinal.png")
 {
 	working = true;
 	localPlayer = local;

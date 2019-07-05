@@ -80,7 +80,7 @@ private:
 
 				{MainTypes::QUIT_MT,{StartMenu_S,TX(sendAckRestart)}} ,
 
-				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar
+				{MainTypes::CLOSE_ALL,{WaitAnswer_s,TX(emitQuit)}} //aca tengo que ir a esperar ack y cerrar si estoy conectado
 
 			},
 
