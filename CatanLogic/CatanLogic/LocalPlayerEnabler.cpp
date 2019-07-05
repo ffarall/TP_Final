@@ -549,7 +549,7 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::notAccepted(SubtypeEvent* ev)
 {
-	setWaitingMessage("La oferta no fue aceptada. Continue jugando.")
+	setWaitingMessage("La oferta no fue aceptada. Continue jugando.");
 }
 
 void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)
@@ -852,6 +852,7 @@ void LocalPlayerEnabler::useRoadBuilding(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
+	setWaitingMessage("La oferta fue aceptada. Continue jugando.");
 	for (auto resource : pendingOffer.getOpponentOnes())
 	{
 		localPlayer->addResource(resource);					// Adding the resources coming from opponent.
