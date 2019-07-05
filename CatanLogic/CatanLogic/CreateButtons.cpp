@@ -15,6 +15,7 @@
 
 #define TINT_CORR(r, g, b, a) (r*255), (g*255), (b*255), (a*255)
 GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button * Yop, Button * monopoly, Button * robber, MainFSM * mainFSM, Player * localPlayer, ResourceType recurso);
+void ResourceUpdate(Button* boton, MainFSM* mainFSM, ResourceType recurso, vector<Button*> buttonList, Player* localPlayer);
 
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab, Networking * network)
 {
@@ -1420,8 +1421,6 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 		{
 			buttonList[20]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el boton es invisible y esta desactivado
 		}
-
-
 	}
 
 	);
@@ -1429,328 +1428,43 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 
 	buttonList[21]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[21]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[21]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[21]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.82, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(COLINAS)).c_str());
-		al_set_target_backbuffer(tempDisplay);
-
-		bool isActive = false; //7,8,12,13
-		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(COLINAS));
-		if (buttonList[7]->getPackage())
 		{
-			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
+			ResourceUpdate(buttonList[21], mainFSM, ResourceType::COLINAS, buttonList, localPlayer);
+			//colina
 		}
-		if (buttonList[8]->getPackage())
-		{
-			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
-		}
-		if (buttonList[12]->getPackage())
-		{
-			isActive = true;
-		}
-		if (buttonList[13]->getPackage())
-		{
-			isActive = true;
-		}
-
-		if (isActive)
-		{
-			if (!buttonList[21]->isPressed())
-			{
-				buttonList[21]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-			}
-			else
-			{
-				buttonList[21]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->getResourceAmount(COLINAS))
-		{
-			buttonList[21]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[21]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[21]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
-
-
-
 	);
 
 	buttonList[22]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[22]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[22]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[22]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.82, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(BOSQUE)).c_str());
-		al_set_target_backbuffer(tempDisplay);
-		bool isActive = false; //7,8,12,13
-		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(BOSQUE));
-		if (buttonList[7]->getPackage())
 		{
-			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
+			ResourceUpdate(buttonList[22], mainFSM, ResourceType::BOSQUE, buttonList, localPlayer);
+			//bosque
 		}
-		if (buttonList[8]->getPackage())
-		{
-			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
-		}
-		if (buttonList[12]->getPackage())
-		{
-			isActive = true;
-		}
-		if (buttonList[13]->getPackage())
-		{
-			isActive = true;
-		}
-
-		if (isActive)
-		{
-			if (!buttonList[22]->isPressed())
-			{
-				buttonList[22]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-			}
-			else
-			{
-				buttonList[22]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->getResourceAmount(BOSQUE))
-		{
-			buttonList[22]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[22]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[22]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
 
 	);
 
 	buttonList[23]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[23]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[23]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[23]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.82, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(MONTAÑAS)).c_str());
-		al_set_target_backbuffer(tempDisplay);
-		bool isActive = false; //7,8,12,13
-		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(MONTAÑAS));
-		if (buttonList[7]->getPackage())
 		{
-			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
+			ResourceUpdate(buttonList[23], mainFSM, ResourceType::MONTAÑAS, buttonList, localPlayer);
+			//montaña
 		}
-		if (buttonList[8]->getPackage())
-		{
-			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
-		}
-		if (buttonList[12]->getPackage())
-		{
-			isActive = true;
-		}
-		if (buttonList[13]->getPackage())
-		{
-			isActive = true;
-		}
-
-		if (isActive)
-		{
-			if (!buttonList[23]->isPressed())
-			{
-				buttonList[23]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-			}
-			else
-			{
-				buttonList[23]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->getResourceAmount(MONTAÑAS))
-		{
-			buttonList[23]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[23]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[23]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
 	);
 
 	buttonList[24]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[24]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[24]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[24]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.82, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(CAMPOS)).c_str());
-		al_set_target_backbuffer(tempDisplay);
-		bool isActive = false; //7,8,12,13
-		isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(CAMPOS));
-		if (buttonList[7]->getPackage())
 		{
-			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
+			ResourceUpdate(buttonList[24], mainFSM, ResourceType::CAMPOS, buttonList, localPlayer);
+		//campos
 		}
-		if (buttonList[8]->getPackage())
-		{
-			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
-		}
-		if (buttonList[12]->getPackage())
-		{
-			isActive = true;
-		}
-		if (buttonList[13]->getPackage())
-		{
-			isActive = true;
-		}
-
-		if (isActive)
-		{
-			if (!buttonList[24]->isPressed())
-			{
-				buttonList[24]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-			}
-			else
-			{
-				buttonList[24]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->getResourceAmount(CAMPOS))
-		{
-			buttonList[24]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[24]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[24]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
 	);
 
 	buttonList[25]->addUpdate(
 		[mainFSM, localPlayer, buttonList]()
-	{
-		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
-		ALLEGRO_BITMAP * temp = buttonList[25]->getType()->getBitmap();
-		al_set_target_bitmap(temp);
-		al_draw_bitmap(buttonList[25]->getBitmap(), 0, 0, 0);
-		al_draw_text(buttonList[25]->getFont(), al_map_rgb(0,0,0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp)*0.82, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(PASTOS)).c_str());
-		al_set_target_backbuffer(tempDisplay);
-
-		bool isActive = false; //7,8,12,13
-		isActive |= ( mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(PASTOS) ) ;
-		if (buttonList[7]->getPackage())
 		{
-			BankTradePkg * tempPkg = static_cast<BankTradePkg *>(buttonList[7]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
+			ResourceUpdate(buttonList[25], mainFSM, ResourceType::PASTOS, buttonList, localPlayer);
+			//pastos
 		}
-		if (buttonList[8]->getPackage())
-		{
-			OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
-			if (tempPkg->offerclosed())
-			{
-				isActive = true;
-			}
-		}
-		if (buttonList[12]->getPackage())
-		{
-			isActive = true;
-		}
-		if (buttonList[13]->getPackage())
-		{
-			isActive = true;
-		}
-
-		if (isActive)
-		{
-			if (!buttonList[25]->isPressed())
-			{
-				buttonList[25]->setTypeTint(TINT_CORR(1, 1, 1, 1));
-			}
-			else
-			{
-				buttonList[25]->setTypeTint(TINT_CORR(1, 0.5, 0.5, 1));
-			}
-		}
-		else if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && !localPlayer->getResourceAmount(PASTOS))
-		{
-			buttonList[25]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else if (mainFSM->getCurrState() == mainStates::RemotePlayer_S) // si estoy en juego pero no es mi turno, botón desactivado
-		{
-			buttonList[25]->setTypeTint(TINT_CORR(0.5, 0.5, 0.5, 0.5));
-		}
-		else
-		{
-			buttonList[25]->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
-		}
-
-
-	}
 	);
 
 	buttonList[26]->addUpdate(
@@ -2085,37 +1799,69 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 
 void ResourceUpdate(Button * boton, MainFSM* mainFSM, ResourceType recurso, vector<Button *> buttonList, Player* localPlayer )
 {
+	Button* bank = buttonList[7];
+	Button* offer = buttonList[8];
+
 	ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 	ALLEGRO_BITMAP* temp = boton->getType()->getBitmap();
+	
 	al_set_target_bitmap(temp);
 	al_draw_bitmap(boton->getBitmap(), 0, 0, 0);
 	al_draw_text(boton->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.82, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getResourceAmount(recurso)).c_str());
-	al_set_target_backbuffer(tempDisplay);
-	bool isActive = false; //7,8,12,13
+	int amount = 0;
+
+	bool isActive = false; 
 	isActive |= (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->getResourceAmount(recurso));
-	if (buttonList[7]->getPackage())
+	if (bank->getPackage())
 	{
-		BankTradePkg* tempPkg = static_cast<BankTradePkg*>(buttonList[7]->getPackage());
+		BankTradePkg* tempPkg = static_cast<BankTradePkg*>(bank->getPackage());
 		if (tempPkg->offerclosed())
 		{
 			isActive = true;
+			if (tempPkg->getResouceBougth() == recurso)
+				amount = 1; // si ya cerre la ofera opngo la catidad de lo que estoy pidiendo
+		}
+		else
+		{
+			vector<ResourceType> pagados = tempPkg->getResoucesPaid();
+			if (pagados[0] == recurso)
+				amount = pagados.size(); // lo que estoy pagando
 		}
 	}
-	if (buttonList[8]->getPackage())
+	else if (offer->getPackage())
 	{
-		OfferTradePkg* tempPkg = static_cast<OfferTradePkg*>(buttonList[8]->getPackage());
+		OfferTradePkg* tempPkg = static_cast<OfferTradePkg*>(offer->getPackage());
 		if (tempPkg->offerclosed())
 		{
 			isActive = true;
+			amount = tempPkg->getOpponent(recurso); // me fijo la qu eestoy pidiendo
+		}
+		else
+		{
+			amount = tempPkg->getMyOnes(recurso); // me fijo las que ofrezco
 		}
 	}
-	if (buttonList[12]->getPackage())
+	else if (buttonList[12]->getPackage()) // monopoly
 	{
 		isActive = true;
+		MonopolyPkg* paquete = static_cast<MonopolyPkg*>(buttonList[12]->getPackage());
+		if (paquete->getResource() == recurso)
+			amount = 1;
 	}
-	if (buttonList[13]->getPackage())
+	else if (buttonList[13]->getPackage()) // yop
 	{
 		isActive = true;
+		YearsOfPlentyPkg* paquete = static_cast<YearsOfPlentyPkg*>(buttonList[13]->getPackage());
+		if (paquete->getResource(true) == recurso)
+			amount++;
+		if (paquete->getResource(false) == recurso)
+			amount++;
+	}
+	else if (buttonList[9]->getPackage()) //robber
+	{
+		RobberCardsPkg* cartas = static_cast<RobberCardsPkg*>(buttonList[9]->getPackage());
+		amount = cartas->getAmountOf(recurso);
+		
 	}
 
 	if (isActive)
@@ -2141,6 +1887,10 @@ void ResourceUpdate(Button * boton, MainFSM* mainFSM, ResourceType recurso, vect
 	{
 		boton->setTypeTint(TINT_CORR(0, 0, 0, 0));//si no estoy en el juego el botón es invisible y esta desactivado
 	}
-
-
+	
+	if (amount != 0)
+	{
+		al_draw_text(boton->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.05, ALLEGRO_ALIGN_CENTRE, to_string(amount).c_str());
+	}
+	al_set_target_backbuffer(tempDisplay);
 }
