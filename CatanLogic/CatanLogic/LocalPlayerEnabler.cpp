@@ -132,7 +132,6 @@ void LocalPlayerEnabler::firstRoadLocalStarts(SubtypeEvent * ev)
 	if (addRoadToLocal(position))
 	{
 		setWaitingMessage("Ahora es turno de su oponente.");
-		setWaitingMessage("");
 
 		pkgSender->pushPackage(new RoadPkg(*pkg));
 
@@ -282,7 +281,7 @@ void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
-	//setWaitingMessage(remotePlayer->getName() + " debe colocar su segundo settlement.");
+	setWaitingMessage(remotePlayer->getName() + " debe colocar su segundo settlement.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
