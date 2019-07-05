@@ -13,7 +13,7 @@
 #define SETTLE "Imagenes/settlement.png"
 #define ICONO "Imagenes/LocalPla.png"
 #define ICONOR "Imagenes/RemotePla.png"
-#define FONT "Catan/mnon_n.ttf"
+#define FONT "catanFont.otf"
 #define LROAD "Imagenes/LongestRoad.png"
 #define LARMY "Imagenes/LargestArmy.png"
 #define COSTOS "Imagenes/BuildingCost.png"
@@ -27,7 +27,7 @@
 #define KNIGHT "Imagenes/Knight.png"
 #define ROBBER "Imagenes/robber.png"
 #define CARTEL "calrtel"
-#define FONT_SIZE 12 // ver
+#define FONT_SIZE 10 // ver
 #define NAME_SIZE 17
 #define BOARD_POS_X 310
 #define BOARD_POS_Y 88
@@ -160,7 +160,7 @@ void PlayersObserver::update()
 		}
 		al_set_target_bitmap(dibujo[CARTEL]);
 		al_clear_to_color(al_map_rgb(255, 255, 255));
-		al_draw_rectangle(1, 1, al_get_bitmap_width(dibujo[CARTEL])-1, al_get_bitmap_height(dibujo[CARTEL]) - 1, al_map_rgb(0, 0, 0), 1);
+		al_draw_rectangle(1, 1, 549, 34, al_map_rgb(0, 0, 0), 1);
 		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.4, ALLEGRO_ALIGN_CENTRE, temp.c_str());
 		sellos[CARTEL]->setTint(al_map_rgba(255, 255, 255, 255));
 
