@@ -20,9 +20,9 @@
 #include "TimerController.h"
 #include "parseCmd.h"
 
-
-#define NAME 1
-#define IP 2
+#define ERROR -1
+#define NAME 0
+#define IP 1
 #define MIN_OPT 2
 
 typedef class
@@ -112,7 +112,7 @@ int parseCallback(char *key, char *value, void *userData)
 	int returnValue;
 	if (key != NULL)
 	{
-		if ((receivedOpt = is_known(key, knownOptions, sizeof(knownOptions) / sizeof(knownOptions[1]))) != 0)// si key coincide con conocido le asigno su valor
+		if ((receivedOpt = is_known(key, knownOptions, sizeof(knownOptions) / sizeof(knownOptions[1]))) != ERROR)// si key coincide con conocido le asigno su valor
 		{
 			switch (receivedOpt)
 			{
@@ -159,7 +159,7 @@ int is_known(const char *key, const char *knownOpt[], int size)
 		}
 
 	}
-	return ready ? i - 1 : 0;
+	return ready ? i - 1 : ERROR;
 }
 
 int strcicmp(char const *a, char const *b)
@@ -180,6 +180,8 @@ void instructions(std::string error)
 	cout << "FATAL ERROR!!!\n\n";
 	cout << error;
 
+	std::cout << "Recuerde que las opciones validas son:" << endl;
+	std::cout << "-name y -ip" << endl;
 	/*cambiar esto para las instrucciones de este programa*//*
 	printf("Recuerde que las opciones validas son:\n");
 	printf("1) -type:UNIFORME, POLIGONO o MANDELBROT\n2) -lStart: un valor entre 0 y 100\n3) -lEnd: un valor entre 0 y 100\n4) -lConstant: un valor entre 0 y 1\n");
