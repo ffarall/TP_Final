@@ -1022,7 +1022,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				al_draw_bitmap(buttonList[10]->getBitmap(), 0, 0, 0);
 				if (localPlayer->isThereDevCard(KNIGHT))
 				{
-					al_draw_text(buttonList[10]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(KNIGHT)).c_str());
+					al_draw_text(buttonList[10]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(KNIGHT)).c_str());
 				}
 				al_set_target_backbuffer(tempDisplay);
 
@@ -1070,7 +1070,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				al_draw_bitmap(buttonList[11]->getBitmap(), 0, 0, 0);
 				if (localPlayer->isThereDevCard(ROAD_BUILDING))
 				{
-					al_draw_text(buttonList[11]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(ROAD_BUILDING)).c_str());
+					al_draw_text(buttonList[11]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(ROAD_BUILDING)).c_str());
 				}
 				al_set_target_backbuffer(tempDisplay);
 
@@ -1117,7 +1117,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				al_draw_bitmap(buttonList[12]->getBitmap(), 0, 0, 0);
 				if (localPlayer->isThereDevCard(KNIGHT))
 				{
-					al_draw_text(buttonList[12]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(MONOPOLY)).c_str());
+					al_draw_text(buttonList[12]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(MONOPOLY)).c_str());
 				}
 				al_set_target_backbuffer(tempDisplay);
 
@@ -1162,9 +1162,9 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 				ALLEGRO_BITMAP* temp = buttonList[13]->getType()->getBitmap();
 				al_set_target_bitmap(temp);
 				al_draw_bitmap(buttonList[13]->getBitmap(), 0, 0, 0);
-				if (localPlayer->isThereDevCard(KNIGHT))
+				if (localPlayer->isThereDevCard(YEARS_OF_PLENTY))
 				{
-					al_draw_text(buttonList[13]->getFont(), al_map_rgb(255, 255, 255), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(YEARS_OF_PLENTY)).c_str());
+					al_draw_text(buttonList[13]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(YEARS_OF_PLENTY)).c_str());
 				}
 				al_set_target_backbuffer(tempDisplay);
 
@@ -1677,8 +1677,19 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 	buttonList[30]->addUpdate(
 		[mainFSM, locEnab, localPlayer, buttonList]()
 		{
+
 			if (locEnab->areWePlayingWithDev())
 			{
+				ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
+				ALLEGRO_BITMAP* temp = buttonList[11]->getType()->getBitmap();
+				al_set_target_bitmap(temp);
+				al_draw_bitmap(buttonList[11]->getBitmap(), 0, 0, 0);
+				if (localPlayer->isThereDevCard(VICTORY_POINTS))
+				{
+					al_draw_text(buttonList[11]->getFont(), al_map_rgb(0, 0, 0), al_get_bitmap_width(temp) / 2, al_get_bitmap_height(temp) * 0.6, ALLEGRO_ALIGN_CENTRE, to_string(localPlayer->getDevCardAmount(VICTORY_POINTS)).c_str());
+				}
+				al_set_target_backbuffer(tempDisplay);
+
 				if (mainFSM->getCurrState() == mainStates::LocalPlayer_S && localPlayer->isThereDevCard(VICTORY_POINTS))
 				{
 					if (!buttonList[30]->isPressed())
