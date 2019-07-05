@@ -103,6 +103,7 @@ public:
 	std::vector<ResourceType> getCards();
 	char getLength();
 	virtual std::string getPackage();
+	char getAmountOf(ResourceType recurso);
 
 	bool isComplete();
 	void pushCard(ResourceType recurso);
@@ -196,6 +197,9 @@ public:
 	OfferTradePkg(OfferTradePkg * copiar);
 	std::vector<ResourceType> getMyOnes();
 	std::vector<ResourceType> getOpponentOnes();
+
+	char getMyOnes(ResourceType recurso);
+	char getOpponent(ResourceType recurso);
 
 	void addToMyOffer(ResourceType offer);
 	void closeOffer();

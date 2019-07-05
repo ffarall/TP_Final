@@ -140,6 +140,7 @@ void Networking::closeConection() // cierra la conexion y vuelve a ser cliente
 	{
 		workPlease(); //por si me queda mandar algo
 	}
+	paraEnviar.empty(); // borro por si me quedo algo raro
 
 	socket->close();
 	delete socket;

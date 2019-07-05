@@ -343,6 +343,17 @@ std::string RobberCardsPkg::getPackage()
 	return ret;
 }
 
+char RobberCardsPkg::getAmountOf(ResourceType recurso)
+{
+	char amount = 0;
+	for (auto each : cartas)
+	{
+		if (each == recurso)
+			amount++;
+	}
+	return amount;
+}
+
 bool RobberCardsPkg::isComplete()
 {
 	if (length == cartas.size())
@@ -579,6 +590,28 @@ std::vector<ResourceType> OfferTradePkg::getMyOnes()
 std::vector<ResourceType> OfferTradePkg::getOpponentOnes()
 {
 	return esperoAcambio;
+}
+
+char OfferTradePkg::getMyOnes(ResourceType recurso)
+{
+	char amount = 0;
+	for (auto each : myOffer)
+	{
+		if (each == recurso)
+			amount++;
+	}
+	return amount;
+}
+
+char OfferTradePkg::getOpponent(ResourceType recurso)
+{
+	char amount = 0;
+	for (auto each : esperoAcambio)
+	{
+		if (each == recurso)
+			amount++;
+	}
+	return amount;
 }
 
 void OfferTradePkg::addToMyOffer(ResourceType offer_)
