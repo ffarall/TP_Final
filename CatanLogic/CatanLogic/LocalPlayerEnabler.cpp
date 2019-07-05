@@ -281,7 +281,7 @@ void LocalPlayerEnabler::secondRoadRemoteStarts(SubtypeEvent * ev)
 {
 	setErrMessage("");
 	setWaitingMessage("");
-	//setWaitingMessage(remotePlayer->getName() + " debe colocar su segundo settlement.");
+	remoteEnabler->setWaitingMessage(remotePlayer->getName() + " debe colocar su segundo settlement.");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	RoadPkg* pkg = static_cast<RoadPkg*>(auxEv->getPackage());
 	string position = pkg->getPos();
