@@ -32,6 +32,8 @@ public:
 	// True when playing with DevCards.
 	bool areWePlayingWithDev();
 
+	void setWaitingMessage(string message);
+
 
 protected:
 	// Message to display error.
@@ -54,7 +56,6 @@ protected:
 	void getResourceFromSettlement(string position, Player* who);
 
 	void setErrMessage(string message);
-	void setWaitingMessage(string message);
 
 	/* VALIDATING FUNCTIONS */
 	bool validateOffer(OfferTradePkg* pkg);

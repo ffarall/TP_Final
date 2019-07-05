@@ -21,6 +21,7 @@ public:
 	void localStarts();
 	// Enables events when remote starts.
 	void remoteStarts();
+
 	
 private:
 	void init();
