@@ -62,7 +62,7 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 	dibujo[KNIGHT] = al_load_bitmap(KNIGHT);
 	dibujo[ROBBER] = al_load_bitmap(ROBBER);
 	dibujo[COSTOS] = al_load_bitmap(COSTOS);
-	dibujo[CARTEL] = al_create_bitmap(475, 35);
+	dibujo[CARTEL] = al_create_bitmap(550, 35);
 	dibujo["pla1"] = al_create_bitmap(150, 225);
 	dibujo["pla2"] = al_create_bitmap(150, 225);
 
@@ -98,7 +98,7 @@ PlayersObserver::PlayersObserver(GutenbergsPressAllegro* printer, Player* local,
 		ALLEGRO_DISPLAY* tempDisplay = al_get_current_display();
 		al_set_target_bitmap(dibujo[CARTEL]);
 		al_clear_to_color(al_map_rgb(255, 255, 255));
-		al_draw_rectangle(0, 0, 450, 35, al_map_rgb(0, 0, 0), 1);
+		al_draw_rectangle(1, 1, 549, 34, al_map_rgb(0, 0, 0), 1);
 		al_draw_text(fuente, al_map_rgb(0,0,0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.4, ALLEGRO_ALIGN_CENTRE, "");
 		al_set_target_backbuffer(tempDisplay);
 		sellos[CARTEL] = impresora->createType(dibujo[CARTEL], al_map_rgba(0, 0, 0, 0),
@@ -160,7 +160,7 @@ void PlayersObserver::update()
 		}
 		al_set_target_bitmap(dibujo[CARTEL]);
 		al_clear_to_color(al_map_rgb(255, 255, 255));
-		al_draw_rectangle(1, 1, 449, 34, al_map_rgb(0, 0, 0), 1);
+		al_draw_rectangle(1, 1, 549, 34, al_map_rgb(0, 0, 0), 1);
 		al_draw_text(fuente, al_map_rgb(0, 0, 0), al_get_bitmap_width(dibujo[CARTEL]) / 2, al_get_bitmap_height(dibujo[CARTEL])*0.4, ALLEGRO_ALIGN_CENTRE, temp.c_str());
 		sellos[CARTEL]->setTint(al_map_rgba(255, 255, 255, 255));
 
