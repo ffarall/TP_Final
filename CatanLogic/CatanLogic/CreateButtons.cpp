@@ -19,67 +19,67 @@ GUIEnablerEvent ResourceButton(Button * bankbutton, Button * offerbutton, Button
 void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Player * localPlayer, MainFSM* mainFSM, AllegroGUI* GUI, Board * tablero, std::vector<Button*> &buttonList, RemotePlayerEnabler * remEnab, LocalPlayerEnabler * locEnab, Networking * network)
 {
 	srand(time(NULL));
-	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "", "start.png", "", 14)); //startPlayingButton()
+	buttonList.push_back(new Button(printer, handler, START_PLAYING_X, START_PLAYING_Y, START_PLAYING_H, START_PLAYING_W, "", "Imagenes/start.png", "", 14)); //startPlayingButton()
 	GUI->attachController("StartPlaying", buttonList[0]);
-	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "", "quit.png", "", 14));//quitButton()
+	buttonList.push_back(new Button(printer, handler, QUIT_X, QUIT_Y, QUIT_H, QUIT_W, "", "Imagenes/quit.png", "", 14));//quitButton()
 	GUI->attachController("Quit", buttonList[1]);
-	buttonList.push_back(new Button(printer, handler, NEW_SETTLEMENT_X, NEW_SETTLEMENT_Y, NEW_SETTLEMENT_H, NEW_SETTLEMENT_W, "", "settlement.png", "", 0));//newSettlementButton
+	buttonList.push_back(new Button(printer, handler, NEW_SETTLEMENT_X, NEW_SETTLEMENT_Y, NEW_SETTLEMENT_H, NEW_SETTLEMENT_W, "", "Imagenes/settlement.png", "", 0));//newSettlementButton
 	GUI->attachController("NewSettlement", buttonList[2]);
-	buttonList.push_back(new Button(printer, handler, NEW_CITY_X, NEW_CITY_Y, NEW_CITY_H, NEW_CITY_W, "", "city.png", "", 0));//newCityButton
+	buttonList.push_back(new Button(printer, handler, NEW_CITY_X, NEW_CITY_Y, NEW_CITY_H, NEW_CITY_W, "", "Imagenes/city.png", "", 0));//newCityButton
 	GUI->attachController("NewCity", buttonList[3]);
-	buttonList.push_back(new Button(printer, handler, NEW_ROAD_X, NEW_ROAD_Y, NEW_ROAD_H, NEW_ROAD_W, "", "road.png", "", 0, -45));//newRoadButton
+	buttonList.push_back(new Button(printer, handler, NEW_ROAD_X, NEW_ROAD_Y, NEW_ROAD_H, NEW_ROAD_W, "", "Imagenes/road.png", "", 0, -45));//newRoadButton
 	GUI->attachController("NewRoad", buttonList[4]);
-	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "DevBack2.PNG", "", 0));//getDevCardButton
+	buttonList.push_back(new Button(printer, handler, BUY_DEV_CARD_X, BUY_DEV_CARD_Y, BUY_DEV_CARD_H, BUY_DEV_CARD_W, "", "Imagenes/DevBack2.PNG", "", 0));//getDevCardButton
 	GUI->attachController("GetDevCard", buttonList[5]);
-	buttonList.push_back(new Button(printer, handler, PASS_X, PASS_Y, PASS_H, PASS_W, "", "pass.png", "", 0));//endTurnButton
+	buttonList.push_back(new Button(printer, handler, PASS_X, PASS_Y, PASS_H, PASS_W, "", "Imagenes/pass.png", "", 0));//endTurnButton
 	GUI->attachController("EndTurn", buttonList[6]);
-	buttonList.push_back(new Button(printer, handler, NEW_BANK_TRADE_X, NEW_BANK_TRADE_Y, NEW_BANK_TRADE_H, NEW_BANK_TRADE_W, "Bank Trade", "bankTrade.png", "catanFont.otf", 14));//bankTradeButton
+	buttonList.push_back(new Button(printer, handler, NEW_BANK_TRADE_X, NEW_BANK_TRADE_Y, NEW_BANK_TRADE_H, NEW_BANK_TRADE_W, "Bank Trade", "Imagenes/bankTrade.png", "catanFont.otf", 14));//bankTradeButton
 	GUI->attachController("BankTrade", buttonList[7]);
-	buttonList.push_back(new Button(printer, handler, NEW_OFFER_TRADE_X, NEW_OFFER_TRADE_Y, NEW_OFFER_TRADE_H, NEW_OFFER_TRADE_W, "Offer Trade", "offerTrade.png", "catanFont.otf", 14));//offerTradeButton
+	buttonList.push_back(new Button(printer, handler, NEW_OFFER_TRADE_X, NEW_OFFER_TRADE_Y, NEW_OFFER_TRADE_H, NEW_OFFER_TRADE_W, "Offer Trade", "Imagenes/offerTrade.png", "catanFont.otf", 14));//offerTradeButton
 	GUI->attachController("OfferTrade", buttonList[8]);
-	buttonList.push_back(new Button(printer, handler, THROW_DICE_X, THROW_DICE_Y, THROW_DICE_H, THROW_DICE_W, "Dice", "dice.png", "catanFont.otf", 14));//throwDicesButton
+	buttonList.push_back(new Button(printer, handler, THROW_DICE_X, THROW_DICE_Y, THROW_DICE_H, THROW_DICE_W, "Dice", "Imagenes/dice.png", "catanFont.otf", 14));//throwDicesButton
 	GUI->attachController("ThrowDices", buttonList[9]);
-	buttonList.push_back(new Button(printer, handler, USE_KNIGHT_X, USE_KNIGHT_Y, USE_KNIGHT_H, USE_KNIGHT_W, "", "Knight.png", "catanFont.otf", 14));//useKnightButtton
+	buttonList.push_back(new Button(printer, handler, USE_KNIGHT_X, USE_KNIGHT_Y, USE_KNIGHT_H, USE_KNIGHT_W, "", "Imagenes/Knight.png", "catanFont.otf", 14));//useKnightButtton
 	GUI->attachController("UseKnight", buttonList[10]);
-	buttonList.push_back(new Button(printer, handler, USE_ROAD_BUILDING_X, USE_ROAD_BUILDING_Y, USE_ROAD_BUILDING_H, USE_ROAD_BUILDING_W, "", "RoadBuilding.PNG", "catanFont.otf", 14));//useRoadBuildingButton
+	buttonList.push_back(new Button(printer, handler, USE_ROAD_BUILDING_X, USE_ROAD_BUILDING_Y, USE_ROAD_BUILDING_H, USE_ROAD_BUILDING_W, "", "Imagenes/RoadBuilding.PNG", "catanFont.otf", 14));//useRoadBuildingButton
 	GUI->attachController("UseRoadBuilding", buttonList[11]);
-	buttonList.push_back(new Button(printer, handler, USE_MONOPOLY_X, USE_MONOPOLY_Y, USE_MONOPOLY_H, USE_MONOPOLY_W, "", "Monopoly.PNG", "catanFont.otf", 14));//useMonopolyButton
+	buttonList.push_back(new Button(printer, handler, USE_MONOPOLY_X, USE_MONOPOLY_Y, USE_MONOPOLY_H, USE_MONOPOLY_W, "", "Imagenes/Monopoly.PNG", "catanFont.otf", 14));//useMonopolyButton
 	GUI->attachController("UseMonopoly", buttonList[12]);
-	buttonList.push_back(new Button(printer, handler, USE_YEARS_OF_PLENTY_X, USE_YEARS_OF_PLENTY_Y, USE_YEARS_OF_PLENTY_H, USE_YEARS_OF_PLENTY_W, "", "YofP.PNG", "catanFont.otf", 14));//useYearsOfPlentyButton
+	buttonList.push_back(new Button(printer, handler, USE_YEARS_OF_PLENTY_X, USE_YEARS_OF_PLENTY_Y, USE_YEARS_OF_PLENTY_H, USE_YEARS_OF_PLENTY_W, "", "Imagenes/YofP.PNG", "catanFont.otf", 14));//useYearsOfPlentyButton
 	GUI->attachController("UseYearsOfPlenty", buttonList[13]);
-	buttonList.push_back(new Button(printer, handler, SELECT_4x1_X, SELECT_4x1_Y, SELECT_4x1_H, SELECT_4x1_W, "", "4por1.png", "", 14));//port4x1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_4x1_X, SELECT_4x1_Y, SELECT_4x1_H, SELECT_4x1_W, "", "Imagenes/4por1.png", "", 14));//port4x1Button
 	GUI->attachController("Port4x1", buttonList[14]);
-	buttonList.push_back(new Button(printer, handler, SELECT_3x1_X, SELECT_3x1_Y, SELECT_3x1_H, SELECT_3x1_W, "", "3por1.png", "", 14));//port3x1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_3x1_X, SELECT_3x1_Y, SELECT_3x1_H, SELECT_3x1_W, "", "Imagenes/3por1.png", "", 14));//port3x1Button
 	GUI->attachController("Port3x1", buttonList[15]);
-	buttonList.push_back(new Button(printer, handler, SELECT_2Mx1_X, SELECT_2Mx1_Y, SELECT_2Mx1_H, SELECT_2Mx1_W, "", "2Mpor1.png", "", 14));//port2Mx1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_2Mx1_X, SELECT_2Mx1_Y, SELECT_2Mx1_H, SELECT_2Mx1_W, "", "Imagenes/2Mpor1.png", "", 14));//port2Mx1Button
 	GUI->attachController("Port2Mx1", buttonList[16]);
-	buttonList.push_back(new Button(printer, handler, SELECT_2Tx1_X, SELECT_2Tx1_Y, SELECT_2Tx1_H, SELECT_2Tx1_W, "", "2Gpor1.png", "", 14));//port2Tx1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_2Tx1_X, SELECT_2Tx1_Y, SELECT_2Tx1_H, SELECT_2Tx1_W, "", "Imagenes/2Gpor1.png", "", 14));//port2Tx1Button
 	GUI->attachController("Port2Tx1", buttonList[17]);
-	buttonList.push_back(new Button(printer, handler, SELECT_2Lx1_X, SELECT_2Lx1_Y, SELECT_2Lx1_H, SELECT_2Lx1_W, "", "2Lpor1.png", "", 14));//port2Lx1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_2Lx1_X, SELECT_2Lx1_Y, SELECT_2Lx1_H, SELECT_2Lx1_W, "", "Imagenes/2Lpor1.png", "", 14));//port2Lx1Button
 	GUI->attachController("Port2Lx1", buttonList[18]);
-	buttonList.push_back(new Button(printer, handler, SELECT_2Ox1_X, SELECT_2Ox1_Y, SELECT_2Ox1_H, SELECT_2Ox1_W, "", "2Opor1.png", "", 14));//port2Ox1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_2Ox1_X, SELECT_2Ox1_Y, SELECT_2Ox1_H, SELECT_2Ox1_W, "", "Imagenes/2Opor1.png", "", 14));//port2Ox1Button
 	GUI->attachController("Port2Ox1", buttonList[19]);
-	buttonList.push_back(new Button(printer, handler, SELECT_2Px1_X, SELECT_2Px1_Y, SELECT_2Px1_H, SELECT_2Px1_W, "", "2Ppor1.png", "", 14));//port2Px1Button
+	buttonList.push_back(new Button(printer, handler, SELECT_2Px1_X, SELECT_2Px1_Y, SELECT_2Px1_H, SELECT_2Px1_W, "", "Imagenes/2Ppor1.png", "", 14));//port2Px1Button
 	GUI->attachController("Port2Px1", buttonList[20]);
-	buttonList.push_back(new Button(printer, handler, SELECT_BRICK_X, SELECT_BRICK_Y, SELECT_BRICK_H, SELECT_BRICK_W, "", "ladrillo.png", "catanFont.otf", 14));//brickButton
+	buttonList.push_back(new Button(printer, handler, SELECT_BRICK_X, SELECT_BRICK_Y, SELECT_BRICK_H, SELECT_BRICK_W, "", "Imagenes/ladrillo.png", "catanFont.otf", 14));//brickButton
 	GUI->attachController("Brick", buttonList[21]);
-	buttonList.push_back(new Button(printer, handler, SELECT_LUMBER_X, SELECT_LUMBER_Y, SELECT_LUMBER_H, SELECT_LUMBER_W, "", "tronco.png", "catanFont.otf", 14));//lumberButton
+	buttonList.push_back(new Button(printer, handler, SELECT_LUMBER_X, SELECT_LUMBER_Y, SELECT_LUMBER_H, SELECT_LUMBER_W, "", "Imagenes/tronco.png", "catanFont.otf", 14));//lumberButton
 	GUI->attachController("Lumber", buttonList[22]);
-	buttonList.push_back(new Button(printer, handler, SELECT_ORE_X, SELECT_ORE_Y, SELECT_ORE_H, SELECT_ORE_W, "", "piedra.png", "catanFont.otf", 14));//oreButton
+	buttonList.push_back(new Button(printer, handler, SELECT_ORE_X, SELECT_ORE_Y, SELECT_ORE_H, SELECT_ORE_W, "", "Imagenes/piedra.png", "catanFont.otf", 14));//oreButton
 	GUI->attachController("Ore", buttonList[23]);
-	buttonList.push_back(new Button(printer, handler, SELECT_GRAIN_X, SELECT_GRAIN_Y, SELECT_GRAIN_H, SELECT_GRAIN_W, "", "pasto.png", "catanFont.otf", 14));//grainButton
+	buttonList.push_back(new Button(printer, handler, SELECT_GRAIN_X, SELECT_GRAIN_Y, SELECT_GRAIN_H, SELECT_GRAIN_W, "", "Imagenes/pasto.png", "catanFont.otf", 14));//grainButton
 	GUI->attachController("Grain", buttonList[24]);
-	buttonList.push_back(new Button(printer, handler, SELECT_WOOL_X, SELECT_WOOL_Y, SELECT_WOOL_H, SELECT_WOOL_W, "", "lana.png", "catanFont.otf", 14));//woolButtton
+	buttonList.push_back(new Button(printer, handler, SELECT_WOOL_X, SELECT_WOOL_Y, SELECT_WOOL_H, SELECT_WOOL_W, "", "Imagenes/lana.png", "catanFont.otf", 14));//woolButtton
 	GUI->attachController("Wool", buttonList[25]);
-	buttonList.push_back(new Button(printer, handler, ACCEPT_X, ACCEPT_Y, ACCEPT_H, ACCEPT_W, "", "tick.png", "", 0));//confirmButton
+	buttonList.push_back(new Button(printer, handler, ACCEPT_X, ACCEPT_Y, ACCEPT_H, ACCEPT_W, "", "Imagenes/tick.png", "", 0));//confirmButton
 	GUI->attachController("Confirm", buttonList[26]);
-	buttonList.push_back(new Button(printer, handler, CANCEL_X, CANCEL_Y, CANCEL_H, CANCEL_W, "", "cruz.png", "", 0));//cancelButton
+	buttonList.push_back(new Button(printer, handler, CANCEL_X, CANCEL_Y, CANCEL_H, CANCEL_W, "", "Imagenes/cruz.png", "", 0));//cancelButton
 	GUI->attachController("Cancel", buttonList[27]);
-	buttonList.push_back(new Button(printer, handler, PLAY_AGAIN_X, PLAY_AGAIN_Y, PLAY_AGAIN_H, PLAY_AGAIN_W, "", "playAgain.png", "", 14));//playAgainButton
+	buttonList.push_back(new Button(printer, handler, PLAY_AGAIN_X, PLAY_AGAIN_Y, PLAY_AGAIN_H, PLAY_AGAIN_W, "", "Imagenes/playAgain.png", "", 14));//playAgainButton
 	GUI->attachController("PlayAgain", buttonList[28]);
-	buttonList.push_back(new Button(printer, handler, GAME_OVER_X, GAME_OVER_Y, GAME_OVER_H, GAME_OVER_W, "", "gameOver.png", "", 14));//stopPlayinButton
+	buttonList.push_back(new Button(printer, handler, GAME_OVER_X, GAME_OVER_Y, GAME_OVER_H, GAME_OVER_W, "", "Imagenes/gameOver.png", "", 14));//stopPlayinButton
 	GUI->attachController("StopPlaying", buttonList[29]);
-	buttonList.push_back(new Button(printer, handler, VICTORY_POINT_X, VICTORY_POINT_Y, VICTORY_POINT_H, VICTORY_POINT_W, "", "VictoryPoint.png", "", 14));//stopPlayinButton
+	buttonList.push_back(new Button(printer, handler, VICTORY_POINT_X, VICTORY_POINT_Y, VICTORY_POINT_H, VICTORY_POINT_W, "", "Imagenes/VictoryPoint.png", "", 14));//stopPlayinButton
 	GUI->attachController("VictoryPoint", buttonList[30]);
 	GUI->attachController("Network", network);
 	

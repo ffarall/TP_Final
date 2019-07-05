@@ -1,12 +1,12 @@
 #include "RemoteObs.h"
 
-#define ROAD "road.png"
-#define CITY "city.png"
-#define SETTLE "setllement.png"
-#define ICONO "RemotePla.png"
-#define FONT "catanFont.otf"
-#define LROAD "LongestRoad.png"
-#define LARMY "LargestArmy.png"
+#define ROAD "Imagenes/road.png"
+#define CITY "Imagenes/city.png"
+#define SETTLE "Imagenes/setllement.png"
+#define ICONO "Imagenes/RemotePla.png"
+#define FONT "Imagenes/catanFont.otf"
+#define LROAD "Imagenes/LongestRoad.png"
+#define LARMY "Imagenes/LargestArmy.png"
 
 #define FONT_SIZE 10 // ver 
 #define BOARD_POS_X 310

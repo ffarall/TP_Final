@@ -1,5 +1,5 @@
 #include "Button.h"
-//#include "ButtonController.h"
+
 #define BUTTON_TINT 0,0,0
 
 Button::Button(GutenbergsPressAllegro* press_, EventsHandler* handler_, uint xPos, uint Ypos, uint height, uint width, std::string label, std::string imagePath, std::string fontPath,int fontSize, int angle) : BasicController(handler_)

@@ -1,9 +1,9 @@
 #include "DetailsObserver.h"
 
-#define W1 "waiting1.png"
-#define W2 "waiting2.png"
-#define W3 "waiting3.png"
-#define W4 "waiting4.png"
+#define W1 "Imagenes/waiting1.png"
+#define W2 "Imagenes/waiting2.png"
+#define W3 "Imagenes/waiting3.png"
+#define W4 "Imagenes/waiting4.png"
 
 #define W_X 500
 #define W_Y 300
