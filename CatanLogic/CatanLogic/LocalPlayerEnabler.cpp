@@ -224,8 +224,6 @@ void LocalPlayerEnabler::firstSettlementRemoteStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::waitingConfFstSetRemStarts(SubtypeEvent* ev)
 {
-	setWaitingMessage("");
-
 	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(firstRoadRemoteStarts) });
 }
@@ -272,7 +270,6 @@ void LocalPlayerEnabler::secondSettlementRemoteStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::waitingConfSndSetRemStarts(SubtypeEvent* ev)
 {
-	setWaitingMessage("");
 	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(secondRoadRemoteStarts) });
 }
