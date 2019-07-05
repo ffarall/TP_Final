@@ -710,6 +710,7 @@ void LocalPlayerEnabler::checkBankTrade(SubtypeEvent * ev)
 		disableAllBut(devCardsEvs);
 
 		pkgSender->pushPackage(new BankTradePkg(*pkg));
+		setWaitingMessage("Ha realizado exitosamente el intercambio, siga jugando.");
 		enable(NET_ACK, { TX(enablePlayerActions) });
 
 		if (tradeType == _4x1)
@@ -868,7 +869,6 @@ void LocalPlayerEnabler::exchangeResources(SubtypeEvent * ev)
 void LocalPlayerEnabler::takeRobberCard(SubtypeEvent * ev)
 {
 	setErrMessage("");
-	setWaitingMessage("");
 	SubEvents* auxEv = static_cast<SubEvents*>(ev);
 	CardIsPkg* pkg = static_cast<CardIsPkg*>(auxEv->getPackage());
 	ResourceType res = pkg->getResource();

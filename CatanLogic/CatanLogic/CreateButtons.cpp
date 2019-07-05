@@ -1486,7 +1486,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					isActive = true;
 				}
 			}
-			if (buttonList[8]->getPackage())
+			else if (buttonList[8]->getPackage())
 			{
 				OfferTradePkg * tempPkg = static_cast<OfferTradePkg *>(buttonList[8]->getPackage());
 				if ((tempPkg->getOpponentOnes()).size() > 0)
@@ -1498,7 +1498,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					isActive = true;
 				}
 			}
-			if (buttonList[12]->getPackage())
+			else if (buttonList[12]->getPackage())
 			{
 				MonopolyPkg * tempPkg = static_cast<MonopolyPkg *>(buttonList[12]->getPackage());
 				if (tempPkg->getResource() != ResourceType::DESIERTO)
@@ -1506,7 +1506,7 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					isActive = true;
 				}
 			}
-			if (buttonList[13]->getPackage())
+			else if (buttonList[13]->getPackage())
 			{
 				YearsOfPlentyPkg * tempPkg = static_cast<YearsOfPlentyPkg *>(buttonList[12]->getPackage());
 				if (tempPkg->getResource(false) != ResourceType::DESIERTO)
@@ -1514,6 +1514,14 @@ void createButtons(GutenbergsPressAllegro* printer, EventsHandler * handler, Pla
 					isActive = true;
 				}
 			}
+			else if (buttonList[9]->getPackage()) //robber
+			{
+				RobberCardsPkg* cartas = static_cast<RobberCardsPkg*>(buttonList[9]->getPackage());
+				if (cartas->isComplete())
+					isActive = true;
+
+			}
+			
 			if (isActive)
 			{
 				if (!buttonList[26]->isPressed())
@@ -1824,8 +1832,9 @@ void ResourceUpdate(Button * boton, MainFSM* mainFSM, ResourceType recurso, vect
 		else
 		{
 			vector<ResourceType> pagados = tempPkg->getResoucesPaid();
-			if (pagados[0] == recurso)
-				amount = pagados.size(); // lo que estoy pagando
+			if(pagados.size()>0)
+				if (pagados[0] == recurso)
+					amount = pagados.size(); // lo que estoy pagando
 		}
 	}
 	else if (offer->getPackage())

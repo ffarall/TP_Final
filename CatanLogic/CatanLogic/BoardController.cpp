@@ -27,7 +27,7 @@
 #define BOARD_POS_Y 88
 #define ROBBER_POS 20
 #define CT_RAD 10
-#define FONT_SIZE 14
+#define FONT_SIZE 16
 #define D_ALTO 700
 #define D_ANCHO 1200
 

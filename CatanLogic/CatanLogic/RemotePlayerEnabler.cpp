@@ -1028,6 +1028,8 @@ void RemotePlayerEnabler::rejectOffer(SubtypeEvent * ev)
 void RemotePlayerEnabler::exchangeResources(SubtypeEvent * ev)
 {
 	pkgSender->pushPackage(new package(headers::YES));
+	setWaitingMessage("El intercambio fue exitoso!!");
+
 	for (auto resource : pendingOffer.getMyOnes())
 	{
 		localPlayer->addResource(resource);					// Adding the resources coming from opponent.
