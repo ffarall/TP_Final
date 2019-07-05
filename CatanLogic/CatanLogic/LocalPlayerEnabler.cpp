@@ -176,8 +176,6 @@ void LocalPlayerEnabler::secondSettlementLocalStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::waitingConfSndSetLocStarts(SubtypeEvent* ev)
 {
-	setWaitingMessage("");
-
 	disable(NET_ACK);
 	enable(PLA_ROAD, { TX(secondRoadLocalStarts) });
 }
@@ -203,8 +201,6 @@ void LocalPlayerEnabler::secondRoadLocalStarts(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::endLocalStarts(SubtypeEvent* ev)
 {
-	setWaitingMessage("");
-
 	disable(NET_ACK);
 	setUpForTurn();
 }
@@ -933,7 +929,7 @@ void LocalPlayerEnabler::endTurn(SubtypeEvent * ev)
 	disableAll();
 	enable(PLA_DICES_ARE, { TX(checkDices) });
 	setWaitingMessage("");
-	//setErrMessage("Es turno de " + remotePlayer->getName() + " de tirar los dados.");
+	remoteEnabler->setWaitingMessage("Es turno de " + remotePlayer->getName() + " de tirar los dados.");
 }
 
 void LocalPlayerEnabler::firstTurn(SubtypeEvent * ev)
