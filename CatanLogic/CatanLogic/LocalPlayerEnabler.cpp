@@ -359,6 +359,7 @@ void LocalPlayerEnabler::checkLocalResources(SubtypeEvent * ev)
 
 void LocalPlayerEnabler::enablePlayerActions(SubtypeEvent * ev)
 {
+	
 	list<EventSubtypes> devCardsEvs = { PLA_KNIGHT, PLA_MONOPOLY, PLA_YEARS_OF_PLENTY, PLA_ROAD_BUILDING };
 
 	disableAllBut(devCardsEvs);
@@ -479,7 +480,7 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 		pendingOffer = *pkg;													// Saving offer for response.
 		pkgSender->pushPackage(new OfferTradePkg(pkg));
 		enable(NET_YES, { TX(exchangeResources), TX(enablePlayerActions) });
-		enable(NET_NO, { TX(enablePlayerActions) });
+		enable(NET_NO, { TX(enablePlayerActions), TX(notAccepted) });
 											
 		map< ResourceType, char> oferta, pedido;								//armando el mensaje para mostrarle al jugador
 		for (auto recurso : pendingOffer.getMyOnes())
@@ -544,6 +545,11 @@ void LocalPlayerEnabler::checkOffer(SubtypeEvent * ev)
 	{
 		setErrMessage("La oferta de trade ingresada es inválida. La misma debe constar de entre 1 y 9 recursos ofrecidos, y entre 1 y 9 pedidos.");
 	}
+}
+
+void LocalPlayerEnabler::notAccepted(SubtypeEvent* ev)
+{
+	setWaitingMessage("La oferta no fue aceptada. Continue jugando.")
 }
 
 void LocalPlayerEnabler::checkSettlement(SubtypeEvent * ev)

@@ -58,6 +58,7 @@ private:
 	void discardLocalResources(SubtypeEvent* ev);
 	void moveRobber(SubtypeEvent* ev);
 	void checkOffer(SubtypeEvent* ev);
+	void notAccepted(SubtypeEvent* ev);
 	void checkSettlement(SubtypeEvent* ev);
 	void checkRoad(SubtypeEvent* ev);
 	void checkCity(SubtypeEvent* ev);
